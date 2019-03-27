@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>刷机后要做的单元测试 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。 不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="刷机后要做的单元测试">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。 不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:25:45.613Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="刷机后要做的单元测试">
+<meta name="twitter:description" content="我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。 不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,125 +178,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_Adapting_Note/刷机后要做的单元测试" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      刷机后要做的单元测试
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/" class="archive-article-date">
+  	<time datetime="2019-01-21T03:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。</p>
+<p>不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。</p>
+<p>因此，对新的ROM做做单元测试，很有必要。笔者的单元测试主要包括以下要素：</p>
+<a id="more"></a>
+<h2 id="移动网络"><a href="#移动网络" class="headerlink" title="移动网络"></a>移动网络</h2><ul>
+<li>双卡设备，是否能保证双卡在线，有信号</li>
+<li>是否能正常连接4G网络</li>
+</ul>
+<h2 id="WIFI"><a href="#WIFI" class="headerlink" title="WIFI"></a>WIFI</h2><ul>
+<li>是否能正常连接，包括5GHz频段的网络</li>
+<li>若在MIUI中连接的网络出现掉线，则检查同样的网络是否在新的ROM中也掉线</li>
+</ul>
+<h2 id="GPS"><a href="#GPS" class="headerlink" title="GPS"></a>GPS</h2><ul>
+<li>在户外使用地图软件是否能准确定位</li>
+<li>使用GPS测试工具，是否能同时搜到GPS、格洛纳斯与北斗。新推出的国产设备基本支持北斗导航，在测试软件中北斗卫星的编号是三位数，有别于另两家。</li>
+</ul>
+<h2 id="电池续航"><a href="#电池续航" class="headerlink" title="电池续航"></a>电池续航</h2><ul>
+<li>对比充满电后的续航，相比于MIUI是能坚持的更久，或相同，或不如MIUI</li>
+<li>测试期间，保证你之前在MIUI中如何使用，<strong>使用强度如何，在新的ROM中就怎样使用</strong></li>
+</ul>
+<h2 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h2><ul>
+<li>是否出现秒退。小米Max的很多第三方ROM都不约而同地出现无法使用相机的Bug。</li>
+<li>是否能正常录像。部分第三方ROM会在录像时卡死。</li>
+</ul>
+<h2 id="应用程序"><a href="#应用程序" class="headerlink" title="应用程序"></a>应用程序</h2><ul>
+<li>多任务切换是否顺畅，是否因内存优化不到位而导致部分程序进入后台后直接被关闭</li>
+<li>你的常用软件使用是否顺畅</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
+        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/02/21/Struggle_with_Linux/为Deepin-Linux启用蓝牙支持/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          为Deepin Linux启用蓝牙支持
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">让TWRP支持解密高通data分区</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +410,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

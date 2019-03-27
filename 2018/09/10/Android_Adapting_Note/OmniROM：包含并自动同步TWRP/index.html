@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>OmniROM：包含并自动同步TWRP | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="知名第三方Recovery TWRP与OmniROM合作，将其最新的代码托管到OmniROM的仓库中（https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo init初始化OmniROM manifest的时候，TWRP并未被包含进去，实际下载到的bootable/recovery`是AOSP的版本。 一种解决思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OmniROM：包含并自动同步TWRP">
+<meta property="og:url" content="http://yoursite.com/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="知名第三方Recovery TWRP与OmniROM合作，将其最新的代码托管到OmniROM的仓库中（https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo init初始化OmniROM manifest的时候，TWRP并未被包含进去，实际下载到的bootable/recovery`是AOSP的版本。 一种解决思路">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:26:15.763Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="OmniROM：包含并自动同步TWRP">
+<meta name="twitter:description" content="知名第三方Recovery TWRP与OmniROM合作，将其最新的代码托管到OmniROM的仓库中（https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo init初始化OmniROM manifest的时候，TWRP并未被包含进去，实际下载到的bootable/recovery`是AOSP的版本。 一种解决思路">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,125 +178,209 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_Adapting_Note/OmniROM：包含并自动同步TWRP" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      OmniROM：包含并自动同步TWRP
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/" class="archive-article-date">
+  	<time datetime="2018-09-10T15:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>知名第三方Recovery TWRP与OmniROM合作，将其最新的代码托管到OmniROM的仓库中（<a href="https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo</a> init<code>初始化OmniROM manifest的时候，TWRP并未被包含进去，实际下载到的</code>bootable/recovery`是AOSP的版本。</p>
+<p>一种解决思路是手动<code>git clone</code>TWRP的源码，不过由于它未被包含进manifest中，因此下次运行<code>repo sync</code>时，它所在的目录会被覆盖，得不偿失。</p>
+<p>正确的办法是，更改OmniROM的manifest文件，在其中包含TWRP。</p>
+<a id="more"></a>
+<blockquote>
+<p><strong>假设当前目录在OmniROM源码的根目录下。</strong></p>
+</blockquote>
+<h2 id="第一步：删除AOSP的Recovery所对应的manifest项目"><a href="#第一步：删除AOSP的Recovery所对应的manifest项目" class="headerlink" title="第一步：删除AOSP的Recovery所对应的manifest项目"></a>第一步：删除AOSP的Recovery所对应的manifest项目</h2><p>打开<code>.repo/manifest.xml</code>（为<code>.repo/manifests/default.xml</code>的符号链接），删除或注释掉这一行：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">path</span>=<span class="string">"bootable/recovery"</span> <span class="attr">name</span>=<span class="string">"platform/bootable/recovery"</span> <span class="attr">groups</span>=<span class="string">"pdk"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="第二步：在OmniROM的manifest中加入TWRP的manifest项目"><a href="#第二步：在OmniROM的manifest中加入TWRP的manifest项目" class="headerlink" title="第二步：在OmniROM的manifest中加入TWRP的manifest项目"></a>第二步：在OmniROM的manifest中加入TWRP的manifest项目</h2><p>TWRP包含以下项目：</p>
+<ul>
+<li>本体：<a href="https://github.com/omnirom/android_bootable_recovery" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery</a></li>
+<li>Busybox：<a href="https://github.com/omnirom/android_external_busybox" target="_blank" rel="noopener">https://github.com/omnirom/android_external_busybox</a></li>
+</ul>
+<p>其中，TWRP的使用和运行离不开Busybox，一方面是shell和常用的工具都由它提供，而另一方面TWRP的一些库也依赖它。</p>
+<p>打开<code>.repo/manifests/omni-default.xml</code>，在<code>&lt;manifest&gt;</code>节的尾部添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AnClark ADDED: Omni TWRP repositories --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"android_bootable_recovery"</span> <span class="attr">path</span>=<span class="string">"bootable/recovery"</span> <span class="attr">remote</span>=<span class="string">"omnirom"</span> <span class="attr">revision</span>=<span class="string">"android-8.1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"android_external_busybox"</span> <span class="attr">path</span>=<span class="string">"external/busybox"</span> <span class="attr">remote</span>=<span class="string">"omnirom"</span> <span class="attr">revision</span>=<span class="string">"android-8.1"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="第三步：重新同步"><a href="#第三步：重新同步" class="headerlink" title="第三步：重新同步"></a>第三步：重新同步</h2><p>回到源码根目录，重新同步源码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync --force-sync -f -j4</span><br></pre></td></tr></table></figure>
+<p>参数中加上<code>--force-sync</code>，要求repo强制同步，将产生同步冲突等问题的项目强行覆盖掉；<code>-f</code>表示连接有问题也继续同步；<code>-j4</code>表示一次开启4个线程（根据处理器和网络状况而定）。</p>
+<p>稍等片刻，TWRP的源码就会同步到相应的目录中，完成之后即可开始编译了。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
+        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/09/10/Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OmniROM：解决“Flex checkpolicy”出错故障
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">踩坑：固态硬盘连接故障使系统假死崩溃</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +403,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>在OpenWrt路由器上使用IPv6 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。">
+<meta name="keywords" content="技术笔记,OpenWrt,IPv6,路由器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在OpenWrt路由器上使用IPv6">
+<meta property="og:url" content="http://yoursite.com/2018/11/12/Network/在OpenWrt路由器上使用IPv6/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:25:12.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="在OpenWrt路由器上使用IPv6">
+<meta name="twitter:description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,78 +179,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Network/在OpenWrt路由器上使用IPv6" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      在OpenWrt路由器上使用IPv6
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
+        
+        <a href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/" class="archive-article-date">
+  	<time datetime="2018-11-12T09:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。</p>
+<p>为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。</p>
+<a id="more"></a>
+<h2 id="设置脚本"><a href="#设置脚本" class="headerlink" title="设置脚本"></a>设置脚本</h2><p>为了方便路由器的配置，<strong>我将所有设置过程做成了一个脚本，并在GitHub上开源。</strong></p>
+<blockquote>
+<p>项目地址：<a href="https://github.com/AnClark/OpenWrt-IPv6-Scripts" target="_blank" rel="noopener">https://github.com/AnClark/OpenWrt-IPv6-Scripts</a></p>
+<p>脚本地址：<a href="https://raw.githubusercontent.com/AnClark/OpenWrt-IPv6-Scripts/master/Use%20ip6tables/operation.sh" target="_blank" rel="noopener">戳这里直接下载，脚本文件名为<code>operation.sh</code></a></p>
+</blockquote>
+<p>使用脚本的步骤很简单，只要你准备好用于发送文件的WinSCP，与用于远程登录路由器的PuTTY。</p>
+<ul>
+<li><strong>第一步</strong>，使用WinSCP，登录到路由器上，并将<code>operation.sh</code>上传到<code>/tmp</code>文件夹中。</li>
+<li><strong>第二步</strong>，使用PuTTY或WinSCP自带的Shell，运行<code>/tmp/operation.sh</code>。稍等片刻，即可配置好。下次重启路由器，就可以自动将WAN的IPv6共享给路由器局域网内的设备了。</li>
+</ul>
+<p>如果使用Linux，或在Windows下使用Cygwin或Git-SCM（一个在Windows下使用Git的套件），那么使用它们自带的<code>scp</code>和<code>ssh</code>工具，会方便得多：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将脚本发送到路由器上。注意路由器地址</span><br><span class="line">scp operation.sh root@192.168.1.1:/tmp/</span><br><span class="line"><span class="meta">#</span> 在路由器上运行脚本</span><br><span class="line">ssh root@192.168.1.1 "chmod +x /tmp/install.sh; sh /tmp/operation.sh"</span><br></pre></td></tr></table></figure>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>脚本完成的设置过程，包括了如下具体操作：</p>
+<h3 id="（1）安装kmod-ipt-nat6"><a href="#（1）安装kmod-ipt-nat6" class="headerlink" title="（1）安装kmod-ipt-nat6"></a>（1）安装<code>kmod-ipt-nat6</code></h3><p><code>kmod-ipt-nat6</code>是用于启用IPv6 NAT的内核模块。在OpenWrt中，使用包管理工具<code>opkg</code>进行安装。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg install kmod-ipt-nat6</span><br></pre></td></tr></table></figure>
+<h3 id="（2）更改IPv6-ULA前缀"><a href="#（2）更改IPv6-ULA前缀" class="headerlink" title="（2）更改IPv6 ULA前缀"></a>（2）更改IPv6 ULA前缀</h3><p>ULA，全称为“唯一的本地IPv6单播地址”（Unique Local IPv6 Unicast Address）[^1]。这一步，我们要把它的前缀由<code>f</code>改为<code>d</code>，以将本地的IPv6地址向外广播，而不是localhost那样的闭环。</p>
+<p>用于实现这一步的脚本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uci set network.globals.ula_prefix=&quot;$(uci get network.globals.ula_prefix | sed &apos;s/^./d/&apos;)&quot;</span><br><span class="line">uci commit network</span><br></pre></td></tr></table></figure>
+<p>OpenWrt的属性参数由<code>uci</code>工具管理，类似于Android的property机制（<code>setprop</code>/<code>getprop</code>），使用“域”来组织各类参数。脚本的第一行，在<code>$()</code>中调用<code>uci</code>命令，获取当前的ULA前缀，将执行结果传递给<code>sed</code>命令。这里<code>sed</code>命令使用了替换语法——<code>sed &#39;s/&lt;原文本&gt;/&lt;替换文本&gt;/&#39;</code>，将开头第一个字符替换为字符“<code>d</code>”。Shell的<code>$()</code>语法可将命令运行结果作为文本使用，那么该用法内的命令结果就作为新的ULA前缀被应用。最后，运行第二行的命令，提交修改。</p>
+<h3 id="（3）将DHCP服务器模式设置为“总是广播"><a href="#（3）将DHCP服务器模式设置为“总是广播" class="headerlink" title="（3）将DHCP服务器模式设置为“总是广播"></a>（3）将DHCP服务器模式设置为“总是广播</h3><p>[^1]: 《IPv6地址》. 北海石松 - 博客园. <a href="https://www.cnblogs.com/gogly/articles/2558150.html" target="_blank" rel="noopener">https://www.cnblogs.com/gogly/articles/2558150.html</a></p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -258,44 +265,144 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OpenWrt</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IPv6</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">路由器</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        			<a href="/categories/网络//" class="article-tag-list-link color3">网络</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
+        			<a href="/categories/网络/路由器//" class="article-tag-list-link color4">路由器</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/12/Network/在OpenWrt路由器上使用IPv6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/11/30/Struggle_with_Linux/Deepin-Linux下为Wine创建文件关联/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Deepin Linux下为Wine创建文件关联
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/11/06/Struggle_with_Linux/为Deepin-Linux编译内核/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为Deepin Linux编译内核</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +425,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

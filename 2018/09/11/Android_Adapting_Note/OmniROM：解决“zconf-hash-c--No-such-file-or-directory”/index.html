@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>OmniROM：解决“zconf.hash.c No such file or directory”错误 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="编译OmniROM 8.1，到达编译内核这一步时出错：1234scripts/kconfig/zconf.tab.c:206:10: fatal error: zconf.hash.c: No such file or directory #include &amp;quot;zconf.hash.c&amp;quot;          ^~~~~~~~~~~~~~compilation terminated.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OmniROM：解决“zconf.hash.c No such file or directory”错误">
+<meta property="og:url" content="http://yoursite.com/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="编译OmniROM 8.1，到达编译内核这一步时出错：1234scripts/kconfig/zconf.tab.c:206:10: fatal error: zconf.hash.c: No such file or directory #include &amp;quot;zconf.hash.c&amp;quot;          ^~~~~~~~~~~~~~compilation terminated.">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:26:03.317Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="OmniROM：解决“zconf.hash.c No such file or directory”错误">
+<meta name="twitter:description" content="编译OmniROM 8.1，到达编译内核这一步时出错：1234scripts/kconfig/zconf.tab.c:206:10: fatal error: zconf.hash.c: No such file or directory #include &amp;quot;zconf.hash.c&amp;quot;          ^~~~~~~~~~~~~~compilation terminated.">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,125 +178,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      OmniROM：解决“zconf.hash.c No such file or directory”错误
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/" class="archive-article-date">
+  	<time datetime="2018-09-11T04:44:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编译OmniROM 8.1，到达编译内核这一步时出错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scripts/kconfig/zconf.tab.c:206:10: fatal error: zconf.hash.c: No such file or directory</span><br><span class="line"> #include &quot;zconf.hash.c&quot;</span><br><span class="line">          ^~~~~~~~~~~~~~</span><br><span class="line">compilation terminated.</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>解决办法很简单：</p>
+<ul>
+<li><p><strong>第一步：</strong> 清除内核源码中的临时文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;Android 源码根目录&gt;/kernel/&lt;定位到设备的内核源码目录&gt;</span><br><span class="line">make mrproper</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>第二步：</strong> 清除Android编译系统的输出目录<code>out</code>，然后重新进行编译即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;Android 源码根目录&gt;</span><br><span class="line">rm -rf out</span><br><span class="line">source build/envsetup.sh</span><br><span class="line">lunch                    # 在弹出的列表中选择你的机型</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>具体的原因是，Android编译系统<strong>要求你的内核源码目录是“干净”的</strong>，也就是说，不能有任何编译的临时文件，否则会导致编译中断。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
+        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/09/15/Use_Python/笔记：Python-3开发C模块初试/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【未完成】笔记：Python 3开发C模块初试
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/10/Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OmniROM：解决“Flex checkpolicy”出错故障</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +394,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

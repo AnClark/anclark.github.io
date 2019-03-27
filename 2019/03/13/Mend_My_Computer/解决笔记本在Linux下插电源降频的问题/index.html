@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>解决笔记本在Linux下插电降频的问题 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="笔记本的处理器频率，若使用电池，则可对最高频率做适当限制，以达到省电目的；若插入移动电源，则可以解除限制，让处理器能够在其最高频率上运行，以提高性能——这是最基本的电源管理策略。 然而，我的ThinkPad X200却不走寻常路，故意和我对着干。X200搭载Intel Core 2 Duo P8600 双核处理器，设计最高主频为2.40GHz。在使用“performance”调控器（governo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决笔记本在Linux下插电降频的问题">
+<meta property="og:url" content="http://yoursite.com/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="笔记本的处理器频率，若使用电池，则可对最高频率做适当限制，以达到省电目的；若插入移动电源，则可以解除限制，让处理器能够在其最高频率上运行，以提高性能——这是最基本的电源管理策略。 然而，我的ThinkPad X200却不走寻常路，故意和我对着干。X200搭载Intel Core 2 Duo P8600 双核处理器，设计最高主频为2.40GHz。在使用“performance”调控器（governo">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:25:33.054Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="解决笔记本在Linux下插电降频的问题">
+<meta name="twitter:description" content="笔记本的处理器频率，若使用电池，则可对最高频率做适当限制，以达到省电目的；若插入移动电源，则可以解除限制，让处理器能够在其最高频率上运行，以提高性能——这是最基本的电源管理策略。 然而，我的ThinkPad X200却不走寻常路，故意和我对着干。X200搭载Intel Core 2 Duo P8600 双核处理器，设计最高主频为2.40GHz。在使用“performance”调控器（governo">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,37 +178,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Mend_My_Computer/解决笔记本在Linux下插电源降频的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      解决笔记本在Linux下插电降频的问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
+  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>笔记本的处理器频率，若使用电池，则可对最高频率做适当限制，以达到省电目的；若插入移动电源，则可以解除限制，让处理器能够在其最高频率上运行，以提高性能——这是最基本的电源管理策略。</p>
+<p>然而，我的ThinkPad X200却不走寻常路，故意和我对着干。X200搭载Intel Core 2 Duo P8600 双核处理器，设计最高主频为2.40GHz。在使用“performance”调控器（governor），并尽可能将调控器最高频率设为最大值的情况下：</p>
+<ul>
+<li>若只使用电池，则处理器最高频率可以达到2.40GHz，平均运行频率常常能超过1.6GHz。</li>
+<li>但是，若插上电源适配器，过一段时间后，最高频率就被限制在了1.60GHz，且无法使用<code>cpufreq-set</code>工具进行更改。</li>
+</ul>
+<p>这也太奇怪了吧，笔记本居然会在插电时降频！尽管插电后电量多到用不完，毫无费电之虞，笔记本却仍然认为应该省电；而使用电池时，笔记本却根本不管这些，允许CPU达到最大频率。什么逻辑！</p>
+<a id="more"></a>
+<h2 id="尝试解决问题"><a href="#尝试解决问题" class="headerlink" title="尝试解决问题"></a>尝试解决问题</h2><p>起初，我以为是BIOS中的节能控制设置不当。有一个设置是Intel SpeedStep Technology，这是英特尔的处理器电源管理功能。我尝试将其中针对AC适配器和电池的策略设置为相同的值，结果重启后问题如故；而关闭该功能后，Linux管理CPU频率的<code>acpi-cpufreq</code>驱动直接失效，不可行。后来，我又尝试将PCI和PCI-E的省电功能关闭，问题同样如故。</p>
+<p>看来，不能靠更改BIOS设置来解决插电降频的问题，只能从系统层面入手了。会不会跟内核有关？对此，我尝试了不同的内核版本，以及使用OpenSUSE安装盘的Shell进行测试，运行以下命令设置调节器为<code>performance</code>，读取调控器最大频率（须在Root用户下测试）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /sys/devices/system/cpu/cpu0/cpufreq</span><br><span class="line">echo performance &gt; scaling_governor</span><br><span class="line">cat scaling_max_freq</span><br></pre></td></tr></table></figure>
+<p>结果，插电后仍然降频。由此可排除内核版本和操作系统的问题。</p>
+<p>那么，问题到底出在哪里呢？</p>
+<h2 id="突破口：BIOS的限制"><a href="#突破口：BIOS的限制" class="headerlink" title="突破口：BIOS的限制"></a>突破口：BIOS的限制</h2><p>在Linux中，控制处理器频率的目录是<code>/sys/devices/system/cpu/cpu*/cpufreq</code>（星号为处理器核心编号），其中包含一系列节点，用于读取或设置处理器频率的参数。主要包括：</p>
+<table>
+<thead>
+<tr>
+<th>节点名</th>
+<th>作用</th>
+<th>读写权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>affected_cpus</td>
+<td>显示受影响的CPU编号</td>
+<td>只读</td>
+</tr>
+<tr>
+<td><strong>bios_limit</strong></td>
+<td>BIOS提供的频率限制值</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>cpuinfo_cur_freq</td>
+<td>CPU的当前频率</td>
+<td>只读，须root</td>
+</tr>
+<tr>
+<td>cpuinfo_max_freq</td>
+<td>CPU的最大频率</td>
+<td>只读，须root</td>
+</tr>
+<tr>
+<td>cpuinfo_min_freq</td>
+<td>CPU的最小频率</td>
+<td>只读，须root</td>
+</tr>
+<tr>
+<td>cpuinfo_transition_latency</td>
+<td>CPU频率切换的延迟</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>freqdomain_cpus</td>
+<td>受调节且在同一组内的CPU编号</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>related_cpus</td>
+<td>显示当前频率调节器关联的CPU编号</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>scaling_available_frequencies</td>
+<td>频率调节器允许的CPU频率值。设置的频率只能为其中之一，否则会报错</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>scaling_available_governors</td>
+<td>可用的频率调节器</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>scaling_cur_freq</td>
+<td>调节器调控的当前CPU频率。此值为当前CPU的真实频率</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>scaling_driver</td>
+<td>当前的调频驱动</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>scaling_governor</td>
+<td>显示与设置当前使用的频率调节器</td>
+<td>读写</td>
+</tr>
+<tr>
+<td>scaling_max_freq</td>
+<td>显示与设置调节器的最大频率</td>
+<td>读写</td>
+</tr>
+<tr>
+<td>scaling_min_freq</td>
+<td>显示与设置调节器的最小频率</td>
+<td>读写</td>
+</tr>
+<tr>
+<td>scaling_setspeed</td>
+<td>手工设置CPU频率。只在<code>userspace</code>调节器下生效</td>
+<td>读写</td>
+</tr>
+<tr>
+<td>stats</td>
+<td>CPU使用信息统计</td>
+<td>目录</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：上述节点中，频率值的单位为Hz。</p>
+</blockquote>
+<p>注意其中的<strong><code>bios_limit</code></strong>，它反映的是BIOS所提供的频率限制值。在本文开头的条件下，使用电池时，其中的值为2400000，而插上电源后该值立刻降到1600000。由此不难得知，是BIOS在限制CPU的频率，X200的BIOS对处理器频率的调控策略简直是弱智！</p>
+<h2 id="让系统忽略处理器频率限制"><a href="#让系统忽略处理器频率限制" class="headerlink" title="让系统忽略处理器频率限制"></a>让系统忽略处理器频率限制</h2><p>那么，有什么办法可以打破限制？的确是可以的，Linux系统可以忽略<code>bios_limit</code>中BIOS所提供的不合理限制值，让用户可以自由设置理想的频率，使处理器性能的发挥重回正轨。</p>
+<p>具体的做法是，调节内核当中的一个参数——<code>ignore_ppc</code>，将其值设为1，表示忽略BIOS频率限制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 | sudo tee /sys/module/processor/parameters/ignore_ppc</span><br></pre></td></tr></table></figure>
+<p>设置即时生效。这时再插入电源适配器，即可发现频率再也不会被限制在1.6GHz下了。</p>
+<p>若要使该设置在每次重启后都能自动应用，可以更改启动配置文件<code>/etc/default/grub</code>。在root权限下打开它，找到<code>GRUB_CMDLINE_LINUX_DEFAULT</code>，将<code>processor.ignore_ppc=1</code>加在值的后面，就像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash processor.ignore_ppc=1&quot;</span><br></pre></td></tr></table></figure>
+<p>最后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></table></figure>
+<p>更新启动参数，重启即可生效。</p>
+<p>到此，插电降频问题彻底解决，终于可以愉快地享用了！</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://askubuntu.com/questions/340626/permanently-change-maximum-cpu-frequency" target="_blank" rel="noopener">https://askubuntu.com/questions/340626/permanently-change-maximum-cpu-frequency</a></li>
+<li><a href="https://askubuntu.com/questions/303882/maximum-cpu-frequency-stuck-at-low-value" target="_blank" rel="noopener">https://askubuntu.com/questions/303882/maximum-cpu-frequency-stuck-at-low-value</a></li>
+<li><a href="https://askubuntu.com/questions/899255/i-cant-set-the-cpu-frequency-to-maximum" target="_blank" rel="noopener">https://askubuntu.com/questions/899255/i-cant-set-the-cpu-frequency-to-maximum</a></li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -224,78 +378,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为OpenSUSE安装搜狗输入法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +498,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>踩坑：固态硬盘连接故障使系统假死崩溃 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="笔者的惠普Pavilion笔记本使用的是双硬盘：原装1TB西部数据机械硬盘，配上光驱位的ADATA SP550 240GB固态硬盘。EFI分区、Windows 10+Ubuntu 18.04双系统及其应用软件安装在固态硬盘上，机械硬盘在删除系统有关的分区后专门用来存放数据。如此一来，速度存储两不误，重新定义了我对Windows和电脑速度的认识。 相对稳定运行两年有余，然而，就在昨天（2018年9月">
+<meta property="og:type" content="article">
+<meta property="og:title" content="踩坑：固态硬盘连接故障使系统假死崩溃">
+<meta property="og:url" content="http://yoursite.com/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="笔者的惠普Pavilion笔记本使用的是双硬盘：原装1TB西部数据机械硬盘，配上光驱位的ADATA SP550 240GB固态硬盘。EFI分区、Windows 10+Ubuntu 18.04双系统及其应用软件安装在固态硬盘上，机械硬盘在删除系统有关的分区后专门用来存放数据。如此一来，速度存储两不误，重新定义了我对Windows和电脑速度的认识。 相对稳定运行两年有余，然而，就在昨天（2018年9月">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:25:23.790Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="踩坑：固态硬盘连接故障使系统假死崩溃">
+<meta name="twitter:description" content="笔者的惠普Pavilion笔记本使用的是双硬盘：原装1TB西部数据机械硬盘，配上光驱位的ADATA SP550 240GB固态硬盘。EFI分区、Windows 10+Ubuntu 18.04双系统及其应用软件安装在固态硬盘上，机械硬盘在删除系统有关的分区后专门用来存放数据。如此一来，速度存储两不误，重新定义了我对Windows和电脑速度的认识。 相对稳定运行两年有余，然而，就在昨天（2018年9月">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,37 +178,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      踩坑：固态硬盘连接故障使系统假死崩溃
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/" class="archive-article-date">
+  	<time datetime="2018-09-07T06:05:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>笔者的惠普Pavilion笔记本使用的是双硬盘：原装1TB西部数据机械硬盘，配上光驱位的ADATA SP550 240GB固态硬盘。EFI分区、Windows 10+Ubuntu 18.04双系统及其应用软件安装在固态硬盘上，机械硬盘在删除系统有关的分区后专门用来存放数据。如此一来，速度存储两不误，重新定义了我对Windows和电脑速度的认识。</p>
+<p>相对稳定运行两年有余，然而，就在昨天（2018年9月6日），意想不到的情况发生了。</p>
+<a id="more"></a>
+<h2 id="故障：莫名变卡的机器"><a href="#故障：莫名变卡的机器" class="headerlink" title="故障：莫名变卡的机器"></a>故障：莫名变卡的机器</h2><p>在像往常一样用Ubuntu编译内核时，我习惯性地关上笔记本盖子去吃饭，回来打开盖子，发现无论等多久、按多少次键盘，电脑怎么也唤不醒。一段时间后，屏幕上出现了指针，而除此之外仍是一片黑屏，登录界面出现后也无法输入密码继续。想尝试打开TTY模式（<code>Ctrl+Alt+F1~F6</code>）排除故障，结果更不管用。观察硬盘灯，硬盘灯竟然一直常亮。</p>
+<p>类似的问题也出现在Windows里。运行某个程序之后，机器逐步陷入瘫痪状态：先是当前运行的程序出现无响应提示，而其他程序没事；接着，其他程序也中招了，纷纷陷入无响应；再后来，就是资源管理器（桌面）崩溃了。无响应提示窗口选择“结束程序”，也没有任何反应。观察硬盘灯，硬盘灯同样出现了常亮的情况。</p>
+<p>本以为这样的死机，重启一下就好，谁知一重启问题就更严重了。惠普采用系微BIOS的笔记本，可以按<code>ESC</code>和功能键进入一些系统功能，例如<code>ESC</code>键暂停启动进入功能菜单、<code>F1</code>显示系统信息、<code>F2</code>打开惠普诊断工具、<code>F9</code>打开启动菜单、<code>F10</code>打开BIOS设置；按下对应键后，屏幕左下角还会显示出按下的键与对应的功能。结果，不管按下哪一个键，系统都会卡住许久，屏幕左下角的文字一直出现，始终未跳转到下一个界面，直到等待约两分钟后才勉强出现。在等待过程中，硬盘灯也一直保持常亮。</p>
+<p>即使成功进入了对应的界面，异常仍然存在。但是，比起根本不能动弹的操作系统，以下位于系统底层的程序反而直接告诉了我答案：</p>
+<ul>
+<li>启动菜单界面中，没有出现任何选项，也就是说系统没有识别出任何的有效启动设备。进一步，插入一个EFI启动U盘，列表中有了显示，但只有U盘对应的那一项。</li>
+<li>惠普诊断工具进入了核心模式，只有简易的菜单和内存/磁盘检测功能。而以往则会进入标准版，为类似于Windows的图形界面模式，功能更全面，还支持鼠标。</li>
+<li>诊断工具起初还能检测出两块硬盘，但再一次重启后只剩下了机械硬盘。</li>
+</ul>
+<p>这里有一个值得注意的细节：<strong>惠普诊断工具的标准版是位于EFI分区当中的（路径为<code>EFI/HP/</code>），核心模式则为BIOS自带，检测不到EFI分区就会自动进入核心模式</strong>。而EFI分区在我的固态硬盘上，机械硬盘的EFI分区早已被我删除。</p>
+<p>以此，我可以判断，问题很可能就出在固态硬盘上。</p>
+<h2 id="探究：拆掉固态硬盘后……"><a href="#探究：拆掉固态硬盘后……" class="headerlink" title="探究：拆掉固态硬盘后……"></a>探究：拆掉固态硬盘后……</h2><p>初步锁定目标后，我二话不说，打开笔记本后盖，卸下固态硬盘托架。然后适当扣好后盖，装上电池启动，于是奇迹发生了：三秒之内，“找不到启动分区”的提示迅速出现，而再度重启后按下功能键，进入对应功能的时候也是秒速，和正常情况无异。整个过程之中，硬盘灯也不再常亮，而只是象征性地闪一下。</p>
+<p>如此一来，问题出在固态硬盘上的这一推测也得到了证实。但是，光确定这一方向还不够，还要具体分析关于固态硬盘的问题出在哪里——硬盘元件、磁盘区块损坏、硬盘的连接等，每个要素都有可能导致机器假死这一结果。</p>
+<p>进一步分析前，要想办法启动系统。我有一个移动硬盘盒，把固态硬盘从托架上卸下来后装进去，连接电脑并开机，结果打开启动菜单后，选项仍是空空如也。试着将一个之前用于安装Ubuntu的U盘插进去重启，列表中出现了U盘的选项，用它引导进入LiveCD，再次重启，选项里就多出了固态硬盘中两个操作系统的入口。</p>
+<p>最容易排除的因素莫过于硬盘本身，尤其是损坏的区块上，对此需要一款能够检查全盘错误的工具，首选就是HDTune。正好电脑中安装了IT天空的Windows 8 PE（手工安装，具体方法还会再出教程），于是从Windows Boot Manager中选择PE，进入之，然后打开其附带的HDTune。</p>
+<p>在HDTune中选择固态硬盘，然后打开“错误扫描”选项卡。确保不勾选“快速扫描”，以及扫描范围的值为最大。随即开始扫描，耐心等待。</p>
+<p>如此测试有两个目的，首先就是检查磁盘错误，其次是长时间考验硬盘。第一部分中所提到的瘫痪问题，均发生在系统启动后一小时之内，正好HDTune的错误扫描时间远远不止1小时，由此也可检查磁盘的稳定性。</p>
+<p>测试最终成功，进行到了最后。结果证明，问题并没有出在固态硬盘本身——幸好固态硬盘没问题。</p>
+<h2 id="防微杜渐：保证连接的稳定性"><a href="#防微杜渐：保证连接的稳定性" class="headerlink" title="防微杜渐：保证连接的稳定性"></a>防微杜渐：保证连接的稳定性</h2><p>排除了固态硬盘本身的问题之后，我的目光即刻集中到硬盘与主板的连接上。光驱位硬盘托架本质上是接口规格的转换，将台式机的SATA+电源接口规格转换为笔记本的规格。它们接口排列相同，都是电源与数据并列，只是笔记本上的接口远远更加小巧。</p>
+<p>然而，小巧也有其风险的地方：小巧意味着接触面小，使得接口固定不牢。我的托架在不上螺丝的情况下插入接口中，稍微摇动一下，或者是往外一抽，即立刻松动。如此设计的初衷，即是允许用户轻松地拆卸并更换光驱。出厂时，笔记本的光驱位只有一颗螺丝固定，同时接口不会设计得太紧，拧开螺丝后，用户很轻易就能抽出光驱。不过，对于稳定性要求高得多的硬盘来说，这保障还不够。在台式机上，SATA线和电源线，只需其一，即可把固态硬盘悬吊起来，还不易松动。</p>
+<p>由此我不由得怀疑，之前的Bug，正是因为接口偶然松动才导致的。为了预防这一问题，我在装回后盖的时候，特意把固定托架的唯一一颗螺丝拧紧了。</p>
+<h2 id="附：不能用USB端口上的固态硬盘启动系统"><a href="#附：不能用USB端口上的固态硬盘启动系统" class="headerlink" title="附：不能用USB端口上的固态硬盘启动系统"></a>附：不能用USB端口上的固态硬盘启动系统</h2><p>不过要注意的是，两款操作系统都不能直接从USB启动。Windows 10会在走完启动画面后，出现<code>INACCESSIBLE_BOOT_DEVICE</code>的蓝屏；而Ubuntu下则表现为无法挂载Root分区而panic。原因就在于，默认情况下它们和硬件设备编号（暂且这么说）是绑定的，但是固态硬盘转移到了完全不同的USB控制器上，那么设备编号自然要重新分配。例如正常情况下，固态硬盘在Windows中是1号磁盘驱动器（0号为机械硬盘）、在Ubuntu中是<code>/dev/sdb</code>；而USB端口下，则会在Windows中变成2号、3号乃至n号驱动器，在Ubuntu中变成<code>/dev/sdc</code>、<code>/dev/sdd</code>，乃至更靠后。而往往系统中的配置文件没有相应地修改，自然会造成崩溃。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -224,78 +274,113 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OmniROM：包含并自动同步TWRP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/05/Use_Python/使用PyAudio模块播放音频流之体会/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用PyAudio模块播放音频流之体会</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +403,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

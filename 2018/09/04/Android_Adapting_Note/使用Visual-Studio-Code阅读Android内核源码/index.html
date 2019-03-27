@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | 爱拼安小匠的技术博客</title>
+  <title>使用Visual Studio Code阅读Android内核源码 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。 ——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Visual Studio Code阅读Android内核源码">
+<meta property="og:url" content="http://yoursite.com/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。 ——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-27T11:25:51.895Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="使用Visual Studio Code阅读Android内核源码">
+<meta name="twitter:description" content="Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。 ——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,125 +178,277 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/" class="archive-article-date">
-  	<time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a>
+    <h1 class="article-title" itemprop="name">
+      使用Visual Studio Code阅读Android内核源码
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/" class="archive-article-date">
+  	<time datetime="2018-09-04T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。</p>
+<p>——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置，就可以将VS Code打造成贴心的Linux代码阅读工具。</p>
+<a id="more"></a>
+<h2 id="第一步：安装C语言相关扩展"><a href="#第一步：安装C语言相关扩展" class="headerlink" title="第一步：安装C语言相关扩展"></a>第一步：安装C语言相关扩展</h2><p>VS Code默认未提供对C语言的完整支持[^1]，因此需要先安装相应的扩展。</p>
+<p>在扩展管理器中安装以下扩展：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">扩展名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>C/C++</strong></td>
+<td>微软推出的C/C++扩展，可以将VS Code打造成C/C++的IDE</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>C++ Intellisense</strong></td>
+<td>austin 推出的智能提示（Intellisense）扩展，可以在用户键入代码时给出自动完成提示</td>
+</tr>
+</tbody>
+</table>
+<p>安装完成后，在扩展管理器中选择“重新加载”（Reload），重载VS Code窗口，使扩展生效。</p>
+<h2 id="第二步：配置“C-C-”扩展"><a href="#第二步：配置“C-C-”扩展" class="headerlink" title="第二步：配置“C/C++”扩展"></a>第二步：配置“C/C++”扩展</h2><p>打开Linux源码目录，可以打开源码的根目录，也可以打开其中任意一个模块的子目录（如SELinux模块的子目录<code>security/selinux</code>），由此开始对源码的管理。</p>
+<p>不过这个时候，由于配置文件未设置好，与代码提示有关的功能还不能使用，这会大大降低我们的体验。实际体验中，代码提示体现在如下功能特性：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>悬停提示</strong></td>
+<td>在鼠标悬停时，自动显示悬停处对象的定义<br>不需搜索文本即可快速了解一个对象的定义和使用方法</td>
+</tr>
+<tr>
+<td><strong>自动完成</strong></td>
+<td>键入代码时，给出自动完成提示，即相关备选项的菜单</td>
+</tr>
+<tr>
+<td><strong>上下文定位</strong></td>
+<td>按住<code>Ctrl</code>键，单击对象名，即可跳转到它的定义处</td>
+</tr>
+<tr>
+<td><strong>上下文查看</strong></td>
+<td>可以跳转到对象的由来【声明（declaration）或定义（definition）】所在的地方；<br>并提供速览（peek）——在当前代码窗口中分裂出一块小区域显示它的由来</td>
+</tr>
+</tbody>
+</table>
+<p>代码提示工作的基础是对源码包含（<code>#include</code>）的头文件进行分析，分析其中的各种定义，其次才分析上下文。默认情况下，C/C++扩展只会查找工作目录下的所有头文件，然而Linux的源码还会用到其他的头文件。为此需要配置这个扩展。</p>
+<p>一般涉及的头文件都在<strong>内核源码里</strong>的如下子目录中，自低向高分层次列举如下。注意<strong>在上层的头文件会调用下层的头文件，如此形成依赖关系</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>头文件包含目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>arch/arm/mach-&lt;机器方案名&gt;/include</code></td>
+<td>由机器方案厂商提供的专用于某一系列设备的程序源码</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>arch/arm/include</code></td>
+<td>架构的头文件，包含的文件以用于汇编为主</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>include</code></td>
+<td>内核的主要头文件</td>
+</tr>
+</tbody>
+</table>
+<p>以上针对ARM架构介绍，其他架构（如X86、MIPS）类推即可。机器方案名根据设备配置文件来确定。</p>
+<p>接下来就编辑配置文件，把上述相应的目录加入进来。按<code>Ctrl+Alt+P</code>打开命令面板，输入<code>Edit configurations</code>，在其中选择<code>C/Cpp: Edit configurations</code>，进入配置文件编辑。配置文件的格式是JSON，如下所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Linux"</span>,</span><br><span class="line">            <span class="attr">"includePath"</span>: [</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/**"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"defines"</span>: [],</span><br><span class="line">            <span class="attr">"compilerPath"</span>: <span class="string">"/usr/bin/gcc"</span>,</span><br><span class="line">            <span class="attr">"cStandard"</span>: <span class="string">"c11"</span>,</span><br><span class="line">            <span class="attr">"cppStandard"</span>: <span class="string">"c++17"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"version"</span>: <span class="number">4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的<code>configurations.includePath</code>就是代码分析时包含头文件的目录。该数组的值支持一个宏<code>${workspaceFolder}</code>，指代工作区所在的路径，由此在填入值的时候，允许根据以上头文件夹与它的相对位置来填写。当然也可以填写绝对路径，不过绝对路径的健壮性（robust）不够强。</p>
+<p><strong>填写时要严格遵循顺序，下层在前，上层在后，否则不能确保有依赖关系的头文件均能被找出来。</strong></p>
+<p>举例来说，假如工作区在内核源码下<code>security/selinux</code>目录里，那么应该这样填写：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            <span class="attr">"......"</span></span><br><span class="line">            <span class="attr">"includePath"</span>: [</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../arch/arm/mach-&lt;机器方案名&gt;/include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../arch/arm/include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/**"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"......"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置之后，再次打开源代码，即可发现以上提到的特性均能一一实现了。</p>
+<p>[^1]: VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
+        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/" class="archive-article-date">
-  	<time datetime="2019-03-03T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/09/05/Use_Python/使用PyAudio模块播放音频流之体会/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用PyAudio模块播放音频流之体会
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/04/Struggle_with_Linux/经验体会：解决Ubuntu-18-04+Windows双系统时间不同步的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">经验体会：解决Ubuntu 18.04 + Windows双系统时间不同步的问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/OpenSUSE//" class="article-tag-list-link color4">OpenSUSE</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -318,8 +471,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

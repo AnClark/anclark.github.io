@@ -205,7 +205,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Ubuntu和Windows双系统，开发娱乐两不误，随用随切换，岂不美哉？</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Ubuntu和Windows双系统，开发娱乐两不误，随用随切换，岂不美哉？</p>
 <p>然而，在美的背后，存在一个让人抓狂的Bug：从一个系统切换到另一个系统后，时间就会出错，表现为——</p>
 <p><strong>时差8小时。</strong></p>
 <p>例如：</p>
@@ -221,7 +221,8 @@
 <h4 id="协调世界时（Coordinated-Universal-Time-UTC）"><a href="#协调世界时（Coordinated-Universal-Time-UTC）" class="headerlink" title="协调世界时（Coordinated Universal Time, UTC）"></a>协调世界时（Coordinated Universal Time, UTC）</h4><p>协调世界时（英语：Coordinated Universal Time，法语：Temps Universel Coordonné，简称UTC）是最主要的世界时间标准，其以原子时秒长为基础，在时刻上尽量接近于格林尼治标准时间。</p>
 <p><em>——以上描述摘自<a href="https://zh.m.wikipedia.org/wiki/协调世界时" target="_blank" rel="noopener">维基百科</a></em></p>
 <p><strong>实践中，UTC与GMT大致重合，其时间的值基本一致</strong>，但是它们在本质上各不相同。前者以原子时为依据，是确定时间值的标准，而后者则是时区上的概念，作为世界上不同地区人口生活的时间参照。</p>
-<p>UTC也是计算机系统中的一个时间衡量标准，Ubuntu默认就将机器时间视为UTC[^1]。Ubuntu 16.04及更高版本的时间管理工具<code>timedatectl</code>中，UTC时间被单独列出来.</p>
+<p>UTC也是计算机系统中的一个时间衡量标准，Ubuntu默认就将机器时间视为UTC<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Bruceoxl. Windows + Ubuntu双系统时间不一致. https://blog.csdn.net/u013162035/article/details/79151640
+">[1]</span></a></sup>。Ubuntu 16.04及更高版本的时间管理工具<code>timedatectl</code>中，UTC时间被单独列出来.</p>
 <h4 id="CST"><a href="#CST" class="headerlink" title="CST"></a>CST</h4><p>CST同时是以下两个时区的英文缩写：</p>
 <ul>
 <li>中国标准时间：China Standard Time</li>
@@ -252,15 +253,15 @@
 <p><strong>第三步：同步机器时间。</strong>运行以下命令，将本地时间更新到硬件时间上：</p>
 <p><strong>最终设置的结果如下，注意观察时差：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">                      Local time: Fri 2018-09-07 23:15:47 CST</span><br><span class="line">                  Universal time: Fri 2018-09-07 15:15:47 UTC</span><br><span class="line">                        RTC time: Fri 2018-09-07 23:15:47</span><br><span class="line">                       Time zone: Asia/Shanghai (CST, +0800)</span><br><span class="line">       System clock synchronized: no</span><br><span class="line">systemd-timesyncd.service active: yes</span><br><span class="line">                 RTC in local TZ: yes</span><br><span class="line"></span><br><span class="line">Warning: The system is configured to read the RTC time in the local time zone.</span><br><span class="line">         This mode can not be fully supported. It will create various problems</span><br><span class="line">         with time zone changes and daylight saving time adjustments. The RTC</span><br><span class="line">         time is never updated, it relies on external facilities to maintain it.</span><br><span class="line">         If at all possible, use RTC in UTC by calling</span><br><span class="line">         &apos;timedatectl set-local-rtc 0&apos;.</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo hwclock --localtime --systohc</span><br></pre></td></tr></table></figure>
-<h3 id="方法二：在Windows中设置"><a href="#方法二：在Windows中设置" class="headerlink" title="方法二：在Windows中设置"></a>方法二：在Windows中设置</h3><p>Bruceoxl提供了另一种解决思路，在Windows中设置。打开管理员模式的命令提示符或PowerShell（在<code>Windows+X</code>快捷菜单中），输入以下命令[^2]：</p>
+<h3 id="方法二：在Windows中设置"><a href="#方法二：在Windows中设置" class="headerlink" title="方法二：在Windows中设置"></a>方法二：在Windows中设置</h3><p>Bruceoxl提供了另一种解决思路，在Windows中设置。打开管理员模式的命令提示符或PowerShell（在<code>Windows+X</code>快捷菜单中），输入以下命令<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="下面的`HKEY_LOCAL_MACHINE`缩写为`HKLM`。
+">[2]</span></a></sup>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1</span><br></pre></td></tr></table></figure>
 <p>原理就是：在注册表项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation</code>中添加一个名为<code>RealTimeIsUniversal</code>的值，类型为<code>REG_DWORD</code>，数据为<code>1</code>。此项的作用就是让Windows将硬件时间当作UTC，与Ubuntu的默认设置一致。</p>
 <p>重启系统后即可生效。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>采用上述方法，可完美解决Ubuntu 16.04及以上版本与Windows共存时所造成的时差问题，而时差问题的根源就在于默认情况下两个操作系统对待硬件时间的标准不一致。默认地，Ubuntu会将硬件时间视为UTC，而Windows则将其视为本地时间。</p>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="切勿在两个系统中同时设置"><a href="#切勿在两个系统中同时设置" class="headerlink" title="切勿在两个系统中同时设置"></a>切勿在两个系统中同时设置</h3><p>上述两种系统的方法不能同时适用，否则会导致两款系统的时间标准不统一。因为在Ubuntu中，我们是要把默认的机器时间标准从UTC改动出去，但在Windows中却刚好相反。时间标准不统一，造成的后果与适用本教程前一模一样，只是错乱的系统变成了Windows。</p>
 <p>同时，若在时间标准不统一的情况下设置系统时间，<strong>还会连同硬件时间也一同产生时差</strong>，提前或延后八个小时。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[^1]:Bruceoxl. Windows + Ubuntu双系统时间不一致. <a href="https://blog.csdn.net/u013162035/article/details/79151640" target="_blank" rel="noopener">https://blog.csdn.net/u013162035/article/details/79151640</a><br>[^2]:下面的<code>HKEY_LOCAL_MACHINE</code>缩写为<code>HKLM</code>。</p>
-
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Bruceoxl. Windows + Ubuntu双系统时间不一致. <a href="https://blog.csdn.net/u013162035/article/details/79151640" target="_blank" rel="noopener">https://blog.csdn.net/u013162035/article/details/79151640</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">下面的<code>HKEY_LOCAL_MACHINE</code>缩写为<code>HKLM</code>。<a href="#fnref:2" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       
@@ -583,15 +584,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,15 +628,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -648,6 +649,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

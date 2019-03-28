@@ -205,12 +205,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
 <p>然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？</p>
 <p><strong>当然要自己动手啦！</strong></p>
 <p>事实上，TWRP的适配并没有想象中的那么难。理论上只需在Android的源代码中进行，准备好必要的文件，运行编译命令，即可完成适配。下面笔者就来结合自己的经验，一步步讲解如何适配TWRP Recovery。</p>
 <a id="more"></a>
-<h2 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h2><p>编译TWRP和编译Android一样，都是相当吃系统资源的工作，因此必须确保你电脑的配置足够。运行环境只能是Linux发行版[^1]，下文以Ubuntu 18.04为例。</p>
+<h2 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h2><p>编译TWRP和编译Android一样，都是相当吃系统资源的工作，因此必须确保你电脑的配置足够。运行环境只能是Linux发行版<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="实际上Mac OS X也可以。
+">[1]</span></a></sup>，下文以Ubuntu 18.04为例。</p>
 <table>
 <thead>
 <tr>
@@ -368,18 +369,11 @@
 </tr>
 <tr>
 <td><code>BOARD_KERNEL_IMAGE_NAME</code></td>
-<td>指定内核映像名。Android编译系统根据它来查找内核映像[^2]<br>编译而成的内核映像位于内核源码<code>arch/&lt;系统平台&gt;/boot</code>中</td>
-</tr>
-<tr>
-<td><code>KERNEL_TOOLCHAIN</code></td>
-<td>指定用于编译内核的交叉工具链。有些设备比较特殊，使用Android源码自带的编译器编译的内核无法启动，必须使用专用或旧版本的编译器</td>
-</tr>
-<tr>
-<td><code>TARGET_KERNEL_CROSS_COMPILE_PREFIX</code></td>
-<td>与<code>KERNEL_TOOLCHAIN</code>配合使用，指定交叉工具链的前缀</td>
+<td>指定内核映像名。Android编译系统根据它来查找内核映像<sup id="fnref:2"><a href="#fn:2" rel="footnote">&lt;span class=”hint–top hint–error hint–medium hint–rounded hint–bounce” aria-label=”一般地，ARM平台为<code>zImage</code>，x86平台为<code>bzImage</code>，NXP（FreeScale）平台为<code>uImage</code>。</a></sup></td>
 </tr>
 </tbody>
 </table>
+<p>“&gt;[2]<br>编译而成的内核映像位于内核源码<code>arch/&lt;系统平台&gt;/boot</code>中 |<br>| <code>KERNEL_TOOLCHAIN</code>                   | 指定用于编译内核的交叉工具链。有些设备比较特殊，使用Android源码自带的编译器编译的内核无法启动，必须使用专用或旧版本的编译器 |<br>| <code>TARGET_KERNEL_CROSS_COMPILE_PREFIX</code> | 与<code>KERNEL_TOOLCHAIN</code>配合使用，指定交叉工具链的前缀           |</p>
 <p>但是，如果你实在无法找到内核源码，你也可以指定下面的参数，以使用现有的内核（如从能正常运行的<code>boot.img</code>与<code>recovery.img</code>中提取出来的内核，或设备参数文件提供者提供的内核）。不过不能保证在新版本的系统下正常使用！</p>
 <table>
 <thead>
@@ -415,34 +409,12 @@
 </tr>
 <tr>
 <td><code>TARGET_RECOVERY_FSTAB</code></td>
-<td>指定Recovery分区表信息文件（<code>fstab</code>）的路径。该文件记载了可供挂载的分区信息，用户可在Recovery中选择是否挂载它们[^3]。</td>
-</tr>
-<tr>
-<td><code>BOARD_RECOVERY_SWIPE</code></td>
-<td>启用滑动操作，在非触屏Recovery中可以允许用户上下滑动屏幕来移动高亮选项。一般启用。[^4]</td>
-</tr>
-<tr>
-<td><code>DEVICE_RESOLUTION</code></td>
-<td>指定设备的分辨率。</td>
-</tr>
-<tr>
-<td><code>RECOVERY_GRAPHICS_USE_LINELENGTH</code></td>
-<td>Recovery图形显示时使用“行距”。具体作用笔者尚还不清楚，但是该选项若设置不当，会导致Recovery花屏。</td>
-</tr>
-<tr>
-<td><code>BOARD_HAS_SDCARD_INTERNAL</code></td>
-<td>设置设备是否有内置SD卡。现阶段的新设备均拥有至少8GB的eMMC存储，都将内置存储的<code>/data/media/0</code>划为内置SD卡。</td>
-</tr>
-<tr>
-<td><code>RECOVERY_SDCARD_ON_DATA</code></td>
-<td>在Recovery中，确定SD卡位于<code>data</code>分区。现阶段的新设备都将内置存储的<code>/data/media/0</code>划为内置SD卡。与上面的<code>BOARD_HAS_SDCARD_INTERNAL</code>呼应。</td>
-</tr>
-<tr>
-<td><code>TARGET_RECOVERY_INITRC</code></td>
-<td>指定自己的<code>init.rc</code>路径。<code>init.rc</code>是Android初始化程序<code>init</code>最主要的脚本，起到<code>main()</code>函数的作用。该选项允许用户编写自己的<code>init.rc</code>，以支持各种客制化的设备平台。</td>
+<td>指定Recovery分区表信息文件（<code>fstab</code>）的路径。该文件记载了可供挂载的分区信息，用户可在Recovery中选择是否挂载它们<sup id="fnref:3"><a href="#fn:3" rel="footnote">&lt;span class=”hint–top hint–error hint–medium hint–rounded hint–bounce” aria-label=”仅限TWRP、LineageOS Recovery等第三方Recovery。AOSP官方的Recovery不支持自由挂载分区。</a></sup></td>
 </tr>
 </tbody>
 </table>
+<p>“&gt;[3]。|<br>| <code>BOARD_RECOVERY_SWIPE</code> |启用滑动操作，在非触屏Recovery中可以允许用户上下滑动屏幕来移动高亮选项。一般启用。<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="参考自：[andorid recovery源码分析 - 木马男孩 - 博客园](https://www.cnblogs.com/yuanguo/articles/3483477.html)。
+">[4]</span></a></sup>|<br>| <code>DEVICE_RESOLUTION</code> |指定设备的分辨率。|<br>| <code>RECOVERY_GRAPHICS_USE_LINELENGTH</code> |Recovery图形显示时使用“行距”。具体作用笔者尚还不清楚，但是该选项若设置不当，会导致Recovery花屏。|<br>| <code>BOARD_HAS_SDCARD_INTERNAL</code> |设置设备是否有内置SD卡。现阶段的新设备均拥有至少8GB的eMMC存储，都将内置存储的<code>/data/media/0</code>划为内置SD卡。|<br>| <code>RECOVERY_SDCARD_ON_DATA</code> |在Recovery中，确定SD卡位于<code>data</code>分区。现阶段的新设备都将内置存储的<code>/data/media/0</code>划为内置SD卡。与上面的<code>BOARD_HAS_SDCARD_INTERNAL</code>呼应。|<br>| <code>TARGET_RECOVERY_INITRC</code> |指定自己的<code>init.rc</code>路径。<code>init.rc</code>是Android初始化程序<code>init</code>最主要的脚本，起到<code>main()</code>函数的作用。该选项允许用户编写自己的<code>init.rc</code>，以支持各种客制化的设备平台。|</p>
 <p><strong>注意：</strong><code>TARGET_RECOVERY_INITRC</code>  仅适用于AOSP官方Recovery，以及Android 6.0之前的旧版本Recovery（如TWRP 2.x、ClockworkMod）。<strong>新版本的TWRP（≥3.0）会直接忽略该选项</strong>，只使用它提供的<code>init.rc</code>。</p>
 <h4 id="4-TWRP专用选项"><a href="#4-TWRP专用选项" class="headerlink" title="4. TWRP专用选项"></a>4. TWRP专用选项</h4><p>TWRP有专属的一些选项，部分选项如下所示。</p>
 <table>
@@ -621,8 +593,7 @@
 <h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><ul>
 <li><a href="https://forum.xda-developers.com/showthread.php?t=1943625" target="_blank" rel="noopener">TWRP官方编译教程 - XDA Developers</a></li>
 </ul>
-<p>[^1]: 实际上Mac OS X也可以。<br>[^2]: 一般地，ARM平台为<code>zImage</code>，x86平台为<code>bzImage</code>，NXP（FreeScale）平台为<code>uImage</code>。<br>[^3]: 仅限TWRP、LineageOS Recovery等第三方Recovery。AOSP官方的Recovery不支持自由挂载分区。<br>[^4]: 参考自：<a href="https://www.cnblogs.com/yuanguo/articles/3483477.html" target="_blank" rel="noopener">andorid recovery源码分析 - 木马男孩 - 博客园</a>。</p>
-
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">实际上Mac OS X也可以。<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">一般地，ARM平台为<code>zImage</code>，x86平台为<code>bzImage</code>，NXP（FreeScale）平台为<code>uImage</code>。<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">仅限TWRP、LineageOS Recovery等第三方Recovery。AOSP官方的Recovery不支持自由挂载分区。<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">参考自：<a href="https://www.cnblogs.com/yuanguo/articles/3483477.html" target="_blank" rel="noopener">andorid recovery源码分析 - 木马男孩 - 博客园</a>。<a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       
@@ -945,15 +916,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -985,15 +960,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1010,6 +981,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

@@ -205,7 +205,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>现在新出品的手机，基本都加密了data分区，旨在保障用户数据的安全。其中高通方案的手机使用的加密方案是QSEE（高通安全执行环境，Qualcomm Security Executing Environment），每次启动设备时会有一个专门的过程来解密data分区。然而，TWRP Recovery默认并没有附带高通的加密组件，因此在启动时会无法解密和访问data分区，使得体验大打折扣。因此必须把高通的加密组件从Android系统中移植过来。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>现在新出品的手机，基本都加密了data分区，旨在保障用户数据的安全。其中高通方案的手机使用的加密方案是QSEE（高通安全执行环境，Qualcomm Security Executing Environment），每次启动设备时会有一个专门的过程来解密data分区。然而，TWRP Recovery默认并没有附带高通的加密组件，因此在启动时会无法解密和访问data分区，使得体验大打折扣。因此必须把高通的加密组件从Android系统中移植过来。</p>
 <a id="more"></a>
 <h2 id="QSEE加密组件的组成"><a href="#QSEE加密组件的组成" class="headerlink" title="QSEE加密组件的组成"></a>QSEE加密组件的组成</h2><p>高通QSEE组件由本体<code>qseecomd</code>程序、Keystore及其依赖库组成。</p>
 <p>首先是<code>qseecomd</code>。<strong>加解密过程全由<code>qseecomd</code>完成，</strong>因此移植过程相对比较简单。</p>
@@ -232,16 +232,11 @@
 </tr>
 <tr>
 <td>libQSEEComAPI.so</td>
-<td>/system/vendor/lib64/libQSEEComAPI.so<a href="系统中，根目录有一个`/vendor`，链接到`/system/vendor`。">^1</a></td>
-<td>/vendor/lib64/libQSEEComAPI.so</td>
-</tr>
-<tr>
-<td>libdrmfs.so</td>
-<td>/system/vendor/lib64/libdrmfs.so</td>
-<td>/vendor/lib64/libdrmfs.so</td>
+<td>/system/vendor/lib64/libQSEEComAPI.so<sup id="fnref:1"><a href="#fn:1" rel="footnote">&lt;span class=”hint–top hint–error hint–medium hint–rounded hint–bounce” aria-label=”系统中，根目录有一个<code>/vendor</code>，链接到<code>/system/vendor</code>。</a></sup></td>
 </tr>
 </tbody>
 </table>
+<p>“&gt;[1] | /vendor/lib64/libQSEEComAPI.so |<br>| libdrmfs.so      | /system/vendor/lib64/libdrmfs.so          | /vendor/lib64/libdrmfs.so      |</p>
 <h2 id="将文件复制到TWRP源码中"><a href="#将文件复制到TWRP源码中" class="headerlink" title="将文件复制到TWRP源码中"></a>将文件复制到TWRP源码中</h2><p>Android设备配置文件（<code>/device/&lt;厂商名&gt;/&lt;设备名&gt;</code>）中，如果存在目录<code>recovery/root</code>，那么该目录中的内容就会在编译TWRP时，自动复制到TWRP的根文件系统中。因此，请将上一步中的文件，根据上表的路径复制到其中。</p>
 <h2 id="使用patchelf修改qseecomd的linker路径"><a href="#使用patchelf修改qseecomd的linker路径" class="headerlink" title="使用patchelf修改qseecomd的linker路径"></a>使用<code>patchelf</code>修改<code>qseecomd</code>的linker路径</h2><p>系统环境与TWRP的环境还是有所差别的。为了保证<code>qseecomd</code>能够正确地找到解释器<code>linker</code>，我们还需要使用<code>patchelf</code>工具，对<code>qseecomd</code>进行一番修改，否则运行时会提示“<code>qseecomd: not found</code>”，尽管<code>qseecomd</code>确实在指定的目录中。</p>
 <p><code>qseecomd</code>默认的linker是<code>/system/bin/linker64</code>，而TWRP的linker则是<code>/sbin/linker64</code>。因此，我们需要这样修改linker路径：</p>
@@ -259,7 +254,7 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Logcat</span></span><br><span class="line">TWRP_INCLUDE_LOGCAT := true</span><br><span class="line">TARGET_USES_LOGD := true</span><br></pre></td></tr></table></figure>
 <p>除此之外，我们还可以从TWRP这一边展开分析。TWRP的解密过程也被记录在TWRP本身的日志中，阅读<code>/cache/recovery/last_log*</code>即可了解。</p>
 <h2 id="总结体会"><a href="#总结体会" class="headerlink" title="总结体会"></a>总结体会</h2><p>为TWRP加入解密组件，看似比较难，实则并不难，关键在于不断尝试。笔者能获得上面的成果，有赖于在反复失败后仍然能够反复尝试，最终取得成功。在整个过程当中，日志调试的作用举足轻重，它反馈了TWRP与qseecomd组件运行时的一系列状况，是分析故障的利器。</p>
-
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">系统中，根目录有一个<code>/vendor</code>，链接到<code>/system/vendor</code>。<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       
@@ -582,15 +577,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,15 +621,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,6 +642,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

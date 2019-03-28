@@ -185,6 +185,186 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="draft-BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记" class="article article-type-draft  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/">【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/" class="archive-article-date">
+  	<time datetime="2018-09-18T05:54:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文未完成！</p>
+</blockquote>
+<h1 id="TODO大纲"><a href="#TODO大纲" class="headerlink" title="TODO大纲"></a>TODO大纲</h1><h2 id="变色龙"><a href="#变色龙" class="headerlink" title="变色龙"></a>变色龙</h2><p>新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中</p>
+<p>重命名Avldr.bin为ntldr，然后bootsect nt52 mbr</p>
+<h2 id="苹果系统分区"><a href="#苹果系统分区" class="headerlink" title="苹果系统分区"></a>苹果系统分区</h2><p>可装在逻辑分区中，不装主分区，以免与引导分区冲突</p>
+<p>苹果安装文件分区必须放在苹果系统分区之前！</p>
+<h2 id="第一轮安装之后。。。"><a href="#第一轮安装之后。。。" class="headerlink" title="第一轮安装之后。。。"></a>第一轮安装之后。。。</h2><p>引导分区会被自动取消激活。必须重新激活引导分区才行。</p>
+<p>另外，扩展分区的标志会由0F变为05，一并改之。</p>
+<p>工具：DiskGenius</p>
+<h2 id="未解决的问题"><a href="#未解决的问题" class="headerlink" title="未解决的问题"></a>未解决的问题</h2><ul>
+<li>只能用USB键鼠，不能用笔记本键盘</li>
+<li>WIFI</li>
+<li>显卡</li>
+<li>声卡</li>
+</ul>
+<h2 id="驱动相关工具"><a href="#驱动相关工具" class="headerlink" title="驱动相关工具"></a>驱动相关工具</h2><ul>
+<li>MultiBeast</li>
+<li>EasyKext Pro</li>
+</ul>
+<h2 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h2><ul>
+<li>VoodooPS2Controller</li>
+</ul>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>【前言先放着】</p>
+<h2 id="笔记本的配置"><a href="#笔记本的配置" class="headerlink" title="笔记本的配置"></a>笔记本的配置</h2><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td></td>
+</tr>
+<tr>
+<td>内存</td>
+<td></td>
+</tr>
+<tr>
+<td>显卡</td>
+<td></td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td></td>
+</tr>
+<tr>
+<td>无线网卡</td>
+<td></td>
+</tr>
+<tr>
+<td>有线网卡</td>
+<td></td>
+</tr>
+<tr>
+<td>声卡</td>
+<td></td>
+</tr>
+<tr>
+<td>其他功能</td>
+<td></td>
+</tr>
+<tr>
+<td>固件类型</td>
+<td>BIOS，不支持UEFI</td>
+</tr>
+</tbody>
+</table>
+<p>值得注意的是，X200首发于2009年，那时UEFI技术尚还处在萌芽之中，所以原版Clover的黑苹果自然不能奢望了。在这台有历史年头的电脑上，就只能使用最传统的MBR分区安装了。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li>Windows 8/10 PE<br>笔者使用Windows 10 PE。选择Win8及以上版本是因为它们自带了引导工具bootsect。若PE未附带该工具，也可以从Win7的安装盘中提取该工具，或使用BootIce替代。</li>
+<li>Mac OS CDR格式懒人版映像<br>笔者选用黑苹果乐园的版本。懒人版诞生的初衷，就是为了在MBR分区上安装Mac OS。</li>
+</ul>
+<h2 id="配置分区"><a href="#配置分区" class="headerlink" title="配置分区"></a>配置分区</h2><p>笔者采用的分区方案是：只留一个100MB左右的分区作为主分区，其余空间划为扩展分区。扩展分区中的逻辑分区才用于安装系统与存放数据。这一理念借鉴了ESP分区（EFI System Partition），UEFI中的 ESP正是专门用于引导系统的。</p>
+<h3 id="（1）配置引导分区"><a href="#（1）配置引导分区" class="headerlink" title="（1）配置引导分区"></a>（1）配置引导分区</h3><p>打开DiskGenius，然后在第一个分区的位置建立一个100MB的主分区。如果硬盘有可用空间，直接创建即可；否则则需右键单击第一个分区，选择“调整大小”，拉动分区图左边的滑杆，腾出100MB。</p>
+<p>创建时，选择格式化为FAT或FAT32。</p>
+<p>然后右键点击分区，选择“激活当前分区”，以将该分区设为启动分区。</p>
+<p>整个过程需要根据提示点击工具栏上的“应用更改”，方能生效。</p>
+<h3 id="（2）安装变色龙引导文件"><a href="#（2）安装变色龙引导文件" class="headerlink" title="（2）安装变色龙引导文件"></a>（2）安装变色龙引导文件</h3><h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Mac OS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">黑苹果</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统/Mac-OS//" class="article-tag-list-link color2">Mac OS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统/Mac-OS/黑苹果//" class="article-tag-list-link color4">黑苹果</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="draft-Use_Python/笔记：Python-3开发C模块初试" class="article article-type-draft  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -994,7 +1174,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[TOC]</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>[TOC]</p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>这是一篇未完成的实验报告，因为在写报告之时，笔者的实验并没有成功，后续还有很多工作需要完成。而笔者所做的项目在之前几乎没有任何可参考的先例，只有适合于其他设备方案的资料参照，可谓“摸着石头过河”。在毕业论文截止之际，笔者先将截至2018年9月初所得到的研究成果记录下来，暂且作为本次毕业论文的内容。</p>
 <p>华为Ascend P6（以下简称P6），是华为于2013年推出的一款旗舰手机，属<strong>P系列</strong>旗舰的第六款，也是华为海思（<em>HiSillicon</em>）处理器应用的里程碑，具有重要的战略和纪念意义。然而，就是这样一款里程碑旗舰，却一直被广大Android开发者忽视，以至于推出5年多，都没有开发者为其适配历代最新的Android系统[^Ref_HD2]。</p>
 <p>而Android系统的适配，本身更是一项需要大量精力投入的工作，涉及到配置文件的收集、编写，长期多方面的调试，以及潜在问题的跟踪，其中的调试环节更是需要细致耐心，因为在一款完全没有运行对应版本Android系统的设备上，随时都会出现连原厂开发者均难以发现的问题。</p>
@@ -1362,7 +1542,7 @@
 <li><p>将<code>recoveryimage.img</code>移动到<code>/tmp/recimg_modify</code>目录中，重命名为<code>boot.img</code>。这是<code>bootimg.py</code>的要求。</p>
 </li>
 <li><p>进入<code>/tmp/recimg_modify</code>，使用<code>bootimg.py</code>进行解包。解包过程会输出<code>boot.img</code>的一些信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> bootimg.py --unpack-bootimg</span><br><span class="line">arguments: [bootimg file]</span><br><span class="line">bootimg file: boot.img</span><br><span class="line">output: kernel[.gz] ramdisk[.gz] second[.gz]</span><br><span class="line">kernel_addr=0x8000</span><br><span class="line">ramdisk_addr=0x1400000</span><br><span class="line">second_addr=0xf00000</span><br><span class="line">tags_addr=0x100</span><br><span class="line">page_size=2048</span><br><span class="line">name=""</span><br><span class="line">cmdline="vmalloc=512M k3v2_pmem=1 mmcparts=mmcblk0:p1(xloader),p3(nvme),p4(misc),p5(splash),p6(oeminfo),p7(reserved1),p8(reserved2),p9(splash2),p10(recovery2),p11(recovery),p12(boot),p13(modemimage),p14(modemnvm1),p15(modemnvm2),p16(system),p17(cache),p18(cust),p19(userdata);mmcblk1:p1(ext_sdcard) buildvariant=userdebug"</span><br><span class="line">padding_size=2048</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bootimg.py --unpack-bootimg</span></span><br><span class="line">arguments: [bootimg file]</span><br><span class="line">bootimg file: boot.img</span><br><span class="line">output: kernel[.gz] ramdisk[.gz] second[.gz]</span><br><span class="line">kernel_addr=0x8000</span><br><span class="line">ramdisk_addr=0x1400000</span><br><span class="line">second_addr=0xf00000</span><br><span class="line">tags_addr=0x100</span><br><span class="line">page_size=2048</span><br><span class="line">name=""</span><br><span class="line">cmdline="vmalloc=512M k3v2_pmem=1 mmcparts=mmcblk0:p1(xloader),p3(nvme),p4(misc),p5(splash),p6(oeminfo),p7(reserved1),p8(reserved2),p9(splash2),p10(recovery2),p11(recovery),p12(boot),p13(modemimage),p14(modemnvm1),p15(modemnvm2),p16(system),p17(cache),p18(cust),p19(userdata);mmcblk1:p1(ext_sdcard) buildvariant=userdebug"</span><br><span class="line">padding_size=2048</span><br></pre></td></tr></table></figure>
 <p>解包后，得到<code>kernel</code>、<code>ramdisk.gz</code>和<code>bootimg.json</code>三个文件。其中<code>bootimg.json</code>记录了启动镜像的参数。</p>
 </li>
 <li><p>使用<code>bootimg.py</code>回打包。由于回打包会覆盖原始文件<code>boot.img</code>，故需将原始文件改名为<code>boot-old.img</code>，然后再运行打包命令：</p>
@@ -1439,7 +1619,7 @@
 <blockquote>
 <big><strong>TODO：现在手上只有4.4.3的编译器！！！！</strong></big>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap				# 编译配置程序使用automake编写，运行该命令以生成编译环境</span><br><span class="line"><span class="meta">#</span> 运行编译配置程序，其中：</span><br><span class="line"><span class="meta">#</span> --host=arm</span><br><span class="line"><span class="meta">#</span>		交叉编译必选项，表明主机上运行所运行编译器的目标平台</span><br><span class="line"><span class="meta">#</span> CC=arm-linux-gcc</span><br><span class="line"><span class="meta">#</span>		指定交叉编译为目标设备编译时使用的编译器。</span><br><span class="line"><span class="meta">#</span> LDFLAGS=-static</span><br><span class="line"><span class="meta">#</span>		传递给链接器（linker）的参数，-static表示将程序编译为静态可执行文件</span><br><span class="line">./configure --host=arm CC=arm-linux-gcc LDFLAGS=-static</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap				# 编译配置程序使用automake编写，运行该命令以生成编译环境</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行编译配置程序，其中：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --host=arm</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		交叉编译必选项，表明主机上运行所运行编译器的目标平台</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CC=arm-linux-gcc</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		指定交叉编译为目标设备编译时使用的编译器。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> LDFLAGS=-static</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		传递给链接器（linker）的参数，-static表示将程序编译为静态可执行文件</span></span><br><span class="line">./configure --host=arm CC=arm-linux-gcc LDFLAGS=-static</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>开始编译。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br></pre></td></tr></table></figure>
@@ -1457,7 +1637,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>解决这一问题只有两种思路：升级内核，或降低编译器版本（低版本的编译器所作的版本限制会低一些）。显然，最简便的方法即为降低编译器版本，其中包括使用<code>./configure --enable-kernel=&lt;低于3.0.8的版本号&gt;</code>重新配置并编译交叉编译器（GCC编译器本身也是有源码、可以被编译的），也包括直接使用现成的低版本编译器。编译编译器的工作比较繁琐，在有限的时间内不现实；而笔者手中正好拥有一套由FriendlyARM组织于2011年推出的<code>gcc-arm-none-linux-gnueabi 4.4.3</code>编译器。</p>
 <p>因此，笔者将编译器安装到系统中，重新进行以上步骤：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">make distclean					# 清理编译时产生的临时文件，避免出错</span><br><span class="line">./bootstrap</span><br><span class="line"><span class="meta">#</span> 重新运行编译配置程序，选用低版本编译器</span><br><span class="line"><span class="meta">#</span> STRIP=arm-none-linux-gnueabi-strip</span><br><span class="line"><span class="meta">#</span>			指定目标代码裁剪器。目标代码裁剪器用于裁剪二进制文件中多余的代码，节省存储空间</span><br><span class="line"><span class="meta">#</span> Ubuntu 18.04附带的strip工具与该低版本编译器不兼容，因此必须使用该编译器自带的strip</span><br><span class="line">./configure --host=arm CC=arm-none-linux-gnueabi-gcc STRIP=arm-none-linux-gnueabi-strip LDFLAGS=-static</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">make distclean					# 清理编译时产生的临时文件，避免出错</span><br><span class="line">./bootstrap</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重新运行编译配置程序，选用低版本编译器</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> STRIP=arm-none-linux-gnueabi-strip</span></span><br><span class="line"><span class="meta">#</span><span class="bash">			指定目标代码裁剪器。目标代码裁剪器用于裁剪二进制文件中多余的代码，节省存储空间</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu 18.04附带的strip工具与该低版本编译器不兼容，因此必须使用该编译器自带的strip</span></span><br><span class="line">./configure --host=arm CC=arm-none-linux-gnueabi-gcc STRIP=arm-none-linux-gnueabi-strip LDFLAGS=-static</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
 <p>再次检查所生成可执行文件的信息，可以发现最低内核版本降低了不少：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/sbin/kexec: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 2.6.32, with debug_info, not stripped</span><br></pre></td></tr></table></figure>
 <p>P6 ATX的内核版本亦为<code>3.0.8</code>，该版本的<code>kexec</code>已经可以正常运行了。下一步，即为尝试从ATX启动新编译的内核。运行如下命令：</p>
@@ -1478,7 +1658,7 @@
 <p> 编译完成后，生成的内核镜像zImage为<code>arch/arm/boot/zImage</code>。</p>
 </li>
 <li><p>将新的内核重新打包到由<code>bootimg.py</code>解包的Recovery启动镜像中。</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 用`zImage`覆盖`/tmp/recimg_modify`下的`kernel`文件</span><br><span class="line">cp arch/arm/boot/zImage /tmp/recimg_modify/kernel</span><br><span class="line"><span class="meta">#</span> 重新打包内核</span><br><span class="line">cd /tmp/recimg_modify</span><br><span class="line">bootimg.py --repack-bootimg</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 用`zImage`覆盖`/tmp/recimg_modify`下的`kernel`文件</span></span><br><span class="line">cp arch/arm/boot/zImage /tmp/recimg_modify/kernel</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重新打包内核</span></span><br><span class="line">cd /tmp/recimg_modify</span><br><span class="line">bootimg.py --repack-bootimg</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>将新的内核映像刷入设备。</p>
 </li>
@@ -1569,7 +1749,7 @@
 <p>这里的PolicyDB，即存放SELinux策略的数据库，为一个二进制文件，由SELinux规则的定义代码（以<code>.te</code>为扩展名）通过<code>checkpolicy</code>工具编译而来。它的版本问题，竟然会影响到SELinux机制的工作，可谓问题重大。</p>
 <p>带着疑问，我在Android的SELinux模块（<code>external/selinux</code>）中，以上述错误文本为关键字进行<code>grep</code>搜索。值得注意的是，程序员在编写这些用于日志输出的错误文本时，为了排版美观，作了断行处理；加之日志中的<code>30</code>、<code>15</code>和<code>26</code>一般都是不确定的值：如此使得检索一整段关键字是找不到结果的。故笔者尝试截取其中一部分，如“<code>does not match</code>”。</p>
 <p>果然有了结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> grep -rn "does not match"</span><br><span class="line">libselinux/src/label_file.h:415:		/* Stem of regex does not match requested prefix, discard. */</span><br><span class="line">libselinux/src/sestatus.c:108:	 * `curr_seqno' is always even-number, so it does not match with</span><br><span class="line">libsepol/src/ebitmap.c:383:		    ("security: ebitmap: map size %d does not match my size %zu (high bit was %d)\n",</span><br><span class="line">libsepol/src/policydb.c:3913:			ERR(fp-&gt;handle, "policydb version %d does not match "</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> grep -rn <span class="string">"does not match"</span></span></span><br><span class="line">libselinux/src/label_file.h:415:		/* Stem of regex does not match requested prefix, discard. */</span><br><span class="line">libselinux/src/sestatus.c:108:	 * `curr_seqno' is always even-number, so it does not match with</span><br><span class="line">libsepol/src/ebitmap.c:383:		    ("security: ebitmap: map size %d does not match my size %zu (high bit was %d)\n",</span><br><span class="line">libsepol/src/policydb.c:3913:			ERR(fp-&gt;handle, "policydb version %d does not match "</span><br></pre></td></tr></table></figure>
 <p>显然<code>policydb.c</code>的那一项最匹配。打开该源码，定位到相应的位置，发现以下代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Read the configuration data from a policy database binary</span></span><br><span class="line"><span class="comment"> * representation file into a policy database structure.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">policydb_read</span><span class="params">(<span class="keyword">policydb_t</span> * p, struct policy_file *fp, <span class="keyword">unsigned</span> verbose)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    r_policyvers = buf[bufindex];</span><br><span class="line">	<span class="keyword">if</span> (policy_type == POLICY_KERN) &#123;</span><br><span class="line">		<span class="keyword">if</span> (r_policyvers &lt; POLICYDB_VERSION_MIN ||</span><br><span class="line">		    r_policyvers &gt; POLICYDB_VERSION_MAX) &#123;</span><br><span class="line">			ERR(fp-&gt;handle, <span class="string">"policydb version %d does not match "</span></span><br><span class="line">			    <span class="string">"my version range %d-%d"</span>, buf[bufindex],</span><br><span class="line">			    POLICYDB_VERSION_MIN, POLICYDB_VERSION_MAX);</span><br><span class="line">			<span class="keyword">return</span> POLICYDB_ERROR;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (policy_type == POLICY_BASE || policy_type == POLICY_MOD) &#123;</span><br><span class="line">		<span class="keyword">if</span> (r_policyvers &lt; MOD_POLICYDB_VERSION_MIN ||</span><br><span class="line">		    r_policyvers &gt; MOD_POLICYDB_VERSION_MAX) &#123;</span><br><span class="line">			ERR(fp-&gt;handle, <span class="string">"policydb module version %d does "</span></span><br><span class="line">			    <span class="string">"not match my version range %d-%d"</span>,</span><br><span class="line">			    buf[bufindex], MOD_POLICYDB_VERSION_MIN,</span><br><span class="line">			    MOD_POLICYDB_VERSION_MAX);</span><br><span class="line">			<span class="keyword">return</span> POLICYDB_ERROR;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		assert(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	bufindex++;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此处的条件判断，正是用于在读取PolicyDB时检测PolicyDB的版本，若不符合版本要求，立刻报错返回。其中的两个宏——<code>POLICYDB_VERSION_MAX</code>与<code>POLICYDB_VERSION_MIN</code>，指定了要求的版本范围，它们的定义在头文件<code>libsepol/include/sepol/policydb/policydb.h</code>之中。</p>
@@ -1585,7 +1765,7 @@
 <h3 id="（三）就地升级"><a href="#（三）就地升级" class="headerlink" title="（三）就地升级"></a>（三）就地升级</h3><p>代码的升级，以新版本内核<code>4.17</code>为蓝本。操作的思想是，找出新版内核SELinux源码中与最新的PolicyDB版本<code>POLICYDB_VERSION_XPERMS_IOCTL</code>有关的代码，然后在<code>3.0.8</code>的旧版本内核中实现它们。而寻找不同之处，最便捷直接的手段，莫过于用比较工具。笔者选用的是<strong>Meld</strong>。</p>
 <h4 id="（1）抓住重点文件"><a href="#（1）抓住重点文件" class="headerlink" title="（1）抓住重点文件"></a>（1）抓住重点文件</h4><p>打开Meld，选择“目录比较（Directory comparison）”，两边分别指定为旧版本与新版本内核的<code>security/selinux</code>目录。然后在工具栏上把“显示相同文件（Show identical，按钮文本为“Same”）”按钮取消，只按下“显示新文件（Show new）”和“显示已修改文件（Show modified）”，以确保只显示两边不同的文件。</p>
 <p>面对纷繁复杂的文件列表，须确定一个比较的重点。此刻的重点，即为围绕两个关键点查找相关的源文件——PolicyDB与<code>XPERMS</code>。笔者的做法是，以<code>XPERMS</code>为关键词（忽略大小写），使用<code>grep -l</code>检索出包含该关键词的文件列表[^grep_arguments_2]，据此发现了以下直接与<code>XPERMS</code>相关的源文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> grep -ril "XPERMS"</span><br><span class="line">avc.c</span><br><span class="line">include/avc.h</span><br><span class="line">include/security.h</span><br><span class="line">ss/avtab.c</span><br><span class="line">ss/avtab.h</span><br><span class="line">ss/conditional.c</span><br><span class="line">ss/conditional.h</span><br><span class="line">ss/policydb.c</span><br><span class="line">ss/services.c</span><br><span class="line">ss/services.h</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> grep -ril <span class="string">"XPERMS"</span></span></span><br><span class="line">avc.c</span><br><span class="line">include/avc.h</span><br><span class="line">include/security.h</span><br><span class="line">ss/avtab.c</span><br><span class="line">ss/avtab.h</span><br><span class="line">ss/conditional.c</span><br><span class="line">ss/conditional.h</span><br><span class="line">ss/policydb.c</span><br><span class="line">ss/services.c</span><br><span class="line">ss/services.h</span><br></pre></td></tr></table></figure>
 <p>这种以关键字为准的判断方法，得出来的结果比较粗略，它并未考虑到代码上下文的关系。一些包含<code>xperms</code>关键字的函数有可能还调用了上述文件以外、且同样需要修改的函数。因此还须在实践中找出“漏网之鱼”。</p>
 <h4 id="（2）明晰二者差异"><a href="#（2）明晰二者差异" class="headerlink" title="（2）明晰二者差异"></a>（2）明晰二者差异</h4><p>源码升级不是一个简单的问题，版本跨越幅度之大，使得升级过程中要注意的细节为数不少。在使用Meld比较的过程中，软件显示出的差异常常占据导航栏相当大的比重。笔者在观察源码时，发现了<code>4.17</code>版本和<code>3.0.8</code>版本SELinux源码的以下不同之处：</p>
 <h5 id="1-新增功能"><a href="#1-新增功能" class="headerlink" title="1. 新增功能"></a>1. 新增功能</h5><p>XPERMS属于新功能，因而<code>4.17</code>版本相比<code>3.0.8</code>，最明显的变化在于<strong>多出了很多与XPERMS相关的函数。</strong>它们表现如下：</p>
@@ -1643,7 +1823,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;0&gt;[1.0, init] [    4.066831] Kernel panic - not syncing: Attempted to kill init!</span><br></pre></td></tr></table></figure>
 <p>仅仅得知这一条日志是不够的，加之只有一部分重启有日志，资料不完备，因此笔者只能从<code>init</code>的源代码入手分析。</p>
 <h4 id="（1）找出与panic相关的源文件"><a href="#（1）找出与panic相关的源文件" class="headerlink" title="（1）找出与panic相关的源文件"></a>（1）找出与panic相关的源文件</h4><p><code>init</code>的源码位于Android源码的<code>system/core/init</code>下。为了找出与panic有关的代码，笔者首先在其中用<code>grep</code>检索关键字<code>panic</code>[^grep_arguments]，结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> grep -rin "panic"</span><br><span class="line">Android.bp:31:        "-DREBOOT_BOOTLOADER_ON_PANIC=0",</span><br><span class="line">Android.bp:43:                "-UREBOOT_BOOTLOADER_ON_PANIC",</span><br><span class="line">Android.bp:44:                "-DREBOOT_BOOTLOADER_ON_PANIC=1",</span><br><span class="line">Android.mk:11:    -DREBOOT_BOOTLOADER_ON_PANIC=1 \</span><br><span class="line">Android.mk:17:    -DREBOOT_BOOTLOADER_ON_PANIC=0 \</span><br><span class="line">init.cpp:237:    // property. We still panic if it takes more than a minute though,</span><br><span class="line">init.cpp:242:        panic();</span><br><span class="line">init.cpp:327:    panic();</span><br><span class="line">init.cpp:887:            panic();</span><br><span class="line">init.cpp:964:    // Instead of panic'ing the kernel as is the default behavior when init crashes,</span><br><span class="line">init.cpp:978:        // panic() reboots to bootloader</span><br><span class="line">init.cpp:979:        panic();</span><br><span class="line">init.cpp:1003:    if (REBOOT_BOOTLOADER_ON_PANIC) &#123;</span><br><span class="line">init.cpp:1043:            panic();</span><br><span class="line">init.cpp:1069:        // panic and never fall through this conditional.</span><br><span class="line">service.cpp:331:                panic();</span><br><span class="line">util.cpp:373:void panic() &#123;</span><br><span class="line">util.cpp:374:    LOG(ERROR) &lt;&lt; "panic: rebooting to bootloader";</span><br><span class="line">util.h:56:void panic() __attribute__((__noreturn__));</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> grep -rin <span class="string">"panic"</span></span></span><br><span class="line">Android.bp:31:        "-DREBOOT_BOOTLOADER_ON_PANIC=0",</span><br><span class="line">Android.bp:43:                "-UREBOOT_BOOTLOADER_ON_PANIC",</span><br><span class="line">Android.bp:44:                "-DREBOOT_BOOTLOADER_ON_PANIC=1",</span><br><span class="line">Android.mk:11:    -DREBOOT_BOOTLOADER_ON_PANIC=1 \</span><br><span class="line">Android.mk:17:    -DREBOOT_BOOTLOADER_ON_PANIC=0 \</span><br><span class="line">init.cpp:237:    // property. We still panic if it takes more than a minute though,</span><br><span class="line">init.cpp:242:        panic();</span><br><span class="line">init.cpp:327:    panic();</span><br><span class="line">init.cpp:887:            panic();</span><br><span class="line">init.cpp:964:    // Instead of panic'ing the kernel as is the default behavior when init crashes,</span><br><span class="line">init.cpp:978:        // panic() reboots to bootloader</span><br><span class="line">init.cpp:979:        panic();</span><br><span class="line">init.cpp:1003:    if (REBOOT_BOOTLOADER_ON_PANIC) &#123;</span><br><span class="line">init.cpp:1043:            panic();</span><br><span class="line">init.cpp:1069:        // panic and never fall through this conditional.</span><br><span class="line">service.cpp:331:                panic();</span><br><span class="line">util.cpp:373:void panic() &#123;</span><br><span class="line">util.cpp:374:    LOG(ERROR) &lt;&lt; "panic: rebooting to bootloader";</span><br><span class="line">util.h:56:void panic() __attribute__((__noreturn__));</span><br></pre></td></tr></table></figure>
 <p>一般地，包含有文本“<code>panic</code>”（或“<code>PANIC</code>”）的源文件均与<code>init</code>对panic的处理有关。下一步，即为逐一分析以上涉及到的文件，根据行号定位到相应的代码处。</p>
 <h4 id="（2）分析代码"><a href="#（2）分析代码" class="headerlink" title="（2）分析代码"></a>（2）分析代码</h4><h5 id="1-init-cpp"><a href="#1-init-cpp" class="headerlink" title="1. init.cpp"></a>1. <code>init.cpp</code></h5><p><code>init.cpp</code>是<code>init</code>的主程序，<code>main()</code>函数位于其中。一个函数<code>InstallRebootSignalHandlers()</code>用于指定处理信号的动作，使<code>init</code>在收到异常信号（如<code>SIGINT</code>、<code>SIGABRT</code>）后，调用<code>panic()</code>函数。<code>panic()</code>会直接让系统重启进入Bootloader。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">InstallRebootSignalHandlers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Instead of panic'ing the kernel as is the default behavior when init crashes,</span></span><br><span class="line">    <span class="comment">// we prefer to reboot to bootloader on development builds, as this will prevent</span></span><br><span class="line">    <span class="comment">// boot looping bad configurations and allow both developers and test farms to easily</span></span><br><span class="line">    <span class="comment">// recover.</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action</span>;</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;action, <span class="number">0</span>, <span class="keyword">sizeof</span>(action));</span><br><span class="line">    sigfillset(&amp;action.sa_mask);</span><br><span class="line">    action.sa_handler = [](<span class="keyword">int</span> signal) &#123;</span><br><span class="line">        <span class="comment">// These signal handlers are also caught for processes forked from init, however we do not</span></span><br><span class="line">        <span class="comment">// want them to trigger reboot, so we directly call _exit() for children processes here.</span></span><br><span class="line">        <span class="keyword">if</span> (getpid() != <span class="number">1</span>) &#123;</span><br><span class="line">            _exit(signal);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// panic() reboots to bootloader</span></span><br><span class="line">        panic();</span><br><span class="line">    &#125;;</span><br><span class="line">    action.sa_flags = SA_RESTART;</span><br><span class="line">    sigaction(SIGABRT, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">    sigaction(SIGBUS, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">    sigaction(SIGFPE, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">    sigaction(SIGILL, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">    sigaction(SIGSEGV, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(SIGSTKFLT)</span></span><br><span class="line">    sigaction(SIGSTKFLT, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    sigaction(SIGSYS, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">    sigaction(SIGTRAP, &amp;action, <span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1753,108 +1933,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/09/02/Paper/Adapt_Android_Oreo_to_Huawei_P6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/01/Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记/">Ubuntu 18.04安装搜狗输入法折腾记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/01/Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记/" class="archive-article-date">
-  	<time datetime="2018-09-01T15:14:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>搜狗输入法是老牌的中文输入法，它的易用性、海量词库和强悍的云输入一直是广大国人提升输入效率的利器，可谓“码字必备”。PC端上，先前官方开发的是Windows和Mac OS版本，并没有Linux版本。直到后来，Linux系统在国内使用率大增（一切从广大程序猿开始～），搜狗官方开始与优麒麟团队合作，终于让广大Linux用户可以愉快地码字了。</p>
-<p>对于Ubuntu用户来说，优麒麟团队的参与，意味着如果你使用Ubuntu Kyrin等由优麒麟团队定制开发的Linux发行版，就可以直接双击搜狗输入法的Deb安装包，开箱即用了。但是，如果你使用原汁原味、不含任何优化的Ubuntu原生版本，尤其是Ubuntu 18.04这样彻底颠覆以往版本的Ubuntu原生版，那就没那么简单了。</p>
-<p>笔者的Ubuntu Kirin 16.04更新程序抽风，导致原本更新的18.04无法进入桌面，黑屏不断循环。但是这可是我的生产力系统呀，我得马上修好，遂格盘重装18.04原生版之。后来，笔者习惯性地安装了搜狗输入法官网的Deb包，结果搜狗输入法一直没有预期出现。</p>
-<p>这才意识到，原生版的Ubuntu并没有满足搜狗输入法运行的各种条件。笔者摸着石头过河，硬是好好折腾了一番，终于得以在简书上畅快地用搜狗输入法，写下这篇大快人心的经验啦。</p>
-        
-          <a class="article-more-a" href="/2018/09/01/Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ubuntu</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">搜狗输入法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Ubuntu//" class="article-tag-list-link color2">Ubuntu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/01/Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记/">展开全文 >></a>
         </p>
       
 
@@ -2030,15 +2108,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2070,15 +2152,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2095,6 +2173,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

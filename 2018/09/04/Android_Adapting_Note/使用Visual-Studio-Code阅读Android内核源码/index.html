@@ -205,10 +205,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。</p>
 <p>——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置，就可以将VS Code打造成贴心的Linux代码阅读工具。</p>
 <a id="more"></a>
-<h2 id="第一步：安装C语言相关扩展"><a href="#第一步：安装C语言相关扩展" class="headerlink" title="第一步：安装C语言相关扩展"></a>第一步：安装C语言相关扩展</h2><p>VS Code默认未提供对C语言的完整支持[^1]，因此需要先安装相应的扩展。</p>
+<h2 id="第一步：安装C语言相关扩展"><a href="#第一步：安装C语言相关扩展" class="headerlink" title="第一步：安装C语言相关扩展"></a>第一步：安装C语言相关扩展</h2><p>VS Code默认未提供对C语言的完整支持<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。
+">[1]</span></a></sup>，因此需要先安装相应的扩展。</p>
 <p>在扩展管理器中安装以下扩展：</p>
 <table>
 <thead>
@@ -293,8 +294,7 @@
 <p>举例来说，假如工作区在内核源码下<code>security/selinux</code>目录里，那么应该这样填写：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            <span class="attr">"......"</span></span><br><span class="line">            <span class="attr">"includePath"</span>: [</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../arch/arm/mach-&lt;机器方案名&gt;/include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../arch/arm/include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/../../include/**"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;/**"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"......"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>设置之后，再次打开源代码，即可发现以上提到的特性均能一一实现了。</p>
-<p>[^1]: VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。</p>
-
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       
@@ -617,15 +617,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,15 +661,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -682,6 +682,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

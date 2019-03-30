@@ -207,20 +207,20 @@
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Hexo博客框架具有非常强大的插件系统，可为Hexo提供无限可能的功能拓展，只有想不到，没有做不到。</p>
 <a id="more"></a>
-<h2><span id="插件安装与卸载">插件安装与卸载</span></h2><p>在Hexo网站的目录下，使用<code>npm</code>就可以直接安装：</p>
+<h2><span id="cha-jian-an-zhuang-yu-xie-zai">插件安装与卸载</span><a href="#cha-jian-an-zhuang-yu-xie-zai" class="header-anchor">#</a></h2><p>在Hexo网站的目录下，使用<code>npm</code>就可以直接安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;插件名&gt; --save</span><br></pre></td></tr></table></figure>
 <p>其中，插件名均以“<code>hexo-</code>”开头，Hexo会自动加载有此前缀的插件，而没有该前缀的插件是不会被自动识别的。<code>--save</code>参数告诉<code>npm</code>将插件名记录在网站目录的<code>package.json</code>里，以便于直接使用<code>npm install</code>（不带参数）更新或直接安装。</p>
-<h2><span id="插件卸载">插件卸载</span></h2><p>对应地，使用<code>npm</code>也可以直接卸载：</p>
+<h2><span id="cha-jian-xie-zai">插件卸载</span><a href="#cha-jian-xie-zai" class="header-anchor">#</a></h2><p>对应地，使用<code>npm</code>也可以直接卸载：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm un &lt;插件名&gt; --save</span><br></pre></td></tr></table></figure>
 <p>加上<code>--save</code>参数后，存储在<code>package.json</code>中的插件信息也会被移除；如果不加此参数，那么下次使用<code>npm install</code>安装时该插件还会被装上。</p>
-<h2><span id="markdown-拓展">Markdown 拓展</span></h2><p>Hexo默认的Markdown渲染器<code>hexo-renderer-marked</code>，相比于Typora等Markdown环境，还是有很多欠缺的地方。幸好，有些专门的插件能对症下药解决问题。</p>
-<h3><span id="hexo-reference">hexo-reference</span></h3><p>添加引文支持。</p>
+<h2><span id="markdown-tuo-zhan">Markdown 拓展</span><a href="#markdown-tuo-zhan" class="header-anchor">#</a></h2><p>Hexo默认的Markdown渲染器<code>hexo-renderer-marked</code>，相比于Typora等Markdown环境，还是有很多欠缺的地方。幸好，有些专门的插件能对症下药解决问题。</p>
+<h3><span id="hexo-reference">hexo-reference</span><a href="#hexo-reference" class="header-anchor">#</a></h3><p>添加引文支持。</p>
 <p>引文格式为：假设<code>a</code>为整数，正文适当部分插入<code>[^a]</code>，然后在文章结尾插入<code>[^a]: 引文内容</code>。</p>
 <p>项目地址：<a href="https://github.com/kchen0x/hexo-reference" target="_blank" rel="noopener">https://github.com/kchen0x/hexo-reference</a></p>
-<h3><span id="hexo-toc">hexo-toc</span></h3><p>添加目录支持。</p>
+<h3><span id="hexo-toc">hexo-toc</span><a href="#hexo-toc" class="header-anchor">#</a></h3><p>添加目录支持。</p>
 <p>只要插入占位符<code>[TOC]</code>，就可以生成目录。</p>
 <p>项目地址：<a href="https://github.com/bubkoo/hexo-toc" target="_blank" rel="noopener">https://github.com/bubkoo/hexo-toc</a></p>
-<h3><span id="hexo-math">hexo-math</span></h3><p>添加 MathJax 支持，可在文章中插入 LaTeX 与 KaTeX公式。</p>
+<h3><span id="hexo-math">hexo-math</span><a href="#hexo-math" class="header-anchor">#</a></h3><p>添加 MathJax 支持，可在文章中插入 LaTeX 与 KaTeX公式。</p>
 <p>用法有：</p>
 <ol>
 <li>内联：</li>
@@ -239,15 +239,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% math %&#125;</span><br><span class="line">\begin&#123;aligned&#125;</span><br><span class="line">\dot&#123;x&#125; &amp; = \sigma(y-x) \\</span><br><span class="line">\dot&#123;y&#125; &amp; = \rho x - y - xz \\</span><br><span class="line">\dot&#123;z&#125; &amp; = -\beta z + xy</span><br><span class="line">\end&#123;aligned&#125;</span><br><span class="line">&#123;% endmath %&#125;</span><br></pre></td></tr></table></figure>
 <p>项目地址：<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="noopener">https://github.com/hexojs/hexo-math</a></p>
 <hr>
-<h2><span id="增强标签">增强标签</span></h2><p>增强标签能够在文章中插入各种自定义的内容，实现对Hexo的扩展。</p>
-<h3><span id="hexo-tag-bilibili">hexo-tag-bilibili</span></h3><p>插入哔哩哔哩视频。用法：</p>
+<h2><span id="zeng-qiang-biao-qian">增强标签</span><a href="#zeng-qiang-biao-qian" class="header-anchor">#</a></h2><p>增强标签能够在文章中插入各种自定义的内容，实现对Hexo的扩展。</p>
+<h3><span id="hexo-tag-bilibili">hexo-tag-bilibili</span><a href="#hexo-tag-bilibili" class="header-anchor">#</a></h3><p>插入哔哩哔哩视频。用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% bilibili [av_id] %&#125;</span><br><span class="line">or</span><br><span class="line">&#123;% bilibili [av_id] [page] %&#125;</span><br></pre></td></tr></table></figure>
 <p>项目地址：<a href="https://github.com/Z4Tech/hexo-tag-bilibili" target="_blank" rel="noopener">https://github.com/Z4Tech/hexo-tag-bilibili</a></p>
-<h3><span id="hexo-tag-html5">hexo-tag-html5</span></h3><p>插入HTML5视频。使用前先把需要的视频放置在网站文件夹的<code>source</code>子目录中。</p>
+<h3><span id="hexo-tag-html5">hexo-tag-html5</span><a href="#hexo-tag-html5" class="header-anchor">#</a></h3><p>插入HTML5视频。使用前先把需要的视频放置在网站文件夹的<code>source</code>子目录中。</p>
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">基本用法：</span><br><span class="line">&#123;% html5video %&#125; &#123;% asset_path &lt;视频路径&gt; %&#125; &#123;% endhtml5video %&#125;</span><br><span class="line"></span><br><span class="line">不带参数时，默认宽度为“100%”，默认高度为“250px”，解码器为“video/webm”：</span><br><span class="line">&#123;% html5video %&#125; &#123;% asset_path &lt;视频路径&gt; %&#125; &#123;% endhtml5video %&#125;</span><br><span class="line"></span><br><span class="line">以上参数可手工指定以覆盖默认值：</span><br><span class="line">&#123;% html5video &apos;100%&apos; &apos;250px&apos; &apos;video/mp4&apos; %&#125; &#123;% asset_path &lt;视频路径&gt; %&#125; &#123;% endhtml5video %&#125;</span><br></pre></td></tr></table></figure>
 <p>项目地址：<a href="https://github.com/stephenmkbrady/hexo-tag-html5" target="_blank" rel="noopener">https://github.com/stephenmkbrady/hexo-tag-html5</a></p>
-<h3><span id="hexo-tag-hint">hexo-tag-hint</span></h3><p>插入悬停提示（hint）。用法：</p>
+<h3><span id="hexo-tag-hint">hexo-tag-hint</span><a href="#hexo-tag-hint" class="header-anchor">#</a></h3><p>插入悬停提示（hint）。用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% hint &apos;body_text&apos; &apos;hint_text&apos; %&#125;</span><br></pre></td></tr></table></figure>
 <p>项目地址：<a href="https://github.com/etigerstudio/hexo-tag-hint" target="_blank" rel="noopener">https://github.com/etigerstudio/hexo-tag-hint</a></p>
 
@@ -532,10 +532,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
@@ -544,11 +540,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,6 +549,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,14 +596,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -612,11 +612,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

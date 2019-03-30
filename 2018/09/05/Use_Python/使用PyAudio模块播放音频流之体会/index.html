@@ -207,7 +207,7 @@
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>PyAudio是Python下的一个音频处理模块，用于将音频流输送到计算机声卡上。理论上，该模块能够播放任何解码器解码而成的有效音频帧。</p>
 <a id="more"></a>
-<h2><span id="安装pyaudio">安装PyAudio</span></h2><p>使用pip工具来安装PyAudio：</p>
+<h2><span id="an-zhuang-pyaudio">安装PyAudio</span><a href="#an-zhuang-pyaudio" class="header-anchor">#</a></h2><p>使用pip工具来安装PyAudio：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pyaudio</span><br></pre></td></tr></table></figure>
 <p>不同系统的安装过程有所不同：</p>
 <ul>
@@ -217,7 +217,7 @@
 </ul>
 </li>
 </ul>
-<h2><span id="csdn实践">CSDN实践</span></h2><p>笔者根据CSDN上的这篇笔记实践使用PyAudio模块播放音频。作者 <strong>@一个处女座的程序猿</strong> 所演示的格式为WAV，使用Python自带的Wave文件处理模块<code>wave</code>进行解码。但是，他的笔记写的不够完善，为此笔者特地对代码进行了修正，并加了更多注释。</p>
+<h2><span id="csdn-shi-jian">CSDN实践</span><a href="#csdn-shi-jian" class="header-anchor">#</a></h2><p>笔者根据CSDN上的这篇笔记实践使用PyAudio模块播放音频。作者 <strong>@一个处女座的程序猿</strong> 所演示的格式为WAV，使用Python自带的Wave文件处理模块<code>wave</code>进行解码。但是，他的笔记写的不够完善，为此笔者特地对代码进行了修正，并加了更多注释。</p>
 <blockquote>
 <p>pyaudio：基于pyaudio利用Python编程实现播放音频mp3、wav等格式文件 - CSDN博客<br><a href="https://blog.csdn.net/qq_41185868/article/details/80500847" target="_blank" rel="noopener">https://blog.csdn.net/qq_41185868/article/details/80500847</a></p>
 </blockquote>
@@ -226,7 +226,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 引入模块</span></span><br><span class="line"><span class="keyword">from</span> pyaudio <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> wave</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 用文本文件记录wave模块解码每一帧所产生的内容。注意这里不是保存为二进制文件</span></span><br><span class="line">    dump_buff_file=open(<span class="string">r"Ring01.dup"</span>, <span class="string">'w'</span>)</span><br><span class="line">    </span><br><span class="line">    chunk=<span class="number">1</span>                                       <span class="comment"># 指定WAV文件的大小</span></span><br><span class="line">    wf=wave.open(<span class="string">r"Ring01.wav"</span>,<span class="string">'rb'</span>)              <span class="comment"># 打开WAV文件</span></span><br><span class="line">    p=PyAudio()                                   <span class="comment"># 初始化PyAudio模块</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 打开一个数据流对象，解码而成的帧将直接通过它播放出来，我们就能听到声音啦</span></span><br><span class="line">    stream=p.open(format=p.get_format_from_width(wf.getsampwidth()), channels=wf.getnchannels(), rate=wf.getframerate(), output=<span class="literal">True</span>)</span><br><span class="line"> </span><br><span class="line">    data = wf.readframes(chunk)      <span class="comment"># 读取第一帧数据</span></span><br><span class="line">    print(data)                        <span class="comment"># 以文本形式打印出第一帧数据，实际上是转义之后的十六进制字符串</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 播放音频，并使用while循环继续读取并播放后面的帧数</span></span><br><span class="line">    <span class="comment"># 结束的标志为wave模块读到了空的帧</span></span><br><span class="line">    <span class="keyword">while</span> data != <span class="string">b''</span>:   </span><br><span class="line">        stream.write(data)                <span class="comment"># 将帧写入数据流对象中，以此播放之</span></span><br><span class="line">        data = wf.readframes(chunk)            <span class="comment"># 继续读取后面的帧</span></span><br><span class="line">        dump_buff_file.write(str(data) + <span class="string">"\n---------------------------------------\n"</span>)                    <span class="comment"># 将读出的帧写入文件中，每一个帧用分割线隔开以便阅读</span></span><br><span class="line">        </span><br><span class="line">    stream.stop_stream()            <span class="comment"># 停止数据流</span></span><br><span class="line">    stream.close()                        <span class="comment"># 关闭数据流</span></span><br><span class="line">    p.terminate()                          <span class="comment"># 关闭 PyAudio</span></span><br><span class="line">    print(<span class="string">'play函数结束！'</span>)</span><br><span class="line"></span><br><span class="line">play()</span><br></pre></td></tr></table></figure>
 <p>运行后，指定的文件<code>Ring01.wav</code>就会自动播放，你也能听到音频；音频帧的内容也会在播放的同时自动记录在<code>Ring01.dup</code>中。<code>dup</code>文件的内容摘录如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">b&apos;\xff\xff\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x01\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\xff\xff&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\xff\xff&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\xff\xff&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;\x01\x00\xff\xff&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">......skipping......</span><br><span class="line">b&apos;\x00\x00\x00\x00&apos;</span><br><span class="line">---------------------------------------</span><br><span class="line">b&apos;&apos;</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
-<h2><span id="print-while与性能瓶颈">print、while与性能瓶颈</span></h2><p>原作者的代码有一处不合理：在while循环内使用<code>print</code>输出缓冲区的内容。笔者在IDLE中尝试，结果IDLE直接卡顿，满屏都是输出的十六进制转义文本，滚屏严重掉帧，严重时直接假死；并且，程序也没有输出任何声音——这让我一时间以为PyAudio只会捕捉音频帧却不会播放。尝试注释掉while循环内的<code>print</code>后，程序流畅正常，且久违的音频出乎我意料地出现了。</p>
+<h2><span id="print-while-yu-xing-neng-ping-jing">print、while与性能瓶颈</span><a href="#print-while-yu-xing-neng-ping-jing" class="header-anchor">#</a></h2><p>原作者的代码有一处不合理：在while循环内使用<code>print</code>输出缓冲区的内容。笔者在IDLE中尝试，结果IDLE直接卡顿，满屏都是输出的十六进制转义文本，滚屏严重掉帧，严重时直接假死；并且，程序也没有输出任何声音——这让我一时间以为PyAudio只会捕捉音频帧却不会播放。尝试注释掉while循环内的<code>print</code>后，程序流畅正常，且久违的音频出乎我意料地出现了。</p>
 <p>性能反差如此之大，很重要的原因正是会造成性能瓶颈的屏幕输出。使用Python的<code>print</code>方法将内容输出到<code>stdout</code>的时候，整个程序的运行会被拖慢，你不得不等待屏幕上的那一行行输出爱快不快地挤出来。这一现象有可能是因为屏幕输出是一个具有阻塞性的工作，部分屏显的过程未完成，后面的过程就没法继续。少量文本的输出问题不大，但如果是while循环这样在短时间内可以执行无数代码的循环，那造成的工作量不堪设想。想象一下，一条双向两车道的二级公路，只有一辆车时可以尽情地加速，但是车一多起来，这速度就被拉下来了，严重时更会堵出十里长车。</p>
 <p>不过，如果输出的目标不是<code>stdout</code>，而是硬盘上的文件，以上的瓶颈就不复存在了。同样是在while循环中，笔者让程序的每一次循环都在写文件，但程序的运行没受到任何影响，音频照样放，机器根本不卡。当然，输出到硬盘上，仍会受到IO调度、硬盘本身性能、缓存与传输带宽等因素的制约，但是它们在屏幕输出的制约面前，根本就只能甘拜下风了。</p>
 <p>如果以上的例子还不足以说明屏幕输出和文件输出之间的性能有多大区别，那么不妨用MP3编解码器<code>lame</code>做个实验。对比执行以下两个命令，将一个约5MB大小、128kbps/48000Hz的MP3文件解码为WAV格式：</p>
@@ -530,10 +530,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
@@ -542,11 +538,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,6 +547,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,14 +594,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -610,11 +610,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

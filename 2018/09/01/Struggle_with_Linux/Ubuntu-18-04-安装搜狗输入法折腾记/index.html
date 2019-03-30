@@ -218,7 +218,7 @@
 <p>笔者的Ubuntu Kirin 16.04更新程序抽风，导致原本更新的18.04无法进入桌面，黑屏不断循环。但是这可是我的生产力系统呀，我得马上修好，遂格盘重装18.04原生版之。后来，笔者习惯性地安装了搜狗输入法官网的Deb包，结果搜狗输入法一直没有预期出现。</p>
 <p>这才意识到，原生版的Ubuntu并没有满足搜狗输入法运行的各种条件。笔者摸着石头过河，硬是好好折腾了一番，终于得以在简书上畅快地用搜狗输入法，写下这篇大快人心的经验啦。</p>
 <a id="more"></a>
-<h2><span id="第一弹激活fcitx">第一弹：激活Fcitx</span></h2><p>Fcitx是Linux平台下的一款输入法框架，为Linux提供各种语言的输入支持。搜狗输入法就是基于fcitx开发的，因此想要让Fcitx运行，必须先激活它，然而Ubuntu 18.04原生版默认激活的是另一款输入法框架IBus，Fcitx处于禁用状态。</p>
+<h2><span id="di-yi-dan-ji-huo-fcitx">第一弹：激活Fcitx</span><a href="#di-yi-dan-ji-huo-fcitx" class="header-anchor">#</a></h2><p>Fcitx是Linux平台下的一款输入法框架，为Linux提供各种语言的输入支持。搜狗输入法就是基于fcitx开发的，因此想要让Fcitx运行，必须先激活它，然而Ubuntu 18.04原生版默认激活的是另一款输入法框架IBus，Fcitx处于禁用状态。</p>
 <p>打开文件管理器，按<code>Ctrl+L</code>，输入路径<code>/usr/share/applications/</code>，回车进入。这里罗列了当前桌面环境里所有应用程序的入口。找到<code>Input Method</code>，双击它，进入输入法配置。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/5168189-2acaf8752f82aa35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="/usr/share/applications/ 中的内容，在其中找到“Input Method”"></p>
 <p>输入法配置界面如下图所示。它的第一个界面就是列出当前你系统输入法框架的设置情况，从中可以看出，IBus被Ubuntu系统选为默认值。点击<code>OK</code>继续。</p>
@@ -229,19 +229,19 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/5168189-f2024f7b0e4d122e?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入法配置界面第三步"></p>
 <p>最后一步，向导提示设置成功。重启Xorg桌面环境，即可使设置生效。对于新手来说，直接重启操作系统，完全可以实现相同的目的。重启完成后，Fcitx就被激活了。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/5168189-8074d8e082862c72?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入法配置界面最后一步"></p>
-<h2><span id="第二弹安装搜狗输入法">第二弹：安装搜狗输入法</span></h2><p>进入<a href="https://pinyin.sogou.com/linux/?r=pinyin" target="_blank" rel="noopener">搜狗输入法Linux官网</a>，即可下载到搜狗输入法的Deb安装包。下载完成后双击，按提示安装即可，安装方法与安装一般的软件包无异。</p>
+<h2><span id="di-er-dan-an-zhuang-sou-gou-shu-ru-fa">第二弹：安装搜狗输入法</span><a href="#di-er-dan-an-zhuang-sou-gou-shu-ru-fa" class="header-anchor">#</a></h2><p>进入<a href="https://pinyin.sogou.com/linux/?r=pinyin" target="_blank" rel="noopener">搜狗输入法Linux官网</a>，即可下载到搜狗输入法的Deb安装包。下载完成后双击，按提示安装即可，安装方法与安装一般的软件包无异。</p>
 <blockquote>
 <p>提示：64位系统建议选择64位的安装包。</p>
 </blockquote>
-<h2><span id="第三弹配置fcitx以激活搜狗输入法">第三弹：配置fcitx以激活搜狗输入法</span></h2><p>值得注意的是，安装了搜狗输入法的安装包，并不意味着我们马上就能按键盘上的输入法切换键来启动搜狗输入法。默认情况下，<strong>搜狗输入法在正常安装后不会被激活，还需我们手动设置</strong>。</p>
+<h2><span id="di-san-dan-pei-zhi-fcitx-yi-ji-huo-sou-gou-shu-ru-fa">第三弹：配置fcitx以激活搜狗输入法</span><a href="#di-san-dan-pei-zhi-fcitx-yi-ji-huo-sou-gou-shu-ru-fa" class="header-anchor">#</a></h2><p>值得注意的是，安装了搜狗输入法的安装包，并不意味着我们马上就能按键盘上的输入法切换键来启动搜狗输入法。默认情况下，<strong>搜狗输入法在正常安装后不会被激活，还需我们手动设置</strong>。</p>
 <p>还是打开第一弹的<code>applications</code>文件夹，找到<code>Fcitx Config Tool</code>，双击之，打开Fcitx配置界面。点击左下角的<code>+</code>按钮，添加输入法。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/5168189-4dc6641b016ca8a5?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fcitx配置界面。图为笔者配置好搜狗输入法后的效果，而一开始搜狗输入法是不会出现在这里的。"></p>
 <p>在添加输入法的窗口中，取消选择<code>Only Show Current Language（仅显示当前语言对应的输入法）</code>（如果当前语言不是简体中文），然后在列表中找到<code>Sogou Pinyin（搜狗拼音输入法）</code>，选中并单击<code>OK</code>，即可激活搜狗输入法。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/5168189-28b7ae36f30962d1?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入法选择界面。笔者的系统为英文，所以必须取消勾选“Only Show Current Language”才能找到搜狗输入法。"></p>
 <p><strong>至此，做好用搜狗输入法码字的准备吧！</strong></p>
-<h2><span id="第四弹测试">第四弹：测试</span></h2><p>打开任意一个可输入文本的位置，按<code>Shift</code>键，即可启动搜狗输入法。这时屏幕顶栏的右侧会显示搜狗的图标，而搜狗的状态栏也会默认地显示在屏幕的右下方。</p>
+<h2><span id="di-si-dan-ce-shi">第四弹：测试</span><a href="#di-si-dan-ce-shi" class="header-anchor">#</a></h2><p>打开任意一个可输入文本的位置，按<code>Shift</code>键，即可启动搜狗输入法。这时屏幕顶栏的右侧会显示搜狗的图标，而搜狗的状态栏也会默认地显示在屏幕的右下方。</p>
 <p>如果你在Fcitx中安装了不止两个输入法，且按Shift键未显示搜狗，不妨考虑按<code>Super键（就是Windows键）+空格</code>，切换一下语言。</p>
-<h2><span id="注意">注意</span></h2><ul>
+<h2><span id="zhu-yi">注意</span><a href="#zhu-yi" class="header-anchor">#</a></h2><ul>
 <li><strong>当前Ubuntu 18.04下的Fcitx不是很完善，与桌面环境兼容不够好</strong>，在切换输入法上可能会有些莫名其妙的Bug，如顶栏处Fcitx的有些弹出菜单打不开。并且搜狗输入法也会<strong>不定时崩溃</strong>。</li>
 <li>同时，<strong>目前也无法在Fcitx中打开搜狗输入法的设置界面，要想设置搜狗输入法，只能从状态栏中打开设置</strong>。</li>
 <li><strong>更加致命的Bug</strong>是，有时重启Ubuntu后，输入拼音，<strong>候选框中出现的竟然全是乱码</strong>，但上屏后结果却正常。</li>
@@ -542,10 +542,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
@@ -554,11 +550,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -567,6 +559,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,14 +606,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -622,11 +622,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

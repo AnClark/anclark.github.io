@@ -9,7 +9,7 @@
   <title>刷机后要做的单元测试 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。 不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。">
-<meta name="keywords" content="随笔,技术笔记,Android 适配笔记">
+<meta name="keywords" content="技术笔记,Android 适配笔记,随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="刷机后要做的单元测试">
 <meta property="og:url" content="http://yoursite.com/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/index.html">
@@ -209,27 +209,27 @@
 <p>不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。</p>
 <p>因此，对新的ROM做做单元测试，很有必要。笔者的单元测试主要包括以下要素：</p>
 <a id="more"></a>
-<h2><span id="移动网络">移动网络</span></h2><ul>
+<h2><span id="yi-dong-wang-luo">移动网络</span><a href="#yi-dong-wang-luo" class="header-anchor">#</a></h2><ul>
 <li>双卡设备，是否能保证双卡在线，有信号</li>
 <li>是否能正常连接4G网络</li>
 </ul>
-<h2><span id="wifi">WIFI</span></h2><ul>
+<h2><span id="wifi">WIFI</span><a href="#wifi" class="header-anchor">#</a></h2><ul>
 <li>是否能正常连接，包括5GHz频段的网络</li>
 <li>若在MIUI中连接的网络出现掉线，则检查同样的网络是否在新的ROM中也掉线</li>
 </ul>
-<h2><span id="gps">GPS</span></h2><ul>
+<h2><span id="gps">GPS</span><a href="#gps" class="header-anchor">#</a></h2><ul>
 <li>在户外使用地图软件是否能准确定位</li>
 <li>使用GPS测试工具，是否能同时搜到GPS、格洛纳斯与北斗。新推出的国产设备基本支持北斗导航，在测试软件中北斗卫星的编号是三位数，有别于另两家。</li>
 </ul>
-<h2><span id="电池续航">电池续航</span></h2><ul>
+<h2><span id="dian-chi-xu-hang">电池续航</span><a href="#dian-chi-xu-hang" class="header-anchor">#</a></h2><ul>
 <li>对比充满电后的续航，相比于MIUI是能坚持的更久，或相同，或不如MIUI</li>
 <li>测试期间，保证你之前在MIUI中如何使用，<strong>使用强度如何，在新的ROM中就怎样使用</strong></li>
 </ul>
-<h2><span id="相机">相机</span></h2><ul>
+<h2><span id="xiang-ji">相机</span><a href="#xiang-ji" class="header-anchor">#</a></h2><ul>
 <li>是否出现秒退。小米Max的很多第三方ROM都不约而同地出现无法使用相机的Bug。</li>
 <li>是否能正常录像。部分第三方ROM会在录像时卡死。</li>
 </ul>
-<h2><span id="应用程序">应用程序</span></h2><ul>
+<h2><span id="ying-yong-cheng-xu">应用程序</span><a href="#ying-yong-cheng-xu" class="header-anchor">#</a></h2><ul>
 <li>多任务切换是否顺畅，是否因内存优化不到位而导致部分程序进入后台后直接被关闭</li>
 <li>你的常用软件使用是否顺畅</li>
 </ul>
@@ -277,15 +277,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
@@ -532,10 +532,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
@@ -544,11 +540,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,6 +549,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,14 +596,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -612,11 +612,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

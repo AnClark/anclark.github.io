@@ -207,7 +207,7 @@
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>现在新出品的手机，基本都加密了data分区，旨在保障用户数据的安全。其中高通方案的手机使用的加密方案是QSEE（高通安全执行环境，Qualcomm Security Executing Environment），每次启动设备时会有一个专门的过程来解密data分区。然而，TWRP Recovery默认并没有附带高通的加密组件，因此在启动时会无法解密和访问data分区，使得体验大打折扣。因此必须把高通的加密组件从Android系统中移植过来。</p>
 <a id="more"></a>
-<h2><span id="qsee加密组件的组成">QSEE加密组件的组成</span></h2><p>高通QSEE组件由本体<code>qseecomd</code>程序、Keystore及其依赖库组成。</p>
+<h2><span id="qsee-jia-mi-zu-jian-de-zu-cheng">QSEE加密组件的组成</span><a href="#qsee-jia-mi-zu-jian-de-zu-cheng" class="header-anchor">#</a></h2><p>高通QSEE组件由本体<code>qseecomd</code>程序、Keystore及其依赖库组成。</p>
 <p>首先是<code>qseecomd</code>。<strong>加解密过程全由<code>qseecomd</code>完成，</strong>因此移植过程相对比较简单。</p>
 <p>Keystore是加解密过程所必需的“钥匙”，为一个<code>so</code>格式的库文件，每个高通方案设备有属于自己的Keystore，路径为<code>/system/vendor/lib64/hw/keystore.&lt;高通方案型号&gt;.so</code>（32位处理器型号请将<code>lib64</code>改为<code>lib</code>）。</p>
 <p>而<code>qseecomd</code>运行还需依赖其它库文件，查看依赖可使用<code>readelf -d qseecomd</code>：</p>
@@ -215,7 +215,7 @@
 <p>值得注意的是，上述命令给出的依赖库，除了<code>libQSEEComAPI.so</code>与<code>libdrmfs.so</code>由高通提供外，其他的均为安卓公用的运行库，TWRP会提供它们。</p>
 <p>另外，<code>qseecomd</code>的运行还离不开解释器<code>linker</code>，使用<code>readelf -l qseecomd</code>，在输出中可以看到<code>qseecomd</code>所使用<code>linker</code>的绝对路径。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Elf file type is DYN (Shared object file)</span><br><span class="line">Entry point 0x125c</span><br><span class="line">There are 9 program headers, starting at offset 64</span><br><span class="line"></span><br><span class="line">Program Headers:</span><br><span class="line">  Type           Offset             VirtAddr           PhysAddr</span><br><span class="line">                 FileSiz            MemSiz              Flags  Align</span><br><span class="line">  PHDR           0x0000000000000040 0x0000000000000040 0x0000000000000040</span><br><span class="line">                 0x00000000000001f8 0x00000000000001f8  R E    0x8</span><br><span class="line">  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238</span><br><span class="line">                 0x0000000000000015 0x0000000000000015  R      0x1</span><br><span class="line">      [Requesting program interpreter: /sbin/linker64]</span><br><span class="line">  LOAD           0x0000000000000000 0x0000000000000000 0x0000000000000000</span><br><span class="line">                 0x0000000000001dd8 0x0000000000001dd8  R E    0x10000</span><br><span class="line">  LOAD           0x0000000000002c88 0x0000000000012c88 0x0000000000012c88</span><br><span class="line">                 0x0000000000000540 0x0000000000000540  RW     0x10000</span><br><span class="line">  DYNAMIC        0x0000000000002cb8 0x0000000000012cb8 0x0000000000012cb8</span><br><span class="line">                 0x0000000000000270 0x0000000000000270  RW     0x8</span><br><span class="line">  NOTE           0x0000000000000250 0x0000000000000250 0x0000000000000250</span><br><span class="line">                 0x0000000000000038 0x0000000000000038  R      0x4</span><br><span class="line">  GNU_EH_FRAME   0x0000000000001cc0 0x0000000000001cc0 0x0000000000001cc0</span><br><span class="line">                 0x0000000000000024 0x0000000000000024  R      0x4</span><br><span class="line">  GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000</span><br><span class="line">                 0x0000000000000000 0x0000000000000000  RW     0x10</span><br><span class="line">  GNU_RELRO      0x0000000000002c88 0x0000000000012c88 0x0000000000012c88</span><br><span class="line">                 0x0000000000000378 0x0000000000000378  R      0x1</span><br></pre></td></tr></table></figure>
-<h2><span id="找到加密所需的文件">找到加密所需的文件</span></h2><p>在上一步中，我们已经知道了加密需要用到哪些文件，那么它们位于安卓系统的哪一个路径？根据下面的表格，整理出它们所在的路径，以及放置到TWRP根文件系统中的路径。</p>
+<h2><span id="zhao-dao-jia-mi-suo-xu-de-wen-jian">找到加密所需的文件</span><a href="#zhao-dao-jia-mi-suo-xu-de-wen-jian" class="header-anchor">#</a></h2><p>在上一步中，我们已经知道了加密需要用到哪些文件，那么它们位于安卓系统的哪一个路径？根据下面的表格，整理出它们所在的路径，以及放置到TWRP根文件系统中的路径。</p>
 <table>
 <thead>
 <tr>
@@ -237,23 +237,23 @@
 </tbody>
 </table>
 <p>“&gt;[1] | /vendor/lib64/libQSEEComAPI.so |<br>| libdrmfs.so      | /system/vendor/lib64/libdrmfs.so          | /vendor/lib64/libdrmfs.so      |</p>
-<h2><span id="将文件复制到twrp源码中">将文件复制到TWRP源码中</span></h2><p>Android设备配置文件（<code>/device/&lt;厂商名&gt;/&lt;设备名&gt;</code>）中，如果存在目录<code>recovery/root</code>，那么该目录中的内容就会在编译TWRP时，自动复制到TWRP的根文件系统中。因此，请将上一步中的文件，根据上表的路径复制到其中。</p>
-<h2><span id="使用patchelf修改qseecomd的linker路径">使用<code>patchelf</code>修改<code>qseecomd</code>的linker路径</span></h2><p>系统环境与TWRP的环境还是有所差别的。为了保证<code>qseecomd</code>能够正确地找到解释器<code>linker</code>，我们还需要使用<code>patchelf</code>工具，对<code>qseecomd</code>进行一番修改，否则运行时会提示“<code>qseecomd: not found</code>”，尽管<code>qseecomd</code>确实在指定的目录中。</p>
+<h2><span id="jiang-wen-jian-fu-zhi-dao-twrp-yuan-ma-zhong">将文件复制到TWRP源码中</span><a href="#jiang-wen-jian-fu-zhi-dao-twrp-yuan-ma-zhong" class="header-anchor">#</a></h2><p>Android设备配置文件（<code>/device/&lt;厂商名&gt;/&lt;设备名&gt;</code>）中，如果存在目录<code>recovery/root</code>，那么该目录中的内容就会在编译TWRP时，自动复制到TWRP的根文件系统中。因此，请将上一步中的文件，根据上表的路径复制到其中。</p>
+<h2><span id="shi-yong-patchelf-xiu-gai-qseecomd-de-linker-lu-jing">使用<code>patchelf</code>修改<code>qseecomd</code>的linker路径</span><a href="#shi-yong-patchelf-xiu-gai-qseecomd-de-linker-lu-jing" class="header-anchor">#</a></h2><p>系统环境与TWRP的环境还是有所差别的。为了保证<code>qseecomd</code>能够正确地找到解释器<code>linker</code>，我们还需要使用<code>patchelf</code>工具，对<code>qseecomd</code>进行一番修改，否则运行时会提示“<code>qseecomd: not found</code>”，尽管<code>qseecomd</code>确实在指定的目录中。</p>
 <p><code>qseecomd</code>默认的linker是<code>/system/bin/linker64</code>，而TWRP的linker则是<code>/sbin/linker64</code>。因此，我们需要这样修改linker路径：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">patchelf --set-interpreter /sbin/linker64 qseecomd</span><br></pre></td></tr></table></figure>
 <p>修改完成后，再使用<code>readelf -l qseecomd</code>进行检查，就可以发现修改成功了。</p>
-<h2><span id="将qseecomd注册为服务">将<code>qseecomd</code>注册为服务</span></h2><p><code>qseecomd</code>以服务的形式运行，它会在运行之时自动对data分区进行解密。想让<code>qseecomd</code>作为服务运行，需要修改<code>init.recovery.qcom.rc</code>，这是Android的init配置文件之一。</p>
+<h2><span id="jiang-qseecomd-zhu-ce-wei-fu-wu">将<code>qseecomd</code>注册为服务</span><a href="#jiang-qseecomd-zhu-ce-wei-fu-wu" class="header-anchor">#</a></h2><p><code>qseecomd</code>以服务的形式运行，它会在运行之时自动对data分区进行解密。想让<code>qseecomd</code>作为服务运行，需要修改<code>init.recovery.qcom.rc</code>，这是Android的init配置文件之一。</p>
 <p>创建该文件，在其中写入如下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">on property:ro.crypto.state=encrypted</span><br><span class="line">    stop qseecomd</span><br><span class="line">    start qseecomd</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># qseecomd 的服务项</span><br><span class="line"># 设置为随TWRP启动而自动启动</span><br><span class="line">#</span><br><span class="line">service qseecomd /sbin/qseecomd</span><br><span class="line">    user root</span><br><span class="line">    group root</span><br><span class="line">    seclabel u:r:recovery:s0</span><br><span class="line"></span><br><span class="line"># </span><br><span class="line"># 修复TWRP的一个Bug：删除无效的bootdevice链接并重新创建</span><br><span class="line"># 默认地，TWRP会在/dev/block目录下创建一个bootdevice链接，指向启动设备，</span><br><span class="line"># 但因为未知的原因使得该链接无效。因此需要重新创建之，否则qseecomd会无法识别启动设备，导致出错</span><br><span class="line">#</span><br><span class="line">on boot</span><br><span class="line">    exec u:r:recovery:s0 -- /sbin/busybox rm -r /dev/block/bootdevice</span><br><span class="line">    symlink /dev/block/platform/7824900.sdhci /dev/block/bootdevice</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">on fs</span><br><span class="line">    #</span><br><span class="line">    # 保险起见，在这个地方也尝试重新创建设备链接</span><br><span class="line">    #</span><br><span class="line">    symlink /dev/block/platform/7824900.sdhci /dev/block/bootdevice</span><br><span class="line"></span><br><span class="line">    # </span><br><span class="line">    # 设置qseecomd所需设备的权限</span><br><span class="line">    #</span><br><span class="line">    chmod 0660 /dev/qseecom</span><br><span class="line">    chown system drmrpc /dev/qseecom</span><br><span class="line">    chmod 0664 /dev/ion</span><br><span class="line">    chown system system /dev/ion</span><br></pre></td></tr></table></figure>
-<h2><span id="设置twrp参数">设置TWRP参数</span></h2><p>TWRP本身有解密模块，并提供与<code>qseecomd</code>对接的接口，但默认没有启用。因此我们需要在<code>BoardConfig.mk</code>设置相应的选项：</p>
+<h2><span id="she-zhi-twrp-can-shu">设置TWRP参数</span><a href="#she-zhi-twrp-can-shu" class="header-anchor">#</a></h2><p>TWRP本身有解密模块，并提供与<code>qseecomd</code>对接的接口，但默认没有启用。因此我们需要在<code>BoardConfig.mk</code>设置相应的选项：</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TARGET_PROVIDES_KEYMASTER := true</span><br><span class="line">TARGET_KEYMASTER_WAIT_FOR_QSEE := true</span><br></pre></td></tr></table></figure>
 <p><code>TARGET_PROVIDES_KEYMASTER</code>指定设备是否具有用于解密的keymaster，keymaster正是解密必不可少的“钥匙”，高通方案的设备会提供。而<code>TARGET_KEYMASTER_WAIT_FOR_QSEE</code>则指定是否等待<code>qseecomd</code>解密完成。其中，<strong><code>TARGET_KEYMASTER_WAIT_FOR_QSEE</code>至关重要，它是<code>qseecomd</code>解密支持的重要开关，若不设置它，就和不带加密组件无异。</strong></p>
-<h2><span id="调试">调试</span></h2><h3><span id="检查工作状态">检查工作状态</span></h3><p>判断TWRP是否正常解密的依据，就是观察启动后会出现什么画面。如果启动非常快，且显示的是输入密码的窗口，而事实上手机并没有使用密码加密，而是保持默认加密状态，那么说明解密不成功，还需努力调试。如果启动时间延长（定格在splash画面），进入主界面后点击底部的“日志”按钮显示“Data successfully decrypted”，那么则说明解密成功。</p>
-<h3><span id="获取日志">获取日志</span></h3><p>并不是所有的设备都能遵照上述步骤成功为TWRP启用加密支持，各种各样的问题都有可能出现。显然，我们可以根据日志，来检查<code>qseecomd</code>的工作状态——<code>qseecomd</code>会同时往内核日志和logcat中写入日志。使用<code>dmesg</code>或<code>cat /proc/kmsg</code>来获取内核日志；而在<code>BoardConfig.mk</code>中启用logcat支持后，我们亦可以通过运行<code>logcat</code>来获取<code>qseecomd</code>输出的另一部分日志。</p>
+<h2><span id="diao-shi">调试</span><a href="#diao-shi" class="header-anchor">#</a></h2><h3><span id="jian-cha-gong-zuo-zhuang-tai">检查工作状态</span><a href="#jian-cha-gong-zuo-zhuang-tai" class="header-anchor">#</a></h3><p>判断TWRP是否正常解密的依据，就是观察启动后会出现什么画面。如果启动非常快，且显示的是输入密码的窗口，而事实上手机并没有使用密码加密，而是保持默认加密状态，那么说明解密不成功，还需努力调试。如果启动时间延长（定格在splash画面），进入主界面后点击底部的“日志”按钮显示“Data successfully decrypted”，那么则说明解密成功。</p>
+<h3><span id="huo-qu-ri-zhi">获取日志</span><a href="#huo-qu-ri-zhi" class="header-anchor">#</a></h3><p>并不是所有的设备都能遵照上述步骤成功为TWRP启用加密支持，各种各样的问题都有可能出现。显然，我们可以根据日志，来检查<code>qseecomd</code>的工作状态——<code>qseecomd</code>会同时往内核日志和logcat中写入日志。使用<code>dmesg</code>或<code>cat /proc/kmsg</code>来获取内核日志；而在<code>BoardConfig.mk</code>中启用logcat支持后，我们亦可以通过运行<code>logcat</code>来获取<code>qseecomd</code>输出的另一部分日志。</p>
 <p>启用logcat支持的开关为：</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Logcat</span></span><br><span class="line">TWRP_INCLUDE_LOGCAT := true</span><br><span class="line">TARGET_USES_LOGD := true</span><br></pre></td></tr></table></figure>
 <p>除此之外，我们还可以从TWRP这一边展开分析。TWRP的解密过程也被记录在TWRP本身的日志中，阅读<code>/cache/recovery/last_log*</code>即可了解。</p>
-<h2><span id="总结体会">总结体会</span></h2><p>为TWRP加入解密组件，看似比较难，实则并不难，关键在于不断尝试。笔者能获得上面的成果，有赖于在反复失败后仍然能够反复尝试，最终取得成功。在整个过程当中，日志调试的作用举足轻重，它反馈了TWRP与qseecomd组件运行时的一系列状况，是分析故障的利器。</p>
+<h2><span id="zong-jie-ti-hui">总结体会</span><a href="#zong-jie-ti-hui" class="header-anchor">#</a></h2><p>为TWRP加入解密组件，看似比较难，实则并不难，关键在于不断尝试。笔者能获得上面的成果，有赖于在反复失败后仍然能够反复尝试，最终取得成功。在整个过程当中，日志调试的作用举足轻重，它反馈了TWRP与qseecomd组件运行时的一系列状况，是分析故障的利器。</p>
 <div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">系统中，根目录有一个<code>/vendor</code>，链接到<code>/system/vendor</code>。<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
@@ -549,10 +549,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
@@ -561,11 +557,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -574,6 +566,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -605,14 +613,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -629,11 +629,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

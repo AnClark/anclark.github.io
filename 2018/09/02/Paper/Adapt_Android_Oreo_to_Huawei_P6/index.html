@@ -62,7 +62,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/archives">所有文章</a></li>
 	        
 				<li><a href="/tags/技术笔记/">技术笔记</a></li>
 	        
@@ -164,7 +164,7 @@
 				
 					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
 					<li style="width: 20%"><a href="/tags/技术笔记/">技术笔记</a></li>
 		        
@@ -205,7 +205,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[TOC]</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>[TOC]</p>
 <h2><span id="概述">概述</span></h2><p>这是一篇未完成的实验报告，因为在写报告之时，笔者的实验并没有成功，后续还有很多工作需要完成。而笔者所做的项目在之前几乎没有任何可参考的先例，只有适合于其他设备方案的资料参照，可谓“摸着石头过河”。在毕业论文截止之际，笔者先将截至2018年9月初所得到的研究成果记录下来，暂且作为本次毕业论文的内容。</p>
 <p>华为Ascend P6（以下简称P6），是华为于2013年推出的一款旗舰手机，属<strong>P系列</strong>旗舰的第六款，也是华为海思（<em>HiSillicon</em>）处理器应用的里程碑，具有重要的战略和纪念意义。然而，就是这样一款里程碑旗舰，却一直被广大Android开发者忽视，以至于推出5年多，都没有开发者为其适配历代最新的Android系统[^Ref_HD2]。</p>
 <p>而Android系统的适配，本身更是一项需要大量精力投入的工作，涉及到配置文件的收集、编写，长期多方面的调试，以及潜在问题的跟踪，其中的调试环节更是需要细致耐心，因为在一款完全没有运行对应版本Android系统的设备上，随时都会出现连原厂开发者均难以发现的问题。</p>
@@ -573,7 +573,7 @@
 <li><p>将<code>recoveryimage.img</code>移动到<code>/tmp/recimg_modify</code>目录中，重命名为<code>boot.img</code>。这是<code>bootimg.py</code>的要求。</p>
 </li>
 <li><p>进入<code>/tmp/recimg_modify</code>，使用<code>bootimg.py</code>进行解包。解包过程会输出<code>boot.img</code>的一些信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> bootimg.py --unpack-bootimg</span><br><span class="line">arguments: [bootimg file]</span><br><span class="line">bootimg file: boot.img</span><br><span class="line">output: kernel[.gz] ramdisk[.gz] second[.gz]</span><br><span class="line">kernel_addr=0x8000</span><br><span class="line">ramdisk_addr=0x1400000</span><br><span class="line">second_addr=0xf00000</span><br><span class="line">tags_addr=0x100</span><br><span class="line">page_size=2048</span><br><span class="line">name=""</span><br><span class="line">cmdline="vmalloc=512M k3v2_pmem=1 mmcparts=mmcblk0:p1(xloader),p3(nvme),p4(misc),p5(splash),p6(oeminfo),p7(reserved1),p8(reserved2),p9(splash2),p10(recovery2),p11(recovery),p12(boot),p13(modemimage),p14(modemnvm1),p15(modemnvm2),p16(system),p17(cache),p18(cust),p19(userdata);mmcblk1:p1(ext_sdcard) buildvariant=userdebug"</span><br><span class="line">padding_size=2048</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bootimg.py --unpack-bootimg</span></span><br><span class="line">arguments: [bootimg file]</span><br><span class="line">bootimg file: boot.img</span><br><span class="line">output: kernel[.gz] ramdisk[.gz] second[.gz]</span><br><span class="line">kernel_addr=0x8000</span><br><span class="line">ramdisk_addr=0x1400000</span><br><span class="line">second_addr=0xf00000</span><br><span class="line">tags_addr=0x100</span><br><span class="line">page_size=2048</span><br><span class="line">name=""</span><br><span class="line">cmdline="vmalloc=512M k3v2_pmem=1 mmcparts=mmcblk0:p1(xloader),p3(nvme),p4(misc),p5(splash),p6(oeminfo),p7(reserved1),p8(reserved2),p9(splash2),p10(recovery2),p11(recovery),p12(boot),p13(modemimage),p14(modemnvm1),p15(modemnvm2),p16(system),p17(cache),p18(cust),p19(userdata);mmcblk1:p1(ext_sdcard) buildvariant=userdebug"</span><br><span class="line">padding_size=2048</span><br></pre></td></tr></table></figure>
 <p>解包后，得到<code>kernel</code>、<code>ramdisk.gz</code>和<code>bootimg.json</code>三个文件。其中<code>bootimg.json</code>记录了启动镜像的参数。</p>
 </li>
 <li><p>使用<code>bootimg.py</code>回打包。由于回打包会覆盖原始文件<code>boot.img</code>，故需将原始文件改名为<code>boot-old.img</code>，然后再运行打包命令：</p>
@@ -650,7 +650,7 @@
 <blockquote>
 <big><strong>TODO：现在手上只有4.4.3的编译器！！！！</strong></big>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap				# 编译配置程序使用automake编写，运行该命令以生成编译环境</span><br><span class="line"><span class="meta">#</span> 运行编译配置程序，其中：</span><br><span class="line"><span class="meta">#</span> --host=arm</span><br><span class="line"><span class="meta">#</span>		交叉编译必选项，表明主机上运行所运行编译器的目标平台</span><br><span class="line"><span class="meta">#</span> CC=arm-linux-gcc</span><br><span class="line"><span class="meta">#</span>		指定交叉编译为目标设备编译时使用的编译器。</span><br><span class="line"><span class="meta">#</span> LDFLAGS=-static</span><br><span class="line"><span class="meta">#</span>		传递给链接器（linker）的参数，-static表示将程序编译为静态可执行文件</span><br><span class="line">./configure --host=arm CC=arm-linux-gcc LDFLAGS=-static</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap				# 编译配置程序使用automake编写，运行该命令以生成编译环境</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行编译配置程序，其中：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --host=arm</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		交叉编译必选项，表明主机上运行所运行编译器的目标平台</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CC=arm-linux-gcc</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		指定交叉编译为目标设备编译时使用的编译器。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> LDFLAGS=-static</span></span><br><span class="line"><span class="meta">#</span><span class="bash">		传递给链接器（linker）的参数，-static表示将程序编译为静态可执行文件</span></span><br><span class="line">./configure --host=arm CC=arm-linux-gcc LDFLAGS=-static</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>开始编译。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br></pre></td></tr></table></figure>
@@ -668,7 +668,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>解决这一问题只有两种思路：升级内核，或降低编译器版本（低版本的编译器所作的版本限制会低一些）。显然，最简便的方法即为降低编译器版本，其中包括使用<code>./configure --enable-kernel=&lt;低于3.0.8的版本号&gt;</code>重新配置并编译交叉编译器（GCC编译器本身也是有源码、可以被编译的），也包括直接使用现成的低版本编译器。编译编译器的工作比较繁琐，在有限的时间内不现实；而笔者手中正好拥有一套由FriendlyARM组织于2011年推出的<code>gcc-arm-none-linux-gnueabi 4.4.3</code>编译器。</p>
 <p>因此，笔者将编译器安装到系统中，重新进行以上步骤：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">make distclean					# 清理编译时产生的临时文件，避免出错</span><br><span class="line">./bootstrap</span><br><span class="line"><span class="meta">#</span> 重新运行编译配置程序，选用低版本编译器</span><br><span class="line"><span class="meta">#</span> STRIP=arm-none-linux-gnueabi-strip</span><br><span class="line"><span class="meta">#</span>			指定目标代码裁剪器。目标代码裁剪器用于裁剪二进制文件中多余的代码，节省存储空间</span><br><span class="line"><span class="meta">#</span> Ubuntu 18.04附带的strip工具与该低版本编译器不兼容，因此必须使用该编译器自带的strip</span><br><span class="line">./configure --host=arm CC=arm-none-linux-gnueabi-gcc STRIP=arm-none-linux-gnueabi-strip LDFLAGS=-static</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">make distclean					# 清理编译时产生的临时文件，避免出错</span><br><span class="line">./bootstrap</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重新运行编译配置程序，选用低版本编译器</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> STRIP=arm-none-linux-gnueabi-strip</span></span><br><span class="line"><span class="meta">#</span><span class="bash">			指定目标代码裁剪器。目标代码裁剪器用于裁剪二进制文件中多余的代码，节省存储空间</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu 18.04附带的strip工具与该低版本编译器不兼容，因此必须使用该编译器自带的strip</span></span><br><span class="line">./configure --host=arm CC=arm-none-linux-gnueabi-gcc STRIP=arm-none-linux-gnueabi-strip LDFLAGS=-static</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
 <p>再次检查所生成可执行文件的信息，可以发现最低内核版本降低了不少：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/sbin/kexec: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 2.6.32, with debug_info, not stripped</span><br></pre></td></tr></table></figure>
 <p>P6 ATX的内核版本亦为<code>3.0.8</code>，该版本的<code>kexec</code>已经可以正常运行了。下一步，即为尝试从ATX启动新编译的内核。运行如下命令：</p>
@@ -1212,23 +1212,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1240,15 +1232,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,6 +1253,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1305,14 +1313,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

@@ -62,7 +62,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/archives">所有文章</a></li>
 	        
 				<li><a href="/tags/技术笔记/">技术笔记</a></li>
 	        
@@ -164,7 +164,7 @@
 				
 					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
 					<li style="width: 20%"><a href="/tags/技术笔记/">技术笔记</a></li>
 		        
@@ -208,7 +208,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Visual Studio Code是阅读代码的不二选择，尤其是与传统IDE工程并驾齐驱的、由构建器（Make、Ninja、CMake等）组织的工程，只需打开一个文件夹作为工作区，即可立刻开始。而VS Code对C语言的多方面支持，使得用它来阅读、学习、调试C语言源代码，尤有一种舒心简便的体验。</p>
 <p>——所以，对于学习Linux Android内核源码的程序员，我首先推荐VS Code。只需简单的配置，就可以将VS Code打造成贴心的Linux代码阅读工具。</p>
 <a id="more"></a>
-<h2 id="第一步：安装C语言相关扩展"><a href="#第一步：安装C语言相关扩展" class="headerlink" title="第一步：安装C语言相关扩展"></a>第一步：安装C语言相关扩展</h2><p>VS Code默认未提供对C语言的完整支持<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。
+<h2><span id="第一步安装c语言相关扩展">第一步：安装C语言相关扩展</span></h2><p>VS Code默认未提供对C语言的完整支持<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="VS Code只对JavaScript、TypeScript等开发它的语言提供了原生支持。
 ">[1]</span></a></sup>，因此需要先安装相应的扩展。</p>
 <p>在扩展管理器中安装以下扩展：</p>
 <table>
@@ -230,7 +230,7 @@
 </tbody>
 </table>
 <p>安装完成后，在扩展管理器中选择“重新加载”（Reload），重载VS Code窗口，使扩展生效。</p>
-<h2 id="第二步：配置“C-C-”扩展"><a href="#第二步：配置“C-C-”扩展" class="headerlink" title="第二步：配置“C/C++”扩展"></a>第二步：配置“C/C++”扩展</h2><p>打开Linux源码目录，可以打开源码的根目录，也可以打开其中任意一个模块的子目录（如SELinux模块的子目录<code>security/selinux</code>），由此开始对源码的管理。</p>
+<h2><span id="第二步配置cc扩展">第二步：配置“C/C++”扩展</span></h2><p>打开Linux源码目录，可以打开源码的根目录，也可以打开其中任意一个模块的子目录（如SELinux模块的子目录<code>security/selinux</code>），由此开始对源码的管理。</p>
 <p>不过这个时候，由于配置文件未设置好，与代码提示有关的功能还不能使用，这会大大降低我们的体验。实际体验中，代码提示体现在如下功能特性：</p>
 <table>
 <thead>
@@ -589,23 +589,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,15 +609,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,6 +630,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -682,14 +690,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

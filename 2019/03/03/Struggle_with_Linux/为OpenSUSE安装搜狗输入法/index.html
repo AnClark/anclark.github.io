@@ -64,7 +64,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/archives">所有文章</a></li>
 	        
 				<li><a href="/tags/技术笔记/">技术笔记</a></li>
 	        
@@ -166,7 +166,7 @@
 				
 					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
 					<li style="width: 20%"><a href="/tags/技术笔记/">技术笔记</a></li>
 		        
@@ -210,29 +210,29 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>笔者新入了一台ThinkPad X61来玩玩，给它装上了OpenSUSE。为了获得更好的输入体验，安装搜狗输入法必不可少，然而OpenSUSE使用的包管理器是RPM，与搜狗输入法官方支持的Debian差别太大，互不兼容。加之即使在OpenSUSE中安装了Debian的包管理器<code>dpkg</code>，也无法正常安装搜狗的包，提示依赖条件不满足。</p>
 <p>所幸，OpenSUSE的多语言支持社区编写了可以在OpenSUSE下安装搜狗输入法的安装器，这就使得搜狗不会局限在Debian系Linux发行版（如Ubuntu、Deepin）的专利中了。</p>
 <a id="more"></a>
-<h2 id="添加M17N源"><a href="#添加M17N源" class="headerlink" title="添加M17N源"></a>添加M17N源</h2><p>搜狗输入法的安装器在OpenSUSE的M17N源，即多语言支持源中。首先进入源的地址（<a href="http://download.opensuse.org/repositories/M17N/" target="_blank" rel="noopener">http://download.opensuse.org/repositories/M17N/</a> ），然后在列表中找到与你OpenSUSE版本所对应的那一项。进入后，复制地址栏上的地址备用。例如，笔者的OpenSUSE是Leap 15.0版本的，那就点击“OpenSUSE_Leap_15.0“，从而在地址栏得到这个地址：</p>
+<h2><span id="添加m17n源">添加M17N源</span></h2><p>搜狗输入法的安装器在OpenSUSE的M17N源，即多语言支持源中。首先进入源的地址（<a href="http://download.opensuse.org/repositories/M17N/" target="_blank" rel="noopener">http://download.opensuse.org/repositories/M17N/</a> ），然后在列表中找到与你OpenSUSE版本所对应的那一项。进入后，复制地址栏上的地址备用。例如，笔者的OpenSUSE是Leap 15.0版本的，那就点击“OpenSUSE_Leap_15.0“，从而在地址栏得到这个地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://download.opensuse.org/repositories/M17N/openSUSE_Leap_15.0/</span><br></pre></td></tr></table></figure>
 <p><img src="https://upload-images.jianshu.io/upload_images/5168189-c59dfa2fa29f4d46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="这个列表显示了所有OpenSUSE的版本，需要在其中选择你当前运行的版本，才能获得正确的软件包。"></p>
 <p>打开终端，输入以下命令来添加源，命令中的地址就是刚才复制的地址，只是要在最后加上“<code>M17N.repo</code>”：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo zypper ar -f http://download.opensuse.org/repositories/M17N/openSUSE_Leap_15.0/M17N.repo</span><br><span class="line">sudo zypper refresh      # 刷新软件源</span><br></pre></td></tr></table></figure>
 <p>这样，多语言支持源就添加好了。</p>
-<h2 id="安装搜狗输入法"><a href="#安装搜狗输入法" class="headerlink" title="安装搜狗输入法"></a>安装搜狗输入法</h2><p>直接在终端中就可以安装：</p>
+<h2><span id="安装搜狗输入法">安装搜狗输入法</span></h2><p>直接在终端中就可以安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zypper install sogou-pinyin</span><br></pre></td></tr></table></figure>
 <p>稍等片刻，让安装过程正常进行。有别于其他的RPM软件包，这里的搜狗输入法“软件包”其实是一个安装器，由shell脚本构成。它的作用就是获取搜狗官方的DEB安装包，然后将其中的内容直接抽取出来，安装到系统的相应位置。据此就可以在不支持DEB的OpenSUSE中安装搜狗的DEB安装包了。</p>
-<h2 id="解决依赖问题"><a href="#解决依赖问题" class="headerlink" title="解决依赖问题"></a>解决依赖问题</h2><p>理论上，在任务栏上的Fcitx输入法管理器中就可以找到搜狗输入法，并启用之。但是，搜狗输入法却始终无法正常工作，表现为实际的输入法界面和控制栏一直未出现，而且过一段时间后就弹出输入法出错的提示。</p>
+<h2><span id="解决依赖问题">解决依赖问题</span></h2><p>理论上，在任务栏上的Fcitx输入法管理器中就可以找到搜狗输入法，并启用之。但是，搜狗输入法却始终无法正常工作，表现为实际的输入法界面和控制栏一直未出现，而且过一段时间后就弹出输入法出错的提示。</p>
 <p>后来，笔者尝试在终端中直接运行搜狗输入法的主程序<code>sogou-qimpanel</code>，结果提示找不到共享库<code>libQtWebKit.so.4</code>，无法运行。</p>
 <p>看来，终究还是缺少依赖导致运行异常——OpenSUSE默认并未带这个库。所幸，这个库文件是可以直接用zypper来安装的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zypper install libQtWebKit4</span><br></pre></td></tr></table></figure>
 <p>安装完成后，重启搜狗输入法，即可正常打字了。</p>
-<h2 id="解决无法输入中文标点的问题"><a href="#解决无法输入中文标点的问题" class="headerlink" title="解决无法输入中文标点的问题"></a>解决无法输入中文标点的问题</h2><p>笔者随意打开了一个文本编辑器打字，结果发现，搜狗输入法虽然能正常输入了，但打出来的标点全都是半角英文标点，即使开启了中文标点选项也是如此。</p>
+<h2><span id="解决无法输入中文标点的问题">解决无法输入中文标点的问题</span></h2><p>笔者随意打开了一个文本编辑器打字，结果发现，搜狗输入法虽然能正常输入了，但打出来的标点全都是半角英文标点，即使开启了中文标点选项也是如此。</p>
 <p>这个问题解决的办法其实很简单：<strong>重启系统即可</strong>。重启完成后，搜狗输入法就能正常输入中文标点了。</p>
 <p>若还是有问题，可以在OpenSUSE的“Qt 4 设置”程序中（在OpenSUSE开始菜单搜索“Qt 设置”即可找到），将“Interface”选项卡中的“Default Input Method”设为Fcitx。</p>
-<h2 id="另一种解决办法"><a href="#另一种解决办法" class="headerlink" title="另一种解决办法"></a>另一种解决办法</h2><p>除了使用M17N源中的安装器之外，还有一种办法就是转换安装包格式。使用Alien这款工具，可以实现DEB和RPM安装包之间的互转，具体可以参阅以下教程：</p>
+<h2><span id="另一种解决办法">另一种解决办法</span></h2><p>除了使用M17N源中的安装器之外，还有一种办法就是转换安装包格式。使用Alien这款工具，可以实现DEB和RPM安装包之间的互转，具体可以参阅以下教程：</p>
 <ul>
 <li><a href="https://www.linuxidc.com/Linux/2017-12/149567.htm" target="_blank" rel="noopener">Ubuntu/Debian下的安装包装换工具 – alien</a></li>
 <li><a href="https://www.linuxidc.com/Linux/2015-09/122573.htm" target="_blank" rel="noopener">Alien 魔法：RPM 和 DEB 互转</a></li>
 </ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<h2><span id="参考文献">参考文献</span></h2><ul>
 <li><a href="https://blog.csdn.net/github_32658299/article/details/58761267" target="_blank" rel="noopener">github_32658299:<br>openSUSE Leap42.2安装搜狗输入法 for Linux</a></li>
 </ul>
 
@@ -530,23 +530,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,15 +550,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,6 +571,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,14 +631,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

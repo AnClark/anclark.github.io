@@ -62,7 +62,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/archives">所有文章</a></li>
 	        
 				<li><a href="/tags/技术笔记/">技术笔记</a></li>
 	        
@@ -164,7 +164,7 @@
 				
 					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
 					<li style="width: 20%"><a href="/tags/技术笔记/">技术笔记</a></li>
 		        
@@ -207,9 +207,9 @@
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>在Deepin Linux下，默认地，使用<code>apt</code>安装的Wine并没有创建文件关联，这使得在文件管理器中双击<code>exe</code>等Windows可执行文件时，不能直接运行。为此，必须手动在桌面环境中创建文件关联。</p>
 <a id="more"></a>
-<h2 id="文件关联的位置"><a href="#文件关联的位置" class="headerlink" title="文件关联的位置"></a>文件关联的位置</h2><p>DDE（Deepin Desktop Environment，深度桌面环境）、Gnome等桌面环境通过桌面配置文件<code>*.desktop</code>，来定义在桌面环境下运行应用程序的入口，这些配置文件放置在<code>/usr/share/applications</code>目录下。文件关联——打开文件的方式，正是运行应用程序入口的一种用法。文件管理器通过读取该目录下定义的配置文件，来获取某种特定类型文件的打开方式。</p>
+<h2><span id="文件关联的位置">文件关联的位置</span></h2><p>DDE（Deepin Desktop Environment，深度桌面环境）、Gnome等桌面环境通过桌面配置文件<code>*.desktop</code>，来定义在桌面环境下运行应用程序的入口，这些配置文件放置在<code>/usr/share/applications</code>目录下。文件关联——打开文件的方式，正是运行应用程序入口的一种用法。文件管理器通过读取该目录下定义的配置文件，来获取某种特定类型文件的打开方式。</p>
 <p>因此，我们只需要编写合适的配置文件，放入其中，然后设置<code>exe</code>等文件的打开方式，就可以通过双击直接运行Windows程序了。</p>
-<h2 id="Desktop配置文件内容与解析"><a href="#Desktop配置文件内容与解析" class="headerlink" title="Desktop配置文件内容与解析"></a>Desktop配置文件内容与解析</h2><p>笔者编写的配置文件如下所示。将下述配置文件保存为<code>/usr/share/applications/Wine.desktop</code>。添加完成之后，就可以在<code>exe</code>文件的打开方式中看到Wine了。</p>
+<h2><span id="desktop配置文件内容与解析">Desktop配置文件内容与解析</span></h2><p>笔者编写的配置文件如下所示。将下述配置文件保存为<code>/usr/share/applications/Wine.desktop</code>。添加完成之后，就可以在<code>exe</code>文件的打开方式中看到Wine了。</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Name</span>=Wine</span><br><span class="line"><span class="attr">Name[zh_CN]</span>=Wine</span><br><span class="line"><span class="attr">GenericName</span>=Launch by Wine</span><br><span class="line"><span class="attr">GenericName[zh_CN]</span>=使用Wine运行</span><br><span class="line"><span class="attr">Comment</span>=Launch by Wine</span><br><span class="line"><span class="attr">Comment[zh_CN]</span>=使用Wine运行</span><br><span class="line"><span class="attr">MimeType</span>=application/octet-stream</span><br><span class="line"><span class="attr">Keywords</span>=exe;scr;</span><br><span class="line"><span class="attr">Exec</span>=wine-stable %f</span><br><span class="line"><span class="attr">Icon</span>=wine</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">NoDisplay</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Categories</span>=System;Utility;</span><br><span class="line"><span class="attr">StartupNotify</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <p>各个参数的意义如下：</p>
 <table>
@@ -270,7 +270,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="另一种写法"><a href="#另一种写法" class="headerlink" title="另一种写法"></a>另一种写法</h2><p>Wine官方提供的桌面配置文件<code>wineloader.desktop</code>如下所示，似乎相较于笔者探究的版本，还支持显示Windows应用程序的图标。<strong>不过该方案只适用于Ubuntu，在Deepin上未测试成功。</strong></p>
+<h2><span id="另一种写法">另一种写法</span></h2><p>Wine官方提供的桌面配置文件<code>wineloader.desktop</code>如下所示，似乎相较于笔者探究的版本，还支持显示Windows应用程序的图标。<strong>不过该方案只适用于Ubuntu，在Deepin上未测试成功。</strong></p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Encoding</span>=UTF-<span class="number">8</span></span><br><span class="line"><span class="attr">Name</span>=Wine</span><br><span class="line"><span class="attr">Comment</span>=Wine Windows Program Loader</span><br><span class="line"><span class="attr">Exec</span>=wine %U</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Icon</span>=wine</span><br><span class="line"><span class="attr">Categories</span>=Application;Utility;</span><br><span class="line"><span class="attr">MimeType</span>=application/x-ms-dos-executable;</span><br><span class="line"><span class="attr">StartupNotify</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">NoDisplay</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
 
       
@@ -563,23 +563,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,15 +583,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -616,6 +604,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -656,14 +664,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

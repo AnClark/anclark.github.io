@@ -9,7 +9,7 @@
   <title>刷机后要做的单元测试 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="我用的手机是小米Max初代。无奈小米官方不给力，迟迟没有发布基于Android 9.0的MIUI，于是就想刷其他的ROM尝尝鲜。 不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。">
-<meta name="keywords" content="技术笔记,Android 适配笔记,随笔">
+<meta name="keywords" content="随笔,技术笔记,Android 适配笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="刷机后要做的单元测试">
 <meta property="og:url" content="http://yoursite.com/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/index.html">
@@ -62,7 +62,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/archives">所有文章</a></li>
 	        
 				<li><a href="/tags/技术笔记/">技术笔记</a></li>
 	        
@@ -164,7 +164,7 @@
 				
 					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
 					<li style="width: 20%"><a href="/tags/技术笔记/">技术笔记</a></li>
 		        
@@ -209,27 +209,27 @@
 <p>不过，小米官方的ROM经过了专业的测试和调校，理论上是最适合我手机的，然而其他的ROM却完全不一定。很多ROM，无论是在性能上，体验上，还是硬件的适配（如GPS）上，都会出现或多或少的问题，加之大部分的第三方ROM都是老外的作品，由此更加剧了ROM未来体验的不确定性。</p>
 <p>因此，对新的ROM做做单元测试，很有必要。笔者的单元测试主要包括以下要素：</p>
 <a id="more"></a>
-<h2 id="移动网络"><a href="#移动网络" class="headerlink" title="移动网络"></a>移动网络</h2><ul>
+<h2><span id="移动网络">移动网络</span></h2><ul>
 <li>双卡设备，是否能保证双卡在线，有信号</li>
 <li>是否能正常连接4G网络</li>
 </ul>
-<h2 id="WIFI"><a href="#WIFI" class="headerlink" title="WIFI"></a>WIFI</h2><ul>
+<h2><span id="wifi">WIFI</span></h2><ul>
 <li>是否能正常连接，包括5GHz频段的网络</li>
 <li>若在MIUI中连接的网络出现掉线，则检查同样的网络是否在新的ROM中也掉线</li>
 </ul>
-<h2 id="GPS"><a href="#GPS" class="headerlink" title="GPS"></a>GPS</h2><ul>
+<h2><span id="gps">GPS</span></h2><ul>
 <li>在户外使用地图软件是否能准确定位</li>
 <li>使用GPS测试工具，是否能同时搜到GPS、格洛纳斯与北斗。新推出的国产设备基本支持北斗导航，在测试软件中北斗卫星的编号是三位数，有别于另两家。</li>
 </ul>
-<h2 id="电池续航"><a href="#电池续航" class="headerlink" title="电池续航"></a>电池续航</h2><ul>
+<h2><span id="电池续航">电池续航</span></h2><ul>
 <li>对比充满电后的续航，相比于MIUI是能坚持的更久，或相同，或不如MIUI</li>
 <li>测试期间，保证你之前在MIUI中如何使用，<strong>使用强度如何，在新的ROM中就怎样使用</strong></li>
 </ul>
-<h2 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h2><ul>
+<h2><span id="相机">相机</span></h2><ul>
 <li>是否出现秒退。小米Max的很多第三方ROM都不约而同地出现无法使用相机的Bug。</li>
 <li>是否能正常录像。部分第三方ROM会在录像时卡死。</li>
 </ul>
-<h2 id="应用程序"><a href="#应用程序" class="headerlink" title="应用程序"></a>应用程序</h2><ul>
+<h2><span id="应用程序">应用程序</span></h2><ul>
 <li>多任务切换是否顺畅，是否因内存优化不到位而导致部分程序进入后台后直接被关闭</li>
 <li>你的常用软件使用是否顺畅</li>
 </ul>
@@ -277,15 +277,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
@@ -532,23 +532,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,15 +552,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,6 +573,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -625,14 +633,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
             
             <div class="clearfix"></div>

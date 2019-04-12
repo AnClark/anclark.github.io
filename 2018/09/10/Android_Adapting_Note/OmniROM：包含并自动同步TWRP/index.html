@@ -206,9 +206,9 @@
 <blockquote>
 <p><strong>假设当前目录在OmniROM源码的根目录下。</strong></p>
 </blockquote>
-<h2><span id="di-yi-bu-shan-chu-aosp-de-recovery-suo-dui-ying-de-manifest-xiang-mu">第一步：删除AOSP的Recovery所对应的manifest项目</span><a href="#di-yi-bu-shan-chu-aosp-de-recovery-suo-dui-ying-de-manifest-xiang-mu" class="header-anchor">#</a></h2><p>打开<code>.repo/manifest.xml</code>（为<code>.repo/manifests/default.xml</code>的符号链接），删除或注释掉这一行：</p>
+<h2 id="第一步：删除AOSP的Recovery所对应的manifest项目"><a href="#第一步：删除AOSP的Recovery所对应的manifest项目" class="headerlink" title="第一步：删除AOSP的Recovery所对应的manifest项目"></a>第一步：删除AOSP的Recovery所对应的manifest项目</h2><p>打开<code>.repo/manifest.xml</code>（为<code>.repo/manifests/default.xml</code>的符号链接），删除或注释掉这一行：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">path</span>=<span class="string">"bootable/recovery"</span> <span class="attr">name</span>=<span class="string">"platform/bootable/recovery"</span> <span class="attr">groups</span>=<span class="string">"pdk"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h2><span id="di-er-bu-zai-omnirom-de-manifest-zhong-jia-ru-twrp-de-manifest-xiang-mu">第二步：在OmniROM的manifest中加入TWRP的manifest项目</span><a href="#di-er-bu-zai-omnirom-de-manifest-zhong-jia-ru-twrp-de-manifest-xiang-mu" class="header-anchor">#</a></h2><p>TWRP包含以下项目：</p>
+<h2 id="第二步：在OmniROM的manifest中加入TWRP的manifest项目"><a href="#第二步：在OmniROM的manifest中加入TWRP的manifest项目" class="headerlink" title="第二步：在OmniROM的manifest中加入TWRP的manifest项目"></a>第二步：在OmniROM的manifest中加入TWRP的manifest项目</h2><p>TWRP包含以下项目：</p>
 <ul>
 <li>本体：<a href="https://github.com/omnirom/android_bootable_recovery" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery</a></li>
 <li>Busybox：<a href="https://github.com/omnirom/android_external_busybox" target="_blank" rel="noopener">https://github.com/omnirom/android_external_busybox</a></li>
@@ -216,7 +216,7 @@
 <p>其中，TWRP的使用和运行离不开Busybox，一方面是shell和常用的工具都由它提供，而另一方面TWRP的一些库也依赖它。</p>
 <p>打开<code>.repo/manifests/omni-default.xml</code>，在<code>&lt;manifest&gt;</code>节的尾部添加：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AnClark ADDED: Omni TWRP repositories --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"android_bootable_recovery"</span> <span class="attr">path</span>=<span class="string">"bootable/recovery"</span> <span class="attr">remote</span>=<span class="string">"omnirom"</span> <span class="attr">revision</span>=<span class="string">"android-8.1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"android_external_busybox"</span> <span class="attr">path</span>=<span class="string">"external/busybox"</span> <span class="attr">remote</span>=<span class="string">"omnirom"</span> <span class="attr">revision</span>=<span class="string">"android-8.1"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h2><span id="di-san-bu-chong-xin-tong-bu">第三步：重新同步</span><a href="#di-san-bu-chong-xin-tong-bu" class="header-anchor">#</a></h2><p>回到源码根目录，重新同步源码：</p>
+<h2 id="第三步：重新同步"><a href="#第三步：重新同步" class="headerlink" title="第三步：重新同步"></a>第三步：重新同步</h2><p>回到源码根目录，重新同步源码：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync --force-sync -f -j4</span><br></pre></td></tr></table></figure>
 <p>参数中加上<code>--force-sync</code>，要求repo强制同步，将产生同步冲突等问题的项目强行覆盖掉；<code>-f</code>表示连接有问题也继续同步；<code>-j4</code>表示一次开启4个线程（根据处理器和网络状况而定）。</p>
 <p>稍等片刻，TWRP的源码就会同步到相应的目录中，完成之后即可开始编译了。</p>
@@ -551,6 +551,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -559,11 +567,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,11 +591,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
               </li>
              
               <li class="article-tag-list-item">

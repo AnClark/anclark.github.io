@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文未完成！  TODO大纲#变色龙#新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区#可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。#引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志">
+  <meta name="description" content="本文未完成！  TODO大纲变色龙新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志会由0F">
 <meta name="keywords" content="随笔,Mac OS,黑苹果">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记">
 <meta property="og:url" content="http://yoursite.com/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="本文未完成！  TODO大纲#变色龙#新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区#可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。#引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志">
+<meta property="og:description" content="本文未完成！  TODO大纲变色龙新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志会由0F">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-03-28T03:17:27.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记">
-<meta name="twitter:description" content="本文未完成！  TODO大纲#变色龙#新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区#可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。#引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志">
+<meta name="twitter:description" content="本文未完成！  TODO大纲变色龙新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中 重命名Avldr.bin为ntldr，然后bootsect nt52 mbr 苹果系统分区可装在逻辑分区中，不装主分区，以免与引导分区冲突 苹果安装文件分区必须放在苹果系统分区之前！ 第一轮安装之后。。。引导分区会被自动取消激活。必须重新激活引导分区才行。 另外，扩展分区的标志会由0F">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -202,28 +202,28 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
 <p>本文未完成！</p>
 </blockquote>
-<h1><span id="todo-da-gang">TODO大纲</span><a href="#todo-da-gang" class="header-anchor">#</a></h1><h2><span id="bian-se-long">变色龙</span><a href="#bian-se-long" class="header-anchor">#</a></h2><p>新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中</p>
+<h1 id="TODO大纲"><a href="#TODO大纲" class="headerlink" title="TODO大纲"></a>TODO大纲</h1><h2 id="变色龙"><a href="#变色龙" class="headerlink" title="变色龙"></a>变色龙</h2><p>新建一个主分区作为引导分区，100MB即可，激活，然后变色龙所有文件放入其中</p>
 <p>重命名Avldr.bin为ntldr，然后bootsect nt52 mbr</p>
-<h2><span id="ping-guo-xi-tong-fen-qu">苹果系统分区</span><a href="#ping-guo-xi-tong-fen-qu" class="header-anchor">#</a></h2><p>可装在逻辑分区中，不装主分区，以免与引导分区冲突</p>
+<h2 id="苹果系统分区"><a href="#苹果系统分区" class="headerlink" title="苹果系统分区"></a>苹果系统分区</h2><p>可装在逻辑分区中，不装主分区，以免与引导分区冲突</p>
 <p>苹果安装文件分区必须放在苹果系统分区之前！</p>
-<h2><span id="di-yi-lun-an-zhuang-zhi-hou">第一轮安装之后。。。</span><a href="#di-yi-lun-an-zhuang-zhi-hou" class="header-anchor">#</a></h2><p>引导分区会被自动取消激活。必须重新激活引导分区才行。</p>
+<h2 id="第一轮安装之后。。。"><a href="#第一轮安装之后。。。" class="headerlink" title="第一轮安装之后。。。"></a>第一轮安装之后。。。</h2><p>引导分区会被自动取消激活。必须重新激活引导分区才行。</p>
 <p>另外，扩展分区的标志会由0F变为05，一并改之。</p>
 <p>工具：DiskGenius</p>
-<h2><span id="wei-jie-jue-de-wen-ti">未解决的问题</span><a href="#wei-jie-jue-de-wen-ti" class="header-anchor">#</a></h2><ul>
+<h2 id="未解决的问题"><a href="#未解决的问题" class="headerlink" title="未解决的问题"></a>未解决的问题</h2><ul>
 <li>只能用USB键鼠，不能用笔记本键盘</li>
 <li>WIFI</li>
 <li>显卡</li>
 <li>声卡</li>
 </ul>
-<h2><span id="qu-dong-xiang-guan-gong-ju">驱动相关工具</span><a href="#qu-dong-xiang-guan-gong-ju" class="header-anchor">#</a></h2><ul>
+<h2 id="驱动相关工具"><a href="#驱动相关工具" class="headerlink" title="驱动相关工具"></a>驱动相关工具</h2><ul>
 <li>MultiBeast</li>
 <li>EasyKext Pro</li>
 </ul>
-<h2><span id="qu-dong">驱动</span><a href="#qu-dong" class="header-anchor">#</a></h2><ul>
+<h2 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h2><ul>
 <li>VoodooPS2Controller</li>
 </ul>
-<h1><span id="zheng-wen">正文</span><a href="#zheng-wen" class="header-anchor">#</a></h1><p>【前言先放着】</p>
-<h2><span id="bi-ji-ben-de-pei-zhi">笔记本的配置</span><a href="#bi-ji-ben-de-pei-zhi" class="header-anchor">#</a></h2><table>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>【前言先放着】</p>
+<h2 id="笔记本的配置"><a href="#笔记本的配置" class="headerlink" title="笔记本的配置"></a>笔记本的配置</h2><table>
 <thead>
 <tr>
 <th>要素</th>
@@ -270,16 +270,16 @@
 </tbody>
 </table>
 <p>值得注意的是，X200首发于2009年，那时UEFI技术尚还处在萌芽之中，所以原版Clover的黑苹果自然不能奢望了。在这台有历史年头的电脑上，就只能使用最传统的MBR分区安装了。</p>
-<h2><span id="zhun-bei">准备</span><a href="#zhun-bei" class="header-anchor">#</a></h2><ul>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
 <li>Windows 8/10 PE<br>笔者使用Windows 10 PE。选择Win8及以上版本是因为它们自带了引导工具bootsect。若PE未附带该工具，也可以从Win7的安装盘中提取该工具，或使用BootIce替代。</li>
 <li>Mac OS CDR格式懒人版映像<br>笔者选用黑苹果乐园的版本。懒人版诞生的初衷，就是为了在MBR分区上安装Mac OS。</li>
 </ul>
-<h2><span id="pei-zhi-fen-qu">配置分区</span><a href="#pei-zhi-fen-qu" class="header-anchor">#</a></h2><p>笔者采用的分区方案是：只留一个100MB左右的分区作为主分区，其余空间划为扩展分区。扩展分区中的逻辑分区才用于安装系统与存放数据。这一理念借鉴了ESP分区（EFI System Partition），UEFI中的 ESP正是专门用于引导系统的。</p>
-<h3><span id="1-pei-zhi-yin-dao-fen-qu">（1）配置引导分区</span><a href="#1-pei-zhi-yin-dao-fen-qu" class="header-anchor">#</a></h3><p>打开DiskGenius，然后在第一个分区的位置建立一个100MB的主分区。如果硬盘有可用空间，直接创建即可；否则则需右键单击第一个分区，选择“调整大小”，拉动分区图左边的滑杆，腾出100MB。</p>
+<h2 id="配置分区"><a href="#配置分区" class="headerlink" title="配置分区"></a>配置分区</h2><p>笔者采用的分区方案是：只留一个100MB左右的分区作为主分区，其余空间划为扩展分区。扩展分区中的逻辑分区才用于安装系统与存放数据。这一理念借鉴了ESP分区（EFI System Partition），UEFI中的 ESP正是专门用于引导系统的。</p>
+<h3 id="（1）配置引导分区"><a href="#（1）配置引导分区" class="headerlink" title="（1）配置引导分区"></a>（1）配置引导分区</h3><p>打开DiskGenius，然后在第一个分区的位置建立一个100MB的主分区。如果硬盘有可用空间，直接创建即可；否则则需右键单击第一个分区，选择“调整大小”，拉动分区图左边的滑杆，腾出100MB。</p>
 <p>创建时，选择格式化为FAT或FAT32。</p>
 <p>然后右键点击分区，选择“激活当前分区”，以将该分区设为启动分区。</p>
 <p>整个过程需要根据提示点击工具栏上的“应用更改”，方能生效。</p>
-<h3><span id="2-an-zhuang-bian-se-long-yin-dao-wen-jian">（2）安装变色龙引导文件</span><a href="#2-an-zhuang-bian-se-long-yin-dao-wen-jian" class="header-anchor">#</a></h3><h2><span id="zhun-bei-an-zhuang-wen-jian">准备安装文件</span><a href="#zhun-bei-an-zhuang-wen-jian" class="header-anchor">#</a></h2>
+<h3 id="（2）安装变色龙引导文件"><a href="#（2）安装变色龙引导文件" class="headerlink" title="（2）安装变色龙引导文件"></a>（2）安装变色龙引导文件</h3><h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2>
       
 
       
@@ -614,6 +614,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -622,11 +630,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,11 +654,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
               </li>
              
               <li class="article-tag-list-item">

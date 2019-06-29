@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5168189-a78f271bc313a1c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5168189-92812ca7242a3acf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-06-29T10:33:08.543Z">
+<meta property="og:updated_time" content="2019-06-29T10:49:45.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Deepin Linux + KWin 屏幕界面的撕裂问题">
 <meta name="twitter:description" content="笔者是一个苛求显卡性能的程序员，对坐拥的两台“古董”笔记本也一视同仁。这两台笔记本，一台是2009年的老机器ThinkPad X61，安装了OpenSUSE；而另一台是2012年的ThinkPad X200，用的是Deepin Linux。 按理说，新机器的显卡性能相对于旧机器应当有所改善，可是事实却让我无奈——X200的Deepin下，拖动窗口时画面会有明显的撕裂感，一个窗口被拆成两半，而且在使">
@@ -204,9 +204,7 @@
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>笔者是一个苛求显卡性能的程序员，对坐拥的两台“古董”笔记本也一视同仁。这两台笔记本，一台是2009年的老机器ThinkPad X61，安装了OpenSUSE；而另一台是2012年的ThinkPad X200，用的是Deepin Linux。</p>
 <p>按理说，新机器的显卡性能相对于旧机器应当有所改善，可是事实却让我无奈——X200的Deepin下，拖动窗口时画面会有明显的撕裂感，一个窗口被拆成两半，而且在使用SMPlayer播放视频（720p）时，也会有细微但肉眼可辨的撕裂。然而，X61的OpenSUSE却完全不存在这样的问题，拖动窗口时一气呵成，不会撕裂，观感体验要好上不少。</p>
-<p>撕裂现象是Deepin在一些老机器上容易产生的问题。Deepin属于比较新的系统，不可能会对旧机型进行细致的优化，其默认的显卡配置（Xorg的配置文件）也不是放之四海而皆准的，因此还得手动解决。但是，Deepin最新适配的窗口管理器（下文简称“窗管”）KWin，能够便捷地解决这个问题。KWin是KDE的窗管，得益于它的桌面混成器（desktop compositor），KDE Plasma桌面得以充分发挥显卡的性能，哪怕是X61所使用的旧显卡都能实现行云流水的使用体验。这一特性也在Deepin版的KWin得到了实现。</p>
-<h2 id="安装KWin"><a href="#安装KWin" class="headerlink" title="安装KWin"></a>安装KWin</h2><p>Deepin目前的版本（15.10.1）默认的窗管是Mutter，而不是KWin。KWin需要手动安装，安装下面的包之后，下次启动系统后窗管就会自动从Mutter切换到KWin：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dde-kwin</span><br></pre></td></tr></table></figure>
+<a id="more"></a>s<br><br>撕裂现象是Deepin在一些老机器上容易产生的问题。Deepin属于比较新的系统，不可能会对旧机型进行细致的优化，其默认的显卡配置（Xorg的配置文件）也不是放之四海而皆准的，因此还得手动解决。但是，Deepin最新适配的窗口管理器（下文简称“窗管”）KWin，能够便捷地解决这个问题。KWin是KDE的窗管，得益于它的桌面混成器（desktop compositor），KDE Plasma桌面得以充分发挥显卡的性能，哪怕是X61所使用的旧显卡都能实现行云流水的使用体验。这一特性也在Deepin版的KWin得到了实现。<br><br>## 安装KWin<br><br>Deepin目前的版本（15.10.1）默认的窗管是Mutter，而不是KWin。KWin需要手动安装，安装下面的包之后，下次启动系统后窗管就会自动从Mutter切换到KWin：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dde-kwin</span><br></pre></td></tr></table></figure>
 <h2 id="安装-systemsettings"><a href="#安装-systemsettings" class="headerlink" title="安装 systemsettings"></a>安装 systemsettings</h2><p>Deepin的KWin默认没有启用桌面混成器，所以在KWin下仍然会出现画面撕裂的情况，与默认的Mutter窗管无异。笔者曾以为Deepin团队会针对KWin的性能作出针对性优化，然而事与愿违了。接下来只能手动启用混成器。</p>
 <p>桌面混成器的设置位于<code>systemsettings</code>包中。这个包是精简版的KDE系统设置程序，只保留了与KWin和网络有关的设置项。使用下面命令直接安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install systemsettings</span><br></pre></td></tr></table></figure>
@@ -597,11 +595,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,7 +623,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
+                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,14 +636,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,19 +659,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
               </li>
              
               <li class="article-tag-list-item">

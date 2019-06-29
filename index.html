@@ -179,6 +179,159 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Struggle_with_Linux/解决Deepin-KWin撕裂问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/">解决Deepin Linux + KWin 屏幕界面的撕裂问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/" class="archive-article-date">
+  	<time datetime="2019-06-29T10:29:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>笔者是一个苛求显卡性能的程序员，对坐拥的两台“古董”笔记本也一视同仁。这两台笔记本，一台是2009年的老机器ThinkPad X61，安装了OpenSUSE；而另一台是2012年的ThinkPad X200，用的是Deepin Linux。</p>
+<p>按理说，新机器的显卡性能相对于旧机器应当有所改善，可是事实却让我无奈——X200的Deepin下，拖动窗口时画面会有明显的撕裂感，一个窗口被拆成两半，而且在使用SMPlayer播放视频（720p）时，也会有细微但肉眼可辨的撕裂。然而，X61的OpenSUSE却完全不存在这样的问题，拖动窗口时一气呵成，不会撕裂，观感体验要好上不少。</p>
+<p>撕裂现象是Deepin在一些老机器上容易产生的问题。Deepin属于比较新的系统，不可能会对旧机型进行细致的优化，其默认的显卡配置（Xorg的配置文件）也不是放之四海而皆准的，因此还得手动解决。但是，Deepin最新适配的窗口管理器（下文简称“窗管”）KWin，能够便捷地解决这个问题。KWin是KDE的窗管，得益于它的桌面混成器（desktop compositor），KDE Plasma桌面得以充分发挥显卡的性能，哪怕是X61所使用的旧显卡都能实现行云流水的使用体验。这一特性也在Deepin版的KWin得到了实现。</p>
+<h2 id="安装KWin"><a href="#安装KWin" class="headerlink" title="安装KWin"></a>安装KWin</h2><p>Deepin目前的版本（15.10.1）默认的窗管是Mutter，而不是KWin。KWin需要手动安装，安装下面的包之后，下次启动系统后窗管就会自动从Mutter切换到KWin：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dde-kwin</span><br></pre></td></tr></table></figure>
+<h2 id="安装-systemsettings"><a href="#安装-systemsettings" class="headerlink" title="安装 systemsettings"></a>安装 systemsettings</h2><p>Deepin的KWin默认没有启用桌面混成器，所以在KWin下仍然会出现画面撕裂的情况，与默认的Mutter窗管无异。笔者曾以为Deepin团队会针对KWin的性能作出针对性优化，然而事与愿违了。接下来只能手动启用混成器。</p>
+<p>桌面混成器的设置位于<code>systemsettings</code>包中。这个包是精简版的KDE系统设置程序，只保留了与KWin和网络有关的设置项。使用下面命令直接安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install systemsettings</span><br></pre></td></tr></table></figure>
+<p>安装后，启动器中就会多出一个“KDE系统设置”，如图所示。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5168189-a78f271bc313a1c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"> </p>
+<h2 id="配置桌面混成器"><a href="#配置桌面混成器" class="headerlink" title="配置桌面混成器"></a>配置桌面混成器</h2><p>打开KDE系统设置，左栏最后一项“显示和监控”即为桌面混成器的设置。点开它：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5168189-92812ca7242a3acf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"> </p>
+<h3 id="基本设置"><a href="#基本设置" class="headerlink" title="基本设置"></a>基本设置</h3><p>首先，勾选“Enable compositor on startup”，让KWin在系统启动时自动启动混成器。然后“Rendering backend”（渲染后端）选择“OpenGL 2.0”或“OpenGL 3.1”。</p>
+<h3 id="垂直同步设置"><a href="#垂直同步设置" class="headerlink" title="垂直同步设置"></a>垂直同步设置</h3><p>垂直同步是防止撕裂的关键。KDE提供了若干种垂直同步的处理方法，位于“Tearing prevention (‘vsync’)”这个选项中。每选择一个方法，设置界面中就会用蓝色的框说明该选项可能会导致的后果。</p>
+<p>具体的方法见下表：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+<th>在X200下的实际效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Never</td>
+<td>禁用垂直同步</td>
+<td>于是画面会撕裂。。。</td>
+</tr>
+<tr>
+<td>Automatic</td>
+<td>自动选择垂直同步的方法</td>
+<td>不靠谱，往往会选择并没有啥用的方法</td>
+</tr>
+<tr>
+<td>Only when cheap</td>
+<td>只在性能开销不大的时候进行处理</td>
+<td>只会在全屏内容改变（如视频播放）时起作用</td>
+</tr>
+<tr>
+<td>Full screen repaints</td>
+<td>全屏重绘制</td>
+<td>真正能在英特尔集显上起作用的方法，完美！</td>
+</tr>
+<tr>
+<td>Re-use screen content</td>
+<td>复用屏幕元素</td>
+<td>电脑卡成了PPT，根本无法正常使用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实践证明，只有Full screen repaints适合我的X200笔记本。</strong>选择该模式并应用，再拖动窗口，果然不再撕裂了，使用体验变得顺滑了不少！</p>
+<p>另外两种方式中，“Only when cheap”只在播放视频时能起到防止撕裂的作用。而对于“Re-use screen content”，KDE的开发者表示<strong>该模式会在MESA驱动中导致严重的性能问题</strong>，果不其然，选择该模式后，电脑就卡成了PPT，动弹不得，延迟爆表！我可是费了很大的劲才把设置还原回来。Linux配备的英特尔集显驱动就是一种MESA驱动，它最终的表现正应了开发者的警告。</p>
+<h2 id="桌面混成器的意义"><a href="#桌面混成器的意义" class="headerlink" title="桌面混成器的意义"></a>桌面混成器的意义</h2><p>启用桌面混成器并选用有效的垂直同步处理方法后，Deepin的体验有了质的提升。</p>
+<p>首先是窗口拖动不再出现撕裂的情况，使得界面的操作体验更为舒适流畅，提高了Deepin的规格。</p>
+<p>同时，桌面混成器也提高了各种应用程序的界面渲染性能，这是我意料之外的收获。举个例子：Typora，基于Electron开发的Markdown编辑器，它的Chromium内核默认没有启用硬件加速，在启用桌面混成器之前滚屏时会有间歇性错位的现象；Deepin设置，滚屏时虽然很流畅，但也常常会出现界面错位，影响观感。上述两个问题在配置桌面混成器后，竟然在我不经意之间都得到了解决，偶然再使用它们时才发现这一切的转变。</p>
+<p>X61上的OpenSUSE，它的KDE Plasma桌面默认就配置好了混成器，所以一开始就无比流畅。而Deepin在经过调教之后，它的表现也开始不输于KDE了。电脑要流畅，启用混成器是王道。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Deepin</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">垂直同步</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Deepin//" class="article-tag-list-link color2">Deepin</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Play_Switch/使用Visual Studio Code阅读Switch Homebrew程序源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1075,110 +1228,6 @@
 
 
   
-    <article id="post-Network/在OpenWrt路由器上使用IPv6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/">在OpenWrt路由器上使用IPv6</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/" class="archive-article-date">
-  	<time datetime="2018-11-12T09:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。</p>
-<p>为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。</p>
-        
-          <a class="article-more-a" href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OpenWrt</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IPv6</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">路由器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络//" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/路由器//" class="article-tag-list-link color4">路由器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1305,59 +1354,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1377,6 +1374,58 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
               </li>
              
@@ -1393,15 +1442,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/parted_demo_1.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/parted_demo_2.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/parted_demo_3.png">
-<meta property="og:updated_time" content="2019-03-30T12:10:58.302Z">
+<meta property="og:updated_time" content="2019-07-05T13:00:00.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="静态交叉编译parted在Android上运行">
 <meta name="twitter:description" content="前言现在有越来越多的Android手机用上了GPT分区表。我目前接触过的有：华为C8816、G6-C00、Ascend P6，中兴U880E，还有亚马逊Kindle Fire。目前我不太好解释GPT 分区表相对于之前安卓手机广泛使用的MBR分区表有什么优势（毕竟手机不同于电脑；电脑上超过2TB的硬盘必须要用GPT才能完全识别），但这至少是新技术，一代更比一代强。 我观察到，网上大神们分享了不少给安">
@@ -254,7 +254,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./parted</span><br><span class="line">Segmentation Fault</span><br></pre></td></tr></table></figure>
 <p>我试过把我在这里编译好的parted放到上述“我接触过”的几台手机中，都能正常运行。</p>
 <h3 id="第三步-将可执行文件放入设备中"><a href="#第三步-将可执行文件放入设备中" class="headerlink" title="第三步  将可执行文件放入设备中"></a>第三步  将可执行文件放入设备中</h3><blockquote>
-<p> 假设SD卡目录为<code>/sdcard</code>。</p>
+<p>假设SD卡目录为<code>/sdcard</code>。</p>
 </blockquote>
 <ol>
 <li><p>设备连上电脑，打开MTP模式或USB存储设备，把parted可执行文件放到SD卡中。</p>

@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/menuconfig_05_hda_codecs.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/menuconfig_06_fs_fuse.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/menuconfig_07_save_config.png">
-<meta property="og:updated_time" content="2019-07-05T13:37:40.334Z">
+<meta property="og:updated_time" content="2019-07-05T13:40:47.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为Deepin Linux编译内核">
 <meta name="twitter:description" content="Deepin Linux是Linux中的新锐力量，独创的桌面环境、应用生态与设计时的种种匠心，使得它拥有非常酷炫的体验，成为越来越多电脑爱好者的首选。 不过，基于Linux的操作系统，并不像Windows一样能完美解决驱动问题。在Windows中，只需找到对应的官方驱动安装即可；但是Linux却是将设备驱动程序都集成在内核中，以及作为内核模块加载，这一切都是在编译内核时就已一锤定音。如此机制，使得">
@@ -234,7 +234,7 @@
 <p>运行以下命令，即可自动编译并启动menuconfig：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
 <p>稍等片刻，终端中就会出现如下画面：</p>
-<img src="/assets/img/blog/menuconfig_01_main_menu.png" width="867" height="714" title="menuconfig 的主页面">
+<img src="/assets/img/blog/menuconfig_01_main_menu.png" title="menuconfig 的主页面">
 <p>menuconfig的操作方法简单直观，在界面上部就已经列出了，改变选项值除了按“Y/N/M”三个键之外，还可用空格。可以键入问号（即<code>Shift+问号键</code>）来查看帮助，键入斜杠（<code>/</code>）来检索设置项。</p>
 <p>值得注意的是，一些组件在编译时可以选择将其编译到内核中（显示为<code>[*]</code>和<code>&lt;*&gt;</code>）或是编译为模块（显示为<code>[M]</code>和<code>&lt;M&gt;</code>）。编译到内核中就成为了内核的一部分；而编译成为模块则会被安装到指定的目录中，使用<code>modprobe</code>等工具加载。</p>
 <h2 id="配置内核"><a href="#配置内核" class="headerlink" title="配置内核"></a>配置内核</h2><h3 id="启用设备支持"><a href="#启用设备支持" class="headerlink" title="启用设备支持"></a>启用设备支持</h3><p>要想让内核比较完美地支持目标设备，还需对内核进行一番设置。Linux官方虽然提供了针对PC的通用配置文件，但该配置文件仅仅是一个开始，要面向各种各样复杂的具体平台，内核的发布者不可能兼顾所有的设备。因此，仅仅使用默认的配置文件是不够的。</p>

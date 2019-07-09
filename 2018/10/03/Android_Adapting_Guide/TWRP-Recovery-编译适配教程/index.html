@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-08T14:05:51.726Z">
+<meta property="og:updated_time" content="2019-07-09T16:25:24.255Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TWRP Recovery 编译适配教程">
 <meta name="twitter:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
@@ -237,11 +237,11 @@
 <h3 id="（一）下载repo"><a href="#（一）下载repo" class="headerlink" title="（一）下载repo"></a>（一）下载<code>repo</code></h3><p><code>repo</code>是谷歌开发的软件仓库管理工具，使用Python 2.7编写，用于批量管理由Git组织的源代码。使用以下的命令，把<code>repo</code>下载到被<code>PATH</code>所包含的<code>/usr/bin</code>目录中：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl https://storage.googleapis.com/git-repo-downloads/repo &gt; /usr/bin/repo</span><br><span class="line">sudo chmod +x /usr/bin/repo</span><br></pre></td></tr></table></figure>
 <h3 id="（二）下载OmniROM源代码"><a href="#（二）下载OmniROM源代码" class="headerlink" title="（二）下载OmniROM源代码"></a>（二）下载OmniROM源代码</h3><p>首先在磁盘中新建一个专门的目录，用于存放OmniROM源代码，然后使用<code>repo init</code>初始化源代码仓库。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir omni8</span><br><span class="line">cd omni8</span><br><span class="line">repo init -u git://github.com/omnirom/android.git -b android-8.1</span><br></pre></td></tr></table></figure>
-<p><code>-b</code>参数指定你需要的Android版本。一般编译<code>3.0.x</code>系列版本用<code>android-6.0</code>即可，但是更新的版本则需要<code>android-7.0</code>及更高。笔者强烈建议只选择最新的TWRP版本——<code>3.2.3-0</code>，因此对应地，使用<code>android-8.1</code>或<code>android-9.0</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir omni9</span><br><span class="line">cd omni9</span><br><span class="line">repo init -u git://github.com/omnirom/android.git -b android-9.0</span><br></pre></td></tr></table></figure>
+<p><code>-b</code>参数指定你需要的Android版本。一般编译<code>3.0.x</code>系列版本用<code>android-6.0</code>即可，但是更新的版本则需要<code>android-7.0</code>及更高。笔者强烈建议只选择最新的TWRP版本——<code>3.3.1-0</code>，因此对应地，使用<code>android-8.1</code>或<code>android-9.0</code>。</p>
 <p>初始化完成后，我们开始下载：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br></pre></td></tr></table></figure>
-<p>根据网络状况和电脑性能，整个过程会需要几个小时甚至半天以上的时间，耐心等待即可。下载完成后，<code>omni8</code>目录中就会多出包括<code>.repo</code>在内的很多文件夹。</p>
+<p>根据网络状况和电脑性能，整个过程会需要几个小时甚至半天以上的时间，耐心等待即可。下载完成后，<code>omni9</code>目录中就会多出包括<code>.repo</code>在内的很多文件夹。</p>
 <h3 id="（三）小贴士"><a href="#（三）小贴士" class="headerlink" title="（三）小贴士"></a>（三）小贴士</h3><ul>
 <li><p>可以使用<code>-j</code>参数多开下载进程，适当提高下载效率。</p>
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
@@ -253,8 +253,17 @@
 </li>
 </ul>
 <h2 id="第三步：下载TWRP源代码"><a href="#第三步：下载TWRP源代码" class="headerlink" title="第三步：下载TWRP源代码"></a>第三步：下载TWRP源代码</h2><p>一般地，OmniROM源码树并未包含TWRP的源码，默认下载的是AOSP的Recovery。因此，我们需要手动下载TWRP源码，并将其添加到<code>repo</code>的仓库配置文件（manifest）中。TWRP的源码位于<a href="https://github.com/omnirom/android_bootable_recovery。" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery。</a></p>
-<p>在<code>omni8</code>目录中，首先删掉AOSP的Recovery源码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf bootable/recovery</span><br></pre></td></tr></table></figure>
+<p>以下有两种更改OmniROM仓库配置的方案，任选其一。（<strong>Android 9.0建议选择第一种，以避免意想不到的问题。</strong>）</p>
+<h3 id="方案一：更改本地仓库配置文件"><a href="#方案一：更改本地仓库配置文件" class="headerlink" title="方案一：更改本地仓库配置文件"></a>方案一：更改本地仓库配置文件</h3><p>本地仓库配置文件位于源码树的<code>.repo/local_manifests/</code>目录。它原本的作用，是将OmniROM官方支持机型所涉及到的所有源码仓库地址收集起来，存储到其中的<code>roomservice.xml</code>中，以便于日后用<code>repo sync</code>来一并进行更新。它不会随着Android官方仓库配置（<code>.repo</code>目录下的其他XML manifest文件）的更新而被更改，因此建议在其中添加与TWRP有关的仓库地址。</p>
+<p>假设源码树根目录为<code>omni9</code>。首先，进入<code>omni9/.repo</code>，检查其中是否有<strong><code>local_manifests</code></strong>这个目录，该目录中是否有<strong><code>roomservice.xml</code></strong>这个文件。如果没有，就手动创建一个，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Please do not manually edit this file--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"OmniROM/android_bootable_recovery"</span> <span class="attr">path</span>=<span class="string">"bootable/recovery"</span> <span class="attr">remote</span>=<span class="string">"github"</span> <span class="attr">revision</span>=<span class="string">"android-9.0"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">"OmniROM/android_external_busybox"</span> <span class="attr">path</span>=<span class="string">"external/busybox"</span> <span class="attr">remote</span>=<span class="string">"github"</span> <span class="attr">revision</span>=<span class="string">"android-9.0"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后，对默认配置文件<code>omni9/.repo/manifests/default.xml</code>进行如下修改，以删除AOSP Recovery对应的manifest项目：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-  &lt;project path="bootable/recovery" name="platform/bootable/recovery" groups="pdk" /&gt;</span></span><br><span class="line"><span class="addition">+  &lt;project path="bootable/recovery-aosp" name="platform/bootable/recovery" groups="pdk" /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后回到<code>omni9</code>目录，运行下面命令，将TWRP相关的源码下载下来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo sync --force-sync bootable/recovery</span><br><span class="line">repo sync --force-sync external/busybox</span><br></pre></td></tr></table></figure>
+<h3 id="方案二：在默认配置文件中添加TWRP相关项目"><a href="#方案二：在默认配置文件中添加TWRP相关项目" class="headerlink" title="方案二：在默认配置文件中添加TWRP相关项目"></a>方案二：在默认配置文件中添加TWRP相关项目</h3><p>这一方案在之前的Android 8.1源码中起作用。假设源码树根目录为<code>omni8</code>。</p>
+<p>首先，进入源码树，删除原先下载的AOSP Recovery：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd omni8</span><br><span class="line">rm -rf bootable/recovery</span><br></pre></td></tr></table></figure>
 <p>然后克隆TWRP的Recovery源码：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/omnirom/android_bootable_recovery bootable/recovery</span><br></pre></td></tr></table></figure>
 <p>随后，删除AOSP Recovery对应的manifest项目。打开<code>omni8/.repo/manifests/default.xml</code>，进行如下修改：</p>
@@ -539,11 +548,11 @@
 </thead>
 <tbody>
 <tr>
-<td>TWRP_INCLUDE_LOGCAT</td>
+<td><code>TWRP_INCLUDE_LOGCAT</code></td>
 <td>指定是否在TWRP中包含<code>logcat</code></td>
 </tr>
 <tr>
-<td>TARGET_USES_LOGD</td>
+<td><code>TARGET_USES_LOGD</code></td>
 <td>指定是否在TWRP中启用日志服务<code>logd</code></td>
 </tr>
 </tbody>
@@ -608,7 +617,7 @@
 <p>在Android源码根目录下，首先初始化编译环境：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source build/envsetup.sh</span><br></pre></td></tr></table></figure>
 <p>然后，运行<code>lunch</code>命令，选择编译目标。也可以直接运行<code>lunch &lt;下面菜单中的一个编译目标&gt;</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> lunch</span><br><span class="line"></span><br><span class="line">You're building on Linux</span><br><span class="line"></span><br><span class="line">Lunch menu... pick a combo:</span><br><span class="line">     1. aosp_arm-eng</span><br><span class="line">     2. aosp_arm64-eng</span><br><span class="line">     3. aosp_mips-eng</span><br><span class="line">     4. aosp_mips64-eng</span><br><span class="line">     5. aosp_x86-eng</span><br><span class="line">     6. aosp_x86_64-eng</span><br><span class="line">     7. omni_berkeley-user</span><br><span class="line">     8. omni_berkeley-userdebug</span><br><span class="line">     9. omni_berkeley-eng</span><br><span class="line">     10. omni_hwp6_u06-userdebug</span><br><span class="line">     11. omni_hwp6_u06-eng</span><br><span class="line">     12. omni_kenzo-userdebug</span><br><span class="line">     13. omni_emulator-userdebug</span><br><span class="line"></span><br><span class="line">Which would you like? [aosp_arm-eng] 10</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lunch</span></span><br><span class="line"></span><br><span class="line">You're building on Linux</span><br><span class="line"></span><br><span class="line">Lunch menu... pick a combo:</span><br><span class="line">     1. aosp_arm-eng</span><br><span class="line">     2. aosp_arm64-eng</span><br><span class="line">     3. aosp_mips-eng</span><br><span class="line">     4. aosp_mips64-eng</span><br><span class="line">     5. aosp_x86-eng</span><br><span class="line">     6. aosp_x86_64-eng</span><br><span class="line">     7. omni_berkeley-user</span><br><span class="line">     8. omni_berkeley-userdebug</span><br><span class="line">     9. omni_berkeley-eng</span><br><span class="line">     10. omni_hwp6_u06-userdebug</span><br><span class="line">     11. omni_hwp6_u06-eng</span><br><span class="line">     12. omni_kenzo-userdebug</span><br><span class="line">     13. omni_emulator-userdebug</span><br><span class="line"></span><br><span class="line">Which would you like? [aosp_arm-eng] 10</span><br></pre></td></tr></table></figure>
 <p>最后，开始编译TWRP：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make recoveryimage</span><br></pre></td></tr></table></figure>
 <p>编译而成的Recovery为<code>out/target/product/&lt;设备名&gt;/recovery.img</code>，直接使用<code>fastboot</code>等工具刷入即可。</p>

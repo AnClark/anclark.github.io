@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-09T23:26:22.934Z">
+<meta property="og:updated_time" content="2019-08-06T12:55:41.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TWRP Recovery 编译适配教程">
 <meta name="twitter:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
@@ -251,10 +251,15 @@
 <li><p>如果下载过程中发生错误，可以加上两个参数，让<code>repo</code>遇到错误仍然继续下载。<code>-f</code>使得遇到网络错误时仍然继续，<code>--force-sync</code>使得遇到冲突时仍然继续。</p>
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync -f --force-sync</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>如果磁盘空间不足，不妨考虑Minimal Manifest for TWRP，它只包含了编译TWRP所需的最少组件。地址在这里：<a href="https://github.com/minimal-manifest-twrp。" target="_blank" rel="noopener">https://github.com/minimal-manifest-twrp。</a></p>
-</li>
 </ul>
-<h2 id="第三步：下载TWRP源代码"><a href="#第三步：下载TWRP源代码" class="headerlink" title="第三步：下载TWRP源代码"></a>第三步：下载TWRP源代码</h2><p>一般地，OmniROM源码树并未包含TWRP的源码，默认下载的是AOSP的Recovery。因此，我们需要手动下载TWRP源码，并将其添加到<code>repo</code>的仓库配置文件（manifest）中。TWRP的源码位于<a href="https://github.com/omnirom/android_bootable_recovery。" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery。</a></p>
+<h3 id="（四）备选方案——Minimal-Manifest-for-TWRP"><a href="#（四）备选方案——Minimal-Manifest-for-TWRP" class="headerlink" title="（四）备选方案——Minimal Manifest for TWRP"></a>（四）备选方案——Minimal Manifest for TWRP</h3><p>如果磁盘空间不足，不妨考虑<strong>Minimal Manifest for TWRP</strong>，它只包含了编译TWRP所需的最少组件，并且也包含了TWRP源码及所需依赖。项目的地址在这里：<a href="https://github.com/minimal-manifest-twrp。" target="_blank" rel="noopener">https://github.com/minimal-manifest-twrp。</a></p>
+<p>以下载Omni 8.1的Minimal Manifest为例，按照下面的步骤就可以下载到精悍、省空间、省资源的代码树：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立文件夹用来存放代码树</span></span><br><span class="line">mkdir omni8_minimal</span><br><span class="line"><span class="built_in">cd</span> omni8_minimal</span><br><span class="line"><span class="comment"># 初始化源码仓库</span></span><br><span class="line"><span class="comment"># 可以把分支名“twrp-8.1”后的“8.1”改为你想要下载的安卓版本号，支持4.4~9.0</span></span><br><span class="line">repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-8.1</span><br><span class="line"><span class="comment"># 开始同步</span></span><br><span class="line">repo sync -f --force-sync</span><br></pre></td></tr></table></figure>
+<h2 id="第三步：下载TWRP源代码"><a href="#第三步：下载TWRP源代码" class="headerlink" title="第三步：下载TWRP源代码"></a>第三步：下载TWRP源代码</h2><blockquote>
+<p><strong>注意：</strong></p>
+<p>如果使用上文的Minimal Manifest for TWRP，则请跳过本步，因为Minimal Manifest for TWRP的manifest包含了TWRP源码！</p>
+</blockquote>
+<p>一般地，OmniROM源码树并未包含TWRP的源码，默认下载的是AOSP的Recovery。因此，我们需要手动下载TWRP源码，并将其添加到<code>repo</code>的仓库配置文件（manifest）中。TWRP的源码位于<a href="https://github.com/omnirom/android_bootable_recovery。" target="_blank" rel="noopener">https://github.com/omnirom/android_bootable_recovery。</a></p>
 <p>以下有两种更改OmniROM仓库配置的方案，任选其一。（<strong>Android 9.0建议选择第一种，以避免意想不到的问题。</strong>）</p>
 <h3 id="方案一：更改本地仓库配置文件"><a href="#方案一：更改本地仓库配置文件" class="headerlink" title="方案一：更改本地仓库配置文件"></a>方案一：更改本地仓库配置文件</h3><p>本地仓库配置文件位于源码树的<code>.repo/local_manifests/</code>目录。它原本的作用，是将OmniROM官方支持机型所涉及到的所有源码仓库地址收集起来，存储到其中的<code>roomservice.xml</code>中，以便于日后用<code>repo sync</code>来一并进行更新。它不会随着Android官方仓库配置（<code>.repo</code>目录下的其他XML manifest文件）的更新而被更改，因此建议在其中添加与TWRP有关的仓库地址。</p>
 <p>假设源码树根目录为<code>omni9</code>。首先，进入<code>omni9/.repo</code>，检查其中是否有<strong><code>local_manifests</code></strong>这个目录，该目录中是否有<strong><code>roomservice.xml</code></strong>这个文件。如果没有，就手动创建一个，内容如下：</p>

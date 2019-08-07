@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-07T02:09:37.991Z">
+<meta property="og:updated_time" content="2019-08-07T02:55:27.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TWRP Recovery 编译适配教程">
 <meta name="twitter:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
@@ -358,7 +358,11 @@
 </tr>
 </tbody>
 </table>
-<p><strong>注意：</strong><code>BOARD_CUSTOM_MKBOOTIMG</code>和<code>BOARD_CUSTOM_BOOTIMG_MK</code>不再适用于Android 8.0及以上版本，添加该参数会导致报错！</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><code>BOARD_CUSTOM_MKBOOTIMG</code>不再适用于Android 8.0及以上版本，添加该参数会导致报错。</li>
+<li><code>BOARD_CUSTOM_BOOTIMG_MK</code>可能不受Android 8.x编译系统支持而引起报错，但在Android 9.0中不存在问题，可放心使用。</li>
+</ul>
 <h4 id="2-内核编译参数"><a href="#2-内核编译参数" class="headerlink" title="2. 内核编译参数"></a>2. 内核编译参数</h4><p>各类第三方开源ROM的开发者都建议你自己编译内核，而不是使用设备参数文件中预先编译好的内核映像（prebuilt kernel image，预编译内核）。这是因为已编译的内核映像无法修改，只适用于某个特定版本的系统，一旦放到一个新系统中就无法正常工作，甚至直接无法开机。如果你找到的设备参数文件提供了预编译的内核，且你能够找到内核源码，请设置下面的选项。</p>
 <table>
 <thead>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-07T01:54:00.526Z">
+<meta property="og:updated_time" content="2019-08-07T02:09:37.991Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TWRP Recovery 编译适配教程">
 <meta name="twitter:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
@@ -230,9 +230,9 @@
 <h2 id="第一步：准备编译环境"><a href="#第一步：准备编译环境" class="headerlink" title="第一步：准备编译环境"></a>第一步：准备编译环境</h2><h3 id="（一）安装必要的软件包"><a href="#（一）安装必要的软件包" class="headerlink" title="（一）安装必要的软件包"></a>（一）安装必要的软件包</h3><p>TWRP的编译，需要一系列软件包支持。在Ubuntu下，使用<code>apt</code>命令即可一次就安装好：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 更新软件源</span><br><span class="line">sudo apt update</span><br><span class="line"><span class="meta">#</span> 安装软件包</span><br><span class="line">sudo apt install git-core gnupg flex bison gperf \</span><br><span class="line">zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \</span><br><span class="line">lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \</span><br><span class="line">libgl1-mesa-dev libxml2-utils xsltproc unzip</span><br><span class="line"><span class="meta">#</span> 安装OpenJDK</span><br><span class="line">sudo apt install openjdk-8-jdk</span><br><span class="line"><span class="meta">#</span> 安装编译套件build-essential。若出错，则请使用以下第二行的命令</span><br><span class="line">sudo apt install build-essential</span><br><span class="line">sudo apt install gcc g++ make</span><br></pre></td></tr></table></figure>
 <h3 id="（二）配置ccache"><a href="#（二）配置ccache" class="headerlink" title="（二）配置ccache"></a>（二）配置<code>ccache</code></h3><p><code>ccache</code>是一个缓存工具，它通过将编译产生的中间文件（预处理得到的代码、输出文件<code>*.o</code>等）缓存起来，待到下次编译同样源文件时直接复制而不是重新生成，以此来提高编译效率。最直接的好处，就是在<code>make clean</code>之后，重新编译的速度能够快不少。</p>
-<p>在<code>~/.bashrc</code>的尾部加上以下语句，启用<code>ccache</code>。<code>ccache</code>默认存放在用户目录下（<code>~/.ccache</code>），可以更改环境变量<code>CCACHE_DIR</code>，以设置到其他磁盘分区。</p>
+<p>波浪线“<code>~</code>”是Home目录的简写。我们在Bash的配置文件<code>~/.bashrc</code>的尾部加上以下语句，启用<code>ccache</code>。<code>ccache</code>默认存放在用户目录下（<code>~/.ccache</code>），可以更改环境变量<code>CCACHE_DIR</code>，以设置到其他磁盘分区。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启用ccache</span><br><span class="line">export USE_CCACHE=1</span><br><span class="line"><span class="meta">#</span> 改变ccache缓存路径</span><br><span class="line">export CCACHE_DIR=/mnt/seagate_drive/.ccache</span><br></pre></td></tr></table></figure>
-<p>然后重启终端，或运行<code>source ~/.bashrc</code>，使上述语句生效。</p>
+<p>然后重启终端，或运行<code>source ~/.bashrc</code>，或新开一个Bash会话，使上述语句生效。</p>
 <p>另外，可以设置<code>ccache</code>缓存所占磁盘空间的大小：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccache -M 50G</span><br></pre></td></tr></table></figure>
 <h2 id="第二步：下载Android源代码"><a href="#第二步：下载Android源代码" class="headerlink" title="第二步：下载Android源代码"></a>第二步：下载Android源代码</h2><p>编译TWRP离不开Android源代码，因为它依赖Android源码中的组件。推荐使用<a href="https://www.omnirom.org/" target="_blank" rel="noopener">OmniROM</a>，它与TWRP的开发团队TeamWin有官方合作关系，由OmniROM持有<a href="https://github.com/omnirom/android_bootable_recovery" target="_blank" rel="noopener">TWRP的最新源代码</a>。</p>
@@ -665,6 +665,8 @@
 <p>测试一下系统是否能正常备份和恢复，检查可选的备份分区是否包含必要的分区（<code>system</code>、<code>data</code>、<code>boot</code>、<code>recovery</code>）。</p>
 </li>
 </ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="编译系统对Shell的支持"><a href="#编译系统对Shell的支持" class="headerlink" title="编译系统对Shell的支持"></a>编译系统对Shell的支持</h3><p>原则上，操作用的Shell只能是Bash。如果使用其他Shell，那么就会在运行一些命令时出现难以预料的Bug——例如，在<code>lunch</code>选单中，输序号选择了设备一，最终Shell会给我们选择设备三，很坑。对此，编译系统会在<code>source build/envsetup.sh</code>的过程中，对使用Bash之外的Shell提出警告。</p>
+<p>但是，从Android 9.0开始，编译系统就能够支持Bash之外的第三方Shell了，比如Zsh。因此，如果你的Shell是Zsh（尤其是Oh-My-Zsh），敬请放心使用。</p>
 <h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><ul>
 <li><a href="https://forum.xda-developers.com/showthread.php?t=1943625" target="_blank" rel="noopener">TWRP官方编译教程 - XDA Developers</a></li>
 </ul>

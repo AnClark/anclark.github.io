@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="笔者在自己的惠普笔记本上安装了采用KDE的Debian，配备了官方的4.19.5内核。后来我又从Linux内核官网上下载了最新的5.2.8版本内核，自己编译安装。 直到某一天，我例行进行sudo apt upgrade大更新，更新过程中官方的内核和ramdisk也一并更新了。结果这次更新完毕重启，出现了以下问题：  5.2.8内核始终无法正常进入登录界面，一直卡在Debian的启动画面处，按方向键">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/debian_selinux_audit.jpg">
-<meta property="og:updated_time" content="2019-08-17T05:27:47.263Z">
+<meta property="og:updated_time" content="2019-08-17T05:29:24.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Debian：修复SELinux导致卡在启动画面的问题">
 <meta name="twitter:description" content="笔者在自己的惠普笔记本上安装了采用KDE的Debian，配备了官方的4.19.5内核。后来我又从Linux内核官网上下载了最新的5.2.8版本内核，自己编译安装。 直到某一天，我例行进行sudo apt upgrade大更新，更新过程中官方的内核和ramdisk也一并更新了。结果这次更新完毕重启，出现了以下问题：  5.2.8内核始终无法正常进入登录界面，一直卡在Debian的启动画面处，按方向键">
@@ -346,6 +346,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/10/05/Play_NAS/OMV编译过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          开源NAS系统 Openmediavault（OMV） 编译与安装教程
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/07/10/Android_Adapting_Note/追根溯源解决Busybox编译错误/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">TWRP编译：追根溯源解决BusyBox编译错误</div>
@@ -641,13 +650,33 @@ MathJax.Hub.Queue(function() {
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OMV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Openmediavault</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Debian</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:

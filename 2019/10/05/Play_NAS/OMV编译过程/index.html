@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>开源NAS系统 Openmediavault（OMV） 编译与安装教程 | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Openmediavault 编译与安装过程Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常">
+  <meta name="description" content="Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用">
 <meta name="keywords" content="教程,NAS,OMV,Openmediavault,Debian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开源NAS系统 Openmediavault（OMV） 编译与安装教程">
 <meta property="og:url" content="http://yoursite.com/2019/10/05/Play_NAS/OMV编译过程/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="Openmediavault 编译与安装过程Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常">
+<meta property="og:description" content="Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-06T00:15:26.128Z">
+<meta property="og:updated_time" content="2019-10-06T01:06:10.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开源NAS系统 Openmediavault（OMV） 编译与安装教程">
-<meta name="twitter:description" content="Openmediavault 编译与安装过程Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常">
+<meta name="twitter:description" content="Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -199,9 +199,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Openmediavault-编译与安装过程"><a href="#Openmediavault-编译与安装过程" class="headerlink" title="Openmediavault 编译与安装过程"></a>Openmediavault 编译与安装过程</h1><p>Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。</p>
 <p>然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用户自己猜！</p>
 <p>于是，在踩了N个坑，失败N次之后，我决定，不要让这空白再继续坑害新入坑的OMV用户了！这篇编译和安装二合一的教程，应运而生。</p>
+<a id="more"></a>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
 <li><strong>系统：</strong>Debian 10 Buster，不带任何桌面环境的基础版本</li>
 <li><strong>处理器架构：</strong>OMV官方推荐的AMD64、ARM、ARM64，以及i386<ul>

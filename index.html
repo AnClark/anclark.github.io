@@ -199,104 +199,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Openmediavault-编译与安装过程"><a href="#Openmediavault-编译与安装过程" class="headerlink" title="Openmediavault 编译与安装过程"></a>Openmediavault 编译与安装过程</h1><p>Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。</p>
+        <p>Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。</p>
 <p>然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用户自己猜！</p>
 <p>于是，在踩了N个坑，失败N次之后，我决定，不要让这空白再继续坑害新入坑的OMV用户了！这篇编译和安装二合一的教程，应运而生。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
-<li><strong>系统：</strong>Debian 10 Buster，不带任何桌面环境的基础版本</li>
-<li><strong>处理器架构：</strong>OMV官方推荐的AMD64、ARM、ARM64，以及i386<ul>
-<li>官方不提供i386架构的ISO镜像，但我们仍可以在Debian x86的系统上手动安装。</li>
-</ul>
-</li>
-<li><strong>磁盘空间：</strong>至少2GB（要安装大量的依赖包）</li>
-<li><strong>内存：</strong>至少512MB，推荐1GB及以上</li>
-</ul>
-<blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li><p><strong>为了便于操作，下文所有的命令都在root用户下进行。</strong></p>
-<ul>
-<li>本地用户，请使用<code>sudo -i</code>或<code>sudo su</code>来切换到root用户。</li>
-<li>SSH登入远程服务器，可直接以root身份登录。</li>
-</ul>
-</li>
-<li><p>Debian的基础版本镜像可从我母校——华中科技大学的镜像源下载：<a href="http://mirrors.hust.edu.cn/debian-cd/current/" target="_blank" rel="noopener">http://mirrors.hust.edu.cn/debian-cd/current/</a>。</p>
-</li>
-</ul>
-</blockquote>
-<h2 id="OMV的本质是什么？"><a href="#OMV的本质是什么？" class="headerlink" title="OMV的本质是什么？"></a>OMV的本质是什么？</h2><p>OMV的本质，就是建构在Nginx、PHP、Python等底层系统应用上的大型Web服务程序，类似于高知名度的<a href="https://www.bt.com" target="_blank" rel="noopener">宝塔平台</a>。它本身不包含任何二进制文件和源码，所有有效的程序代码均为解释型语言，这使得<strong>它天生具有跨平台性</strong>——理论上，只要目标架构支持Debian、Dpkg，以及OMV的依赖程序，OMV就能在任意架构上的操作系统运行。</p>
-<p>OMV基于Debian而构建，它的源代码编译后生成的是跨平台、无架构（noarch）的Deb程序包，整个编译过程并不会调用编译器生成平台专用的二进制文件。因此，OMV能够在任何一个Debian操作系统实例上安装。</p>
-<p><strong>注：</strong>理论上Debian系、采用Dpkg的操作系统均可安装，比如Ubuntu。但笔者未进行测试。</p>
-<h2 id="克隆源代码"><a href="#克隆源代码" class="headerlink" title="克隆源代码"></a>克隆源代码</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>OMV的源代码发布在GitHub上，可直接克隆下来。我们将源码下载到<code>omv</code>目录中。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Git和pip</span></span><br><span class="line">apt install git python3-pip</span><br><span class="line"><span class="comment"># 克隆源码，放到omv目录下</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/openmediavault/openmediavault.git omv</span><br></pre></td></tr></table></figure>
-<h3 id="进入源码目录"><a href="#进入源码目录" class="headerlink" title="进入源码目录"></a>进入源码目录</h3><p>OMV的核心源码放在<code>deb</code>子目录中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd omv/deb</span><br></pre></td></tr></table></figure>
-<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>OMV的编译流程是个巨坑，不仅缺乏文档，更坑的是，它的Makefile写法并不规范，若不仔细研读，是很难找出真正的编译目标的。好在，经过总结后，它的编译过程相当简单。</p>
-<h3 id="安装编译所需工具"><a href="#安装编译所需工具" class="headerlink" title="安装编译所需工具"></a>安装编译所需工具</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
-<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make binary</span><br></pre></td></tr></table></figure>
-<p>编译完成后，<code>omv/deb</code>目录下会生成若干个deb安装包。一般如下所示。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ls *.deb</span><br><span class="line">openmediavault-clamav_5.0-1_all.deb</span><br><span class="line">openmediavault-diskstats_5.0-1_all.deb</span><br><span class="line">openmediavault-forkeddaapd_5.0-1_all.deb</span><br><span class="line">openmediavault-keyring_1.0_all.deb</span><br><span class="line">openmediavault-ldap_4.0.6-1_all.deb</span><br><span class="line">openmediavault-lvm2_5.0.1-1_all.deb</span><br><span class="line">openmediavault-nut_5.0-1_all.deb</span><br><span class="line">openmediavault-shairport_5.0-1_all.deb</span><br><span class="line">openmediavault-snmp_5.0-1_all.deb</span><br><span class="line">openmediavault-tftp_5.0-1_all.deb</span><br><span class="line">openmediavault-usbbackup_5.0.1-1_all.deb</span><br><span class="line">openmediavault_5.0.11_all.deb</span><br></pre></td></tr></table></figure>
-<h3 id="坑：默认编译目标的问题"><a href="#坑：默认编译目标的问题" class="headerlink" title="坑：默认编译目标的问题"></a>坑：默认编译目标的问题</h3><p>OMV的默认编译目标，也就是不带参数运行<code>make</code>时进行的编译过程，竟然不是编译Deb包，而是对各个子目录执行清理！这一点要格外小心，笔者已经无力吐槽了ε=(´ο｀*)))。。。</p>
-<h2 id="安装OMV"><a href="#安装OMV" class="headerlink" title="安装OMV"></a>安装OMV</h2><h3 id="添加OMV官方源"><a href="#添加OMV官方源" class="headerlink" title="添加OMV官方源"></a>添加OMV官方源</h3><p>OMV的少部分依赖，在Debian的官方源中是没有的，因此必须添加OMV源。</p>
-<p>首先，将以下代码添加到<code>/etc/apt/sources.list</code>的末尾：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Openmediavault official repository</span><br><span class="line">deb packages.openmediavault.org/public usul main</span><br></pre></td></tr></table></figure>
-<p>接着，安装OMV源密钥环：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装我们自己编译的版本</span></span><br><span class="line"><span class="built_in">cd</span> omv/deb</span><br><span class="line">dpkg -i openmediavault-keyring_1.0_all.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然，你也可以在线安装</span></span><br><span class="line">wget http://packages.openmediavault.org/public/pool/main/o/openmediavault-keyring/openmediavault-keyring_1.0_all.deb</span><br><span class="line">dpkg -i openmediavault-keyring_1.0_all.deb</span><br></pre></td></tr></table></figure>
-<p>然后，更新软件源：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
-<h3 id="安装基础依赖"><a href="#安装基础依赖" class="headerlink" title="安装基础依赖"></a>安装基础依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Debian 10 提供的软件包</span><br><span class="line">apt install php-fpm php-json php-cgi php-cli php-mbstring ethtool python3-dialog acl xfsprogs jfsutils ntfs-3g sdparm postfix bsd-mailx cpufrequtils smartmontools uuid nfs-kernel-server proftpd-basic sshpass samba samba-common-bin rsync avahi-daemon libnss-mdns beep php-bcmath gdisk rrdtool collectd anacron cron-apt quota php-xml quotatool lvm2 watchdog libjson-perl liblocale-po-perl proftpd-mod-vroot libjavascript-minifier-xs-perl xmlstarlet socat rrdcached nginx wpasupplicant btrfs-progs samba-vfs-modules python3-pyudev python3-natsort jq chrony python3-netifaces python3-lxml salt-minion php-yaml python-click python3-click</span><br><span class="line"></span><br><span class="line"># Debian 10 不提供的软件包，在OMV源中提供</span><br><span class="line">apt install monit php-pam libjs-extjs6 wsdd</span><br></pre></td></tr></table></figure>
-<p>此时会发生依赖关系错误。接着运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt --fix-broken install</span><br></pre></td></tr></table></figure>
-<p>再重复运行之前的那一长串<code>apt install</code>，即可正常安装。</p>
-<h3 id="安装OMV主程序包"><a href="#安装OMV主程序包" class="headerlink" title="安装OMV主程序包"></a>安装OMV主程序包</h3><p>为了方便安装，OMV的开发者将所有安装过程都整合在了一个包中，不需要再零零散散安装大量的包。</p>
-<h4 id="安装官方版本"><a href="#安装官方版本" class="headerlink" title="安装官方版本"></a>安装官方版本</h4><p>OMV可由官方源直接安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install postfix openmediavault</span><br></pre></td></tr></table></figure>
-<p>期间会出现大量的日志，耐心等待，直到成功完成。<strong>要注意，一旦出现任何一种错误，OMV都是没法用的</strong>！</p>
-<h4 id="安装我们编译的版本"><a href="#安装我们编译的版本" class="headerlink" title="安装我们编译的版本"></a>安装我们编译的版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新进入到源码目录</span></span><br><span class="line"><span class="built_in">cd</span> omv/deb</span><br><span class="line"><span class="comment"># 然后开始安装</span></span><br><span class="line">dpkg -i openmediavault-keyring_1.0_all.deb     <span class="comment"># 源密钥环</span></span><br><span class="line">dpkg -i openmediavault_5.0.11_all.deb          <span class="comment"># 主安装包</span></span><br></pre></td></tr></table></figure>
-<h4 id="填坑：解决Unit-file-is-masked问题"><a href="#填坑：解决Unit-file-is-masked问题" class="headerlink" title="填坑：解决Unit file is masked问题"></a>填坑：解决<code>Unit file is masked</code>问题</h4><p>在某些机器（如VPS）上手动安装OMV时，常常会出现<code>Unit file is masked</code>的问题。该问题非常致命，会中断OMV后续的安装进程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Failed to preset unit: Unit file /etc/systemd/system/openmediavault-cleanup-php.service is masked.</span><br><span class="line">/usr/bin/deb-systemd-helper: error: systemctl preset failed on openmediavault-cleanup-php.service: No such file or directory</span><br><span class="line">dpkg: error processing package openmediavault (--configure):</span><br><span class="line"> installed openmediavault package post-installation script subprocess returned error exit status 1 </span><br><span class="line">Errors were encountered while processing:</span><br><span class="line"> openmediavault</span><br><span class="line">E: Sub-process /usr/bin/dpkg returned an error code (1)</span><br></pre></td></tr></table></figure>
-<p>实际上，了解systemd对服务的管理机制，就不难得知，这里的“mask”是系统服务的一个状态，相当于被“屏蔽”。据此，<strong>解决办法很简单，但凡有一个服务提示被masked，就运行下面的命令来unmask，然后重新安装，直到安装过程能够顺利继续</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl unmask &lt;被报错的服务名&gt;，例如：</span></span><br><span class="line">systemctl unmask openmediavault-cleanup-php.service</span><br></pre></td></tr></table></figure>
-<h2 id="启动OMV"><a href="#启动OMV" class="headerlink" title="启动OMV"></a>启动OMV</h2><p>运行以下命令即可启动。事实上，新版本OMV直接配置成了系统服务，可以自动启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">omv-run</span><br></pre></td></tr></table></figure>
-<p>在浏览器中输入主机的IP地址，即可打开OMV的登录页面。默认的凭据如下：</p>
-<table>
-<thead>
-<tr>
-<th>凭据</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>默认用户名</td>
-<td>admin</td>
-</tr>
-<tr>
-<td>默认密码</td>
-<td>openmediavault</td>
-</tr>
-</tbody>
-</table>
-<h2 id="添加OMVExtras插件库"><a href="#添加OMVExtras插件库" class="headerlink" title="添加OMVExtras插件库"></a>添加OMVExtras插件库</h2><p>OMVExtras插件库是官方所提供的插件源，建议添加，这样我们就能够用上更多强悍的插件。</p>
-<p>开发者提供了一键安装方法：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://omv-extras.org/install | bash</span><br></pre></td></tr></table></figure>
-<p>要是不能下载脚本，则把下面该脚本的内容保存为<code>install.sh</code>，<code>chmod 755</code>后运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">declare</span> -i version</span><br><span class="line"></span><br><span class="line">url=<span class="string">"https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/"</span></span><br><span class="line"></span><br><span class="line">version=$(dpkg -l openmediavault | awk <span class="string">'$2 == "openmediavault" &#123; print substr($3,1,1) &#125;'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;version&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;version&#125;</span> -eq 5 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Downloading omv-extras.org plugin for openmediavault 5.x ..."</span></span><br><span class="line">  file=<span class="string">"openmediavault-omvextrasorg_latest_all5.deb"</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$&#123;version&#125;</span> -eq 4 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Downloading omv-extras.org plugin for openmediavault 4.x ..."</span></span><br><span class="line">  file=<span class="string">"openmediavault-omvextrasorg_latest_all4.deb"</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$&#123;version&#125;</span> -eq 3 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Downloading omv-extras.org plugin for openmediavault 3.x ..."</span></span><br><span class="line">  file=<span class="string">"openmediavault-omvextrasorg_latest_all3.deb"</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$&#123;version&#125;</span> -eq 2 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Downloading omv-extras.org plugin for openmediavault 2.x ..."</span></span><br><span class="line">  file=<span class="string">"openmediavault-omvextrasorg_latest_all.deb"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Unsupported version of openmediavault"</span></span><br><span class="line">  <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="string">"<span class="variable">$&#123;file&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  rm <span class="variable">$&#123;file&#125;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">wget --no-check-certificate <span class="variable">$&#123;url&#125;</span>/<span class="variable">$&#123;file&#125;</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="string">"<span class="variable">$&#123;file&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">  dpkg -i <span class="variable">$&#123;file&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [ $? -gt 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Installing other dependencies ..."</span></span><br><span class="line">    apt-get -f install</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Updating repos ..."</span></span><br><span class="line">  apt-get update</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"There was a problem downloading the package."</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-<p>安装完成后，刷新浏览器，即可看到<strong>OMV的左栏中多出了一个“OMV-Extras”入口</strong>。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><p><a href="https://zhuanlan.zhihu.com/p/54905523" target="_blank" rel="noopener">OMV系列教程1——在Debian上安装OpenMediaVault开源NAS系统</a></p>
-</li>
-<li><p><a href="https://blog.ruanbekker.com/blog/2017/12/09/unmask-a-masked-service-in-systemd/" target="_blank" rel="noopener">Unmask a Masked Service in Systemd - Ruan Bekker</a></p>
-</li>
-<li><p><a href="https://askubuntu.com/questions/710420/why-are-some-systemd-services-in-the-masked-state" target="_blank" rel="noopener">Why are some systemd services in the “masked” state?</a></p>
-</li>
-<li><p><a href="https://forum.openmediavault.org/index.php/Thread/25213-Install-OMV5-on-Debian-10-Buster-OMV-5-x-development/" target="_blank" rel="noopener">Install OMV5 on Debian 10 (Buster) OMV 5.x (development) - Openmediavault Forum</a></p>
-</li>
-<li><p><a href="https://www.howtoing.com/install-open-media-vault-nas" target="_blank" rel="noopener">使用OpenMediaVault构建您自己的NAS</a></p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2019/10/05/Play_NAS/OMV编译过程/#more">more >></a>
+        
       
 
       

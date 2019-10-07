@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-06T01:06:10.858Z">
+<meta property="og:updated_time" content="2019-10-07T08:26:05.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开源NAS系统 Openmediavault（OMV） 编译与安装教程">
 <meta name="twitter:description" content="Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。 然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用">
@@ -240,7 +240,7 @@
 <h3 id="坑：默认编译目标的问题"><a href="#坑：默认编译目标的问题" class="headerlink" title="坑：默认编译目标的问题"></a>坑：默认编译目标的问题</h3><p>OMV的默认编译目标，也就是不带参数运行<code>make</code>时进行的编译过程，竟然不是编译Deb包，而是对各个子目录执行清理！这一点要格外小心，笔者已经无力吐槽了ε=(´ο｀*)))。。。</p>
 <h2 id="安装OMV"><a href="#安装OMV" class="headerlink" title="安装OMV"></a>安装OMV</h2><h3 id="添加OMV官方源"><a href="#添加OMV官方源" class="headerlink" title="添加OMV官方源"></a>添加OMV官方源</h3><p>OMV的少部分依赖，在Debian的官方源中是没有的，因此必须添加OMV源。</p>
 <p>首先，将以下代码添加到<code>/etc/apt/sources.list</code>的末尾：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Openmediavault official repository</span><br><span class="line">deb packages.openmediavault.org/public usul main</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Openmediavault official repository</span><br><span class="line">deb http://packages.openmediavault.org/public usul main</span><br></pre></td></tr></table></figure>
 <p>接着，安装OMV源密钥环：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装我们自己编译的版本</span></span><br><span class="line"><span class="built_in">cd</span> omv/deb</span><br><span class="line">dpkg -i openmediavault-keyring_1.0_all.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然，你也可以在线安装</span></span><br><span class="line">wget http://packages.openmediavault.org/public/pool/main/o/openmediavault-keyring/openmediavault-keyring_1.0_all.deb</span><br><span class="line">dpkg -i openmediavault-keyring_1.0_all.deb</span><br></pre></td></tr></table></figure>
 <p>然后，更新软件源：</p>

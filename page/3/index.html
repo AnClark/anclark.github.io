@@ -179,6 +179,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/">OmniROM：解决“zconf.hash.c No such file or directory”错误</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/" class="archive-article-date">
+  	<time datetime="2018-09-11T04:44:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编译OmniROM 8.1，到达编译内核这一步时出错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scripts/kconfig/zconf.tab.c:206:10: fatal error: zconf.hash.c: No such file or directory</span><br><span class="line"> #include &quot;zconf.hash.c&quot;</span><br><span class="line">          ^~~~~~~~~~~~~~</span><br><span class="line">compilation terminated.</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1775,112 +1874,9 @@
 
 
   
-    <article id="post-Android_Adapting_Note/静态交叉编译parted在Android上运行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/11/Android_Adapting_Note/静态交叉编译parted在Android上运行/">静态交叉编译parted在Android上运行</a>
-    </h1>
-  
-
-        
-        <a href="/2014/07/11/Android_Adapting_Note/静态交叉编译parted在Android上运行/" class="archive-article-date">
-  	<time datetime="2014-07-11T06:05:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>现在有越来越多的Android手机用上了GPT分区表。我目前接触过的有：华为C8816、G6-C00、Ascend P6，中兴U880E，还有亚马逊Kindle Fire。目前我不太好解释GPT 分区表相对于之前安卓手机广泛使用的MBR分区表有什么优势（毕竟手机不同于电脑；电脑上超过2TB的硬盘必须要用GPT才能完全识别），但这至少是新技术，一代更比一代强。</p>
-<p>我观察到，网上大神们分享了不少给安卓手机重新分区的教程。他们用的是fdisk工具，针对大部分还在用MBR分区表的手机。可是像用GPT 分区表的新手机，用fdisk是没办法识别的（这一点，用Linux的朋友应该会有体会）。实测我的C8816运行”fdisk -l /dev/block/mmcblk0”时，只能读出一个EFI GPT分区，根本没办法显示出分区表。而我打开/proc/partitions查看分区信息一看，手机里其实是有25个分区的。</p>
-<p>难道就真的没有办法了吗？</p>
-<p>嘿嘿，当然不是了！这里有一个真正可以称得上是“大神”的工具，就是大名鼎鼎的GNU parted 工具！它是Linux下开放源代码的分区工具，完美支持GPT和MBR分区表，弥补了fdisk工具的缺憾。</p>
-<p><strong>我们的目标是：把parted工具通过交叉静态编译，移植到到Android手机中。</strong>这样理论上只需要一个可执行文件，就可以在大部分的Android手机上运行了。</p>
-        
-          <a class="article-more-a" href="/2014/07/11/Android_Adapting_Note/静态交叉编译parted在Android上运行/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/07/11/Android_Adapting_Note/静态交叉编译parted在Android上运行/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -2153,6 +2149,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
               </li>
             
             <div class="clearfix"></div>

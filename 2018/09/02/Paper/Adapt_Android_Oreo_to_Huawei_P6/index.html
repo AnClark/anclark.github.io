@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="[TOC] 概述这是一篇未完成的实验报告，因为在写报告之时，笔者的实验并没有成功，后续还有很多工作需要完成。而笔者所做的项目在之前几乎没有任何可参考的先例，只有适合于其他设备方案的资料参照，可谓“摸着石头过河”。在毕业论文截止之际，笔者先将截至2018年9月初所得到的研究成果记录下来，暂且作为本次毕业论文的内容。 华为Ascend P6（以下简称P6），是华为于2013年推出的一款旗舰手机，属P系">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-28T09:38:36.161Z">
+<meta property="og:updated_time" content="2020-11-18T06:24:34.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="拯救老旗舰：为华为Ascend P6适配Android 8.1">
 <meta name="twitter:description" content="[TOC] 概述这是一篇未完成的实验报告，因为在写报告之时，笔者的实验并没有成功，后续还有很多工作需要完成。而笔者所做的项目在之前几乎没有任何可参考的先例，只有适合于其他设备方案的资料参照，可谓“摸着石头过河”。在毕业论文截止之际，笔者先将截至2018年9月初所得到的研究成果记录下来，暂且作为本次毕业论文的内容。 华为Ascend P6（以下简称P6），是华为于2013年推出的一款旗舰手机，属P系">
@@ -680,8 +680,10 @@
 </li>
 <li><p>初始化编译环境并开始编译。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make distclean                      <span class="comment"># 清除所有临时文件</span></span><br><span class="line">make cm_k3v2oem1_defconfig          <span class="comment"># 加载K3V2平台的配置文件</span></span><br><span class="line">make -j8                            <span class="comment"># 开始编译</span></span><br></pre></td></tr></table></figure>
-<p>编译完成后，生成的内核镜像zImage为<code>arch/arm/boot/zImage</code>。</p>
 </li>
+</ol>
+<pre><code>编译完成后，生成的内核镜像zImage为`arch/arm/boot/zImage`。
+</code></pre><ol start="4">
 <li><p>将新的内核重新打包到由<code>bootimg.py</code>解包的Recovery启动镜像中。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用`zImage`覆盖`/tmp/recimg_modify`下的`kernel`文件</span></span><br><span class="line">cp arch/arm/boot/zImage /tmp/recimg_modify/kernel</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新打包内核</span></span><br><span class="line"><span class="built_in">cd</span> /tmp/recimg_modify</span><br><span class="line">bootimg.py --repack-bootimg</span><br></pre></td></tr></table></figure>
 </li>
@@ -765,7 +767,7 @@
 <p>从日志中可知，SELinux若在内核中启用，就会建立一个虚拟文件系统<code>selinuxfs</code>，并在<code>/sys/fs/selinux</code>中建立SELinux的设备节点文件（类似于<code>/dev</code>，但后者是由<code>init</code>生成的，这与<code>init</code>加载前就生成的SELinux设备节点有本质区别）。日志中明确指出的文件<code>/sys/fs/selinux/null</code>起到空设备<code>/dev/null</code>的作用。为什么不用<code>/dev/null</code>？这是因为<code>init</code>启动伊始，并没有建立<code>/dev</code>下的各个节点，<code>init</code>反而负责建立它们。可见，<code>init</code>的启动有赖于SELinux的支持。</p>
 <p>事实上，从Android 7.0起，谷歌对Android的设计要求愈发严格，SELinux也就成为了任何Android厂商必须支持的标准，到Android 8.0则开始成为强制性要求。Android的SELinux要求“里应外合”，“外”则为Android的SELinux组件，“内”即为Linux内核中的SELinux机制。实现SELinux的根本是内核中的SELinux机制，Android的SELinux组件主要是调用内核中的API，以此保证系统内外的安全性。正因如此，内核必须支持SELinux。</p>
 <p>所幸，早在<code>2.6.35</code>版本中[^follow_my_collections]，Linux就已经引入了SELinux机制。但默认情况下它并未启用，也并未作为Linux默认的安全机制，故用户必须手动启用。在内核配置文件的“<code># Security Options</code>”部分中加入以下配置：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CONFIG_SECURITY_SELINUX=y							<span class="comment"># 启用SELinux</span></span><br><span class="line">CONFIG_DEFAULT_SECURITY_SELINUX=y					<span class="comment"># 将SELinux作为默认安全模块</span></span><br><span class="line">CONFIG_DEFAULT_SECURITY=<span class="string">"selinux"</span>					<span class="comment"># 默认安全模块，与上一个选项同步设置</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_BOOTPARAM=y					<span class="comment"># 是否允许通过内核启动参数控制SELinux</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE=1			<span class="comment"># 默认SELinux内核启动参数，必须设置为1</span></span><br><span class="line">													<span class="comment"># 0为禁用，1为Enforce，2为Permissive</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_DISABLE=n					<span class="comment"># 是否允许在系统中禁用SELinux</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_DEVELOP=y					<span class="comment"># 是否启用开发者模式</span></span><br><span class="line">													<span class="comment">#（如允许在系统中设置SELinux状态）</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_AVC_STATS=y                 <span class="comment"># 是否记录AVC状态到专门的日志中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下为已弃用的选项，按下文的“第（五）小节”更新代码后将无效</span></span><br><span class="line"><span class="comment">#CONFIG_SECURITY_SELINUX_POLICYDB_VERSION_MAX=y			# 允许自定义PolicyDB版本</span></span><br><span class="line"><span class="comment">#CONFIG_SECURITY_SELINUX_POLICYDB_VERSION_MAX_VALUE=30	# 自定义PolicyDB版本</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CONFIG_SECURITY_SELINUX=y							<span class="comment"># 启用SELinux</span></span><br><span class="line">CONFIG_DEFAULT_SECURITY_SELINUX=y					<span class="comment"># 将SELinux作为默认安全模块</span></span><br><span class="line">CONFIG_DEFAULT_SECURITY=<span class="string">"selinux"</span>					<span class="comment"># 默认安全模块，与上一个选项同步设置</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_BOOTPARAM=y					<span class="comment"># 是否允许通过内核启动参数控制SELinux</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE=1			<span class="comment"># 默认SELinux内核启动参数，必须设置为1</span></span><br><span class="line">													<span class="comment"># 0为禁用，1为Enforce，2为Permissive</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_DISABLE=n					<span class="comment"># 是否允许在系统中禁用SELinux</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_DEVELOP=y					<span class="comment"># 是否启用开发者模式</span></span><br><span class="line">													<span class="comment">#  （比如，允许在系统中设置SELinux状态）</span></span><br><span class="line">CONFIG_SECURITY_SELINUX_AVC_STATS=y                 <span class="comment"># 是否记录AVC状态到专门的日志中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下为已弃用的选项，按下文的“第（五）小节”更新代码后将无效</span></span><br><span class="line"><span class="comment">#CONFIG_SECURITY_SELINUX_POLICYDB_VERSION_MAX=y			# 允许自定义PolicyDB版本</span></span><br><span class="line"><span class="comment">#CONFIG_SECURITY_SELINUX_POLICYDB_VERSION_MAX_VALUE=30	# 自定义PolicyDB版本</span></span><br></pre></td></tr></table></figure>
 <p>SELinux还依赖其他的设置项，因此也要确保下面的项目一并配置正确：</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONFIG_SECURITY=y</span><br><span class="line">CONFIG_SECURITY_NETWORK=y</span><br><span class="line">CONFIG_AUDIT=y</span><br><span class="line">CONFIG_NET=y</span><br><span class="line">CONFIG_INET=y</span><br></pre></td></tr></table></figure>
 <p>重新编译内核并应用之，下次panic时即可发现，<code>init</code>不再于此处出错了，而是顺利地开始了后面的进程。</p>
@@ -1226,6 +1228,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
               </li>
              
@@ -1242,14 +1248,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -1258,63 +1256,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1327,6 +1273,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">路由器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1350,7 +1312,75 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wine</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Snap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1358,7 +1388,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1379,18 +1409,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
               </li>
             
             <div class="clearfix"></div>

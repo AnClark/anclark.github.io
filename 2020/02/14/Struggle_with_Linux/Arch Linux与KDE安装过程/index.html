@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X200装上了">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-09T09:02:58.582Z">
+<meta property="og:updated_time" content="2020-11-20T23:44:29.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X200装上了">
@@ -418,23 +418,23 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/default/grub</span><br></pre></td></tr></table></figure>
 <p>把以下参数加进<code>GRUB_CMDLINE_LINUX_DEFAULT</code>字段里，注意包裹在原有的引号中：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resume=UUID=&lt;Swap分区的UUID&gt;</span><br></pre></td></tr></table></figure>
-<p>其中，要获取Swap分区的UUID，可打开/etc/fstab。</p>
+<p>其中，要获取Swap分区的UUID，可打开/etc/fstab，找到Swap分区那一项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># UUID=99ec3c4a-01e6-487b-9fdd-fb81e6c5a482</span><br><span class="line">/dev/sda5               none            swap            defaults        0 0</span><br></pre></td></tr></table></figure>
 <p>最后重新生成配置文件，重启后生效：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <h3 id="禁用蜂鸣器"><a href="#禁用蜂鸣器" class="headerlink" title="禁用蜂鸣器"></a>禁用蜂鸣器</h3><p>默认情况下，进行一些操作时，电脑的蜂鸣器会响起，发出很刺耳的嘟嘟声，例如在TTY中光标的始末处按方向键或退格键。这时可以考虑禁用蜂鸣器。</p>
 <p>蜂鸣器默认作为内核模块加载，因此只需把相应的模块加入黑名单中禁用即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到Root用户下</span></span><br><span class="line">sudo -i</span><br><span class="line"><span class="comment"># 卸载蜂鸣器模块</span></span><br><span class="line">rmmod pcspkr</span><br><span class="line"><span class="comment"># 把蜂鸣器模块添加到黑名单中，重启即可彻底禁用之</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"blacklist pcspkr"</span> &gt; /etc/modprobe.d/nobeep.conf</span><br></pre></td></tr></table></figure>
+<h3 id="禁用重新登录时恢复上一次会话"><a href="#禁用重新登录时恢复上一次会话" class="headerlink" title="禁用重新登录时恢复上一次会话"></a>禁用重新登录时恢复上一次会话</h3><p>默认情况下，KDE在重新登录后，会把用户之前打开的程序再重新打开（如果支持的话），方便用户马上开始工作。但这功能不实用，它不会恢复应用程序的状态（比如给你原封不动地显示之前的网页内容，以及你的文档编辑进度），拖慢启动速度。对PT党来说，它有时甚至会把qBittorrent这样的应用也恢复，不考虑电脑分区的挂载情况，导致异常（严重者甚至会导致种子重新下载）。</p>
+<p>设置的方法是：</p>
+<p>打开系统设置（Settings） -&gt; 启动和关机（Startup and Shutdown） -&gt; 桌面会话（Desktop Session） -&gt; 以新会话启动（Start with an empty session）。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><p><a href="https://www.cnblogs.com/kainhuck/p/10698671.html" target="_blank" rel="noopener">ArchLinux安装KDE桌面</a></p>
-</li>
-<li><p><a href="https://www.colabug.com/2016/1004/609036/" target="_blank" rel="noopener">给 GNU/Linux 萌新的 Arch Linux 安装指南</a></p>
-</li>
-<li><p><a href="https://bbs.archlinux.org/viewtopic.php?id=201816" target="_blank" rel="noopener"> A start job is running for dev-disk-by… (1min 30s)</a></p>
-</li>
-<li><p><a href="[https://wiki.archlinux.org/index.php/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87">Arch Linux Wiki对Locale的介绍</a>#%E7%94%9F%E6%88%90_locale](<a href="https://wiki.archlinux.org/index.php/Locale_(简体中文)#生成_locale)" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Locale_(简体中文)#生成_locale)</a>)</p>
-</li>
-<li><p><a href="https://www.cnblogs.com/dolphi/p/3622570.html" target="_blank" rel="noopener">Linux下使用locale命令设置语言环境</a></p>
-</li>
+<li><a href="https://www.cnblogs.com/kainhuck/p/10698671.html" target="_blank" rel="noopener">ArchLinux安装KDE桌面</a></li>
+<li><a href="https://www.colabug.com/2016/1004/609036/" target="_blank" rel="noopener">给 GNU/Linux 萌新的 Arch Linux 安装指南</a></li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=201816" target="_blank" rel="noopener"> A start job is running for dev-disk-by… (1min 30s)</a></li>
+<li><a href="[https://wiki.archlinux.org/index.php/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87">Arch Linux Wiki对Locale的介绍</a>#%E7%94%9F%E6%88%90_locale](<a href="https://wiki.archlinux.org/index.php/Locale_(简体中文)#生成_locale" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Locale_(简体中文)#生成_locale</a>)</li>
+<li><a href="https://www.cnblogs.com/dolphi/p/3622570.html" target="_blank" rel="noopener">Linux下使用locale命令设置语言环境</a></li>
+<li><a href="https://blog.csdn.net/AsWeDo/article/details/104613641" target="_blank" rel="noopener">sddm显示管理器设置“登录时恢复上一次会话”后遇到的问题</a></li>
 </ul>
 
       
@@ -771,14 +771,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -787,15 +779,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -815,26 +803,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">教程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NAS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OMV</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Openmediavault</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Debian</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
               </li>
              
@@ -851,15 +819,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
+                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
+                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -880,6 +848,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OMV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Openmediavault</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Debian</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -907,11 +895,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
               </li>
              
               <li class="article-tag-list-item">

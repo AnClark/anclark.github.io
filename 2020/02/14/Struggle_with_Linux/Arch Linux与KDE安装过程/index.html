@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X200装上了">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-20T23:44:29.491Z">
+<meta property="og:updated_time" content="2020-11-21T05:21:11.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X200装上了">
@@ -352,8 +352,39 @@
 <p>如果不安装终端，就只能在进入Plasma后，按<kbd>Ctrl+Alt+F2/F3/F4</kbd>切换到TTY中操作。</p>
 <h3 id="安装中文字体和Emoji字体"><a href="#安装中文字体和Emoji字体" class="headerlink" title="安装中文字体和Emoji字体"></a>安装中文字体和Emoji字体</h3><p>中文字体默认没有安装。若不安装，会在中文显示的地方显示Unicode占位符。Emoji也是如此。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装思源字体家族，包含中日韩字体，以及黑体、宋体、等宽体三种类型</span></span><br><span class="line">pacstrap /mnt noto-fonts-cjk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装思源Emoji字体，安卓同款</span></span><br><span class="line">pacstrap /mnt noto-fonts-emoji</span><br></pre></td></tr></table></figure>
-<h2 id="重启后安装其他组件"><a href="#重启后安装其他组件" class="headerlink" title="重启后安装其他组件"></a>重启后安装其他组件</h2><p>经过以上的设置，重启电脑并由硬盘启动后（建议拔掉启动盘），就能看到登录界面了，用我们新建的用户即可直接登入系统。之后我们就可以在安装好的系统中，进行后续的操作。</p>
-<h3 id="安装KDE全家桶"><a href="#安装KDE全家桶" class="headerlink" title="安装KDE全家桶"></a>安装KDE全家桶</h3><p>KDE组织旗下开发了大量的软件，涵盖系统应用的方方面面。用户可按自己的实际需要安装，或者安装下面这个包，迎来KDE全家桶：</p>
+<h2 id="重启后第一步：添加archlinuxcn和AUR"><a href="#重启后第一步：添加archlinuxcn和AUR" class="headerlink" title="重启后第一步：添加archlinuxcn和AUR"></a>重启后第一步：添加archlinuxcn和AUR</h2><p>经过以上的设置，重启电脑并由硬盘启动后（建议拔掉启动盘），就能看到登录界面了，用我们新建的用户即可直接登入系统。之后我们就可以在安装好的系统中，进行后续的操作。</p>
+<p>为了能够获取更多软件，添加第三方软件源必不可少。Arch Linux用户常用的第三方软件源包括Archlinuxcn和AUR。</p>
+<h3 id="添加Archlinuxcn"><a href="#添加Archlinuxcn" class="headerlink" title="添加Archlinuxcn"></a>添加Archlinuxcn</h3><p>Archlinuxcn是由来自我国的团队维护的软件源，主要提供官方源之外的以下实用软件：</p>
+<ul>
+<li>闭源软件，如Google Chrome、Android Studio、WPS Office。</li>
+<li>开源软件的官方Build，如Visual Studio Code。Arch官方源也有，但界面和功能与微软官方版有明显区别。</li>
+<li>官方源未收录的实用软件，如NVM（Node.js版本切换工具）、Oh My Zsh（火爆的zsh增强工具）、Logisim（电路仿真工具）。</li>
+<li>官方源也有，但影响用户体验。比如Pandoc，官方源提供的版本会捆绑Haskell的依赖，数百兆很臃肿，一般用户用不上。Archlinuxcn则提供了静态链接的版本<code>pandoc-bin</code>。</li>
+<li>从GitHub编译而来的自由软件，与官方源版本不兼容，如fcitx。</li>
+</ul>
+<p>添加方法很简单。首先打开<code>/etc/pacman.conf</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/pacman.conf</span><br></pre></td></tr></table></figure>
+<p>然后在文件末尾加上Archlinuxcn的软件源地址。这里采用清华大学TUNA的镜像源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch</span><br></pre></td></tr></table></figure>
+<p>保存后，更新软件源并安装密钥环：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Sy</span><br><span class="line">sudo pacman -S archlinuxcn-keyring</span><br></pre></td></tr></table></figure>
+<p>这样就可以使用了。</p>
+<h3 id="使用AUR"><a href="#使用AUR" class="headerlink" title="使用AUR"></a>使用AUR</h3><p>AUR是Arch Linux社区维护的软件源，是官方源甚至是Archlinuxcn的扩展，包罗万象。用Pacman搜不到的软件，可以去AUR找找看。</p>
+<p>AUR的官方地址是<a href="https://aur.archlinux.org/" target="_blank" rel="noopener">https://aur.archlinux.org/</a>，一般更为实用的使用方法是安装一款管理工具，主要包括yaourt（曾经主流，现已停止维护）和yay（Yet Another Yaourt）。<strong>yay是现在的首选</strong>。</p>
+<p>首先安装yay。<strong>官方源未收录，只有Archlinuxcn收录了</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S yay</span><br></pre></td></tr></table></figure>
+<p>然后用它来检索并安装软件包，命令格式是<code>yay 关键字</code>，<strong>不需要使用<code>sudo</code>来运行</strong>。比如，笔者想安装<code>ntfs-3g</code>驱动程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索ntfs-3g</span></span><br><span class="line">yay ntfs-3g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后得到以下搜索结果</span></span><br><span class="line">9 aur/ntfs-3g-onedrive-bin 1.1.0-2 (+0 0.00) </span><br><span class="line">    NTFS-3G plugin <span class="keyword">for</span> reading OneDrive directories created by Windows 10</span><br><span class="line">8 aur/libntfs-wii 2013.1.13-2 (+1 0.00) </span><br><span class="line">    NTFS-3G filesystem access library (<span class="keyword">for</span> Nintendo Gamecube/Wii homebrew development)</span><br><span class="line">7 aur/libntfs-3g 2016.2.22-1 (+1 0.00) </span><br><span class="line">    NTFS filesystem library and development headers. Does not include FUSE driver or utilities.</span><br><span class="line">6 aur/ntfs-3g-system-compression-git 1.0.r13.3a474d4-1 (+3 0.00) </span><br><span class="line">    NTFS-3G plugin <span class="keyword">for</span> reading <span class="string">"system compressed"</span> files</span><br><span class="line">5 aur/ntfs-3g-wimlib-patched 2017.3.23-1 (+3 0.00) </span><br><span class="line">    NTFS filesystem driver and utilities - with patch from https://wimlib.net/forums/viewtopic.php?f=1&amp;t=4&amp;p=693<span class="comment">#p596 applied</span></span><br><span class="line">4 aur/ntfs-3g-system-compression 1.0-1 (+10 0.12) </span><br><span class="line">    NTFS-3G plugin <span class="keyword">for</span> reading <span class="string">"system compressed"</span> files</span><br><span class="line">3 aur/ntfs-3g-ar 2017.3.23AR.5-4 (+40 0.00) </span><br><span class="line">    NTFS filesystem driver and utilities with experimental features</span><br><span class="line">2 aur/ntfs-3g-fuse 2017.3.23-1 (+78 0.41) (Installed)</span><br><span class="line">    Stable <span class="built_in">read</span> and write NTFS driver and ntfsprogs. This package will allow normal users to mount NTFS Volumes.</span><br><span class="line">1 extra/ntfs-3g 2017.3.23-5 (551.2 KiB 1.7 MiB) </span><br><span class="line">    NTFS filesystem driver and utilities</span><br><span class="line">==&gt; Packages to install (eg: 1 2 3, 1-3 or ^4)</span><br><span class="line">==&gt;</span><br></pre></td></tr></table></figure>
+<p>按照提示，输入包的编号来安装，比如第2个包。值得注意的是，yay的软件包是要从源代码编译的，所以一般安装流程如下：</p>
+<ul>
+<li>自动下载该AUR的源代码，可能会用到<code>curl</code>或<code>git</code>；</li>
+<li>给源码打补丁；</li>
+<li>安装必要的软件包用于编译，用户可选是否在安装完成后卸载；</li>
+<li>把编译好的文件打包成Pacman安装包；</li>
+<li>用Pacman安装。</li>
+</ul>
+<p>具体的安装过程可以自己体会一下。</p>
+<h2 id="安装其他组件"><a href="#安装其他组件" class="headerlink" title="安装其他组件"></a>安装其他组件</h2><h3 id="安装KDE全家桶"><a href="#安装KDE全家桶" class="headerlink" title="安装KDE全家桶"></a>安装KDE全家桶</h3><p>KDE组织旗下开发了大量的软件，涵盖系统应用的方方面面。用户可按自己的实际需要安装，或者安装下面这个包，迎来KDE全家桶：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S kde-applications-meta</span><br></pre></td></tr></table></figure>
 <p>全家桶的体积非常大，包含各类应用，甚至涵盖了不少游戏和教育软件。大部分软件难以用上，因此虚拟机用户不建议安装，而以按需取用其中一类（或单个）组件来代替。</p>
 <p>以下是我们在Arch Linux中可选的KDE软件套组分类：</p>
@@ -399,18 +430,10 @@
 <p><strong>第二，设置fcitx作为我们默认的输入法框架</strong>。创建并编辑<code>/home/用户名/.xprofile</code>，然后在里面添加以下内容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></span><br></pre></td></tr></table></figure>
 <p>重新登录生效。</p>
+<p>在Arch Linux下，笔者首推的输入法是<a href="https://rime.im/" target="_blank" rel="noopener">中州韵Rime输入法</a>。安装后也是重新登录生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx-rime</span><br></pre></td></tr></table></figure>
 <h3 id="启用网络支持"><a href="#启用网络支持" class="headerlink" title="启用网络支持"></a>启用网络支持</h3><p>若网络管理不起作用，KDE设置里网络管理部分显示为空白，且任务栏上没有网络图标，则手工启用网络管理器。立即生效。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start NetworkManager</span><br><span class="line">sudo systemctl start wpa_supplicant</span><br></pre></td></tr></table></figure>
-<h3 id="启用蓝牙组件"><a href="#启用蓝牙组件" class="headerlink" title="启用蓝牙组件"></a>启用蓝牙组件</h3><p>Plasma会装上蓝牙服务程序Bluez，但默认不会启用，导致系统提示“找不到蓝牙适配器”。</p>
-<p>先启用Bluez Daemon：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable bluetooth</span><br><span class="line">sudo systemctl start bluetooth</span><br></pre></td></tr></table></figure>
-<p>安装蓝牙音频支持：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S pulseaudio-bluetooth</span><br></pre></td></tr></table></figure>
-<p>高级玩家还可以安装高级蓝牙管理器：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S blueman</span><br></pre></td></tr></table></figure>
-<p>Blueman可激活电脑蓝牙的隐藏功能，如把电脑当手机的蓝牙音箱、串口通信。需内核支持。</p>
-<h3 id="安装媒体组件"><a href="#安装媒体组件" class="headerlink" title="安装媒体组件"></a>安装媒体组件</h3><p>基本的媒体组件包括硬件加速库libva，以及媒体播放器。libva同时支持英特尔和NVIDIA的显卡（后者使用NVIDIA专有的VDPAU技术）。而在媒体播放上，Arch Linux和Manjaro均首推VLC。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装硬件加速库libva</span></span><br><span class="line">sudo pacman -S libva libva-intel-driver libva-vdpau-driver libva-utils</span><br><span class="line"><span class="comment"># 检查硬件加速库状态，会显示libva库的版本与显卡信息</span></span><br><span class="line">vainfo</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLC和SMPlayer，按需取用。</span></span><br><span class="line"><span class="comment"># 【注意】VLC已包含在KDE全家桶中。</span></span><br><span class="line">sudo pacman -S vlc smplayer</span><br></pre></td></tr></table></figure>
 <h3 id="配置好休眠文件（可解决自动休眠时的卡死问题）"><a href="#配置好休眠文件（可解决自动休眠时的卡死问题）" class="headerlink" title="配置好休眠文件（可解决自动休眠时的卡死问题）"></a>配置好休眠文件（可解决自动休眠时的卡死问题）</h3><p>X200有一定几率会在关机时长时间挂起，在文字界面下可见，关机过程卡在以下地方：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[***  ]A stop job is running for device dev-disk-by/uuid-b072209d-279a-41cd-b4b3-16eab1a84d60.device. (1min 30s)</span><br></pre></td></tr></table></figure>
 <p>检查了一下fstab，发现日志中的UUID正是Swap分区的UUID，检索资料后查明是与休眠相关的参数没配置好。而此前偶有出现系统闲置时会莫名其妙卡死，疑为与自动休眠相关，自动休眠可能正触发了这个问题。</p>
@@ -422,12 +445,45 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># UUID=99ec3c4a-01e6-487b-9fdd-fb81e6c5a482</span><br><span class="line">/dev/sda5               none            swap            defaults        0 0</span><br></pre></td></tr></table></figure>
 <p>最后重新生成配置文件，重启后生效：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<h3 id="启用NTFS支持"><a href="#启用NTFS支持" class="headerlink" title="启用NTFS支持"></a>启用NTFS支持</h3><p>Linux下对NTFS的支持，借助于ntfs-3g，以及FUSE（用户态文件系统）。一般的Linux发行版都提供了它们，但在Arch Linux下，ntfs-3g默认不会安装；且FUSE默认也不会启用，须每次开机都手动用<code>sudo modprobe fuse</code>加载（要自动加载，可参考<a href="https://www.cnblogs.com/image-eye/archive/2011/08/19/2145777.html" target="_blank" rel="noopener">这篇文章的讲解</a>）。</p>
+<p>笔者推荐使用<code>ntfs-3g-fuse</code>这个包，它可以自动加载FUSE，还允许普通用户（而不限root）挂载NTFS分区，适合移动硬盘用户。使用yay安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay ntfs-3g-fuse</span><br></pre></td></tr></table></figure>
+<h3 id="启用蓝牙组件"><a href="#启用蓝牙组件" class="headerlink" title="启用蓝牙组件"></a>启用蓝牙组件</h3><p>Plasma会装上蓝牙服务程序Bluez，但默认不会启用，导致系统提示“找不到蓝牙适配器”。</p>
+<p>先启用Bluez Daemon：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable bluetooth</span><br><span class="line">sudo systemctl start bluetooth</span><br></pre></td></tr></table></figure>
+<p>安装蓝牙音频支持：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S pulseaudio-bluetooth</span><br></pre></td></tr></table></figure>
+<p>高级玩家还可以安装高级蓝牙管理器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S blueman</span><br></pre></td></tr></table></figure>
+<p>Blueman可激活电脑蓝牙的隐藏功能，如把电脑当手机的蓝牙音箱、串口通信。需内核支持。</p>
+<h3 id="安装媒体组件"><a href="#安装媒体组件" class="headerlink" title="安装媒体组件"></a>安装媒体组件</h3><p>基本的媒体组件包括硬件加速库libva，以及媒体播放器。libva同时支持英特尔和NVIDIA的显卡（后者使用NVIDIA专有的VDPAU技术）。而在媒体播放上，Arch Linux和Manjaro均首推VLC。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装硬件加速库libva</span></span><br><span class="line">sudo pacman -S libva libva-intel-driver libva-vdpau-driver libva-utils</span><br><span class="line"><span class="comment"># 检查硬件加速库状态，会显示libva库的版本与显卡信息</span></span><br><span class="line">vainfo</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLC和SMPlayer，按需取用。</span></span><br><span class="line"><span class="comment"># 【注意】VLC已包含在KDE全家桶中。</span></span><br><span class="line">sudo pacman -S vlc smplayer</span><br></pre></td></tr></table></figure>
 <h3 id="禁用蜂鸣器"><a href="#禁用蜂鸣器" class="headerlink" title="禁用蜂鸣器"></a>禁用蜂鸣器</h3><p>默认情况下，进行一些操作时，电脑的蜂鸣器会响起，发出很刺耳的嘟嘟声，例如在TTY中光标的始末处按方向键或退格键。这时可以考虑禁用蜂鸣器。</p>
 <p>蜂鸣器默认作为内核模块加载，因此只需把相应的模块加入黑名单中禁用即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到Root用户下</span></span><br><span class="line">sudo -i</span><br><span class="line"><span class="comment"># 卸载蜂鸣器模块</span></span><br><span class="line">rmmod pcspkr</span><br><span class="line"><span class="comment"># 把蜂鸣器模块添加到黑名单中，重启即可彻底禁用之</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"blacklist pcspkr"</span> &gt; /etc/modprobe.d/nobeep.conf</span><br></pre></td></tr></table></figure>
 <h3 id="禁用重新登录时恢复上一次会话"><a href="#禁用重新登录时恢复上一次会话" class="headerlink" title="禁用重新登录时恢复上一次会话"></a>禁用重新登录时恢复上一次会话</h3><p>默认情况下，KDE在重新登录后，会把用户之前打开的程序再重新打开（如果支持的话），方便用户马上开始工作。但这功能不实用，它不会恢复应用程序的状态（比如给你原封不动地显示之前的网页内容，以及你的文档编辑进度），拖慢启动速度。对PT党来说，它有时甚至会把qBittorrent这样的应用也恢复，不考虑电脑分区的挂载情况，导致异常（严重者甚至会导致种子重新下载）。</p>
 <p>设置的方法是：</p>
 <p>打开系统设置（Settings） -&gt; 启动和关机（Startup and Shutdown） -&gt; 桌面会话（Desktop Session） -&gt; 以新会话启动（Start with an empty session）。</p>
+<h3 id="安装打印机"><a href="#安装打印机" class="headerlink" title="安装打印机"></a>安装打印机</h3><p>Linux通过CUPS（Common Unix Printing Service）来提供打印功能。按照惯例，Arch Linux并不会附带它。</p>
+<h4 id="安装打印机服务"><a href="#安装打印机服务" class="headerlink" title="安装打印机服务"></a>安装打印机服务</h4><p>首先安装CUPS本体，以及实际使用时依赖的组件（如Ghostscript，它用于转换打印输出的格式）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S cups ghostscript gsfont</span><br></pre></td></tr></table></figure>
+<p>然后启动CUPS服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用并启动全部CUPS服务</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> cups</span><br><span class="line">sudo systemctl start cups</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个服务作用未知，但可能跟网络打印机有关。Arch Wiki没有讲</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> cups-browsed.service</span><br><span class="line">sudo systemctl start cups-browsed.service</span><br></pre></td></tr></table></figure>
+<p>如果KDE设置中的“打印机设置”不可用，则安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S <span class="built_in">print</span>-manager		<span class="comment"># 包含在了kde-utilities套组中</span></span><br></pre></td></tr></table></figure>
+<p>这样，既可以在KDE设置的“打印机设置”中管理打印机，也可以登录<a href="http://localhost:631" target="_blank" rel="noopener">http://localhost:631</a>以使用CUPS的WebUI进行管理。</p>
+<h4 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h4><p>关于打印机驱动的安装，可参考以下的文章：</p>
+<ul>
+<li><a href="http://www.mintos.org/hard/printer-driver.html" target="_blank" rel="noopener">《方法论：如何驱动各品牌打印机》</a>。作者列举了惠普、三星、兄弟工业，以及日系品牌（佳能、富士、爱普生等）的打印机驱动安装方法。首推惠普打印机，它对Linux的支持最完善，其次是三星和兄弟（<small>其实兄弟工业也是日系，但对Linux支持较好</small>）。</li>
+<li><a href="https://blog.csdn.net/Edison_404/article/details/78048582" target="_blank" rel="noopener">ArchLinux使用HP打印机</a>。只需安装<code>hpoj, hplip</code>这两个包，即可驱动惠普主流型号的打印机。</li>
+</ul>
+<p>也可自行搜索打印机驱动：</p>
+<ul>
+<li><a href="https://aur.archlinux.org/" target="_blank" rel="noopener">AUR</a>，尝试<code>yay 打印机品牌</code>或<code>yay 打印机型号</code>，往往可搜索到大量的打印机驱动。比如<code>yay epson</code>就搜到了近百条驱动。</li>
+<li>ArchLinuxCN，收录了部分打印机的驱动。可尝试<code>pacman -Ss 打印机品牌</code>，比如兄弟工业（Brother）就收录了两款。</li>
+<li><a href="http://www.openprinting.org/printers" target="_blank" rel="noopener">Printer Listings</a>，OpenPrinting 提供的打印机驱动，放在 <code>/usr/share/cups/model/</code> 下。<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[漩涡的博客: Arch Linux连接并使用打印机](https://xuanwo.io/2019/09/19/archlinux-cups-connect/)">[1]</span></a></sup></li>
+<li>从设备供应商网站获取，放在 <code>/usr/share/cups/model/</code> 下。<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[漩涡的博客: Arch Linux连接并使用打印机](https://xuanwo.io/2019/09/19/archlinux-cups-connect/)">[1]</span></a></sup></li>
+</ul>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://www.cnblogs.com/kainhuck/p/10698671.html" target="_blank" rel="noopener">ArchLinux安装KDE桌面</a></li>
 <li><a href="https://www.colabug.com/2016/1004/609036/" target="_blank" rel="noopener">给 GNU/Linux 萌新的 Arch Linux 安装指南</a></li>
@@ -436,7 +492,7 @@
 <li><a href="https://www.cnblogs.com/dolphi/p/3622570.html" target="_blank" rel="noopener">Linux下使用locale命令设置语言环境</a></li>
 <li><a href="https://blog.csdn.net/AsWeDo/article/details/104613641" target="_blank" rel="noopener">sddm显示管理器设置“登录时恢复上一次会话”后遇到的问题</a></li>
 </ul>
-
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://xuanwo.io/2019/09/19/archlinux-cups-connect/" target="_blank" rel="noopener">漩涡的博客: Arch Linux连接并使用打印机</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       

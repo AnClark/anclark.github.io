@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-23T03:35:11.255Z">
+<meta property="og:updated_time" content="2020-11-23T03:48:50.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
@@ -387,7 +387,7 @@
 </tr>
 <tr>
 <td>从GitHub编译而来的自由软件，与官方源版本不兼容</td>
-<td>一般包名有<code>-git</code>后缀。如Fcitx<a href="Archlinuxcn提供了一个定制版本`fcitx-lilydjwg-git`，减少了依赖，并增加对Lua的支持。它与官方源的Fcitx不兼容。">^note_fcitx</a>。</td>
+<td>一般包名有<code>-git</code>后缀。如Fcitx<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Archlinuxcn提供了一个定制版本`fcitx-lilydjwg-git`，减少了依赖，并增加对Lua的支持。它与官方源的Fcitx不兼容。">[1]</span></a></sup>。</td>
 </tr>
 </tbody>
 </table>
@@ -519,8 +519,8 @@
 <ul>
 <li><a href="https://aur.archlinux.org/" target="_blank" rel="noopener">AUR</a>，尝试<code>yay 打印机品牌</code>或<code>yay 打印机型号</code>，往往可搜索到大量的打印机驱动。比如<code>yay epson</code>就搜到了近百款驱动。</li>
 <li>ArchLinuxCN，收录了部分打印机的驱动。可尝试<code>pacman -Ss 打印机品牌</code>，比如兄弟工业就收录了两款。</li>
-<li><a href="http://www.openprinting.org/printers" target="_blank" rel="noopener">Printer Listings</a>，OpenPrinting 提供的打印机驱动，放在 <code>/usr/share/cups/model/</code> 下。[^cite_xuanwo]</li>
-<li>从设备供应商网站获取，放在 <code>/usr/share/cups/model/</code> 下。[^cite_xuanwo]</li>
+<li><a href="http://www.openprinting.org/printers" target="_blank" rel="noopener">Printer Listings</a>，OpenPrinting 提供的打印机驱动，放在 <code>/usr/share/cups/model/</code> 下。<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[漩涡的博客: Arch Linux连接并使用打印机](https://xuanwo.io/2019/09/19/archlinux-cups-connect/)">[2]</span></a></sup></li>
+<li>从设备供应商网站获取，放在 <code>/usr/share/cups/model/</code> 下。<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[漩涡的博客: Arch Linux连接并使用打印机](https://xuanwo.io/2019/09/19/archlinux-cups-connect/)">[2]</span></a></sup></li>
 </ul>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://www.cnblogs.com/kainhuck/p/10698671.html" target="_blank" rel="noopener">ArchLinux安装KDE桌面</a></li>
@@ -530,8 +530,7 @@
 <li><a href="https://www.cnblogs.com/dolphi/p/3622570.html" target="_blank" rel="noopener">Linux下使用locale命令设置语言环境</a></li>
 <li><a href="https://blog.csdn.net/AsWeDo/article/details/104613641" target="_blank" rel="noopener">sddm显示管理器设置“登录时恢复上一次会话”后遇到的问题</a></li>
 </ul>
-<h3 id="引用和脚注"><a href="#引用和脚注" class="headerlink" title="引用和脚注"></a>引用和脚注</h3><p>[^cite_xuanwo]: <a href="https://xuanwo.io/2019/09/19/archlinux-cups-connect/" target="_blank" rel="noopener">漩涡的博客: Arch Linux连接并使用打印机</a></p>
-
+<h3 id="引用和脚注"><a href="#引用和脚注" class="headerlink" title="引用和脚注"></a>引用和脚注</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Archlinuxcn提供了一个定制版本<code>fcitx-lilydjwg-git</code>，减少了依赖，并增加对Lua的支持。它与官方源的Fcitx不兼容。<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://xuanwo.io/2019/09/19/archlinux-cups-connect/" target="_blank" rel="noopener">漩涡的博客: Arch Linux连接并使用打印机</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li></ol></div></div>
       
 
       

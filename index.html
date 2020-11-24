@@ -179,6 +179,106 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Struggle_with_Linux/给RIME中州韵添加词库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/">Arch Linux下给RIME中州韵添加词库</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/" class="archive-article-date">
+  	<time datetime="2020-11-23T08:42:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。</p>
+<p>不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。</p>
+        
+          <a class="article-more-a" href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RIME</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Arch-Linux//" class="article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NodeJS/NodeJS_镜像源指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -199,26 +299,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="配置npm镜像源"><a href="#配置npm镜像源" class="headerlink" title="配置npm镜像源"></a>配置npm镜像源</h2><p>npm的源是用registry（注册库）的形式来组织的。作为业界标准的开源项目，npm在国内也有镜像，一般国内用的较多的是淘宝提供的源。</p>
-<p>使用npm安装软件时，加上<code>--registry</code>参数，即可用上镜像源，显著加快下载速度：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;包名&gt; --registry https://registry.npm.taobao.org/</span><br></pre></td></tr></table></figure>
-<p>如果觉得每次都加参数很麻烦，则可更改npm的设置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org/</span><br></pre></td></tr></table></figure>
-<p>下次使用npm，就会自动用淘宝的镜像源了。</p>
-<h2 id="配置Electron镜像源"><a href="#配置Electron镜像源" class="headerlink" title="配置Electron镜像源"></a>配置Electron镜像源</h2><p>Electron在安装过程中会下载预先编译好的二进制包，但它使用专门工具下载，既不采用你的代理设置，也不采用npm的registry设置，因此在国内这个进度条常常走不动。还好，<strong>我们也可以给Electron设置镜像源</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/</span><br></pre></td></tr></table></figure>
-<p>这里采用华为云提供的镜像源，速度很快，电信宽带可实现秒下。</p>
-<h2 id="使用npm-search：解决No-search-sources-available"><a href="#使用npm-search：解决No-search-sources-available" class="headerlink" title="使用npm search：解决No search sources available"></a>使用npm search：解决<code>No search sources available</code></h2><p>设置淘宝镜像源后，<code>npm search</code>会失效：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ npm search sqlite       </span><br><span class="line">npm WARN search fast search endpoint errored. Using old search.</span><br><span class="line">npm WARN Failed to read search cache. Rebuilding</span><br><span class="line">npm WARN Building the local index for the first time, please be patient</span><br><span class="line">npm WARN Search data request failed, search might be stale</span><br><span class="line">npm ERR! No search sources available</span><br></pre></td></tr></table></figure>
-<p>这是因为淘宝镜像源并没有提供<code>npm search</code>所需的文件，只提供下载。有的前辈建议换回npm官方源，并用cnpm来下载，以保留搜索功能，但这并不是好办法（cnpm采用<strong>扁平化安装</strong>，会导致<strong>Electron打包速度奇慢无比</strong>，慎用）。</p>
-<p>事实上，<code>npm search</code>和<code>npm install</code>一样，<strong>都可以指定<code>--registry</code>参数</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm search sqlite --registry=https://registry.npmjs.org</span><br></pre></td></tr></table></figure>
-<p><strong>使用官方源作为registry</strong>，于是搜索功能正常了。</p>
-<p>为了方便后续使用，可以<code>alias</code>一个搜索命令<code>nsearch</code>。把这行命令添加到<code>~/.bashrc</code>或<code>~/.zshrc</code>的尾部：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> nsearch=<span class="string">'npm search --registry=https://registry.npmjs.org'</span></span><br></pre></td></tr></table></figure>
-<p>那么下次搜索时，直接使用我们的这个命令即可，由此即可兼顾搜索和下载。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsearch &lt;关键字&gt;</span><br></pre></td></tr></table></figure>
-
+        <p>以下记录如何给npm和Electron配置镜像源，大大提升国内的下载体验。</p>
+        
+          <a class="article-more-a" href="/2020/11/18/NodeJS/NodeJS_镜像源指南/#more">more >></a>
+        
       
 
       
@@ -1070,112 +1154,6 @@
 
 
   
-    <article id="post-Struggle_with_Linux/为snapd设置代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/12/Struggle_with_Linux/为snapd设置代理/">为snapd设置代理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/12/Struggle_with_Linux/为snapd设置代理/" class="archive-article-date">
-  	<time datetime="2019-04-12T14:32:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Snap，全称SnapCraft，是一个全新的应用软件环境。在Snap中，软件被封装在类似于Docker的容器中，即开即用，可随时获取，这一切由其后台服务<code>snapd</code>提供支持。Ubuntu从18.04开始，就引入它作为系统的一部分，而其他的Linux发行版（如Deepin）也可以通过软件管理工具进行安装（如<code>sudo apt install snapd</code>）。</p>
-<p>SnapCraft将软件包分发在自己的服务器上。然而，因为众所周知的原因，访问位于海外的Snap服务器异常缓慢，不加代理的情况下，下载速度会持续降到十几KB每秒。这使得我们不得不想办法通过代理服务器进行加速。</p>
-<p>一般地，Linux上的一些应用程序会通过读取环境变量<code>http_proxy</code>和<code>https_proxy</code>来应用代理服务器设置，典型的有Chrome。然而，Snap比较特别，它不会从环境变量中上述环境变量中读取代理服务器设置，因此直接使用<code>export http_proxy=[代理服务器地址]</code>或<code>export https_proxy=[代理服务器地址]</code>是不起作用的。</p>
-<p>那么，有何正确的方法？</p>
-        
-          <a class="article-more-a" href="/2019/04/12/Struggle_with_Linux/为snapd设置代理/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Snapd</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Snap</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Ubuntu//" class="article-tag-list-link color2">Ubuntu</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Ubuntu/Snap//" class="article-tag-list-link color5">Snap</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/12/Struggle_with_Linux/为snapd设置代理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1302,14 +1280,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
@@ -1318,19 +1288,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1430,10 +1396,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
@@ -1446,6 +1408,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">RIME</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
@@ -1454,15 +1424,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1471,14 +1461,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
             
             <div class="clearfix"></div>

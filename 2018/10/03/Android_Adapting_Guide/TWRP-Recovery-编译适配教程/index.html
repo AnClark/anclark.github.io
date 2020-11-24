@@ -228,10 +228,10 @@
 </tbody>
 </table>
 <h2 id="第一步：准备编译环境"><a href="#第一步：准备编译环境" class="headerlink" title="第一步：准备编译环境"></a>第一步：准备编译环境</h2><h3 id="（一）安装必要的软件包"><a href="#（一）安装必要的软件包" class="headerlink" title="（一）安装必要的软件包"></a>（一）安装必要的软件包</h3><p>TWRP的编译，需要一系列软件包支持。在Ubuntu下，使用<code>apt</code>命令即可一次就安装好：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 更新软件源</span><br><span class="line">sudo apt update</span><br><span class="line"><span class="meta">#</span> 安装软件包</span><br><span class="line">sudo apt install git-core gnupg flex bison gperf \</span><br><span class="line">zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \</span><br><span class="line">lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \</span><br><span class="line">libgl1-mesa-dev libxml2-utils xsltproc unzip</span><br><span class="line"><span class="meta">#</span> 安装OpenJDK</span><br><span class="line">sudo apt install openjdk-8-jdk</span><br><span class="line"><span class="meta">#</span> 安装编译套件build-essential。若出错，则请使用以下第二行的命令</span><br><span class="line">sudo apt install build-essential</span><br><span class="line">sudo apt install gcc g++ make</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 更新软件源</span></span><br><span class="line">sudo apt update</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装软件包</span></span><br><span class="line">sudo apt install git-core gnupg flex bison gperf \</span><br><span class="line">zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \</span><br><span class="line">lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \</span><br><span class="line">libgl1-mesa-dev libxml2-utils xsltproc unzip</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装OpenJDK</span></span><br><span class="line">sudo apt install openjdk-8-jdk</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装编译套件build-essential。若出错，则请使用以下第二行的命令</span></span><br><span class="line">sudo apt install build-essential</span><br><span class="line">sudo apt install gcc g++ make</span><br></pre></td></tr></table></figure>
 <h3 id="（二）配置ccache"><a href="#（二）配置ccache" class="headerlink" title="（二）配置ccache"></a>（二）配置<code>ccache</code></h3><p><code>ccache</code>是一个缓存工具，它通过将编译产生的中间文件（预处理得到的代码、输出文件<code>*.o</code>等）缓存起来，待到下次编译同样源文件时直接复制而不是重新生成，以此来提高编译效率。最直接的好处，就是在<code>make clean</code>之后，重新编译的速度能够快不少。</p>
 <p>波浪线“<code>~</code>”是Home目录的简写。我们在Bash的配置文件<code>~/.bashrc</code>的尾部加上以下语句，启用<code>ccache</code>。<code>ccache</code>默认存放在用户目录下（<code>~/.ccache</code>），可以更改环境变量<code>CCACHE_DIR</code>，以设置到其他磁盘分区。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启用ccache</span><br><span class="line">export USE_CCACHE=1</span><br><span class="line"><span class="meta">#</span> 改变ccache缓存路径</span><br><span class="line">export CCACHE_DIR=/mnt/seagate_drive/.ccache</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启用ccache</span></span><br><span class="line">export USE_CCACHE=1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 改变ccache缓存路径</span></span><br><span class="line">export CCACHE_DIR=/mnt/seagate_drive/.ccache</span><br></pre></td></tr></table></figure>
 <p>然后重启终端，或运行<code>source ~/.bashrc</code>，或新开一个Bash会话，使上述语句生效。</p>
 <p>另外，可以设置<code>ccache</code>缓存所占磁盘空间的大小：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccache -M 50G</span><br></pre></td></tr></table></figure>
@@ -1000,14 +1000,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
@@ -1016,19 +1008,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1128,10 +1116,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
@@ -1144,6 +1128,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">RIME</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
@@ -1152,15 +1144,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1169,14 +1181,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
             
             <div class="clearfix"></div>

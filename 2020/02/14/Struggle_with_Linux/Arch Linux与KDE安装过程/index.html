@@ -16,10 +16,14 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-23T03:48:50.471Z">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_set_locale_in_kde_settings.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_disable_kde_bell.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_do_not_restore_last_session.png">
+<meta property="og:updated_time" content="2020-11-24T13:26:28.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/blog/arch_kde_set_locale_in_kde_settings.png">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -316,6 +320,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>提示：</strong>Locale也可在进入系统后，于KDE系统设置中更改，要更直观些。设置选项位于【KDE系统设置（System Settings）】–&gt; 【区域设置（Regional Settings）】–&gt; 【格式设置（Formats）】。</p>
+<img src="/assets/img/blog/arch_kde_set_locale_in_kde_settings.png" title="在KDE中设置Locale">
 <p>区域设置里还有一个“语言设置（Language）”，但<strong>它不是用来设置locale的</strong>，它设置的是KDE、GTK等图形界面的语言。</p>
 </blockquote>
 <h3 id="安装图形环境"><a href="#安装图形环境" class="headerlink" title="安装图形环境"></a>安装图形环境</h3><p>接下来就是安装Xorg图形环境。<code>xorg</code>包包含了所有可能用到的组件，在此基础上再安装显卡驱动组件。</p>
@@ -497,11 +502,15 @@
 <p>Blueman可激活电脑蓝牙的隐藏功能，如把电脑当手机的蓝牙音箱、串口通信。需内核支持。</p>
 <h3 id="安装媒体组件"><a href="#安装媒体组件" class="headerlink" title="安装媒体组件"></a>安装媒体组件</h3><p>基本的媒体组件包括硬件加速库libva，以及媒体播放器。libva同时支持英特尔和NVIDIA的显卡（后者使用NVIDIA专有的VDPAU技术）。而在媒体播放上，Arch Linux和Manjaro均首推VLC，笔者也使用SMPlayer。这两款自由软件媒体播放器使用FFMpeg解码库，一般会自动安装上。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装硬件加速库libva</span></span><br><span class="line">sudo pacman -S libva libva-intel-driver libva-vdpau-driver libva-utils</span><br><span class="line"><span class="comment"># 检查硬件加速库状态，会显示libva库的版本与显卡信息</span></span><br><span class="line">vainfo</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLC和SMPlayer，按需取用。</span></span><br><span class="line"><span class="comment"># 【注意】VLC也被包含在KDE全家桶中。</span></span><br><span class="line">sudo pacman -S vlc smplayer</span><br></pre></td></tr></table></figure>
-<h3 id="禁用蜂鸣器"><a href="#禁用蜂鸣器" class="headerlink" title="禁用蜂鸣器"></a>禁用蜂鸣器</h3><p>默认情况下，进行一些操作时，电脑的蜂鸣器会响起，发出很刺耳的嘟嘟声，例如在TTY中光标的始末处按方向键或退格键。这时可以考虑禁用蜂鸣器。</p>
-<p>蜂鸣器默认作为内核模块加载，因此只需把相应的模块加入黑名单中禁用即可。</p>
+<h3 id="禁用蜂鸣器"><a href="#禁用蜂鸣器" class="headerlink" title="禁用蜂鸣器"></a>禁用蜂鸣器</h3><p>默认情况下，进行一些操作时，电脑的蜂鸣器会响起，发出很刺耳的嘟嘟声，例如在TTY中光标的始末处按方向键或退格键。这时可以考虑禁用蜂鸣器。像ThinkPad X200这样的笔记本，蜂鸣器和电脑的喇叭连在一起，这就意味着如果音量开得很大，那声音可以吓skr人，插上耳机感觉会更酸爽。</p>
+<h4 id="全局禁用"><a href="#全局禁用" class="headerlink" title="全局禁用"></a>全局禁用</h4><p>蜂鸣器默认作为内核模块加载，因此只需把相应的模块加入黑名单中禁用即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到Root用户下</span></span><br><span class="line">sudo -i</span><br><span class="line"><span class="comment"># 卸载蜂鸣器模块</span></span><br><span class="line">rmmod pcspkr</span><br><span class="line"><span class="comment"># 把蜂鸣器模块添加到黑名单中，重启即可彻底禁用之</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"blacklist pcspkr"</span> &gt; /etc/modprobe.d/nobeep.conf</span><br></pre></td></tr></table></figure>
+<h4 id="在KDE中禁用"><a href="#在KDE中禁用" class="headerlink" title="在KDE中禁用"></a>在KDE中禁用</h4><p>KDE和Xorg也使用蜂鸣器来发出提示音，起提示用户的作用，但副作用不少。比如，KDE似乎会在电量严重不足时，让蜂鸣器发出救护车般的警告音，非常吓人。可以在系统设置中关闭。</p>
+<p>打开【系统设置（System Settings）】 -&gt;【辅助功能（Accessibility）】，然后取消勾选右侧的【使用系统铃声（Use system bell）】。</p>
+<img src="/assets/img/blog/arch_kde_disable_kde_bell.png" title="在KDE设置中禁用使用系统铃声">
 <h3 id="禁用重新登录时恢复上一次会话"><a href="#禁用重新登录时恢复上一次会话" class="headerlink" title="禁用重新登录时恢复上一次会话"></a>禁用重新登录时恢复上一次会话</h3><p>默认情况下，KDE在重新登录后，会把用户之前打开的程序再重新打开（如果支持的话），方便用户马上开始工作。但这功能不实用，它不会恢复应用程序的状态（比如给你原封不动地显示之前的网页内容，以及你的文档编辑进度），拖慢启动速度。对PT党来说，它有时甚至会把qBittorrent这样的应用也恢复，不考虑电脑分区的挂载情况，导致异常（严重者甚至会导致种子重新下载）。</p>
 <p><strong>设置的方法是：</strong>打开【系统设置（System Settings）】 -&gt;【 启动和关机（Startup and Shutdown）】 -&gt; 【桌面会话（Desktop Session）】 -&gt; 【以新会话启动（Start with an empty session）】。</p>
+<img src="/assets/img/blog/arch_kde_do_not_restore_last_session.png" title="在KDE设置中禁用登录时恢复上一次会话">
 <h3 id="安装打印机"><a href="#安装打印机" class="headerlink" title="安装打印机"></a>安装打印机</h3><p>Linux通过CUPS（Common Unix Printing Service）来提供打印功能。按照惯例，Arch Linux并不会附带它。</p>
 <h4 id="安装打印机服务"><a href="#安装打印机服务" class="headerlink" title="安装打印机服务"></a>安装打印机服务</h4><p>首先安装CUPS本体，以及实际使用时依赖的组件（如Ghostscript，它用于转换打印输出的格式）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S cups ghostscript gsfont</span><br></pre></td></tr></table></figure>
@@ -849,14 +858,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
@@ -865,19 +866,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -977,10 +974,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
@@ -993,6 +986,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">RIME</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
@@ -1001,15 +1002,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1018,14 +1039,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
             
             <div class="clearfix"></div>

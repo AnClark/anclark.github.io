@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 爱拼安小匠的技术博客</title>
+  <title>把Arch Linux打造成音乐工作站（二）：安装WineASIO | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="爱拼安小匠的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/page/3/index.html">
+  <meta name="description" content="第一篇过后补上，讲如何安装Jack。  借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。 WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，">
+<meta name="keywords" content="技术笔记,Linux,插电降频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把Arch Linux打造成音乐工作站（二）：安装WineASIO">
+<meta property="og:url" content="http://yoursite.com/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta property="og:description" content="第一篇过后补上，讲如何安装Jack。  借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。 WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_Cadence_Config.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_REAPER_Fail.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_REAPER_Succeed.png">
+<meta property="og:updated_time" content="2020-11-25T12:29:46.565Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爱拼安小匠的技术博客">
-<meta name="twitter:description" content="随时记录技术灵感，总结技术经验，分享给需要的你">
+<meta name="twitter:title" content="把Arch Linux打造成音乐工作站（二）：安装WineASIO">
+<meta name="twitter:description" content="第一篇过后补上，讲如何安装Jack。  借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。 WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/blog/WineASIO_Cadence_Config.png">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -177,36 +183,136 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux_Audio_Production/ArchLinux_WineASIO" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      把Arch Linux打造成音乐工作站（二）：安装WineASIO
+    </h1>
+  
+
+        
+        <a href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/" class="archive-article-date">
+  	<time datetime="2020-11-25T10:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>第一篇过后补上，讲如何安装Jack。</p>
+</blockquote>
+<p>借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。</p>
+<p>WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，后者可直接访问硬件，而在Linux中任何音频设备都由ALSA连接。</p>
+<p>下面讲讲怎样在躲掉一个个坑的情况下，成功装好WineASIO。</p>
+<a id="more"></a>
+<h2 id="从AUR下载"><a href="#从AUR下载" class="headerlink" title="从AUR下载"></a>从AUR下载</h2><p>AUR提供了WineASIO的包，可下载编译安装，不必去<a href="https://github.com/wineasio/wineasio" target="_blank" rel="noopener">官方网站</a>下载源码。</p>
+<p>首先安装构建工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S gcc make pkgconf fakeroot</span><br></pre></td></tr></table></figure>
+<p>然后用yay下载并安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay wineasio</span><br></pre></td></tr></table></figure>
+<p>此时会搜到两个版本，一个是<code>wineasio-git</code>（与官方Git repo一致），另一个是<code>wineasio</code>，一般选第二个。</p>
+<h2 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h2><p>安装完成后，要像在Windows里一样，用<code>regsvr32</code>注册。注意WineASIO有32位和64位两个版本，分别用于不同架构的宿主，二者不通用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用于32位Windows宿主</span></span><br><span class="line">regsvr32 wineasio.dll</span><br><span class="line"><span class="comment"># 用于64位Windows宿主</span></span><br><span class="line">wine64 regsvr32 wineasio.dll</span><br></pre></td></tr></table></figure>
+<h2 id="配置WineASIO"><a href="#配置WineASIO" class="headerlink" title="配置WineASIO"></a>配置WineASIO</h2><p>Cadence可与WineASIO配合使用，在用它来开关JACK服务的同时，也可配置WineASIO。WineASIO相关设置项位于Cadence主界面的【Tweaks】标签页中：</p>
+<img src="/assets/img/blog/WineASIO_Cadence_Config.png" title="Cadence 中的WineASIO配置项">
+<p>可设置的参数如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>建议取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of inputs<br>Number of outputs</td>
+<td>输入/输出通道数，默认为16，取值是2的倍数</td>
+<td>随你的声卡而定，一般集成声卡各有2个通道，专业声卡可能更多些</td>
+</tr>
+<tr>
+<td>Connect to hardware</td>
+<td>尝试把ASIO通道与硬件通道连接，实现一一映射</td>
+<td>打开</td>
+</tr>
+<tr>
+<td>Autostart server</td>
+<td>加载WineASIO时，自动启动JACK服务</td>
+<td>打开</td>
+</tr>
+<tr>
+<td>Fixed buffersize</td>
+<td>允许宿主更改缓冲区大小</td>
+<td>打开</td>
+</tr>
+<tr>
+<td>Preferred buffersize</td>
+<td>默认的缓冲区大小</td>
+<td>缓冲区越大，延迟越大。集成声卡选512～1024合适，专业声卡可低于512</td>
+</tr>
+</tbody>
+</table>
+<h2 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h2><p><strong>这里是一个大坑！</strong></p>
+<p>WineASIO对系统权限的要求比较“苛刻”，需要获得实时处理（realtime processing）的权限。这要求当前用户位于<code>realtime</code>用户组中。否则WineASIO会无法启动，导致宿主卡死。</p>
+<p>我在给REAPER设置ASIO输出的时候，就中招了。在设置权限之前，选择ASIO驱动，可见输入输出选择框（下图红框里）是空的。此时关掉REAPER，下次打开，直接GG。</p>
+<img src="/assets/img/blog/WineASIO_REAPER_Fail.png" title="REAPER ASIO驱动设置：权限设置前">
+<p>解决方法是，安装实施权限包，并把当前用户加入<code>realtime</code>组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S realtime-privileges</span><br><span class="line">sudo usermod -a -G realtime <span class="variable">$USER</span></span><br></pre></td></tr></table></figure>
+<p>重新登录后生效，这时再打开REAPER，发现输入输出设备可以选择了：</p>
+<img src="/assets/img/blog/WineASIO_REAPER_Succeed.png" title="REAPER ASIO驱动设置：权限设置后">
+<h2 id="收尾"><a href="#收尾" class="headerlink" title="收尾"></a>收尾</h2><p>以上设置完成后，在Cadence中打开JACK服务，即可畅快地在DAW中用上低延迟的ASIO驱动了。</p>
+<blockquote>
+<p><strong>提示：</strong>有的时候，不事先启动JACK服务，ASIO驱动也能出声，不过这种情况不太稳定，下次重新进入DAW时仍可能打不开音频设备。</p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://github.com/wineasio/wineasio/issues/4" target="_blank" rel="noopener">Apps crash when ASIO device is selected</a></li>
+<li><a href="https://lado.me/2017/04/15/introduce-jack/" target="_blank" rel="noopener">半壁江山！介绍JACK Audio Connection Kit - 拉哆咪</a></li>
+<li><a href="https://lado.me/2017/04/27/compile-wineasio/" target="_blank" rel="noopener">教你编译安装WineASIO - 拉哆咪</a></li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/alipay_qrcode.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/reward/mm_facetoface_collect_qrcode.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/06/Struggle_with_Linux/为Deepin-Linux编译内核/" class="archive-article-date">
-  	<time datetime="2018-11-06T05:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/06/Struggle_with_Linux/为Deepin-Linux编译内核/">为Deepin Linux编译内核</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -216,436 +322,17 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Deepin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">内核</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">插电降频</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Deepin//" class="article-tag-list-link color2">Deepin</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/" class="archive-article-date">
-  	<time datetime="2018-10-03T00:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/">TWRP Recovery 编译适配教程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/教程//" class="article-tag-list-link color3">教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-draft">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/" class="archive-article-date">
-  	<time datetime="2018-09-18T05:54:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/">【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Mac OS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">黑苹果</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统/Mac-OS//" class="article-tag-list-link color2">Mac OS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统/Mac-OS/黑苹果//" class="article-tag-list-link color4">黑苹果</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-draft">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/15/Use_Python/笔记：Python-3开发C模块初试/" class="archive-article-date">
-  	<time datetime="2018-09-15T11:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/15/Use_Python/笔记：Python-3开发C模块初试/">【未完成】笔记：Python 3开发C模块初试</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python//" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/" class="archive-article-date">
-  	<time datetime="2018-09-11T04:44:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/">OmniROM：解决“zconf.hash.c No such file or directory”错误</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/10/Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错/" class="archive-article-date">
-  	<time datetime="2018-09-10T15:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/10/Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错/">OmniROM：解决“Flex checkpolicy”出错故障</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/" class="archive-article-date">
-  	<time datetime="2018-09-10T15:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/">OmniROM：包含并自动同步TWRP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/" class="archive-article-date">
-  	<time datetime="2018-09-07T06:05:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/">踩坑：固态硬盘连接故障使系统假死崩溃</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -662,138 +349,119 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/05/Use_Python/使用PyAudio模块播放音频流之体会/" class="archive-article-date">
-  	<time datetime="2018-09-05T11:19:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-05</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Arch Linux下给RIME中州韵添加词库</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/05/Use_Python/使用PyAudio模块播放音频流之体会/">使用PyAudio模块播放音频流之体会</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">PyAudio</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python//" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/" class="archive-article-date">
-  	<time datetime="2018-09-04T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/">使用Visual Studio Code阅读Android内核源码</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'anclark'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -817,8 +485,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

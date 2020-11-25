@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_set_locale_in_kde_settings.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_disable_kde_bell.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_do_not_restore_last_session.png">
-<meta property="og:updated_time" content="2020-11-24T13:26:28.484Z">
+<meta property="og:updated_time" content="2020-11-25T02:29:58.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
@@ -418,6 +418,9 @@
 <li>用Pacman安装。</li>
 </ul>
 <p>具体的安装过程可以自己尝试，体会一下。</p>
+<h3 id="给AUR使用镜像源"><a href="#给AUR使用镜像源" class="headerlink" title="给AUR使用镜像源"></a>给AUR使用镜像源</h3><p>官方的AUR访问速度慢，好在yay支持设置<code>aururl</code>——AUR的仓库地址。清华TUNA提供了AUR的镜像，运行下列命令设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay --aururl &quot;https://aur.tuna.tsinghua.edu.cn&quot; --save</span><br></pre></td></tr></table></figure>
+<p>下次用yay搜索就会快不少。</p>
 <h2 id="安装其他组件"><a href="#安装其他组件" class="headerlink" title="安装其他组件"></a>安装其他组件</h2><h3 id="安装KDE全家桶"><a href="#安装KDE全家桶" class="headerlink" title="安装KDE全家桶"></a>安装KDE全家桶</h3><p>KDE组织旗下开发了大量的软件，涵盖系统应用的方方面面。用户可按自己的实际需要安装，或者安装下面这个分组（也称宏包），迎来KDE全家桶。</p>
 <blockquote>
 <p><strong>名词解释——宏包（meta package）：</strong>软件包的一种，用于安装一组特定的软件包。它本身不包含任何软件相关文件，只包含对其他软件包的依赖关系。Pacman的软件包可以分组，组名也可以当成包名来安装软件，与宏包类似，笔者也以“宏包”称之。</p>

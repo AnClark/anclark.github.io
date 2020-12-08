@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_set_locale_in_kde_settings.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_disable_kde_bell.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/arch_kde_do_not_restore_last_session.png">
-<meta property="og:updated_time" content="2020-11-25T02:29:58.867Z">
+<meta property="og:updated_time" content="2020-11-26T13:19:26.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux + KDE安装教程">
 <meta name="twitter:description" content="玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。 近日，我成功给我的上古ThinkPad X2">
@@ -326,7 +326,7 @@
 <h3 id="安装图形环境"><a href="#安装图形环境" class="headerlink" title="安装图形环境"></a>安装图形环境</h3><p>接下来就是安装Xorg图形环境。<code>xorg</code>包包含了所有可能用到的组件，在此基础上再安装显卡驱动组件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Xorg</span></span><br><span class="line">pacstrap /mnt xorg</span><br><span class="line"><span class="comment"># 安装显卡组件</span></span><br><span class="line">pacstrap /mnt xf86-video</span><br></pre></td></tr></table></figure>
 <p><code>xf86-video</code> 貌似已经失效，可参考<a href="https://wiki.archlinux.org/index.php/Xorg#Driver_installation" target="_blank" rel="noopener">Arch Linux安装文档</a>来决定安装哪个驱动。常见的选项如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 英特尔</span></span><br><span class="line">pacstrap /mnt xf86-video-intel</span><br><span class="line"><span class="comment"># AMD/ATI</span></span><br><span class="line">pacstrap /mnt xf86-video-amdgpu</span><br><span class="line">pacstrap /mnt xf86-video-ati</span><br><span class="line"><span class="comment"># NVIDIA开源驱动</span></span><br><span class="line">pacstrap /mnt xf86-video-nouveau</span><br><span class="line"><span class="comment"># NVIDIA闭源驱动</span></span><br><span class="line">pacstrap /mnt nvidia</span><br><span class="line">pacstrap /mnt nvidia-390xx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 英特尔</span></span><br><span class="line">pacstrap /mnt xf86-video-intel</span><br><span class="line"><span class="comment"># AMD/ATI</span></span><br><span class="line">pacstrap /mnt xf86-video-amdgpu</span><br><span class="line">pacstrap /mnt xf86-video-ati</span><br><span class="line"><span class="comment"># NVIDIA开源驱动</span></span><br><span class="line">pacstrap /mnt xf86-video-nouveau</span><br><span class="line"><span class="comment"># NVIDIA闭源驱动，包括驱动本体、DKMS模块（保证每个内核都有对应的驱动模块）和显卡设置程序</span></span><br><span class="line">pacstrap /mnt nvidia nvidia-dkms nvidia-settings</span><br><span class="line">pacstrap /mnt nvidia-390xx          <span class="comment"># 用于旧款NVIDIA显卡</span></span><br></pre></td></tr></table></figure>
 <h3 id="安装网络组件"><a href="#安装网络组件" class="headerlink" title="安装网络组件"></a>安装网络组件</h3><p>Arch Linux默认<strong>没有预装网络组件</strong>，因此也需要手动安装。一般安装三个组件即可：</p>
 <ul>
 <li><strong>dhcpcd</strong>：DHCP客户端。</li>
@@ -353,7 +353,7 @@
 <h3 id="安装Konsole"><a href="#安装Konsole" class="headerlink" title="安装Konsole"></a>安装Konsole</h3><p>值得一提的是，<strong>Plasma只是一个桌面环境，没有包含任何其他的KDE应用（如文件管理器等）</strong>，这些应用独立于Plasma，需要用户手动安装。我们见到的Kubuntu、Manjaro等包含的应用实际上是开发团队为我们事先装好的。</p>
 <p>也正因如此，一些常用的应用需要我们手动安装，至少要安装Konsole终端，重启系统后要经常用到。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt konsole</span><br></pre></td></tr></table></figure>
-<p>也可以安装kde-utilities包，包含了Konsole、文件管理器Dolphin、文本编辑器Kate等必备工具：</p>
+<p>也可以安装<code>kde-utilities</code>包，包含了Konsole、文件管理器Dolphin、文本编辑器Kate等必备工具：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt kde-utilities</span><br></pre></td></tr></table></figure>
 <p><strong>如果不安装终端，就只能在进入Plasma后，按<kbd>Ctrl+Alt+F2/F3/F4</kbd>切换到TTY中操作。</strong></p>
 <h3 id="安装中文字体和Emoji字体"><a href="#安装中文字体和Emoji字体" class="headerlink" title="安装中文字体和Emoji字体"></a>安装中文字体和Emoji字体</h3><p>中文字体默认没有安装。若不安装，会在中文显示的地方显示Unicode占位符。Emoji也是如此。</p>
@@ -1042,6 +1042,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">音乐制作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">软件配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
               </li>
             
             <div class="clearfix"></div>

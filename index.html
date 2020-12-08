@@ -179,34 +179,38 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Linux_Audio_Production/ArchLinux_WineASIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a>
+      <a class="article-title" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a>
     </h1>
   
 
         
-        <a href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/" class="archive-article-date">
-  	<time datetime="2020-11-25T10:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
+        <a href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" class="archive-article-date">
+  	<time datetime="2020-12-08T10:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>第一篇过后补上，讲如何安装Jack。</p>
-</blockquote>
-<p>借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。</p>
-<p>WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，后者可直接访问硬件，而在Linux中任何音频设备都由ALSA连接。</p>
-<p>下面讲讲怎样在躲掉一个个坑的情况下，成功装好WineASIO。</p>
+        <p>相较于Windows，作为开发者首选的系统之一，Arch Linux有以下难以比拟的优势：</p>
+<ul>
+<li>运行速度快，内存占用量较小，轻便自在；</li>
+<li>Pacman软件库，应有尽有，安装开发工具轻而易举；</li>
+<li>安全可靠，不怕病毒；</li>
+<li>对老电脑、老设备分外友好，十年前的ThinkPad X200照样做主力。</li>
+</ul>
+<p>不过，不管是哪个发行版，Linux总有一点比不上Windows和MacOS，就是音乐制作——很少有音频软件厂商能够提供原生支持Linux的音乐制作工具。尤其是Native Instruments这样的业界巨头，只专注于Windows和MacOS，不会为Linux提供任何支持。实在是可叹。</p>
+<p>幸运的是，开源的力量是无穷的，既然Linux能普及，总有大佬在填补这方面的空白。各种适用于Linux的音乐制作工具链应运而生，从底层驱动级别的JACK，到对标业界标准插件规范（VST、RTAX、AAX、DX、AU）的LADSPA，甚至完整的DAW——LMMS、Ardour、REAPER for Linux，应有尽有。从此，Linux不再是没有音乐人造访的荒漠。</p>
+<p>要把你的Arch Linux打造成音乐工作站，首先要做的就是<strong>配置音频服务——JACK</strong>。JACK是一套高性能、低延迟的音频服务程序，它基于Linux底层的ALSA，可为音频应用程序提供低延迟的音频回放、录制支持，相当于Windows下的ASIO，以及MacOS下的CoreAudio。</p>
         
-          <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/#more">more >></a>
+          <a class="article-more-a" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/#more">more >></a>
         
       
 
@@ -228,7 +232,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">插电降频</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">音乐制作</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">软件配置</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JACK</a>
         		</li>
       		
 		</ul>
@@ -240,11 +252,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修//" class="article-tag-list-link color5">电脑维修</a>
+        			<a href="/categories/音乐制作//" class="article-tag-list-link color5">音乐制作</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/电脑维修/故障解决//" class="article-tag-list-link color5">故障解决</a>
+        			<a href="/categories/音乐制作/Linux下做音乐//" class="article-tag-list-link color5">Linux下做音乐</a>
         		</li>
       		
 		</ul>
@@ -253,7 +265,118 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" class="archive-article-date">
+  	<time datetime="2020-11-25T10:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。</p>
+<p><strong>传送门——</strong><a href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" title="把Arch Linux打造成音乐工作站（一）：安装与配置JACK">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></p>
+<p>除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。</p>
+<p>WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，后者可直接访问硬件，而在Linux中任何音频设备都由ALSA连接。</p>
+<p>下面讲讲怎样在躲掉一个个坑的情况下，成功装好WineASIO。</p>
+        
+          <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">音乐制作</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">软件配置</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ASIO</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/音乐制作//" class="article-tag-list-link color5">音乐制作</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/音乐制作/Linux下做音乐//" class="article-tag-list-link color5">Linux下做音乐</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">展开全文 >></a>
         </p>
       
 
@@ -1063,106 +1186,6 @@
 
 
   
-    <article id="post-Struggle_with_Linux/解决Deepin-KWin撕裂问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/">解决Deepin Linux + KWin 屏幕界面的撕裂问题</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/" class="archive-article-date">
-  	<time datetime="2019-06-29T10:29:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>笔者是一个苛求显卡性能的程序员，对坐拥的两台“古董”笔记本也一视同仁。这两台笔记本，一台是2009年的老机器ThinkPad X61，安装了OpenSUSE；而另一台是2012年的ThinkPad X200，用的是Deepin Linux。</p>
-<p>按理说，新机器的显卡性能相对于旧机器应当有所改善，可是事实却让我无奈——X200的Deepin下，拖动窗口时画面会有明显的撕裂感，一个窗口被拆成两半，而且在使用SMPlayer播放视频（720p）时，也会有细微但肉眼可辨的撕裂。然而，X61的OpenSUSE却完全不存在这样的问题，拖动窗口时一气呵成，不会撕裂，观感体验要好上不少。</p>
-        
-          <a class="article-more-a" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Deepin</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">垂直同步</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Deepin//" class="article-tag-list-link color2">Deepin</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1470,6 +1493,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">音乐制作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">软件配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
               </li>
             
             <div class="clearfix"></div>

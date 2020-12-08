@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。 不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-24T13:27:52.397Z">
+<meta property="og:updated_time" content="2020-11-26T07:07:18.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux下给RIME中州韵添加词库">
 <meta name="twitter:description" content="RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。 不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。">
@@ -202,7 +202,12 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。</p>
 <p>不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。</p>
 <a id="more"></a>
-<h2 id="下载词库"><a href="#下载词库" class="headerlink" title="下载词库"></a>下载词库</h2><p>RIME的配置文件和词库均位于<code>/usr/share/rime-data/</code>当中，其中<strong>词库以<code>*.dict.yaml</code>为扩展名</strong>，是一个纯文本文件。无论是社区发布，还是你用<a href="https://github.com/studyzy/imewlconverter" target="_blank" rel="noopener">imewlconverter</a>从其他输入法转换的词库，均为这个格式。下载后把它们放在该目录下。</p>
+<h2 id="下载词库"><a href="#下载词库" class="headerlink" title="下载词库"></a>下载词库</h2><p>RIME的配置文件分为用户配置和预置配置。其中：</p>
+<ul>
+<li><strong>预置</strong>的配置文件和词库均位于<code>/usr/share/rime-data/</code>当中，需Root权限；</li>
+<li><strong>用户</strong>的配置文件位于<code>~/.config/fcitx/rime</code>或<code>~/.config/ibus/rime</code>当中，视你安装的输入法框架（Fcitx或IBUS）而定。</li>
+</ul>
+<p>其中<strong>词库以<code>*.dict.yaml</code>为扩展名</strong>，是一个纯文本文件。无论是社区发布，还是你用<a href="https://github.com/studyzy/imewlconverter" target="_blank" rel="noopener">imewlconverter</a>从其他输入法转换的词库，均为这个格式。下载后把它们放在该目录下。</p>
 <p>例如，在ArchLinuxCN中提供了以下两个词库，安装相应的包，会自动在<code>/usr/share/rime-data/</code>中创建相应的词库文件：</p>
 <table>
 <thead>
@@ -227,7 +232,7 @@
 </table>
 <h2 id="创建用户定制的配置文件"><a href="#创建用户定制的配置文件" class="headerlink" title="创建用户定制的配置文件"></a>创建用户定制的配置文件</h2><p>RIME要使用用户自定义的词库，需要基于现有的输入方案（schema），创建“定制”的配置文件。首先要找到你希望使用的输入方案，然后创建对应的配置文件。配置文件的命名有规范，其中<strong>配置方案的文件名是<code>{方案名}.schema.yaml</code></strong>，<strong>对应的用户配置文件则是<code>{方案名}.custom.yaml</code></strong>，<strong>注意前后两个方案名相同</strong>。</p>
 <p>比如，以朙月拼音简体字方案<code>luna_pinyin_simp.schema.yaml</code>为基础来定制，步骤如下：</p>
-<h3 id="第一步，创建配置文件"><a href="#第一步，创建配置文件" class="headerlink" title="第一步，创建配置文件"></a>第一步，创建配置文件</h3><p>进入<code>/usr/share/rime-data/</code>，创建文件<code>luna_pinyin_simp.custom.yaml</code>。</p>
+<h3 id="第一步，创建配置文件"><a href="#第一步，创建配置文件" class="headerlink" title="第一步，创建配置文件"></a>第一步，创建配置文件</h3><p>进入配置文件目录，创建文件<code>luna_pinyin_simp.custom.yaml</code>。我是在预置目录里创建的，不过为保险起见（比如为了不影响RIME输入法更新），最好还是在用户配置文件目录中完成。</p>
 <h3 id="第二步，填写配置信息"><a href="#第二步，填写配置信息" class="headerlink" title="第二步，填写配置信息"></a>第二步，填写配置信息</h3><p>在该文件中添加以下内容：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># luna_pinyin_simp.custom.yaml</span></span><br><span class="line"><span class="attr">patch:</span></span><br><span class="line"><span class="comment"># 指定自定义词库位置</span></span><br><span class="line">  <span class="string">"translator/dictionary"</span><span class="string">:</span> <span class="string">luna_pinyin.my_words</span></span><br></pre></td></tr></table></figure>
 <p>上述自定义词库位置<code>&quot;translator/dictionary&quot;:</code>字段的值，是一个不含扩展名<code>*.dict.yaml</code>的词库文件名，名字可任意取。我们将把这个字段设为一个<strong>词库配置</strong>，这是一个特殊的词库文件，它纯粹是配置文件，里面不包含任何自定义词汇，只有基本的YAML字段。</p>
@@ -244,6 +249,17 @@
 <h3 id="第四步，更新RIME配置"><a href="#第四步，更新RIME配置" class="headerlink" title="第四步，更新RIME配置"></a>第四步，更新RIME配置</h3><p>配置文件修改后，需要更新RIME配置（重新编译词库文件），方可生效。</p>
 <p><strong>右键点击通知栏的RIME图标</strong>，选<strong>“重新部署（Deploy）”</strong>，稍等一段时间。词库越多越大则耗时越长，像维基百科词库这样的大型词库，需要数十秒。</p>
 <p>部署完成后，试着输入几个新词库的词汇（<em>比如说各种二次元角色</em>），那就是见证奇迹的时候了！</p>
+<h2 id="第三方拼音方案的处理：以四叶草拼音为例"><a href="#第三方拼音方案的处理：以四叶草拼音为例" class="headerlink" title="第三方拼音方案的处理：以四叶草拼音为例"></a>第三方拼音方案的处理：以<a href="https://github.com/vlaw/rime-cloverpinyin" target="_blank" rel="noopener">四叶草拼音</a>为例</h2><p>第三方RIME方案的作者则提供了更加便捷的方法，即直接在用户配置文件中创建同名词库覆盖掉。这里以四叶草拼音（Clover Pinyin）为例，<a href="https://github.com/vlaw/rime-cloverpinyin#%E5%AF%BC%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%8D%E5%BA%93" target="_blank" rel="noopener">点击这里参照官方的教程</a>。</p>
+<p>基本原理就是：</p>
+<ol>
+<li>在用户配置目录里创建与预置词库同名的文件（比如四叶草的词库文件<code>clover.dict.yaml</code>）；</li>
+<li>填入与预置目录中原版词库文件一致的内容；</li>
+<li>在<code>import_table:</code>字段中加入你自己的词库；</li>
+<li>重新部署生效。</li>
+</ol>
+<p>以下是一个例子（我的<code>~/.config/fcitx/clover.dict.yaml</code>）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">clover</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">"1"</span></span><br><span class="line"><span class="attr">sort:</span> <span class="string">by_weight</span></span><br><span class="line"></span><br><span class="line"><span class="attr">import_tables:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">clover.base</span>				<span class="comment"># 四叶草拼音单字字库，别漏，否则完全打不出字</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">clover.phrase</span>			<span class="comment"># 四叶草拼音基本词汇及其词频，别漏</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_animal</span>			<span class="comment"># 以THUOCL_*开头的是清华大学开源词库，分门别类</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_caijing</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_car</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_chengyu</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_diming</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_food</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_IT</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_law</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_lishimingren</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_medical</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">THUOCL_poem</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">sogou_new_words</span>			<span class="comment"># 搜狗拼音每周热词</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">moegirl</span>					<span class="comment"># 第三方词库举例1：萌娘百科</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">zhwiki</span>					<span class="comment"># 第三方词库举例2：维基百科</span></span><br></pre></td></tr></table></figure>
+<p>更多细节与注意事项，请移步<a href="https://github.com/vlaw/rime-cloverpinyin#%E5%AF%BC%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%8D%E5%BA%93" target="_blank" rel="noopener">四叶草的官方词库导入教程</a>。</p>
 <h2 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h2><h3 id="RIME的配置文件本质"><a href="#RIME的配置文件本质" class="headerlink" title="RIME的配置文件本质"></a>RIME的配置文件本质</h3><p>从<code>patch:</code>字段可以看出，RIME的用户配置文件是给系统配置文件打的“补丁”（patch），用户定义的值会直接覆盖配置文件中相应的地方。其中的“路径”对应的是<code>luna_pinyin_simp.schema.yaml</code>中的以下部分：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">translator:</span></span><br><span class="line"><span class="attr">  dictionary:</span> <span class="string">luna_pinyin</span></span><br><span class="line">  <span class="string">...</span></span><br></pre></td></tr></table></figure>
 <p>那么，该“补丁”应用后，上述<code>dictionary:</code>字段的值就会被直接替换为<code>luna_pinyin.my_word</code>。这是RIME配置文件的一个特色。</p>
@@ -389,7 +405,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/25/Linux_Audio_Production/ArchLinux_WineASIO/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -752,6 +768,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">音乐制作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">软件配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
               </li>
             
             <div class="clearfix"></div>

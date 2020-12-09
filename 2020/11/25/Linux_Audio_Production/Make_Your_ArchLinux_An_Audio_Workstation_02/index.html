@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>把Arch Linux打造成音乐工作站（二）：安装WineASIO | 爱拼安小匠的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK 除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥">
+  <meta name="description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK  除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，">
 <meta name="keywords" content="技术笔记,Linux,音乐制作,软件配置,ASIO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="把Arch Linux打造成音乐工作站（二）：安装WineASIO">
 <meta property="og:url" content="http://yoursite.com/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK 除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥">
+<meta property="og:description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK  除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_Cadence_Config.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_REAPER_Fail.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/WineASIO_REAPER_Succeed.png">
-<meta property="og:updated_time" content="2020-12-08T13:44:27.124Z">
+<meta property="og:updated_time" content="2020-12-09T00:25:33.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="把Arch Linux打造成音乐工作站（二）：安装WineASIO">
-<meta name="twitter:description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK 除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥">
+<meta name="twitter:description" content="上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。 传送门——把Arch Linux打造成音乐工作站（一）：安装与配置JACK  除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，">
 <meta name="twitter:image" content="http://yoursite.com/assets/img/blog/WineASIO_Cadence_Config.png">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
@@ -203,8 +203,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。</p>
 <p><strong>传送门——</strong><a href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" title="把Arch Linux打造成音乐工作站（一）：安装与配置JACK">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></p>
+</blockquote>
 <p>除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。</p>
 <p>WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，后者可直接访问硬件，而在Linux中任何音频设备都由ALSA连接。</p>
 <p>下面讲讲怎样在躲掉一个个坑的情况下，成功装好WineASIO。</p>
@@ -797,6 +799,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VST</a>
               </li>
             
             <div class="clearfix"></div>

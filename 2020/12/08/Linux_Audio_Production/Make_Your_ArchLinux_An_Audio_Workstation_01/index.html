@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/cadence_jack_started.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/JACK2_sink_with_PulseAudio.png">
 <meta property="og:image" content="http://yoursite.com/assets/img/blog/cadence_configure_driver.png">
-<meta property="og:updated_time" content="2020-12-08T13:46:41.502Z">
+<meta property="og:updated_time" content="2020-12-09T00:24:08.186Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="把Arch Linux打造成音乐工作站（一）：安装与配置JACK">
 <meta name="twitter:description" content="相较于Windows，作为开发者首选的系统之一，Arch Linux有以下难以比拟的优势：  运行速度快，内存占用量较小，轻便自在； Pacman软件库，应有尽有，安装开发工具轻而易举； 安全可靠，不怕病毒； 对老电脑、老设备分外友好，十年前的ThinkPad X200照样做主力。  不过，不管是哪个发行版，Linux总有一点比不上Windows和MacOS，就是音乐制作——很少有音频软件厂商能够">
@@ -237,7 +237,7 @@
 <p>显然，<strong>首选的JACK版本非JACK2莫属。</strong></p>
 <h2 id="安装与启动JACK2"><a href="#安装与启动JACK2" class="headerlink" title="安装与启动JACK2"></a>安装与启动JACK2</h2><p>首先安装JACK2，以及JACK2的音频控制面板Cadence：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Ss jack2 cadence</span><br></pre></td></tr></table></figure>
-<p>Cadence是一款优雅的JACK2控制面板，功能全面，首先打开它：</p>
+<p>Cadence是一款优雅的JACK2控制面板，功能全面。首先打开它：</p>
 <img src="/assets/img/blog/cadence_main_ui.png" title="Cadence 主界面">
 <p><small><strong>图1</strong> Cadence主界面</small></p>
 <p>然后<strong>点击<em>【JACK Status】</em>部分的<em>【Start】</em>，启动JACK服务</strong>。若启动成功，则该部分会显示以下内容，表示JACK2启动成功，并给出当前的运行参数。</p>
@@ -462,6 +462,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件
+        
+      </div>
+    </a>
   
   
     <a href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" id="article-nav-older" class="article-nav-link-wrap">
@@ -833,6 +842,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VST</a>
               </li>
             
             <div class="clearfix"></div>

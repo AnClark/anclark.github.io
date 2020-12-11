@@ -179,6 +179,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Struggle_with_Linux/Debian SELinux导致无法启动问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/17/Struggle_with_Linux/Debian SELinux导致无法启动问题/">Debian：修复SELinux导致卡在启动画面的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/17/Struggle_with_Linux/Debian SELinux导致无法启动问题/" class="archive-article-date">
+  	<time datetime="2019-08-17T03:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>笔者在自己的惠普笔记本上安装了采用KDE的Debian，配备了官方的<code>4.19.5</code>内核。后来我又从Linux内核官网上下载了最新的<code>5.2.8</code>版本内核，自己编译安装。</p>
+<p>直到某一天，我例行进行<code>sudo apt upgrade</code>大更新，更新过程中官方的内核和ramdisk也一并更新了。结果这次更新完毕重启，出现了以下问题：</p>
+<ul>
+<li><strong><code>5.2.8</code>内核始终无法正常进入登录界面，一直卡在Debian的启动画面处</strong>，按方向键切换到日志画面可以看到，日志也卡在某处不动了。</li>
+<li>再过一段时间，日志里就会显示Accounts Service等多个系统关键服务均启动失败。</li>
+</ul>
+<p>然而，使用官方内核启动，却一切正常。这到底是什么原因呢？</p>
+        
+          <a class="article-more-a" href="/2019/08/17/Struggle_with_Linux/Debian SELinux导致无法启动问题/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/17/Struggle_with_Linux/Debian SELinux导致无法启动问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android_Adapting_Note/追根溯源解决Busybox编译错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1029,11 +1100,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
@@ -1063,105 +1134,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android_Adapting_Guide/让TWRP支持解密高通data分区" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/">让TWRP支持解密高通data分区</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/" class="archive-article-date">
-  	<time datetime="2019-01-08T10:27:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在新出品的手机，基本都加密了data分区，旨在保障用户数据的安全。其中高通方案的手机使用的加密方案是QSEE（高通安全执行环境，Qualcomm Security Executing Environment），每次启动设备时会有一个专门的过程来解密data分区。然而，TWRP Recovery默认并没有附带高通的加密组件，因此在启动时会无法解密和访问data分区，使得体验大打折扣。因此必须把高通的加密组件从Android系统中移植过来。</p>
-        
-          <a class="article-more-a" href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配//" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/适配/教程//" class="article-tag-list-link color3">教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/">展开全文 >></a>
         </p>
       
 
@@ -1317,6 +1289,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
               </li>
              
@@ -1325,15 +1305,43 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">音乐制作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">软件配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VST</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wine</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1417,10 +1425,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Wine</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
               </li>
              
@@ -1430,6 +1434,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1445,7 +1453,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1453,15 +1461,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color5">使用技巧</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ZIP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">压缩包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1469,27 +1485,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1501,23 +1501,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">音乐制作</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">软件配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VST</a>
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
             
             <div class="clearfix"></div>

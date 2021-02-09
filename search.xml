@@ -3950,4 +3950,105 @@
         <tag>论文</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Makefile 编写时的几个大坑和技巧</title>
+    <url>/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>这两个月，我做开发的一个重头戏，就是给<a href="https://zynaddsubfx.sourceforge.net" target="_blank" rel="noopener">Zyn-Fusion</a>重写编译系统。它是强悍的开源合成器ZynAddSubFX的全新界面，酷炫性和专业性并不比Serum、Sylenth这些老牌合成器逊色，有望成为电子音乐人的新宠。然而原作者设计的编译脚本（基于Shell和Ruby）在设计上存在不少问题，导致在Windows（Msys2）和Arch Linux下常常编译失败，因此我决定用Makefile重写编译系统。</p>
+<p>就在这过程中，由于Makefile本身具有大量容易被忽略的细节，我在实践的过程中频频踩坑，这也是用Makefile组织有一定规模的编译系统时很容易出现的问题。记在这里，让有幸看到的小伙伴别踩坑了。</p>
+<a id="more"></a>
+<h2 id="阅读之前先来个术语解释"><a href="#阅读之前先来个术语解释" class="headerlink" title="阅读之前先来个术语解释"></a>阅读之前先来个术语解释</h2><ul>
+<li><strong>目标（Target）</strong>：Makefile中用于执行特定任务、生成特定文件的一组程序块，以特定的标识符（目标名加半角冒号）开始，碰到下一个标识符或Makefile语句（如赋值语句、<code>include</code>）结束。</li>
+<li><strong>配方（Recipe）</strong>：目标中用于执行具体操作的程序语句，为shell命令，统一以一个制表符开头。</li>
+</ul>
+<h2 id="第一坑：缩进问题"><a href="#第一坑：缩进问题" class="headerlink" title="第一坑：缩进问题"></a>第一坑：缩进问题</h2><p>除了Python，Makefile是另一个严格要求缩进的编程语言，把缩进视为语法的一部分。更重要的是，Makefile的缩进有这样的特殊规则，堪比大坑：</p>
+<ul>
+<li>缩进只允许用Tab（制表符），不允许用空格。</li>
+<li>缩进后的语句一律视为编译目标的一部分，作为shell语句解释。</li>
+</ul>
+<p>因此，在Makefile中，用代码缩进增强可读性的方式不管用了。</p>
+<p>举一个简单的例子：根据变量<code>ENABLE_OPTIMIZATION</code>定义与否，给<code>CFLAGS</code>赋不同的值。<strong>注意<code>ifdef</code>分支下的语句是没有缩进的。</strong></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ifdef</span> ENABLE_OPTIMIZATION</span><br><span class="line">CFLAGS += -O3</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">CFLAGS += -g -O0</span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+<p>然而，一些像我当时一样的新手可能会觉得可读性不给力，于是习惯性地加上缩进：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ifdef</span> ENABLE_OPTIMIZATION</span><br><span class="line">	CFLAGS += -O3</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	CFLAGS += -g -O0</span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+<p>这样做会存在一定的风险。</p>
+<p><strong>其一，</strong>如果上例放在文件开头，在一些Make版本中不成问题。我目前的Make版本（<code>4.3</code>）仍会正常识别缩进后的赋值语句，而不解释为shell语句。比如这个完整的<code>Makefile</code>：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">ENABLE_OPTIMIZATION := true</span><br><span class="line"></span><br><span class="line"><span class="keyword">ifdef</span> ENABLE_OPTIMIZATION</span><br><span class="line">	CFLAGS += -O3</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	CFLAGS += -g -O0</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="variable">$(CFLAGS)</span></span><br></pre></td></tr></table></figure>
+<p>在终端中运行，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ make</span><br><span class="line">-O3</span><br><span class="line">$ make ENABLE_OPTIMIZATION=</span><br><span class="line">-g -O0</span><br></pre></td></tr></table></figure>
+<p>可见结果正常。但无法保证其他版本的Make能正常工作。</p>
+<p><strong>其二，</strong>如果上例放在目标当中，条件分支语句仍能正常解析，但被缩进的赋值语句已经被解释成了shell语句，出错是必然的。</p>
+<p>略微修改“其一”中的代码清单，改成：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">ENABLE_OPTIMIZATION := true</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line"><span class="keyword">ifdef</span> ENABLE_OPTIMIZATION</span><br><span class="line">	CFLAGS += -O3</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	CFLAGS += -g -O0</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">	@echo <span class="variable">$(CFLAGS)</span></span><br></pre></td></tr></table></figure>
+<p>在终端中运行，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ make</span><br><span class="line">CFLAGS += -O3</span><br><span class="line">make: CFLAGS: No such file or directory</span><br><span class="line">make: *** [Makefile:5: all] Error 127</span><br></pre></td></tr></table></figure>
+<p>可见，Make把那两句<code>CFLAGS += ...</code>当作一个配方来解析了，不会给变量<code>CFLAGS</code>赋值。</p>
+<h2 id="第二坑：不能在目标中使用赋值等Makefile语句"><a href="#第二坑：不能在目标中使用赋值等Makefile语句" class="headerlink" title="第二坑：不能在目标中使用赋值等Makefile语句"></a>第二坑：不能在目标中使用赋值等Makefile语句</h2><p>接着“第一坑：其二”中的例子，如果要在运行目标<code>all</code>时通过条件判断给<code>CFLAGS</code>变量赋值，似乎去掉赋值语句前的缩进就可以了：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">ENABLE_OPTIMIZATION := true</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line"><span class="keyword">ifdef</span> ENABLE_OPTIMIZATION</span><br><span class="line">CFLAGS += -O3</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">CFLAGS += -g -O0</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">	@echo <span class="variable">$(CFLAGS)</span></span><br></pre></td></tr></table></figure>
+<p>但在运行后，却出现了这样的错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Makefile:10: *** recipe commences before first target.  Stop.</span><br><span class="line">Makefile:10: *** 配方在第一个目标前开始。 停止。</span><br></pre></td></tr></table></figure>
+<p>这是因为在一个目标之下<strong>只能出现配方，而不允许掺杂出现不属于配方的语句（例如赋值语句、<code>include</code>语句）</strong>。条件分支语句虽也允许使用，但在目标中<strong>它只能用于控制在不同条件下执行哪些配方</strong>。在编写Makefile时应当尤其注意这一点。</p>
+<h2 id="第三坑：赋值语句的作用域"><a href="#第三坑：赋值语句的作用域" class="headerlink" title="第三坑：赋值语句的作用域"></a>第三坑：赋值语句的作用域</h2><p>其他编程语言中，变量定义没有溯及既往的效力，即定义一个变量后，该变量定义之前的程序代码是不能使用该变量的。然而，Makefile却有，这非常类似于JavaScript函数的“先使用后定义”。且看下面的例子：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="variable">$(VAR)</span></span><br><span class="line"></span><br><span class="line">VAR := abcdefg</span><br></pre></td></tr></table></figure>
+<p>按理来说，变量<code>VAR</code>定义在目标<code>all</code>之后，运行<code>make all</code>应该什么也不会输出。不过，<strong>Makefile的变量允许先使用后定义</strong>，所以运行<code>all</code>时，变量<code>VAR</code>已经被赋值了，最终是有输出的：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">$ make all</span><br><span class="line">abcdefg</span><br></pre></td></tr></table></figure>
+<h2 id="第四坑：变量赋值运算符-和"><a href="#第四坑：变量赋值运算符-和" class="headerlink" title="第四坑：变量赋值运算符=和:="></a>第四坑：变量赋值运算符<code>=</code>和<code>:=</code></h2><p>这个坑，先用两个实例来抛砖引玉。</p>
+<p><strong>例一：</strong>设计Makefile时，如果要判断当前的系统版本，可以调用系统命令<code>uname</code>，这里假设用下列变量来存贮该命令的输出，并尝试在它们当中搜索字符串<code>&quot;Linux&quot;</code>：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">UNAME_1	:= `uname -a`</span><br><span class="line">UNAME_2	= `uname -a` </span><br><span class="line">UNAME_3	:= <span class="variable">$(<span class="built_in">shell</span> uname -a)</span></span><br><span class="line">UNAME_4	= <span class="variable">$(<span class="built_in">shell</span> uname -a)</span></span><br><span class="line"></span><br><span class="line"><span class="section">all:	</span></span><br><span class="line">	@echo <span class="variable">$(<span class="built_in">findstring</span> Linux,<span class="variable">$(UNAME_1)</span>)</span></span><br><span class="line">	@echo <span class="variable">$(<span class="built_in">findstring</span> Linux,<span class="variable">$(UNAME_2)</span>)</span></span><br><span class="line">	@echo <span class="variable">$(<span class="built_in">findstring</span> Linux,<span class="variable">$(UNAME_3)</span>)</span></span><br><span class="line">	@echo <span class="variable">$(<span class="built_in">findstring</span> Linux,<span class="variable">$(UNAME_4)</span>)</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下。可见，只有<code>UNAME_4</code>的值能最终被<code>$(findstring)</code>函数正常识别并工作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Linux</span><br></pre></td></tr></table></figure>
+<p><strong>例二：</strong>在定义变量A时，有时需要先用其他的变量B、C给该变量赋值，但B、C的值不能马上确定。Makefile允许先使用后定义变量，但运算符的不同会影响到预期结果的实现。见下例：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">BUILD_TARGET_1	:= build-zynaddsubfx-<span class="variable">$(OS)</span>-<span class="variable">$(TYPE)</span></span><br><span class="line">BUILD_TARGET_2	= build-zynaddsubfx-<span class="variable">$(OS)</span>-<span class="variable">$(TYPE)</span></span><br><span class="line">OS	:= linux</span><br><span class="line">TYPE	:= debug</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="variable">$(BUILD_TARGET_1)</span></span><br><span class="line">	@echo <span class="variable">$(BUILD_TARGET_2)</span></span><br></pre></td></tr></table></figure>
+<p>最终输出结果如下。可见，只有使用了<code>=</code>运算符的<code>BUILD_TARGET_2</code>得到了正确的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">build-zynaddsubfx--</span><br><span class="line">build-zynaddsubfx-linux-debug</span><br></pre></td></tr></table></figure>
+<p>从上述两个例子中不难推知，运算符<code>=</code>和<code>:=</code>在变量赋值的过程中作用千差万别。</p>
+<p>如果定义变量A时使用了其他的变量B，那么：</p>
+<ul>
+<li><code>:=</code>运算符只会把变量B<strong>简单展开一次</strong>（simply expanded）。这要求变量B必须先定义。</li>
+<li><code>=</code>运算符则会<strong>递归展开</strong>（recursively expanded）。这允许变量先定义后使用。</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>如果想给当前变量的值添加新字符，则必须使用<code>:=</code>，例如<code>CFLAGS := $(CFLAGS) -O3</code>。这种情况下，使用<code>=</code>会导致死循环。</li>
+<li>Make版本更新到<code>4.3</code>后，似乎无论是<code>:=</code>还是<code>=</code>，都能够用来以函数的输出结果给变量赋值了。此前只能使用<code>=</code>。</li>
+</ul>
+</blockquote>
+<h2 id="第五坑：如何保证不再重新生成一个目标（例如文件下载）"><a href="#第五坑：如何保证不再重新生成一个目标（例如文件下载）" class="headerlink" title="第五坑：如何保证不再重新生成一个目标（例如文件下载）"></a>第五坑：如何保证不再重新生成一个目标（例如文件下载）</h2><p>Make能够判断一个目标是否应该重新生成：如果源文件进行了修改，或目标文件被删除，则重新生成；否则保持原样。这个特性能够确保在只修改个别文件时，不至于一股脑儿全都重新编译，有助于保证程序员的工作效率。</p>
+<p>但是，上述特性似乎只适用于编译，对于一些特殊的场合则不管用。例如编写一个下载文件的目标，让Make在检测到文件存在时不再重新下载：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">download/test.gz:</span></span><br><span class="line">	wget http://somewhere.org/test.gz -O <span class="variable">$@</span>    <span class="comment"># $@ 为内置变量，自动设为目标名</span></span><br></pre></td></tr></table></figure>
+<p>然而事实上，Make总是会无条件重新生成这个目标，也就是总会重新下载<code>test.gz</code>这个文件。实践中，这非常不利于资源利用，同时给网络环境不理想的用户造成了麻烦。</p>
+<p>有鉴于此，我们应该在该目标中，手动判断文件是否存在，如果不存在则重新下载。修改上述代码清单如下：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">download/test.gz:</span></span><br><span class="line"><span class="keyword">ifeq</span> (, <span class="variable">$(<span class="built_in">wildcard</span> <span class="variable">$@</span>)</span>)</span><br><span class="line">	wget http://somewhere.org/test.gz -O <span class="variable">$@</span>    <span class="comment"># $@ 为内置变量，自动设为目标名</span></span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+<p>这里，<code>$(wildcard)</code>函数返回一个文件列表的字符串，可用来判断文件是否存在，不存在则自然返回空值。条件判断语句<code>ifeq</code>比较两个表达式是否相等，第一个表达式为空。连起来，则是判断<code>$(wildcard)</code>是否返回空值，一旦返回空值，则目标文件不存在，应当重新下载。</p>
+<p>到此，Make不至于反复重新下载我们需要的文件了。</p>
+<blockquote>
+<p><strong>注意：</strong>一般情况下<code>wget</code>会在下载出错时删除未下载完成的文件，但有时却不会删除。因此还需自行编写检查文件有效性的代码。</p>
+</blockquote>
+<h2 id="第六坑：在Makefile编译目标中使用cd等Shell命令"><a href="#第六坑：在Makefile编译目标中使用cd等Shell命令" class="headerlink" title="第六坑：在Makefile编译目标中使用cd等Shell命令"></a>第六坑：在Makefile编译目标中使用<code>cd</code>等Shell命令</h2><p>在编写一些目标时，有时会需要切换到一个特定目录下进行操作，比如运行某个子目录中子项目的<code>configure</code>：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">build_libuv:</span></span><br><span class="line">	cd libuv</span><br><span class="line">	./configure</span><br></pre></td></tr></table></figure>
+<p>但是上面这种写法，一旦运行就直接提示“找不到<code>./configure</code>”。这是因为Makefile的目标中，<strong>每一个配方都被视为一个独立的shell脚本，在不同的shell会话中运行</strong>，以便处理并行任务。</p>
+<p>也正因如此，在使用<code>cd</code>等要在同一个shell会话中运行的命令时，应当把它们写在同一行中。就像这样：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">build_libuv:</span></span><br><span class="line"><span class="comment"># 第一种写法，用"&amp;&amp;"分隔多个命令</span></span><br><span class="line">	cd libuv &amp;&amp; ./configure</span><br><span class="line"><span class="comment"># 第二种写法，也可用分号分隔</span></span><br><span class="line">	cd libuv; ./configure</span><br></pre></td></tr></table></figure>
+<p>也可拆成多行，用反斜杠<code>\</code>断行。在书写多条命令或较长命令时会显得非常清爽。</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">build_libuv:</span></span><br><span class="line">	cd libuv ; \</span><br><span class="line">	./configure</span><br></pre></td></tr></table></figure>
+<h2 id="第七坑：调用子Makefile"><a href="#第七坑：调用子Makefile" class="headerlink" title="第七坑：调用子Makefile"></a>第七坑：调用子Makefile</h2><p>有些大型的项目包含若干个子项目，每个项目都有自己的<code>Makefile</code>。如果想要调用子项目的<code>Makefile</code>，正确的做法并不是使用<code>include</code>语句，而是用<code>make</code>命令。</p>
+<p>比如，项目<code>Test</code>的结构如图所示，包含两个子项目<code>doc</code>和<code>src</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Test/</span><br><span class="line">├─doc/</span><br><span class="line">│ └─Makefile</span><br><span class="line">├─Makefile</span><br><span class="line">└─src/</span><br><span class="line">  └─Makefile</span><br></pre></td></tr></table></figure>
+<p>如果想编译<code>doc</code>和<code>src</code>，则在<code>Test/Makefile</code>中编写这样的目标：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">build_doc:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C doc</span><br><span class="line"><span class="section">build_src:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C src</span><br></pre></td></tr></table></figure>
+<p>即，运行一个新的<code>make</code>程序，切换到对应目录下并读取其<code>Makefile</code>。<code>$(MAKE)</code>为内置变量，指向用于运行当前Makefile的<code>make</code>命令路径。</p>
+<h2 id="对了……还有！"><a href="#对了……还有！" class="headerlink" title="对了……还有！"></a>对了……还有！</h2><p>如果想参考我的实践成果，或是自己编译Zyn-Fusion来玩音乐，不妨移步我fork的Repo：</p>
+<ul>
+<li><a href="https://github.com/anclark/zyn-fusion-build" target="_blank" rel="noopener">Zyn-Fusion 编译脚本Repo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程经验</category>
+        <category>Makefile</category>
+      </categories>
+      <tags>
+        <tag>技术笔记</tag>
+        <tag>Makefile</tag>
+      </tags>
+  </entry>
 </search>

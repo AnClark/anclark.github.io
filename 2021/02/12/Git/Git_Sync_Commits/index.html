@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码） | 爱拼安小匠的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="GitHub的fork是代码协作的重要方式。一方面，在自己的fork中做出的修改，可以通过提出pull request，合并到上游仓库（或其他分支）；另一方面，上游仓库或别人的fork有了更新，就可以反过来应用到我们自己的fork中，只需启动一个反方向的pull request。 但是，GitHub的pull request存在一个问题：不能采用他人的个别提交（即cherry-pick），而只能把">
+<meta name="keywords" content="技术笔记,GitHub,Pull Request,Cherry Pick">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub：如何只提交&#x2F;应用指定commit（Pull Request，或更新本地代码）">
+<meta property="og:url" content="https://anclark.github.io/2021/02/12/Git/Git_Sync_Commits/index.html">
+<meta property="og:site_name" content="爱拼安小匠的技术博客">
+<meta property="og:description" content="GitHub的fork是代码协作的重要方式。一方面，在自己的fork中做出的修改，可以通过提出pull request，合并到上游仓库（或其他分支）；另一方面，上游仓库或别人的fork有了更新，就可以反过来应用到我们自己的fork中，只需启动一个反方向的pull request。 但是，GitHub的pull request存在一个问题：不能采用他人的个别提交（即cherry-pick），而只能把">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-02-12T13:58:08.364Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GitHub：如何只提交&#x2F;应用指定commit（Pull Request，或更新本地代码）">
+<meta name="twitter:description" content="GitHub的fork是代码协作的重要方式。一方面，在自己的fork中做出的修改，可以通过提出pull request，合并到上游仓库（或其他分支）；另一方面，上游仓库或别人的fork有了更新，就可以反过来应用到我们自己的fork中，只需启动一个反方向的pull request。 但是，GitHub的pull request存在一个问题：不能采用他人的个别提交（即cherry-pick），而只能把">
+  
+    <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">爱拼安小匠</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">AnClark 玩转技术</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/开发工具/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/categories/digital">玩转数码</a></li>
+                        
+                            <li><a  href="/categories/algorithm">算法学习</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/anclark/" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="about:blank" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-适配/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-适配教程/" style="font-size: 12px;">Android 适配教程</a> <a href="/tags/Android-适配笔记/" style="font-size: 18px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12px;">Arch Linux</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 16px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo插件/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 16px;">Linux</a> <a href="/tags/Linux-安装/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12px;">TWRP</a> <a href="/tags/Ubuntu/" style="font-size: 12px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/乱码/" style="font-size: 10px;">乱码</a> <a href="/tags/使用技巧/" style="font-size: 10px;">使用技巧</a> <a href="/tags/内核/" style="font-size: 10px;">内核</a> <a href="/tags/压缩包/" style="font-size: 10px;">压缩包</a> <a href="/tags/垂直同步/" style="font-size: 10px;">垂直同步</a> <a href="/tags/学习笔记/" style="font-size: 14px;">学习笔记</a> <a href="/tags/技术笔记/" style="font-size: 20px;">技术笔记</a> <a href="/tags/技术随笔/" style="font-size: 10px;">技术随笔</a> <a href="/tags/插电降频/" style="font-size: 10px;">插电降频</a> <a href="/tags/搜狗输入法/" style="font-size: 12px;">搜狗输入法</a> <a href="/tags/教程/" style="font-size: 10px;">教程</a> <a href="/tags/时间同步/" style="font-size: 10px;">时间同步</a> <a href="/tags/论文/" style="font-size: 10px;">论文</a> <a href="/tags/路由器/" style="font-size: 10px;">路由器</a> <a href="/tags/软件配置/" style="font-size: 14px;">软件配置</a> <a href="/tags/镜像源/" style="font-size: 10px;">镜像源</a> <a href="/tags/问题解决/" style="font-size: 10px;">问题解决</a> <a href="/tags/随笔/" style="font-size: 14px;">随笔</a> <a href="/tags/音乐制作/" style="font-size: 14px;">音乐制作</a> <a href="/tags/黑苹果/" style="font-size: 10px;">黑苹果</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">爱拼安小匠</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">爱拼安小匠</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">AnClark 玩转技术</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/开发工具/">玩转开发工具</a></li>
+                
+                    <li><a href="/categories/digital">玩转数码</a></li>
+                
+                    <li><a href="/categories/algorithm">算法学习</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/anclark/" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="about:blank" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Git/Git_Sync_Commits" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2021/02/12/Git/Git_Sync_Commits/" class="article-date">
+      <time datetime="2021-02-12T13:54:00.000Z" itemprop="datePublished">2021-02-12</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cherry-Pick/">Cherry Pick</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pull-Request/">Pull Request</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术笔记/">技术笔记</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>GitHub的fork是代码协作的重要方式。一方面，在自己的fork中做出的修改，可以通过提出pull request，合并到上游仓库（或其他分支）；另一方面，上游仓库或别人的fork有了更新，就可以反过来应用到我们自己的fork中，只需启动一个反方向的pull request。</p>
+<p>但是，GitHub的pull request存在一个问题：<strong>不能采用他人的个别提交（即cherry-pick），而只能把他人比你新的所有提交一同合并</strong>。于是，如果：</p>
+<ul>
+<li>你自己在本地仓库作出了大量修改，但只想把个别提交发送给上游仓库；</li>
+<li>或者是上游仓库有一些提交不适合你，你不想把它们一并合并到你的代码库中；</li>
+<li>又或是你的项目是完全独立的，只想选择性地接受上游的部分提交，</li>
+</ul>
+<p>这几种情况下，所有的提交都会算在一次pull request内，直接进行pull request有可能会导致难以预料的后果（比如弄乱上游仓库的代码、引起Bug）。</p>
+<p>对于这种情况，可以善用Git的“远端（remote）”和“分支（branch）”功能，实现上游仓库和自己的fork（为方便起见，下文称“你的仓库”）的协同工作，再借助cherry-pick只采纳个别提交，从而弥补GitHub的缺陷。</p>
+<a id="more"></a>
+<h2 id="情形一：选择个别提交到上游仓库"><a href="#情形一：选择个别提交到上游仓库" class="headerlink" title="情形一：选择个别提交到上游仓库"></a>情形一：选择个别提交到上游仓库</h2><h3 id="第一步——增加远端"><a href="#第一步——增加远端" class="headerlink" title="第一步——增加远端"></a>第一步——增加远端</h3><p>Git默认的远端仓库叫<code>origin</code>，实际上，它支持添加多个远端仓库。我们把上游仓库添加进来，取名为<code>upstream</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add upstream &lt;上游仓库地址&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="第二步——根据上游分支建立patch分支"><a href="#第二步——根据上游分支建立patch分支" class="headerlink" title="第二步——根据上游分支建立patch分支"></a>第二步——根据上游分支建立<code>patch</code>分支</h3><p>GitHub的pull request<strong>支持对特定分支进行比较</strong>。这时如果用于跟远端比较的分支只包括了你需要的提交，就不至于把你做的所有提交一股脑儿加上去了。我们建立一个专门的分支用于发起pull request，选择性应用我们的提交。命名时带上<code>patch</code>这样的关键字，以确保辨识度。</p>
+<p>以下的命令将在上游仓库<code>master</code>分支的基础上建立一个新的<code>patch-1</code>分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b patch-1 upstream/master</span><br></pre></td></tr></table></figure>
+<h3 id="第三步——找出要pull-request的提交"><a href="#第三步——找出要pull-request的提交" class="headerlink" title="第三步——找出要pull request的提交"></a>第三步——找出要pull request的提交</h3><p>这时就会自动切换到新分支<code>patch_1</code>中。我们可以先切换回本地的工作分支（如<code>master</code>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+<p>然后浏览提交日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>在提交日志里，把你需要pull request的提交ID记录下来。下方提交日志的范例中，<code>commit</code>字样后面的十六进制文本就是提交ID，通常只记前七位就可以了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">commit b305a606dff60d9fc2371d3a70535cbedb449bfc (HEAD -&gt; master, origin/master)</span><br><span class="line">Author: AnClark &lt;...&gt;</span><br><span class="line">Date:   Tue Feb 9 17:52:39 2021 +0800</span><br><span class="line"></span><br><span class="line">    Update: 2021-02-09 17:02:39</span><br><span class="line"></span><br><span class="line">commit 59435a4b0f3bf9b57ec4ad55a70a6eef6d79ad6b</span><br><span class="line">Author: AnClark &lt;...&gt;</span><br><span class="line">Date:   Fri Dec 11 10:30:40 2020 +0800</span><br><span class="line"></span><br><span class="line">    Update: 2020-12-11 10:12:40</span><br><span class="line"></span><br><span class="line">commit 8b442234891085a769f36debf21f0c46da5afb14</span><br><span class="line">Author: AnClark &lt;...&gt;</span><br><span class="line">Date:   Thu Dec 10 07:42:45 2020 +0800</span><br><span class="line"></span><br><span class="line">    Update: 2020-12-10  7:12:45</span><br></pre></td></tr></table></figure>
+<h3 id="第四步——cherry-pick"><a href="#第四步——cherry-pick" class="headerlink" title="第四步——cherry pick"></a>第四步——cherry pick</h3><p>这里假设要以上例中第二、第三个提交来发起pull request。</p>
+<p>首先切换到<code>patch-1</code>分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout patch-1</span><br></pre></td></tr></table></figure>
+<p>然后运行cherry pick，应用上述两个提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 8b442234891085a769f36debf21f0c46da5afb14</span><br><span class="line">git cherry-pick 59435a4b0f3bf9b57ec4ad55a70a6eef6d79ad6b</span><br></pre></td></tr></table></figure>
+<p>命令的输出结果如下所示，跟平时使用<code>git commit</code>的输出是一样的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[patch-1 8b44223] Update: 2020-12-10  7:12:45</span><br><span class="line"> Date: Thu Dec 10 07:42:45 2020 +0800</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 test.txt</span><br><span class="line"> </span><br><span class="line">[patch-1 59435a4] Update: 2020-12-11 10:12:40</span><br><span class="line"> Date: Fri Dec 11 10:30:40 2020 +0800</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 demo.html</span><br></pre></td></tr></table></figure>
+<h3 id="第五步——推送分支"><a href="#第五步——推送分支" class="headerlink" title="第五步——推送分支"></a>第五步——推送分支</h3><p>Cherry pick完成后，把<code>patch-1</code>分支推到GitHub上自己的fork：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin patch-1</span><br></pre></td></tr></table></figure>
+<h3 id="第六步——发起pull-request"><a href="#第六步——发起pull-request" class="headerlink" title="第六步——发起pull request"></a>第六步——发起pull request</h3><p>登录GitHub，然后像往常一样，从自己的仓库发起pull request。但要注意，<strong>你的仓库一侧用于比较的分支应该选择刚刚创建的<code>patch-1</code>分支</strong>。</p>
+<h3 id="第七步——删除patch分支"><a href="#第七步——删除patch分支" class="headerlink" title="第七步——删除patch分支"></a>第七步——删除<code>patch</code>分支</h3><p>如果上游仓库接受了你的pull request，你就可以把<code>patch-1</code>分支删除了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先确保不在patch-1分支中。Git不支持在一个分支里删除自己</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地分支，不会影响远程分支</span></span><br><span class="line">git branch -D patch-1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin :patch-1</span><br></pre></td></tr></table></figure>
+<h2 id="情形二：拣选上游仓库的提交"><a href="#情形二：拣选上游仓库的提交" class="headerlink" title="情形二：拣选上游仓库的提交"></a>情形二：拣选上游仓库的提交</h2><h3 id="第一步——增加远端-1"><a href="#第一步——增加远端-1" class="headerlink" title="第一步——增加远端"></a>第一步——增加远端</h3><p>我们同样把上游仓库添加进来，取名为<code>upstream</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add upstream &lt;上游仓库地址&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="第二步——拉取上游分支"><a href="#第二步——拉取上游分支" class="headerlink" title="第二步——拉取上游分支"></a>第二步——拉取上游分支</h3><p>然后我们从上游仓库拉取所需分支（如<code>master</code>）的内容，保存到本地。</p>
+<p>以下的命令将把上游仓库的<code>master</code>分支下载下来，保存到一个新分支<code>master-upstream</code>当中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b master-upstream upstream/master</span><br></pre></td></tr></table></figure>
+<p>拉取后就会自动切换到该新分支下，这样就可以像管理你的分支一样进行操作了，一些适用于本地分支的命令（如<code>git merge</code>、<code>git diff</code>、<code>git cherry-pick</code>）均可使用。</p>
+<p>如果之前已经进行过上述步骤，则使用<code>git pull</code>更新本地的上游仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull upstream master-upstream</span><br></pre></td></tr></table></figure>
+<h3 id="第三步——找出要采用的提交"><a href="#第三步——找出要采用的提交" class="headerlink" title="第三步——找出要采用的提交"></a>第三步——找出要采用的提交</h3><p>在<code>master-upstream</code>分支下，查看提交记录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>然后记下你要采用的提交ID。</p>
+<h3 id="第四步——cherry-pick-1"><a href="#第四步——cherry-pick-1" class="headerlink" title="第四步——cherry pick"></a>第四步——cherry pick</h3><p>重新切换回你的仓库分支，然后使用<code>git cherry-pick</code>应用提交（以下提交ID为示例）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git cherry-pick &lt;要采用的提交ID&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="第五步——把修改推到你的仓库"><a href="#第五步——把修改推到你的仓库" class="headerlink" title="第五步——把修改推到你的仓库"></a>第五步——把修改推到你的仓库</h3><p>完成之后，直接把你的提交推到远程仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://blog.csdn.net/u013068502/article/details/85399806" target="_blank" rel="noopener">github在pull request时只提交指定commit的方法</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 爱拼安小匠 的个人博客">爱拼安小匠</a></p>
+        <p><span>发布时间:</span>2021年02月12日 - 21时54分</p>
+        <p><span>最后更新:</span>2021年02月12日 - 21时58分</p>
+        <div id="copyright-link">
+            <span>原始链接:</span>
+            <a class="post-url" href="/2021/02/12/Git/Git_Sync_Commits/" title="GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）">https://anclark.github.io/2021/02/12/Git/Git_Sync_Commits/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://anclark.github.io/2021/02/12/Git/Git_Sync_Commits/　　作者: 爱拼安小匠" title=""></span>
+        </div>
+        <div id="copyright-license">
+            <p style="display: inline-block; top: 50%; transform: translate(0, -50%);"><span>许可协议:</span></p>
+            <p style="display: inline-block">
+            <i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" title="中国大陆 (CC BY-NC-ND 3.0 CN)" target = "_blank">"署名-非商用-禁止演绎 3.0"</a> 转载请保留原文链接及作者。<br>本许可协议具有溯及既往的效力。
+            </p>
+        </div>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a  href="/2021/02/09/Programming_Tips/Makefile_踩坑记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Makefile 编写时的几个大坑和技巧</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#情形一：选择个别提交到上游仓库"><span class="toc-number">1.</span> <span class="toc-text">情形一：选择个别提交到上游仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步——增加远端"><span class="toc-number">1.1.</span> <span class="toc-text">第一步——增加远端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步——根据上游分支建立patch分支"><span class="toc-number">1.2.</span> <span class="toc-text">第二步——根据上游分支建立patch分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步——找出要pull-request的提交"><span class="toc-number">1.3.</span> <span class="toc-text">第三步——找出要pull request的提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步——cherry-pick"><span class="toc-number">1.4.</span> <span class="toc-text">第四步——cherry pick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步——推送分支"><span class="toc-number">1.5.</span> <span class="toc-text">第五步——推送分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第六步——发起pull-request"><span class="toc-number">1.6.</span> <span class="toc-text">第六步——发起pull request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第七步——删除patch分支"><span class="toc-number">1.7.</span> <span class="toc-text">第七步——删除patch分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情形二：拣选上游仓库的提交"><span class="toc-number">2.</span> <span class="toc-text">情形二：拣选上游仓库的提交</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步——增加远端-1"><span class="toc-number">2.1.</span> <span class="toc-text">第一步——增加远端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步——拉取上游分支"><span class="toc-number">2.2.</span> <span class="toc-text">第二步——拉取上游分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步——找出要采用的提交"><span class="toc-number">2.3.</span> <span class="toc-text">第三步——找出要采用的提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步——cherry-pick-1"><span class="toc-number">2.4.</span> <span class="toc-text">第四步——cherry pick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步——把修改推到你的仓库"><span class="toc-number">2.5.</span> <span class="toc-text">第五步——把修改推到你的仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2021/02/09/Programming_Tips/Makefile_踩坑记/" title="下一篇: Makefile 编写时的几个大坑和技巧">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_踩坑记/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/解决Linux下zip压缩包乱码的问题/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/">Arch Linux下给RIME中州韵添加词库</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/18/NodeJS/NodeJS_镜像源指南/">npm配置笔记：配置镜像源与npm search</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/18/Struggle_with_Linux/Foobar-Wine踩坑记录/">Arch Linux + Wine 下运行 Foobar2000 踩坑记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/14/Struggle_with_Linux/Arch Linux与KDE安装过程/">Arch Linux + KDE安装教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/28/PHP/在Ubuntu上配置Apache2+PHP/">在Ubuntu上安装并配置Apache2 + PHP</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/05/Play_NAS/OMV编译过程/">开源NAS系统 Openmediavault（OMV） 编译与安装教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/17/Struggle_with_Linux/Debian SELinux导致无法启动问题/">Debian：修复SELinux导致卡在启动画面的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/10/Android_Adapting_Note/追根溯源解决Busybox编译错误/">TWRP编译：追根溯源解决BusyBox编译错误</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/29/Struggle_with_Linux/解决Deepin-KWin撕裂问题/">解决Deepin Linux + KWin 屏幕界面的撕裂问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/26/Play_Switch/使用Visual Studio Code阅读Switch Homebrew程序源码/">使用Visual Studio Code阅读Switch Homebrew程序源码</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/Struggle_with_Linux/为snapd设置代理/">为snapd设置代理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/Hexo/推荐插件整理/">Hexo 推荐插件整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/13/Mend_My_Computer/解决笔记本在Linux下插电源降频的问题/">解决笔记本在Linux下插电降频的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/Struggle_with_Linux/为OpenSUSE安装搜狗输入法/">为OpenSUSE安装搜狗输入法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/21/Struggle_with_Linux/为Deepin-Linux启用蓝牙支持/">为Deepin Linux启用蓝牙支持</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/21/Android_Adapting_Note/刷机后要做的单元测试/">刷机后要做的单元测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/08/Android_Adapting_Guide/让TWRP支持解密高通data分区/">让TWRP支持解密高通data分区</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/30/Struggle_with_Linux/Deepin-Linux下为Wine创建文件关联/">Deepin Linux下为Wine创建文件关联</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/12/Network/在OpenWrt路由器上使用IPv6/">在OpenWrt路由器上使用IPv6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/06/Struggle_with_Linux/为Deepin-Linux编译内核/">为Deepin Linux编译内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/">TWRP Recovery 编译适配教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/18/BlackMacOS/还是苹果好：ThinkPad-X200安装黑苹果折腾记/">【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/15/Use_Python/笔记：Python-3开发C模块初试/">【未完成】笔记：Python 3开发C模块初试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/Android_Adapting_Note/OmniROM：解决“zconf-hash-c--No-such-file-or-directory”/">OmniROM：解决“zconf.hash.c No such file or directory”错误</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/10/Android_Adapting_Note/OmniROM：“Flex-checkpolicy”出错/">OmniROM：解决“Flex checkpolicy”出错故障</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/10/Android_Adapting_Note/OmniROM：包含并自动同步TWRP/">OmniROM：包含并自动同步TWRP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/07/Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃/">踩坑：固态硬盘连接故障使系统假死崩溃</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/Use_Python/使用PyAudio模块播放音频流之体会/">使用PyAudio模块播放音频流之体会</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Android_Adapting_Note/使用Visual-Studio-Code阅读Android内核源码/">使用Visual Studio Code阅读Android内核源码</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/04/Struggle_with_Linux/经验体会：解决Ubuntu-18-04+Windows双系统时间不同步的问题/">经验体会：解决Ubuntu 18.04 + Windows双系统时间不同步的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/02/Paper/Adapt_Android_Oreo_to_Huawei_P6/">拯救老旗舰：为华为Ascend P6适配Android 8.1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/01/Struggle_with_Linux/Ubuntu-18-04-安装搜狗输入法折腾记/">Ubuntu 18.04安装搜狗输入法折腾记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/18/SDL1/SDL学习笔记（一）：初探/">【未完成】SDL学习笔记（一）：初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/07/11/Android_Adapting_Note/静态交叉编译parted在Android上运行/">静态交叉编译parted在Android上运行</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 爱拼安小匠
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

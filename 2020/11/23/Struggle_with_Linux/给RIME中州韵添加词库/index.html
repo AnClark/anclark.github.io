@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。 不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-03-03T13:58:02.267Z">
+<meta property="og:updated_time" content="2021-03-03T14:03:04.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linux下给RIME中州韵添加词库">
 <meta name="twitter:description" content="RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。 不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。">
@@ -374,8 +374,8 @@
 <h2 id="第三方拼音方案的处理：以四叶草拼音为例"><a href="#第三方拼音方案的处理：以四叶草拼音为例" class="headerlink" title="第三方拼音方案的处理：以四叶草拼音为例"></a>第三方拼音方案的处理：以<a href="https://www.fkxxyz.com/d/cloverpinyin/" target="_blank" rel="noopener">四叶草拼音</a>为例</h2><p>第三方RIME方案的作者则提供了更加便捷的方法，即直接在用户配置文件中创建同名词库覆盖掉。这里以四叶草拼音（Clover Pinyin）为例，<a href="https://www.fkxxyz.com/d/cloverpinyin/#%E5%AF%BC%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%8D%E5%BA%93" target="_blank" rel="noopener">点击这里参照官方的教程</a>。</p>
 <p>基本原理就是：</p>
 <ol>
-<li>在用户配置目录里创建与预置词库同名的文件（比如四叶草的词库文件<code>clover.dict.yaml</code>）；</li>
-<li>填入与预置目录中原版词库文件一致的内容（原版词库位于<code>/usr/share/rime-data/clover.dict.yaml</code>，视具体情况有所不同）；</li>
+<li>在用户配置目录里创建与预置词库同名的文件（四叶草的词库文件名为<code>clover.dict.yaml</code>）；</li>
+<li>填入与预置目录中原版词库文件一致的内容（下文直接使用官方教程提供的模板）；</li>
 <li>在<code>import_table:</code>字段中加入你自己的词库；</li>
 <li>重新部署生效。</li>
 </ol>
@@ -411,7 +411,7 @@
         <p><span>本文标题:</span><a  href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/">Arch Linux下给RIME中州韵添加词库</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 爱拼安小匠 的个人博客">爱拼安小匠</a></p>
         <p><span>发布时间:</span>2020年11月23日 - 16时42分</p>
-        <p><span>最后更新:</span>2021年03月03日 - 21时58分</p>
+        <p><span>最后更新:</span>2021年03月03日 - 22时03分</p>
         <div id="copyright-link">
             <span>原始链接:</span>
             <a class="post-url" href="/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/" title="Arch Linux下给RIME中州韵添加词库">https://anclark.github.io/2020/11/23/Struggle_with_Linux/给RIME中州韵添加词库/</a>

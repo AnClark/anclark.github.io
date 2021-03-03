@@ -2492,8 +2492,8 @@
 <h2 id="第三方拼音方案的处理：以四叶草拼音为例"><a href="#第三方拼音方案的处理：以四叶草拼音为例" class="headerlink" title="第三方拼音方案的处理：以四叶草拼音为例"></a>第三方拼音方案的处理：以<a href="https://www.fkxxyz.com/d/cloverpinyin/" target="_blank" rel="noopener">四叶草拼音</a>为例</h2><p>第三方RIME方案的作者则提供了更加便捷的方法，即直接在用户配置文件中创建同名词库覆盖掉。这里以四叶草拼音（Clover Pinyin）为例，<a href="https://www.fkxxyz.com/d/cloverpinyin/#%E5%AF%BC%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%8D%E5%BA%93" target="_blank" rel="noopener">点击这里参照官方的教程</a>。</p>
 <p>基本原理就是：</p>
 <ol>
-<li>在用户配置目录里创建与预置词库同名的文件（比如四叶草的词库文件<code>clover.dict.yaml</code>）；</li>
-<li>填入与预置目录中原版词库文件一致的内容（原版词库位于<code>/usr/share/rime-data/clover.dict.yaml</code>，视具体情况有所不同）；</li>
+<li>在用户配置目录里创建与预置词库同名的文件（四叶草的词库文件名为<code>clover.dict.yaml</code>）；</li>
+<li>填入与预置目录中原版词库文件一致的内容（下文直接使用官方教程提供的模板）；</li>
 <li>在<code>import_table:</code>字段中加入你自己的词库；</li>
 <li>重新部署生效。</li>
 </ol>

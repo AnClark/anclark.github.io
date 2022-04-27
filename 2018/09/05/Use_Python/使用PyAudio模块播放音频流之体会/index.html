@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>使用PyAudio模块播放音频流之体会 - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                使用PyAudio模块播放音频流之体会
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2018-09-05
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/Python/">Python</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>PyAudio是Python下的一个音频处理模块，用于将音频流输送到计算机声卡上。理论上，该模块能够播放任何解码器解码而成的有效音频帧。</p>
+<span id="more"></span>
+
+<h2 id="安装PyAudio"><a href="#安装PyAudio" class="headerlink" title="安装PyAudio"></a>安装PyAudio</h2><p>使用pip工具来安装PyAudio：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip3 install pyaudio<br></code></pre></td></tr></table></figure>
+
+<p>不同系统的安装过程有所不同：</p>
+<ul>
+<li>Windows下与Django、Flask等纯Python模块无异，不需编译非Python语言的源码。</li>
+<li>但在Linux下，还须编译用C/C++编写的底层音频库，这点类似于Node.js下那些拥有C++模块、要用<code>gyp</code>单独编译的软件包。<ul>
+<li>需要PortAudio开发包的支持。</li>
+</ul>
+</li>
+</ul>
+<h2 id="CSDN实践"><a href="#CSDN实践" class="headerlink" title="CSDN实践"></a>CSDN实践</h2><p>笔者根据CSDN上的这篇笔记实践使用PyAudio模块播放音频。作者 <strong>@一个处女座的程序猿</strong> 所演示的格式为WAV，使用Python自带的Wave文件处理模块<code>wave</code>进行解码。但是，他的笔记写的不够完善，为此笔者特地对代码进行了修正，并加了更多注释。</p>
+<blockquote>
+<p>pyaudio：基于pyaudio利用Python编程实现播放音频mp3、wav等格式文件 - CSDN博客<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41185868/article/details/80500847">https://blog.csdn.net/qq_41185868/article/details/80500847</a></p>
+</blockquote>
+<p>为了更细致地探究相关模块运行时所产生的数据，笔者还将解码时所产生的帧内容转换成文本，记录在文件当中。</p>
+<p>最终笔者修改而成的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 引入模块</span><br><span class="hljs-keyword">from</span> pyaudio <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> wave<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">play</span>():</span><br>    <span class="hljs-comment"># 用文本文件记录wave模块解码每一帧所产生的内容。注意这里不是保存为二进制文件</span><br>    dump_buff_file=<span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;Ring01.dup&quot;</span>, <span class="hljs-string">&#x27;w&#x27;</span>)<br>    <br>    chunk=<span class="hljs-number">1</span>                                       <span class="hljs-comment"># 指定WAV文件的大小</span><br>    wf=wave.<span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;Ring01.wav&quot;</span>,<span class="hljs-string">&#x27;rb&#x27;</span>)              <span class="hljs-comment"># 打开WAV文件</span><br>    p=PyAudio()                                   <span class="hljs-comment"># 初始化PyAudio模块</span><br>    <br>    <span class="hljs-comment"># 打开一个数据流对象，解码而成的帧将直接通过它播放出来，我们就能听到声音啦</span><br>    stream=p.<span class="hljs-built_in">open</span>(<span class="hljs-built_in">format</span>=p.get_format_from_width(wf.getsampwidth()), channels=wf.getnchannels(), rate=wf.getframerate(), output=<span class="hljs-literal">True</span>)<br> <br>    data = wf.readframes(chunk)      <span class="hljs-comment"># 读取第一帧数据</span><br>    <span class="hljs-built_in">print</span>(data)                        <span class="hljs-comment"># 以文本形式打印出第一帧数据，实际上是转义之后的十六进制字符串</span><br><br>    <span class="hljs-comment"># 播放音频，并使用while循环继续读取并播放后面的帧数</span><br>    <span class="hljs-comment"># 结束的标志为wave模块读到了空的帧</span><br>    <span class="hljs-keyword">while</span> data != <span class="hljs-string">b&#x27;&#x27;</span>:   <br>        stream.write(data)                <span class="hljs-comment"># 将帧写入数据流对象中，以此播放之</span><br>        data = wf.readframes(chunk)            <span class="hljs-comment"># 继续读取后面的帧</span><br>        dump_buff_file.write(<span class="hljs-built_in">str</span>(data) + <span class="hljs-string">&quot;\n---------------------------------------\n&quot;</span>)                    <span class="hljs-comment"># 将读出的帧写入文件中，每一个帧用分割线隔开以便阅读</span><br>        <br>    stream.stop_stream()            <span class="hljs-comment"># 停止数据流</span><br>    stream.close()                        <span class="hljs-comment"># 关闭数据流</span><br>    p.terminate()                          <span class="hljs-comment"># 关闭 PyAudio</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;play函数结束！&#x27;</span>)<br><br>play()<br></code></pre></td></tr></table></figure>
+
+<p>运行后，指定的文件<code>Ring01.wav</code>就会自动播放，你也能听到音频；音频帧的内容也会在播放的同时自动记录在<code>Ring01.dup</code>中。<code>dup</code>文件的内容摘录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">b&#x27;\xff\xff\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x01\x00&#x27;<br>---------------------------------------<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\xff\xff&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\xff\xff&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\xff\xff&#x27;<br>---------------------------------------<br>b&#x27;\x01\x00\xff\xff&#x27;<br>---------------------------------------<br>......skipping......<br>b&#x27;\x00\x00\x00\x00&#x27;<br>---------------------------------------<br>b&#x27;&#x27;<br>---------------------------------------<br></code></pre></td></tr></table></figure>
+
+<h2 id="print、while与性能瓶颈"><a href="#print、while与性能瓶颈" class="headerlink" title="print、while与性能瓶颈"></a>print、while与性能瓶颈</h2><p>原作者的代码有一处不合理：在while循环内使用<code>print</code>输出缓冲区的内容。笔者在IDLE中尝试，结果IDLE直接卡顿，满屏都是输出的十六进制转义文本，滚屏严重掉帧，严重时直接假死；并且，程序也没有输出任何声音——这让我一时间以为PyAudio只会捕捉音频帧却不会播放。尝试注释掉while循环内的<code>print</code>后，程序流畅正常，且久违的音频出乎我意料地出现了。</p>
+<p>性能反差如此之大，很重要的原因正是会造成性能瓶颈的屏幕输出。使用Python的<code>print</code>方法将内容输出到<code>stdout</code>的时候，整个程序的运行会被拖慢，你不得不等待屏幕上的那一行行输出爱快不快地挤出来。这一现象有可能是因为屏幕输出是一个具有阻塞性的工作，部分屏显的过程未完成，后面的过程就没法继续。少量文本的输出问题不大，但如果是while循环这样在短时间内可以执行无数代码的循环，那造成的工作量不堪设想。想象一下，一条双向两车道的二级公路，只有一辆车时可以尽情地加速，但是车一多起来，这速度就被拉下来了，严重时更会堵出十里长车。</p>
+<p>不过，如果输出的目标不是<code>stdout</code>，而是硬盘上的文件，以上的瓶颈就不复存在了。同样是在while循环中，笔者让程序的每一次循环都在写文件，但程序的运行没受到任何影响，音频照样放，机器根本不卡。当然，输出到硬盘上，仍会受到IO调度、硬盘本身性能、缓存与传输带宽等因素的制约，但是它们在屏幕输出的制约面前，根本就只能甘拜下风了。</p>
+<p>如果以上的例子还不足以说明屏幕输出和文件输出之间的性能有多大区别，那么不妨用MP3编解码器<code>lame</code>做个实验。对比执行以下两个命令，将一个约5MB大小、128kbps/48000Hz的MP3文件解码为WAV格式：</p>
+<ul>
+<li>将<code>test.mp3</code>解码输出到<code>test.wav</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">lame --decode test.mp3 test.wav<br></code></pre></td></tr></table></figure></li>
+<li>将<code>test.mp3</code>解码输出为WAV格式，输出于<code>stdout</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">lame --decode test.mp3 -<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>结果，前者安安静静几秒至十几秒搞定；而后者，满屏都是乱码输出，一分钟过去了都还没结束，接着命令行窗口卡死，按<code>Ctrl+C</code>也不管用——<strong>翻车啦</strong>！</p>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/学习笔记/"><i class="fa fa-tag"></i>学习笔记</a></li>
+                
+                <li><a href="/tags/PyAudio/"><i class="fa fa-tag"></i>PyAudio</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2018/09/07/Mend_My_Computer/%E8%B8%A9%E5%9D%91%EF%BC%9A%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98%E8%BF%9E%E6%8E%A5%E6%95%85%E9%9A%9C%E4%BD%BF%E7%B3%BB%E7%BB%9F%E5%81%87%E6%AD%BB%E5%B4%A9%E6%BA%83/">踩坑：固态硬盘连接故障使系统假死崩溃</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2018/09/04/Android_Adapting_Note/%E4%BD%BF%E7%94%A8Visual-Studio-Code%E9%98%85%E8%AF%BBAndroid%E5%86%85%E6%A0%B8%E6%BA%90%E7%A0%81/">使用Visual Studio Code阅读Android内核源码</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

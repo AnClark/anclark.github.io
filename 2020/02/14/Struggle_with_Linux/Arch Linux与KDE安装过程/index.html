@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>Arch Linux + KDE安装教程 - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                Arch Linux + KDE安装教程
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2020-02-14
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/Linux/">Linux</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。</p>
+<p>近日，我成功给我的上古ThinkPad X200装上了Arch Linux，并配置好了KDE，把经验总结如下。</p>
+<span id="more"></span>
+
+<h2 id="下载Arch-Linux镜像"><a href="#下载Arch-Linux镜像" class="headerlink" title="下载Arch Linux镜像"></a>下载Arch Linux镜像</h2><p>Arch Linux的镜像可从官方网站下载：<a target="_blank" rel="noopener" href="https://www.archlinux.org/download/">https://www.archlinux.org/download/</a></p>
+<p>页面中提供了磁力链接、BT种子，而往下拉可以找到HTTP直链下载，其中包括中国大陆镜像源，如163、中科大、清华TUNA。推荐宽带用户选择163的源，教育网用户选择中科大的源。</p>
+<p>下载完成后，用<a target="_blank" rel="noopener" href="https://rufus.ie/">Rufus</a>把镜像刷写到U盘中，然后用它启动电脑，进入安装环境。</p>
+<h2 id="连网"><a href="#连网" class="headerlink" title="连网"></a>连网</h2><p>Arch Linux的安装需要全程联网，建议使用启用了DHCP的有线网，插上网线就可用，无需额外配置，且相对稳定。当然也可采用WLAN，但配置会复杂一些，可以参考一下这两个教程：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/milton/p/10133850.html">《Ubuntu18.04命令行连接WiFi》</a>，或者<a target="_blank" rel="noopener" href="https://www.cnblogs.com/vachester/p/5637027.html">《Arch Linux无线联网教程》</a>。</p>
+<p>插上网线后，如果无法联网，则可重启一下DHCP客户端dhcpcd：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl restart dhcpcd<br></code></pre></td></tr></table></figure>
+
+<p>如果还不行，则重新启用一下以太网接口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看网络接口状态，列表中以太网接口前缀是enp，如enp0s25</span><br>ip link<br><span class="hljs-comment"># 重新打开网络接口</span><br>ip link <span class="hljs-built_in">set</span> enp0s25 up<br></code></pre></td></tr></table></figure>
+
+<h2 id="准备安装分区"><a href="#准备安装分区" class="headerlink" title="准备安装分区"></a>准备安装分区</h2><p>Arch Linux搭配KDE，建议至少20GB的磁盘空间（如果要安装KDE全家桶）。</p>
+<p>如果要与现在的系统共存，可在Windows的“磁盘管理”中，压缩出一个分区。新硬盘建议用图形化的cfdisk分区，同时支持GPT与MBR。老鸟可用命令行的fdisk、gdisk与parted。我的老笔记本是给整个硬盘都装上，所以直接给它重新分区。</p>
+<h3 id="笔者的分区方案"><a href="#笔者的分区方案" class="headerlink" title="笔者的分区方案"></a>笔者的分区方案</h3><p>由于ThinkPad X200年代久远，不支持UEFI，所以只能选择MBR分区。110GB的固态硬盘，分区方案如下表。其中，系统、引导和用户文件放在同一个分区中。</p>
+<table>
+<thead>
+<tr>
+<th>分区用途</th>
+<th>大小</th>
+<th>设备路径</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标分区</td>
+<td>104GB</td>
+<td><code>/dev/sda1</code></td>
+<td>主分区，活动分区</td>
+</tr>
+<tr>
+<td>交换分区</td>
+<td>≈6GB</td>
+<td><code>/dev/sda5</code></td>
+<td>逻辑分区</td>
+</tr>
+</tbody></table>
+<h3 id="格式化并挂载"><a href="#格式化并挂载" class="headerlink" title="格式化并挂载"></a>格式化并挂载</h3><p>分区的文件系统选择上，通常用EXT4和BtrFS较多，老电脑+SSD建议选择BtrFS，BtrFS有专门的SSD优化选项，可在挂载时打开；而EXT4会因不明原因，时常导致笔记本死机。</p>
+<p>格式化目标分区，然后挂载到<code>/mnt</code>。<code>/mnt</code>就是我们系统安装的目标目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 格式化目标分区为BtrFS</span><br>mkfs.btrfs /dev/sda1<br><br><span class="hljs-comment"># 挂载目标分区，并打开SSD优化</span><br>mount -t btrfs -o ssd /dev/sda1 /mnt<br></code></pre></td></tr></table></figure>
+
+<h3 id="启用Swap"><a href="#启用Swap" class="headerlink" title="启用Swap"></a>启用Swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 初始化交换分区</span><br>mkswap /dev/sda5<br><span class="hljs-comment"># 启用交换分区</span><br>swapon /dev/sda5<br><br><span class="hljs-comment"># 检查交换分区使用情况</span><br>free<br></code></pre></td></tr></table></figure>
+
+<h2 id="预安装过程"><a href="#预安装过程" class="headerlink" title="预安装过程"></a>预安装过程</h2><p>分区准备并挂载完成后，就可以开始安装了。安装过程用到的核心工具有<code>pacstrap</code>和<code>arch-chroot</code>。</p>
+<p><code>pacstrap</code>用于把指定的包安装在指定目录，是<code>pacman</code>的离线版；而<code>arch-chroot</code>则用于把当前系统环境切换到指定的目录，通常是我们挂载目标分区的<code>/mnt</code>，由此可允许我们以新装系统的名义进行操作。</p>
+<p><code>arch-chroot</code>后，我们就可以向管理真实系统一样管理目标分区中的系统（目标系统），例如直接使用<code>pacman</code>等常用工具。运行<code>exit</code>可退回安装环境。</p>
+<blockquote>
+<p> <strong>注意：</strong></p>
+<ul>
+<li>安装基础组件后，<code>pacstrap</code>可在<code>arch-chroot</code>切换后，被<code>pacman</code>取代。其他一些操作也可以在目标系统中完成，只是要注意命令参数的变化。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>提示：</strong>配置文件默认用vim打开。vim的基本操作方法：</p>
+<ul>
+<li>方向键移动光标；</li>
+<li>按<kbd>i</kbd>键进入编辑模式；</li>
+<li>按<kbd>v</kbd>键进入可视模式。此模式下按方向键可控制选区，<kbd>y</kbd>键复制。</li>
+<li>按<kbd>ESC</kbd>退出以上模式，返回一般模式；</li>
+<li>一般模式下，按<kbd>p</kbd>键粘贴，<kbd>x</kbd>键退格，按两下<kbd>d</kbd>键删除整行；</li>
+<li>一般模式下，输入<code>:&lt;命令&gt;</code>后回车，可执行内部命令。常用命令有<code>:w</code>（保存）、<code>:x</code>（保存并退出）、<code>:q</code>（直接退出）、<code>:q!</code>（不保存文件退出）。</li>
+<li>一般模式下，键入<code>/</code>，后跟关键字，可快速定位。</li>
+</ul>
+</blockquote>
+<h3 id="使用中国大陆镜像源"><a href="#使用中国大陆镜像源" class="headerlink" title="使用中国大陆镜像源"></a>使用中国大陆镜像源</h3><p>Arch Linux的默认服务器在国外，因此需要切换到中国大陆的服务器，以实现满速下载，提高效率。</p>
+<p>使用Vim打开镜像源配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">vim /etc/pacman.d/mirrorlist<br></code></pre></td></tr></table></figure>
+
+<p>然后在文件中定位到<code># China</code>开头的项目（可输入），例如163（推荐，可满速）。可视模式下把它们所在的行复制，再粘贴到文件开头。下次就可以使用该镜像源进行下载。</p>
+<p><strong>注意：</strong>新版本的Arch Linux可能已经删除了预设的中国大陆镜像源列表，因此只能手动添加。可以考虑把下面的内容添加到上述文件头部：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">## China<br>Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch<br>Server = http://mirrors.163.com/archlinux/$repo/os/$arch<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装基础组件"><a href="#安装基础组件" class="headerlink" title="安装基础组件"></a>安装基础组件</h3><p>系统基础组件由三个包组成：核心包（base）、Linux内核（linux）与固件（linux-firmware）。安装后即可构成一个最基本的Arch Linux：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacstrap /mnt base linux linux-firmware<br></code></pre></td></tr></table></figure>
+
+<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><p>包括Arch Linux在内，裸安装的Linux发行版默认使用Root用户，显然不安全，因此要添加用户。（这与VPS中安装的Linux差不多。）</p>
+<p><strong>第一，安装sudo</strong>。没错，sudo并不是系统预装的组件，还是要用户手动安装的。顺便把vi和vim装上，用于编辑配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pacstrap /mnt sudo vim vi<br></code></pre></td></tr></table></figure>
+
+<p><strong>第二，授予普通用户sudo权限</strong>。切换到目标系统，先打开sudo配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到目标系统中才能进行操作</span><br>arch-chroot /mnt<br><span class="hljs-comment"># 打开配置文件。默认用vi打开</span><br>visudo<br></code></pre></td></tr></table></figure>
+
+<p>然后取消下面这行的注释，即删掉前面的<code>#</code>符号。这行语句允许wheel组的用户获取root权限。</p>
+<p>取消注释以下指定行，并保存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## Uncomment to allow members of group wheel to execute any command</span><br><span class="hljs-comment"># ↓ 就是下面这行 ↓</span><br>%wheel ALL=(ALL) ALL<br></code></pre></td></tr></table></figure>
+
+<p><strong>第三，再新建一个新用户</strong>：</p>
+<p>使用useradd命令创建用户。假设新用户名为<code>username</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-comment"># -G参数设置用户组，-m开关建立用户目录，username为你的用户名</span><br>useradd -G wheel -m username<br></code></pre></td></tr></table></figure>
+
+<p>给新用户设置密码。密码要输入两次，没有回显：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">passwd username<br></code></pre></td></tr></table></figure>
+
+<p>然后检查一下<code>/home</code>目录下有没有自动新建的用户主目录，如果没有，则运行下面的命令手工创建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建用户目录，并设定权限</span><br>mkdir /home/username<br>chown -R username /home/username<br><br><span class="hljs-comment"># 设置用户主目录</span><br>usermod -d /home/username username<br><br><span class="hljs-comment"># 退回安装环境</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<p>OK，下次即可用我们的新用户来登录。</p>
+<p>需要注意的是，主目录权限不当会导致很多组件运行异常，因为它们要读写主目录中的配置文件。</p>
+<h3 id="安装启动器"><a href="#安装启动器" class="headerlink" title="安装启动器"></a>安装启动器</h3><p>Arch Linux可选的启动器有若干种，首选Grub。</p>
+<h3 id="1-MBR环境"><a href="#1-MBR环境" class="headerlink" title="(1) MBR环境"></a>(1) MBR环境</h3><p>由于笔者的X200不支持UEFI，因此只能以MBR的形式安装。首先把Grub软件包安装到目标系统中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Grub</span><br>pacstrap /mnt grub<br></code></pre></td></tr></table></figure>
+
+<p>然后在安装环境下，把Grub启动器安装到硬盘中。<strong>注意最后一个参数为目标的磁盘设备，而不是分区。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 配置Grub以实现硬盘启动（MBR）</span><br><span class="hljs-comment"># 参数--target设置安装模式，值i386-pc为默认值，表示MBR安装</span><br><span class="hljs-comment"># 参数--root-directory设置安装目标磁盘的根目录。省略则表示当前根目录</span><br><span class="hljs-comment"># 【注意】这个工具已经内置在了安装环境中，无需切换到目标系统操作</span><br>grub-install --target=i386-pc --root-directory=/mnt /dev/sda<br></code></pre></td></tr></table></figure>
+
+<p>最后切换到目标系统，生成配置文件。实际上，前一步也可以在目标系统中进行，只需去掉<code>--root-directory</code>参数即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 生成配置文件</span><br>arch-chroot /mnt<br>grub-mkconfig -o /boot/grub/grub.cfg<br><br><span class="hljs-comment"># 退回安装环境</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-EFI环境"><a href="#2-EFI环境" class="headerlink" title="(2) EFI环境"></a>(2) EFI环境</h3><p>EFI用户参照ArchWiki。所用的命令稍有不同：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 首先确保退回安装环境</span><br><span class="hljs-comment"># 然后安装所需的软件包</span><br>pacstrap /mnt grub efibootmgr<br><br><span class="hljs-comment"># 配置Grub以实现硬盘启动（EFI）</span><br>grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=grub<br><br><span class="hljs-comment"># 生成配置文件</span><br>arch-chroot /mnt<br>grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
+
+<h3 id="生成fstab"><a href="#生成fstab" class="headerlink" title="生成fstab"></a>生成fstab</h3><p><code>genfstab</code>工具可把当前挂载磁盘的状态保存到fstab中，方便系统自动挂载。磁盘的参数也会保存于其中。</p>
+<p><strong>这个工具只在安装环境中提供。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">genfstab /mnt &gt; /mnt/etc/fstab<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置Locale（语言环境）"><a href="#配置Locale（语言环境）" class="headerlink" title="配置Locale（语言环境）"></a>配置Locale（语言环境）</h3><p>Locale是Linux系统的语言环境配置，决定了系统界面的语言、时间/日期/货币格式等，也在很大程度上影响终端和图形界面的显示。</p>
+<p>一般Linux发行版隐含了配置Locale的过程，但在Arch Linux当中，需要我们自己来。</p>
+<p><strong>第一，切换到目标系统环境。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">arch-chroot /mnt<br></code></pre></td></tr></table></figure>
+
+<p><strong>第二，生成Locale数据。</strong>每启用一个Locale，都需先生成它。<code>/etc/locale.gen</code>包含了Linux支持的所有语言环境，默认情况下是被注释掉的。用Vim打开这个文件，然后根据需要取消注释以下这行。</p>
+<p>比如说，如果我要使用英文、简体中文、繁体中文（台湾地区）和日文，就取消以下行的注释：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/locale.gen</span><br>...<br>en_US.UTF-8 UTF-8<br>zh_CN.UTF-8 UTF-8<br>zh_TW.UTF-8 UTF-8<br>ja_JP.UTF-8 UTF-8<br>...<br></code></pre></td></tr></table></figure>
+
+<p>保存后，用以下命令生成新的Locale：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">locale-gen<br></code></pre></td></tr></table></figure>
+
+<p><strong>第三，设置Locale。</strong>默认的Locale叫<strong>“C”</strong>——没错，就一个字母C，它是POSIX规范所规定的。一般需要将它改为对应具体国家或地区的Locale，否则如果保留默认值，就会导致界面上的各种Bug，比如我见过的这两个：</p>
+<ul>
+<li><strong>WPS无法使用中文输入法（如搜狗、Rime）；</strong></li>
+<li>Konsole下输中文退格后，字符只有一半消失，再按退格键却连命令提示符一并被吞掉。</li>
+</ul>
+<p>创建一个文件<code>/etc/locale.conf</code>，然后填入以下内容，设置Locale参数（去掉注释）。以简体中文为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">LANG=zh_CN.UTF-8				<span class="hljs-comment"># 语言</span><br>LC_CTYPE=<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>			<span class="hljs-comment"># 字符分类和字符串处理语言</span><br>LC_NUMERIC=<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>		<span class="hljs-comment"># 数字格式</span><br>LC_TIME=<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>			<span class="hljs-comment"># 时间格式</span><br>LC_COLLATE=<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>		<span class="hljs-comment"># 排序格式</span><br>LC_MONETARY=<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>		<span class="hljs-comment"># 货币格式</span><br><br><span class="hljs-comment"># 下面这个参数是一个宏，可以一次性把所有LC_开头的值设置好</span><br>LC_ALL=zh_CN.UTF-8<br></code></pre></td></tr></table></figure>
+
+<p>也可以用<code>localectl</code>工具来设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">localectl set-locale LANG=zh_CN.UTF-8<br>localectl set-locale LC_ALL=zh_CN.UTF-8<br><span class="hljs-comment"># 也可用于设置其他以LC开头的参数，例如LC_CTYPE</span><br></code></pre></td></tr></table></figure>
+
+<p>如果想检查当前Locale配置，或查看其他可以设置的参数，请不带参数运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">locale<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示：</strong>Locale也可在进入系统后，于KDE系统设置中更改，要更直观些。设置选项位于【KDE系统设置（System Settings）】–&gt; 【区域设置（Regional Settings）】–&gt; 【格式设置（Formats）】。</p>
+<img src="/assets/img/blog/arch_kde_set_locale_in_kde_settings.png" class="" title="在KDE中设置Locale">
+
+
+
+<p>区域设置里还有一个“语言设置（Language）”，但<strong>它不是用来设置locale的</strong>，它设置的是KDE、GTK等图形界面的语言。</p>
+</blockquote>
+<h3 id="安装图形环境"><a href="#安装图形环境" class="headerlink" title="安装图形环境"></a>安装图形环境</h3><p>接下来就是安装Xorg图形环境。<code>xorg</code>包包含了所有可能用到的组件，在此基础上再安装显卡驱动组件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Xorg</span><br>pacstrap /mnt xorg<br><span class="hljs-comment"># 安装显卡组件</span><br>pacstrap /mnt xf86-video<br></code></pre></td></tr></table></figure>
+
+<p><code>xf86-video</code> 貌似已经失效，可参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Xorg#Driver_installation">Arch Linux安装文档</a>来决定安装哪个驱动。常见的选项如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-comment"># 英特尔</span><br>pacstrap /mnt xf86-video-intel<br><span class="hljs-comment"># AMD/ATI</span><br>pacstrap /mnt xf86-video-amdgpu	<span class="hljs-comment"># 用于新款AMD显卡</span><br>pacstrap /mnt xf86-video-ati	<span class="hljs-comment"># 用于旧款ATI显卡（AMD收购之前）</span><br><span class="hljs-comment"># NVIDIA开源驱动</span><br>pacstrap /mnt xf86-video-nouveau<br><span class="hljs-comment"># NVIDIA闭源驱动，包括驱动本体、DKMS模块（保证每个内核都有对应的驱动模块）和显卡设置程序</span><br>pacstrap /mnt nvidia nvidia-dkms nvidia-settings<br>pacstrap /mnt nvidia-390xx          <span class="hljs-comment"># 用于旧款NVIDIA显卡</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装网络组件"><a href="#安装网络组件" class="headerlink" title="安装网络组件"></a>安装网络组件</h3><p>Arch Linux默认<strong>没有预装网络组件</strong>，因此也需要手动安装。一般安装三个组件即可：</p>
+<ul>
+<li><strong>dhcpcd</strong>：DHCP客户端。</li>
+<li><strong>wpa_supplicant</strong>：无线网服务端。</li>
+<li><strong>NetworkManager</strong>：网络管理器前端，KDE等桌面环境依赖它来管理网络，若不启用则会使KDE的网络管理器无法运作。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 这三个包是网络的核心组件</span><br>pacstrap /mnt dhcpcd wpa_supplicant networkmanager<br><br><span class="hljs-comment"># 启用上述组件。重启后一般可直接生效</span><br>arch-chroot /mnt<br>systemctl <span class="hljs-built_in">enable</span> dhcpcd<br>systemctl <span class="hljs-built_in">enable</span> wpa_supplicant<br>systemctl <span class="hljs-built_in">enable</span> NetworkManager			<span class="hljs-comment"># 注意大小写！</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>由于不明原因，dhcpcd在笔者的X200上会莫名crazy，导致KDE卡死。使用另一款DHCP客户端——<strong>dhclient</strong>，笔者完美地解决了这个Bug。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在安装完成的系统中，安装dhclient</span><br>sudo pacman -S dhclient<br><br><span class="hljs-comment"># 禁用dhcpcd的服务</span><br>sudo systemctl stop dhcpcd<br>sudo systemctl <span class="hljs-built_in">disable</span> dhcpcd<br><br><span class="hljs-comment"># 卸载dhcpcd</span><br>sudo pacman -Rs dhcpcd<br></code></pre></td></tr></table></figure>
+
+<p>dhclient无需注册服务，也不是后台服务。它在需要的时候会被调用。</p>
+</blockquote>
+<h3 id="安装声音支持"><a href="#安装声音支持" class="headerlink" title="安装声音支持"></a>安装声音支持</h3><p>KDE等桌面环境使用PulseAudio作为音频后端，配合ALSA模块即可解决声音问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pacstrap /mnt alsa-utils pulseaudio pulseaudio-alsa<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装KDE-Plasma"><a href="#安装KDE-Plasma" class="headerlink" title="安装KDE Plasma"></a>安装KDE Plasma</h3><p>接下来就是安装KDE Plasma桌面环境，Plasma本身就是一个软件包。</p>
+<p>首先安装桌面环境本体，以及桌面管理器SDDM：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Plasma桌面环境</span><br>pacstrap /mnt plasma-meta sddm<br></code></pre></td></tr></table></figure>
+
+<p>然后，启用SDDM窗口管理器，以实现开机自动进入登录界面。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到已安装好的系统里</span><br>arch-chroot /mnt<br><br><span class="hljs-comment"># 开启SDDM的服务</span><br>systemctl <span class="hljs-built_in">enable</span> sddm<br><br><span class="hljs-comment"># 退回安装环境</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<p>进入系统后显示的所谓登录界面，实际上就是SDDM本身，通过登录验证后就由它来启动Plasma桌面环境。相应地，退出登录后就终止了Plasma，重新打开SDDM，以显示登录界面。在Linux发行版中切换用户时，会退回字符界面，屏幕上会显示一堆日志，就是因为这个过程。基于这个特性，SDDM还可以启动其他的桌面环境，例如OpenBox、Gnome、Xfce等。</p>
+<h3 id="安装Konsole"><a href="#安装Konsole" class="headerlink" title="安装Konsole"></a>安装Konsole</h3><p>值得一提的是，<strong>Plasma只是一个桌面环境，没有包含任何其他的KDE应用（如文件管理器等）</strong>，这些应用独立于Plasma，需要用户手动安装。我们见到的Kubuntu、Manjaro等包含的应用实际上是开发团队为我们事先装好的。</p>
+<p>也正因如此，一些常用的应用需要我们手动安装，至少要安装Konsole终端，重启系统后要经常用到。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacstrap /mnt konsole<br></code></pre></td></tr></table></figure>
+
+<p>也可以安装<code>kde-utilities</code>包，包含了Konsole、文件管理器Dolphin、文本编辑器Kate等必备工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacstrap /mnt kde-utilities<br></code></pre></td></tr></table></figure>
+
+<p><strong>如果不安装终端，就只能在进入Plasma后，按<kbd>Ctrl+Alt+F2/F3/F4</kbd>切换到TTY中操作。</strong></p>
+<h3 id="安装中文字体和Emoji字体"><a href="#安装中文字体和Emoji字体" class="headerlink" title="安装中文字体和Emoji字体"></a>安装中文字体和Emoji字体</h3><p>中文字体默认没有安装。若不安装，会在中文显示的地方显示Unicode占位符。Emoji也是如此。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装思源字体家族，包含中日韩字体，以及黑体、宋体、等宽体三种类型</span><br>pacstrap /mnt noto-fonts-cjk<br><br><span class="hljs-comment"># 安装思源Emoji字体，安卓同款</span><br>pacstrap /mnt noto-fonts-emoji<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="重启后第一步：添加Archlinuxcn和AUR"><a href="#重启后第一步：添加Archlinuxcn和AUR" class="headerlink" title="重启后第一步：添加Archlinuxcn和AUR"></a>重启后第一步：添加Archlinuxcn和AUR</h2><p>经过以上的设置，重启电脑并由硬盘启动后（建议拔掉启动盘），就能看到登录界面了，用我们新建的用户即可直接登入系统。之后我们就可以在安装好的系统中，进行后续的操作。</p>
+<p>为了能够获取更多软件，添加第三方软件源必不可少。Arch Linux用户常用的第三方软件源包括Archlinuxcn和AUR。</p>
+<h3 id="添加Archlinuxcn"><a href="#添加Archlinuxcn" class="headerlink" title="添加Archlinuxcn"></a>添加Archlinuxcn</h3><p>Archlinuxcn是由来自我国的团队维护的软件源，主要提供官方源之外的以下实用软件：</p>
+<table>
+<thead>
+<tr>
+<th>软件类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>闭源的免费软件</td>
+<td>Android Studio</td>
+</tr>
+<tr>
+<td>商业软件</td>
+<td>JetBrains全家桶（Intellij Idea、PyCharm、WebStorm）</td>
+</tr>
+<tr>
+<td>开源软件的官方构建版</td>
+<td>Visual Studio Code。Arch官方源也有，但界面和功能与微软官方版有明显区别</td>
+</tr>
+<tr>
+<td>官方源未收录的实用软件</td>
+<td>NVM<small>（Node.js版本切换工具）</small>、Oh My Zsh<small>（火爆的zsh增强工具）</small>、Logisim<small>（电路仿真工具）</small></td>
+</tr>
+<tr>
+<td>官方源也有，但影响用户体验</td>
+<td>Pandoc，官方源提供的版本会捆绑Haskell的依赖，数百兆很臃肿，一般用户用不上。Archlinuxcn则提供了静态链接的版本<code>pandoc-bin</code>。</td>
+</tr>
+<tr>
+<td>从GitHub编译而来的自由软件，与官方源版本不兼容</td>
+<td>一般包名有<code>-git</code>后缀。如Fcitx<a href="Archlinuxcn%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AE%9A%E5%88%B6%E7%89%88%E6%9C%AC%60fcitx-lilydjwg-git%60%EF%BC%8C%E5%87%8F%E5%B0%91%E4%BA%86%E4%BE%9D%E8%B5%96%EF%BC%8C%E5%B9%B6%E5%A2%9E%E5%8A%A0%E5%AF%B9Lua%E7%9A%84%E6%94%AF%E6%8C%81%E3%80%82%E5%AE%83%E4%B8%8E%E5%AE%98%E6%96%B9%E6%BA%90%E7%9A%84Fcitx%E4%B8%8D%E5%85%BC%E5%AE%B9%E3%80%82">^1</a>。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意：</strong>由于软件提供方的版权保护，部分原先在源中的软件已经撤下，例如WPS Office、Chrome。请改用AUR安装。</p>
+</blockquote>
+<p>添加方法很简单。首先打开<code>/etc/pacman.conf</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/pacman.conf<br></code></pre></td></tr></table></figure>
+
+<p>然后在文件末尾加上Archlinuxcn的软件源地址。这里采用清华大学TUNA的镜像源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[archlinuxcn]<br>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch<br></code></pre></td></tr></table></figure>
+
+<p>保存后，更新软件源并安装密钥环：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -Sy<br>sudo pacman -S archlinuxcn-keyring<br></code></pre></td></tr></table></figure>
+
+<p>这样就可以使用了。</p>
+<h3 id="使用AUR"><a href="#使用AUR" class="headerlink" title="使用AUR"></a>使用AUR</h3><p>AUR是Arch Linux社区维护的软件源，是官方源甚至是Archlinuxcn的扩展，包罗万象。用Pacman搜不到的软件，可以去AUR找找看。</p>
+<p>AUR的官方地址是<a target="_blank" rel="noopener" href="https://aur.archlinux.org/">https://aur.archlinux.org/</a>，一般更为实用的使用方法是安装一款管理工具，主要包括yaourt（曾经主流，现已停止维护）和yay（Yet Another Yaourt）。<strong>yay是现在的首选</strong>。</p>
+<p>首先安装yay。<strong>官方源未收录，只有Archlinuxcn收录了</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo pacman -S yay<br></code></pre></td></tr></table></figure>
+
+<p>然后用它来检索并安装软件包，命令格式是：</p>
+<ul>
+<li><code>yay 关键字</code>（会显示出所有可选的软件包，并要求用户选择）</li>
+<li><code>yay -S 包名</code> （直接安装）</li>
+<li><code>yay -Ss 关键字</code>（检索软件包，并显示搜索结果。类似于<code>pacman -Ss</code>）</li>
+</ul>
+<p><strong>上述命令不需要使用<code>sudo</code>来运行</strong>。</p>
+<p>比如，笔者想安装<code>ntfs-3g</code>驱动程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 搜索ntfs-3g</span><br>yay ntfs-3g<br><br><span class="hljs-comment"># 然后得到以下搜索结果</span><br>9 aur/ntfs-3g-onedrive-bin 1.1.0-2 (+0 0.00) <br>    NTFS-3G plugin <span class="hljs-keyword">for</span> reading OneDrive directories created by Windows 10<br>8 aur/libntfs-wii 2013.1.13-2 (+1 0.00) <br>    NTFS-3G filesystem access library (<span class="hljs-keyword">for</span> Nintendo Gamecube/Wii homebrew development)<br>7 aur/libntfs-3g 2016.2.22-1 (+1 0.00) <br>    NTFS filesystem library and development headers. Does not include FUSE driver or utilities.<br>6 aur/ntfs-3g-system-compression-git 1.0.r13.3a474d4-1 (+3 0.00) <br>    NTFS-3G plugin <span class="hljs-keyword">for</span> reading <span class="hljs-string">&quot;system compressed&quot;</span> files<br>5 aur/ntfs-3g-wimlib-patched 2017.3.23-1 (+3 0.00) <br>    NTFS filesystem driver and utilities - with patch from https://wimlib.net/forums/viewtopic.php?f=1&amp;t=4&amp;p=693<span class="hljs-comment">#p596 applied</span><br>4 aur/ntfs-3g-system-compression 1.0-1 (+10 0.12) <br>    NTFS-3G plugin <span class="hljs-keyword">for</span> reading <span class="hljs-string">&quot;system compressed&quot;</span> files<br>3 aur/ntfs-3g-ar 2017.3.23AR.5-4 (+40 0.00) <br>    NTFS filesystem driver and utilities with experimental features<br>2 aur/ntfs-3g-fuse 2017.3.23-1 (+78 0.41) (Installed)<br>    Stable <span class="hljs-built_in">read</span> and write NTFS driver and ntfsprogs. This package will allow normal users to mount NTFS Volumes.<br>1 extra/ntfs-3g 2017.3.23-5 (551.2 KiB 1.7 MiB) <br>    NTFS filesystem driver and utilities<br>==&gt; Packages to install (eg: 1 2 3, 1-3 or ^4)<br>==&gt; <br></code></pre></td></tr></table></figure>
+
+<p>按照提示，输入包的编号来安装，比如第2个包。值得注意的是，yay的软件包是要从源代码编译的，所以一般安装流程如下：</p>
+<ul>
+<li>自动下载该AUR的源代码，可能会用到<code>curl</code>或<code>git</code>；</li>
+<li>给源码打补丁；</li>
+<li>安装必要的软件包用于编译，用户可选是否在安装完成后卸载；</li>
+<li>把编译好的文件打包成Pacman安装包；</li>
+<li>用Pacman安装。</li>
+</ul>
+<p>具体的安装过程可以自己尝试，体会一下。</p>
+<h3 id="给AUR使用镜像源（已失效）"><a href="#给AUR使用镜像源（已失效）" class="headerlink" title="给AUR使用镜像源（已失效）"></a>给AUR使用镜像源（已失效）</h3><p>官方的AUR访问速度慢，好在yay支持设置<code>aururl</code>——AUR的仓库地址。清华TUNA提供了AUR的镜像，运行下列命令设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">yay --aururl &quot;https://aur.tuna.tsinghua.edu.cn&quot; --save<br></code></pre></td></tr></table></figure>
+
+<p>下次用yay搜索就会快不少。</p>
+<p><strong>注意：TUNA已经停止了AUR的镜像源服务。</strong></p>
+<h2 id="安装其他组件"><a href="#安装其他组件" class="headerlink" title="安装其他组件"></a>安装其他组件</h2><h3 id="安装KDE全家桶"><a href="#安装KDE全家桶" class="headerlink" title="安装KDE全家桶"></a>安装KDE全家桶</h3><p>KDE组织旗下开发了大量的软件，涵盖系统应用的方方面面。用户可按自己的实际需要安装，或者安装下面这个分组（也称宏包），迎来KDE全家桶。</p>
+<blockquote>
+<p><strong>名词解释——宏包（meta package）：</strong>软件包的一种，用于安装一组特定的软件包。它本身不包含任何软件相关文件，只包含对其他软件包的依赖关系。Pacman的软件包可以分组，组名也可以当成包名来安装软件，与宏包类似，笔者也以“宏包”称之。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo pacman -S kde-applications-meta<br></code></pre></td></tr></table></figure>
+
+<p>全家桶的体积非常大，包含各类应用，甚至涵盖了不少游戏和教育软件。大部分软件难以用上，因此虚拟机用户不建议安装，而以按需取用其中一类（或单个）组件来代替。</p>
+<p>以下是我们在Arch Linux中可选的KDE软件套组分类：</p>
+<table>
+<thead>
+<tr>
+<th>组名/宏包名</th>
+<th>类别介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kde-utilities</td>
+<td>系统工具，包含了KDE桌面环境所需的基本应用，如文件管理器Dolphin、终端工具Konsole。<strong>应当安装。</strong></td>
+</tr>
+<tr>
+<td>kde-multimedia</td>
+<td>多媒体工具，包含几款多媒体播放器（如Dragon）和编辑器等。</td>
+</tr>
+<tr>
+<td>kde-graphics</td>
+<td>图形工具，包含图片查看器Gwenview、PDF查看器Okular、截图工具Spectacle等。<strong>建议安装。</strong></td>
+</tr>
+<tr>
+<td>kde-education</td>
+<td>教育工具，包括虚拟地球仪Marble、日语学习工具Kiten、海龟绘图工具KTurtle等。</td>
+</tr>
+<tr>
+<td>kde-network</td>
+<td>网络应用程序，包含全功能浏览器Konqueror、即时通讯工具Telepathy、远程桌面工具KRDC等。</td>
+</tr>
+<tr>
+<td>kde-games</td>
+<td>KDE团队开发的一系列游戏，不妨一试。</td>
+</tr>
+</tbody></table>
+<p>虚拟机用户应至少安装一个终端、一个文件管理器和文本编辑器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo pacman -S konsole dolphin kate<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="安装Fcitx"><a href="#安装Fcitx" class="headerlink" title="安装Fcitx"></a>安装Fcitx</h3><p>Fcitx是最常用的输入法框架之一。</p>
+<p><strong>第一，先安装Fcitx所需的包</strong>。下面的包中，<code>fcitx-im</code>是宏包，包含了<code>fcitx</code>和<code>fcitx-qt5</code>，单独安装时会弹出提示要求选择，一般两个一起选。<code>kcm-fcitx</code>是给KDE使用的输入法配置模块，而<code>fcitx-configtool</code>则是Fcitx的配置工具。我们只需运行下面的命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装必备的包</span><br>sudo pacman -S fcitx fcitx-im kcm-fxitx fcitx-qt5 fcitx-configtool<br><br><span class="hljs-comment"># 安装GTK2和GTK3下的输入法组件，用来在GTK应用程序下使用输入法</span><br>sudo pacman -S fcitx-gtk2 fcitx-gtk3 <br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong>在Fcitx的新版本（4.2.9.8-1）中，<code>fcitx-gtk2</code>和<code>fcitx-gtk3</code>这两个包已经与<code>fcitx</code>包合并，安装它们就相当于重新安装Fcitx本体，因此不用额外安装。</p>
+</blockquote>
+<p><strong>第二，设置fcitx作为我们默认的输入法框架</strong>。创建并编辑<code>/home/用户名/.xprofile</code>，然后在里面添加以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> GTK_IM_MODULE=fcitx<br><span class="hljs-built_in">export</span> QT_IM_MODULE=fcitx<br><span class="hljs-built_in">export</span> XMODIFIERS=<span class="hljs-string">&quot;@im=fcitx&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>重新登录生效。</p>
+<p><strong>第三，安装输入法：</strong>在Arch Linux下，笔者首推的输入法是<a target="_blank" rel="noopener" href="https://rime.im/">中州韵Rime输入法</a>。安装后也是重新登录生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S fcitx-rime<br></code></pre></td></tr></table></figure>
+
+<p>然后打开【系统设置】 –&gt; 【区域设置】–&gt; 【输入法设置】（或直接终端运行<code>fcitx-configtool</code>），打开Fcitx设置，在左侧【可用的输入法列表（Available Input Methods）】中找到“Rime”，双击，确定即可。</p>
+<p>输入法指示器在任务栏右侧，按Ctrl+Space来开关输入法。</p>
+<h3 id="启用网络支持"><a href="#启用网络支持" class="headerlink" title="启用网络支持"></a>启用网络支持</h3><p>若网络管理不起作用，KDE设置里网络管理部分显示为空白，且任务栏上没有网络图标，则手工启用网络管理器。立即生效。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo systemctl start NetworkManager<br>sudo systemctl start wpa_supplicant<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置好休眠文件（可解决自动休眠时的卡死问题）"><a href="#配置好休眠文件（可解决自动休眠时的卡死问题）" class="headerlink" title="配置好休眠文件（可解决自动休眠时的卡死问题）"></a>配置好休眠文件（可解决自动休眠时的卡死问题）</h3><p>X200有一定几率会在关机时长时间挂起，在文字界面下可见，关机过程卡在以下地方：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[***  ]A stop job is running for device dev-disk-by/uuid-b072209d-279a-41cd-b4b3-16eab1a84d60.device. (1min 30s)<br></code></pre></td></tr></table></figure>
+
+<p>检查了一下fstab，发现日志中的UUID正是Swap分区的UUID，检索资料后查明是与休眠相关的参数没配置好。而此前偶有出现系统闲置时会莫名其妙卡死，疑为与自动休眠相关，自动休眠可能正触发了这个问题。</p>
+<p>解决方法就是修改Grub默认配置文件。用Vim打开<code>/etc/default/grub</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/default/grub<br></code></pre></td></tr></table></figure>
+
+<p>把以下参数加进<code>GRUB_CMDLINE_LINUX_DEFAULT</code>字段里，注意包裹在原有的引号中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">resume=UUID=&lt;Swap分区的UUID&gt;<br></code></pre></td></tr></table></figure>
+
+<p>其中，要获取Swap分区的UUID，可打开/etc/fstab，找到Swap分区那一项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># UUID=99ec3c4a-01e6-487b-9fdd-fb81e6c5a482<br>/dev/sda5               none            swap            defaults        0 0<br></code></pre></td></tr></table></figure>
+
+<p>最后重新生成配置文件，重启后生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
+
+<h3 id="启用NTFS支持"><a href="#启用NTFS支持" class="headerlink" title="启用NTFS支持"></a>启用NTFS支持</h3><p>Linux下对NTFS的支持，借助于ntfs-3g，以及FUSE（用户态文件系统）。一般的Linux发行版都提供了它们，但在Arch Linux下，ntfs-3g默认不会安装；且FUSE默认也不会启用，须每次开机都手动用<code>sudo modprobe fuse</code>加载（要自动加载，可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/image-eye/archive/2011/08/19/2145777.html">这篇文章的讲解</a>）。</p>
+<p>笔者推荐使用<code>ntfs-3g-fuse</code>这个包，它可以自动加载FUSE，还允许普通用户（而不限root）挂载NTFS分区，适合移动硬盘用户。使用yay安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">yay ntfs-3g-fuse<br></code></pre></td></tr></table></figure>
+
+<p><strong>更新：</strong>仅使用官方源的<code>ntfs-3g</code>也可以实现KDE下移动硬盘分区的免root挂载。</p>
+<h3 id="启用蓝牙组件"><a href="#启用蓝牙组件" class="headerlink" title="启用蓝牙组件"></a>启用蓝牙组件</h3><p>Plasma会装上蓝牙服务程序Bluez，但默认不会启用，导致系统提示“找不到蓝牙适配器”。</p>
+<p>先启用Bluez Daemon：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> bluetooth<br>sudo systemctl start bluetooth<br></code></pre></td></tr></table></figure>
+
+<p>如果启动失败，则可能要手动安装Bluez：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S bluetooth<br></code></pre></td></tr></table></figure>
+
+<p>安装蓝牙音频支持：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S pulseaudio-bluetooth<br></code></pre></td></tr></table></figure>
+
+<p>高级玩家还可以安装高级蓝牙管理器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S blueman<br></code></pre></td></tr></table></figure>
+
+<p>Blueman可激活电脑蓝牙的隐藏功能，如把电脑当手机的蓝牙音箱、串口通信。需内核支持。</p>
+<h3 id="安装媒体组件"><a href="#安装媒体组件" class="headerlink" title="安装媒体组件"></a>安装媒体组件</h3><p>基本的媒体组件包括硬件加速库libva，以及媒体播放器。libva同时支持英特尔和NVIDIA的显卡（后者使用NVIDIA专有的VDPAU技术）。而在媒体播放上，Arch Linux和Manjaro均首推VLC，笔者也使用SMPlayer。这两款自由软件媒体播放器使用FFMpeg解码库，一般会自动安装上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装硬件加速库libva</span><br>sudo pacman -S libva libva-intel-driver libva-vdpau-driver libva-utils<br><span class="hljs-comment"># 这个驱动基于VA-API，适用于部分显卡，参考：https://wiki.archlinux.org/title/Hardware_video_acceleration#ATI/AMD</span><br>sudo pacman -S libva-mesa-driver<br><span class="hljs-comment"># 检查硬件加速库状态，会显示libva库的版本与显卡信息</span><br>vainfo<br><br><span class="hljs-comment"># VLC和SMPlayer，按需取用。</span><br><span class="hljs-comment"># 【注意】VLC也被包含在KDE全家桶中。</span><br>sudo pacman -S vlc smplayer<br></code></pre></td></tr></table></figure>
+
+<h3 id="禁用蜂鸣器"><a href="#禁用蜂鸣器" class="headerlink" title="禁用蜂鸣器"></a>禁用蜂鸣器</h3><p>默认情况下，进行一些操作时，电脑的蜂鸣器会响起，发出很刺耳的嘟嘟声，例如在TTY中光标的始末处按方向键或退格键。这时可以考虑禁用蜂鸣器。像ThinkPad X200这样的笔记本，蜂鸣器和电脑的喇叭连在一起，这就意味着如果音量开得很大，那声音可以吓skr人，插上耳机感觉会更酸爽。</p>
+<h4 id="全局禁用"><a href="#全局禁用" class="headerlink" title="全局禁用"></a>全局禁用</h4><p>蜂鸣器默认作为内核模块加载，因此只需把相应的模块加入黑名单中禁用即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到Root用户下</span><br>sudo -i<br><span class="hljs-comment"># 卸载蜂鸣器模块</span><br>rmmod pcspkr<br><span class="hljs-comment"># 把蜂鸣器模块添加到黑名单中，重启即可彻底禁用之</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;blacklist pcspkr&quot;</span> &gt; /etc/modprobe.d/nobeep.conf<br></code></pre></td></tr></table></figure>
+
+<h4 id="在KDE中禁用"><a href="#在KDE中禁用" class="headerlink" title="在KDE中禁用"></a>在KDE中禁用</h4><p>KDE和Xorg也使用蜂鸣器来发出提示音，起提示用户的作用，但副作用不少。比如，KDE似乎会在电量严重不足时，让蜂鸣器发出救护车般的警告音，非常吓人。可以在系统设置中关闭。</p>
+<p>打开【系统设置（System Settings）】 -&gt;【辅助功能（Accessibility）】，然后取消勾选右侧的【使用系统铃声（Use system bell）】。</p>
+<img src="/assets/img/blog/arch_kde_disable_kde_bell.png" class="" title="在KDE设置中禁用使用系统铃声">
+
+<h3 id="禁用重新登录时恢复上一次会话"><a href="#禁用重新登录时恢复上一次会话" class="headerlink" title="禁用重新登录时恢复上一次会话"></a>禁用重新登录时恢复上一次会话</h3><p>默认情况下，KDE在重新登录后，会把用户之前打开的程序再重新打开（如果支持的话），方便用户马上开始工作。但这功能不实用，它不会恢复应用程序的状态（比如给你原封不动地显示之前的网页内容，以及你的文档编辑进度），拖慢启动速度。对PT党来说，它有时甚至会把qBittorrent这样的应用也恢复，不考虑电脑分区的挂载情况，导致异常（严重者甚至会导致种子重新下载）。</p>
+<p><strong>设置的方法是：</strong>打开【系统设置（System Settings）】 -&gt;【 启动和关机（Startup and Shutdown）】 -&gt; 【桌面会话（Desktop Session）】 -&gt; 【以新会话启动（Start with an empty session）】。</p>
+<img src="/assets/img/blog/arch_kde_do_not_restore_last_session.png" class="" title="在KDE设置中禁用登录时恢复上一次会话">
+
+<h3 id="安装打印机"><a href="#安装打印机" class="headerlink" title="安装打印机"></a>安装打印机</h3><p>Linux通过CUPS（Common Unix Printing Service）来提供打印功能。按照惯例，Arch Linux并不会附带它。</p>
+<h4 id="安装打印机服务"><a href="#安装打印机服务" class="headerlink" title="安装打印机服务"></a>安装打印机服务</h4><p>首先安装CUPS本体，以及实际使用时依赖的组件（如Ghostscript，它用于转换打印输出的格式）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S cups ghostscript gsfont<br></code></pre></td></tr></table></figure>
+
+<p>然后启动CUPS服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启用并启动全部CUPS服务</span><br>sudo systemctl <span class="hljs-built_in">enable</span> cups<br>sudo systemctl start cups<br><br><span class="hljs-comment"># 这个服务作用未知，但可能跟网络打印机有关。Arch Wiki没有讲</span><br>sudo systemctl <span class="hljs-built_in">enable</span> cups-browsed.service<br>sudo systemctl start cups-browsed.service<br></code></pre></td></tr></table></figure>
+
+<p>如果KDE设置中的“打印机设置”不可用，则安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S print-manager		<span class="hljs-comment"># 包含在了kde-utilities套组中</span><br></code></pre></td></tr></table></figure>
+
+<p>这样，既可以在KDE设置的“打印机设置”中管理打印机，也可以登录<a target="_blank" rel="noopener" href="http://localhost:631/">http://localhost:631</a>以使用CUPS的WebUI进行管理。</p>
+<h4 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h4><p>关于打印机驱动的安装，可参考以下的文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.mintos.org/hard/printer-driver.html">《方法论：如何驱动各品牌打印机》</a>。作者列举了惠普、三星、兄弟工业（Brothers），以及日系品牌（佳能、富士、爱普生等）的打印机驱动安装方法。首推惠普打印机，它对Linux的支持最完善，其次是三星和兄弟（<small>其实兄弟工业也是日系，但对Linux支持较好</small>）。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Edison_404/article/details/78048582">ArchLinux使用HP打印机</a>。只需安装<code>hpoj, hplip</code>这两个包，即可驱动惠普主流型号的打印机。</li>
+</ul>
+<p>也可自行搜索打印机驱动：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://aur.archlinux.org/">AUR</a>，尝试<code>yay 打印机品牌</code>或<code>yay 打印机型号</code>，往往可搜索到大量的打印机驱动。比如<code>yay epson</code>就搜到了近百款驱动。</li>
+<li>ArchLinuxCN，收录了部分打印机的驱动。可尝试<code>pacman -Ss 打印机品牌</code>，比如兄弟工业就收录了两款。</li>
+<li><a target="_blank" rel="noopener" href="http://www.openprinting.org/printers">Printer Listings</a>，OpenPrinting 提供的打印机驱动，放在 <code>/usr/share/cups/model/</code> 下。[^2]</li>
+<li>从设备供应商网站获取，放在 <code>/usr/share/cups/model/</code> 下。[^2]</li>
+</ul>
+<h3 id="启用MTP-PTP支持"><a href="#启用MTP-PTP支持" class="headerlink" title="启用MTP/PTP支持"></a>启用MTP/PTP支持</h3><p>和Windows一样，Linux也支持MTP、PTP设备，这样就可以方便地与安卓手机、数码相机等外设连接，管理文件。不过对这类设备的支持并非与生俱来，而是有赖于GVFS（Gnome Virtual File System），它把对其他设备或网络环境的访问抽象成一系列I/O接口，意味着可以像平时读写磁盘那样访问它们。</p>
+<p>安装以下组件，分别启用GVFS本体，以及MTP、PTP支持：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S gvfs gvfs-mtp gvfs-gphoto2<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kainhuck/p/10698671.html">ArchLinux安装KDE桌面</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.colabug.com/2016/1004/609036/">给 GNU/Linux 萌新的 Arch Linux 安装指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=201816"> A start job is running for dev-disk-by… (1min 30s)</a></li>
+<li><a href="%5Bhttps://wiki.archlinux.org/index.php/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%94%9F%E6%88%90_locale%5D(https://wiki.archlinux.org/index.php/Locale_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%94%9F%E6%88%90_locale">Arch Linux Wiki对Locale的介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dolphi/p/3622570.html">Linux下使用locale命令设置语言环境</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/AsWeDo/article/details/104613641">sddm显示管理器设置“登录时恢复上一次会话”后遇到的问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05bf79b1878b">Arch Linux安装+KDE桌面+双显卡驱动一站式解决方案</a></li>
+</ul>
+<h3 id="引用和脚注"><a href="#引用和脚注" class="headerlink" title="引用和脚注"></a>引用和脚注</h3><p>[^2]: <a target="_blank" rel="noopener" href="https://xuanwo.io/2019/09/19/archlinux-cups-connect/">漩涡的博客: Arch Linux连接并使用打印机</a></p>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/Linux 安装/"><i class="fa fa-tag"></i>Linux 安装</a></li>
+                
+                <li><a href="/tags/Arch Linux/"><i class="fa fa-tag"></i>Arch Linux</a></li>
+                
+                <li><a href="/tags/KDE/"><i class="fa fa-tag"></i>KDE</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2020/11/18/Struggle_with_Linux/Foobar-Wine%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Arch Linux + Wine 下运行 Foobar2000 踩坑记录</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2019/12/28/PHP/%E5%9C%A8Ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEApache2+PHP/">在Ubuntu上安装并配置Apache2 + PHP</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

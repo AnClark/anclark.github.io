@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>TWRP Recovery 编译适配教程 - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                TWRP Recovery 编译适配教程
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2018-10-03
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/Android/">Android</a></li>
+                            
+                        
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
+<p>然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？</p>
+<p><strong>当然要自己动手啦！</strong></p>
+<p>事实上，TWRP的适配并没有想象中的那么难。理论上只需在Android的源代码中进行，准备好必要的文件，运行编译命令，即可完成适配。下面笔者就来结合自己的经验，一步步讲解如何适配TWRP Recovery。</p>
+<span id="more"></span>
+
+<h2 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h2><p>编译TWRP和编译Android一样，都是相当吃系统资源的工作，因此必须确保你电脑的配置足够。运行环境只能是Linux发行版[^1]，下文以Ubuntu 18.04为例。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统</td>
+<td>64位Linux发行版，推荐Ubuntu 18.04</td>
+</tr>
+<tr>
+<td>磁盘空间</td>
+<td>至少30GB。Android源码相当吃磁盘空间</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>至少4GB，推荐8GB及以上</td>
+</tr>
+</tbody></table>
+<h2 id="第一步：准备编译环境"><a href="#第一步：准备编译环境" class="headerlink" title="第一步：准备编译环境"></a>第一步：准备编译环境</h2><h3 id="（一）安装必要的软件包"><a href="#（一）安装必要的软件包" class="headerlink" title="（一）安装必要的软件包"></a>（一）安装必要的软件包</h3><p>TWRP的编译，需要一系列软件包支持。在Ubuntu下，使用<code>apt</code>命令即可一次就安装好：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 更新软件源</span><br>sudo apt update<br><span class="hljs-comment"># 安装软件包</span><br>sudo apt install git-core gnupg flex bison gperf \<br>zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \<br>lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \<br>libgl1-mesa-dev libxml2-utils xsltproc unzip<br><span class="hljs-comment"># 安装OpenJDK</span><br>sudo apt install openjdk-8-jdk<br><span class="hljs-comment"># 安装编译套件build-essential。若出错，则请使用以下第二行的命令</span><br>sudo apt install build-essential<br>sudo apt install gcc g++ make<br></code></pre></td></tr></table></figure>
+
+<h3 id="（二）配置ccache"><a href="#（二）配置ccache" class="headerlink" title="（二）配置ccache"></a>（二）配置<code>ccache</code></h3><p><code>ccache</code>是一个缓存工具，它通过将编译产生的中间文件（预处理得到的代码、输出文件<code>*.o</code>等）缓存起来，待到下次编译同样源文件时直接复制而不是重新生成，以此来提高编译效率。最直接的好处，就是在<code>make clean</code>之后，重新编译的速度能够快不少。</p>
+<p>波浪线“<code>~</code>”是Home目录的简写。我们在Bash的配置文件<code>~/.bashrc</code>的尾部加上以下语句，启用<code>ccache</code>。<code>ccache</code>默认存放在用户目录下（<code>~/.ccache</code>），可以更改环境变量<code>CCACHE_DIR</code>，以设置到其他磁盘分区。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启用ccache</span><br><span class="hljs-built_in">export</span> USE_CCACHE=1<br><span class="hljs-comment"># 改变ccache缓存路径</span><br><span class="hljs-built_in">export</span> CCACHE_DIR=/mnt/seagate_drive/.ccache<br></code></pre></td></tr></table></figure>
+
+<p>然后重启终端，或运行<code>source ~/.bashrc</code>，或新开一个Bash会话，使上述语句生效。</p>
+<p>另外，可以设置<code>ccache</code>缓存所占磁盘空间的大小：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -M 50G<br></code></pre></td></tr></table></figure>
+
+<h2 id="第二步：下载Android源代码"><a href="#第二步：下载Android源代码" class="headerlink" title="第二步：下载Android源代码"></a>第二步：下载Android源代码</h2><p>编译TWRP离不开Android源代码，因为它依赖Android源码中的组件。推荐使用<a target="_blank" rel="noopener" href="https://www.omnirom.org/">OmniROM</a>，它与TWRP的开发团队TeamWin有官方合作关系，由OmniROM持有<a target="_blank" rel="noopener" href="https://github.com/omnirom/android_bootable_recovery">TWRP的最新源代码</a>。</p>
+<h3 id="（一）下载repo"><a href="#（一）下载repo" class="headerlink" title="（一）下载repo"></a>（一）下载<code>repo</code></h3><p><code>repo</code>是谷歌开发的软件仓库管理工具，使用Python 2.7编写，用于批量管理由Git组织的源代码。使用以下的命令，把<code>repo</code>下载到被<code>PATH</code>所包含的<code>/usr/bin</code>目录中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo curl https://storage.googleapis.com/git-repo-downloads/repo &gt; /usr/bin/repo<br>sudo chmod +x /usr/bin/repo<br></code></pre></td></tr></table></figure>
+
+<h3 id="（二）下载OmniROM源代码"><a href="#（二）下载OmniROM源代码" class="headerlink" title="（二）下载OmniROM源代码"></a>（二）下载OmniROM源代码</h3><p>首先在磁盘中新建一个专门的目录，用于存放OmniROM源代码，然后使用<code>repo init</code>初始化源代码仓库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">mkdir omni9<br><span class="hljs-built_in">cd</span> omni9<br>repo init -u git://github.com/omnirom/android.git -b android-9.0<br></code></pre></td></tr></table></figure>
+
+<p><code>-b</code>参数指定你需要的Android版本。一般编译<code>3.0.x</code>系列版本用<code>android-6.0</code>即可，但是更新的版本则需要<code>android-7.0</code>及更高。笔者强烈建议只选择最新的TWRP版本——<code>3.3.1-0</code>，因此对应地，使用<code>android-8.1</code>或<code>android-9.0</code>。</p>
+<p>初始化完成后，我们开始下载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">repo sync<br></code></pre></td></tr></table></figure>
+
+<p>根据网络状况和电脑性能，整个过程会需要几个小时甚至半天以上的时间，耐心等待即可。下载完成后，<code>omni9</code>目录中就会多出包括<code>.repo</code>在内的很多文件夹。</p>
+<h3 id="（三）小贴士"><a href="#（三）小贴士" class="headerlink" title="（三）小贴士"></a>（三）小贴士</h3><ul>
+<li><p>可以使用<code>-j</code>参数多开下载进程，适当提高下载效率。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">repo sync -j8<br></code></pre></td></tr></table></figure></li>
+<li><p>如果下载过程中发生错误，可以加上两个参数，让<code>repo</code>遇到错误仍然继续下载。<code>-f</code>使得遇到网络错误时仍然继续，<code>--force-sync</code>使得遇到冲突时仍然继续。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">repo sync -f --force-sync<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="（四）备选方案——Minimal-Manifest-for-TWRP"><a href="#（四）备选方案——Minimal-Manifest-for-TWRP" class="headerlink" title="（四）备选方案——Minimal Manifest for TWRP"></a>（四）备选方案——Minimal Manifest for TWRP</h3><p>如果磁盘空间不足，不妨考虑<strong>Minimal Manifest for TWRP</strong>，它只包含了编译TWRP所需的最少组件，并且也包含了TWRP源码及所需依赖。项目的地址在这里：<a target="_blank" rel="noopener" href="https://github.com/minimal-manifest-twrp">https://github.com/minimal-manifest-twrp</a>。</p>
+<p>以下载Omni 8.1的Minimal Manifest为例，按照下面的步骤就可以下载到精悍、省空间、省资源的代码树：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 建立文件夹用来存放代码树</span><br>mkdir omni8_minimal<br><span class="hljs-built_in">cd</span> omni8_minimal<br><span class="hljs-comment"># 初始化源码仓库</span><br><span class="hljs-comment"># 可以把分支名“twrp-8.1”后的“8.1”改为你想要下载的安卓版本号，支持4.4~9.0</span><br>repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-8.1 --no-clone-bundle<br><span class="hljs-comment"># 开始同步</span><br>repo sync -f --force-sync<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>实测twrp-6.0、twrp-8.1可以正常编译。而最新的twrp-9.0由于错误检测严格，会导致各种各样的编译错误出现，不建议选择！</p>
+</blockquote>
+<h2 id="第三步：下载TWRP源代码"><a href="#第三步：下载TWRP源代码" class="headerlink" title="第三步：下载TWRP源代码"></a>第三步：下载TWRP源代码</h2><blockquote>
+<p><strong>注意：</strong></p>
+<p>如果使用上文的Minimal Manifest for TWRP，则请跳过本步，因为Minimal Manifest for TWRP的manifest包含了TWRP源码！</p>
+<p>而它的twrp-8.1分支也包含了Busybox的源码，因此无需再添加Busybox的项目。但是twrp-9.0却因不明原因未包含，不建议选择。</p>
+</blockquote>
+<p>一般地，OmniROM源码树并未包含TWRP的源码，默认下载的是AOSP的Recovery。因此，我们需要手动下载TWRP源码，并将其添加到<code>repo</code>的仓库配置文件（manifest）中。TWRP的源码位于<a target="_blank" rel="noopener" href="https://github.com/omnirom/android_bootable_recovery%E3%80%82">https://github.com/omnirom/android_bootable_recovery。</a></p>
+<p>以下有两种更改OmniROM仓库配置的方案，任选其一。（<strong>Android 9.0建议选择第一种，以避免意想不到的问题。</strong>）</p>
+<h3 id="方案一：更改本地仓库配置文件"><a href="#方案一：更改本地仓库配置文件" class="headerlink" title="方案一：更改本地仓库配置文件"></a>方案一：更改本地仓库配置文件</h3><p>本地仓库配置文件位于源码树的<code>.repo/local_manifests/</code>目录。它原本的作用，是将OmniROM官方支持机型所涉及到的所有源码仓库地址收集起来，存储到其中的<code>roomservice.xml</code>中，以便于日后用<code>repo sync</code>来一并进行更新。它不会随着Android官方仓库配置（<code>.repo</code>目录下的其他XML manifest文件）的更新而被更改，因此建议在其中添加与TWRP有关的仓库地址。</p>
+<p>假设源码树根目录为<code>omni9</code>。首先，进入<code>omni9/.repo</code>，检查其中是否有**<code>local_manifests</code><strong>这个目录，该目录中是否有</strong><code>roomservice.xml</code>**这个文件。如果没有，就手动创建一个，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-comment">&lt;!--Please do not manually edit this file--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;OmniROM/android_bootable_recovery&quot;</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;bootable/recovery&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;github&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;android-9.0&quot;</span> /&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;OmniROM/android_external_busybox&quot;</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;external/busybox&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;github&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;android-9.0&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，对默认配置文件<code>omni9/.repo/manifests/default.xml</code>进行如下修改，以删除AOSP Recovery对应的manifest项目：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-  &lt;project path=&quot;bootable/recovery&quot; name=&quot;platform/bootable/recovery&quot; groups=&quot;pdk&quot; /&gt;</span><br><span class="hljs-addition">+  &lt;project path=&quot;bootable/recovery-aosp&quot; name=&quot;platform/bootable/recovery&quot; groups=&quot;pdk&quot; /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>最后回到<code>omni9</code>目录，运行下面命令，将TWRP相关的源码下载下来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">repo sync --force-sync bootable/recovery<br>repo sync --force-sync external/busybox<br></code></pre></td></tr></table></figure>
+
+<h3 id="方案二：在默认配置文件中添加TWRP相关项目"><a href="#方案二：在默认配置文件中添加TWRP相关项目" class="headerlink" title="方案二：在默认配置文件中添加TWRP相关项目"></a>方案二：在默认配置文件中添加TWRP相关项目</h3><p>这一方案在之前的Android 8.1源码中起作用。假设源码树根目录为<code>omni8</code>。</p>
+<p>首先，进入源码树，删除原先下载的AOSP Recovery：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> omni8<br>rm -rf bootable/recovery<br></code></pre></td></tr></table></figure>
+
+<p>然后克隆TWRP的Recovery源码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/omnirom/android_bootable_recovery bootable/recovery<br></code></pre></td></tr></table></figure>
+
+<p>随后，删除AOSP Recovery对应的manifest项目。打开<code>omni8/.repo/manifests/default.xml</code>，进行如下修改：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-  &lt;project path=&quot;bootable/recovery&quot; name=&quot;platform/bootable/recovery&quot; groups=&quot;pdk&quot; /&gt;</span><br><span class="hljs-addition">+  &lt;!-- project path=&quot;bootable/recovery&quot; name=&quot;platform/bootable/recovery&quot; groups=&quot;pdk&quot; /&gt; --&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>再把TWRP加入manifest。打开<code>omni8/.repo/manifests/omni-default.xml</code>，在<code>&lt;/manifest&gt;</code>节的最后进行如下修改：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs diff">   &lt;project path=&quot;packages/apps/OmniSwitch&quot; name=&quot;android_packages_apps_OmniSwitch&quot; remote=&quot;omnirom&quot; revision=&quot;android-8.1&quot; /&gt;<br>   &lt;project path=&quot;packages/apps/OpenDelta&quot; name=&quot;android_packages_apps_OpenDelta&quot; remote=&quot;omnirom&quot; revision=&quot;android-8.1&quot; /&gt;<br>   &lt;project path=&quot;packages/apps/Phonograph&quot; name=&quot;android_packages_apps_Phonograph&quot; remote=&quot;omnirom&quot; revision=&quot;android-8.1&quot; /&gt;<br><span class="hljs-addition">+</span><br><span class="hljs-addition">+  &lt;project name=&quot;android_bootable_recovery&quot; path=&quot;bootable/recovery&quot; remote=&quot;omnirom&quot; revision=&quot;android-8.1&quot; /&gt;</span><br><span class="hljs-addition">+  &lt;project name=&quot;android_external_busybox&quot; path=&quot;external/busybox&quot; remote=&quot;omnirom&quot; revision=&quot;android-8.1&quot; /&gt;</span><br> &lt;/manifest&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这样，我们就可以编译TWRP了；并且下一次我们也能通过<code>repo sync</code>，将TWRP一并更新。</p>
+<h2 id="第四步：收集配置文件"><a href="#第四步：收集配置文件" class="headerlink" title="第四步：收集配置文件"></a>第四步：收集配置文件</h2><h3 id="（一）配置文件的组成"><a href="#（一）配置文件的组成" class="headerlink" title="（一）配置文件的组成"></a>（一）配置文件的组成</h3><p>编译TWRP，离不开设备的配置文件。设备配置文件一般包括以下部分，以下所提及的路径均以Android源码根目录为参照：</p>
+<ul>
+<li><p><strong>设备配置参数</strong></p>
+<p>设备配置参数位于<code>device</code>目录下，定义设备的一系列基本信息。它由一系列Makefile文件（<code>*.mk</code>）与设备特定的源代码组成。</p>
+</li>
+<li><p><strong>内核源码</strong></p>
+<p>内核源码位于<code>kernel</code>目录下，会在Android编译的同时一并编译。值得注意的是，并不是所有的设备都有对应的源代码，有些设备使用预编译的内核（prebuilt kernel），一般位于配置参数目录中。</p>
+</li>
+<li><p><strong>厂商配置参数</strong></p>
+<p>厂商配置参数位于<code>vendor</code>目录下，存放厂商特定的配置信息、预编译的各种文件（可执行文件、运行库等，通常不开源）等。相当一部分设备只需在编译整个Android系统时才须用到厂商配置文件，编译TWRP时不需要。</p>
+</li>
+</ul>
+<h3 id="（二）在GitHub上搜索配置文件"><a href="#（二）在GitHub上搜索配置文件" class="headerlink" title="（二）在GitHub上搜索配置文件"></a>（二）在GitHub上搜索配置文件</h3><p>怎样获得你设备的配置文件呢？去GitHub吧！GitHub上一般都会有各种设备的各类配置文件，<strong>善用搜索即可</strong>。例如，笔者的手机是华为P6（型号为<code>P6-C00</code>），那么在GitHub中，使用以下关键字搜索上述三类配置文件：</p>
+<ul>
+<li>配置参数：<code>device p6</code>或<code>device huawei p6</code></li>
+<li>内核源码：<code>kernel p6</code>或<code>kernel huawei p6</code></li>
+<li>厂商配置参数：<code>vendor p6</code>或<code>vendor huawei p6</code></li>
+</ul>
+<p>值得注意的是，很多设备都有自己的代号，而开发者在GitHub上发布配置文件时，往往只会用代号来表示设备。如，小米Max的代号是<code>hydrogen</code>或<code>helium</code>，三星Galaxy S5 国行双卡的代号是<code>kltechnduo</code>，在这样的情况下，你就不能用<code>mimax</code>、<code>galaxy s5</code>或<code>G9008W</code>为关键字来搜索配置文件。要查找代号与设备的对应关系，你可以去<a target="_blank" rel="noopener" href="https://rom.mk/">魔趣下载页面</a>、<a target="_blank" rel="noopener" href="https://download.lineageos.org/">Lineage OS下载页面</a>、<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/resurrectionremix-oreo/files/?source=navbar">Resurrection Remix下载页面</a>等开源ROM网站查询之。</p>
+<p>不同的开源ROM，所适用的配置文件往往各不相同，配置文件中支持的参数也往往各异。由于我们使用OmniROM作为编译TWRP的载体，因此最好能找到适用于OmniROM的配置文件——也就是配置参数目录中带有<code>omni_&lt;设备名&gt;.mk</code>的那一个。如果实在找不到，则请参阅下一步“修改配置文件”中的方法。</p>
+<h3 id="（三）把配置文件放到相应目录下"><a href="#（三）把配置文件放到相应目录下" class="headerlink" title="（三）把配置文件放到相应目录下"></a>（三）把配置文件放到相应目录下</h3><p>在GitHub上找到一个可用的repository之后，直接<code>git clone</code>到相应位置即可。如何确认“相应位置”？其实很简单。</p>
+<p>设备配置参数目录的规范是<code>device/&lt;厂商名&gt;/&lt;设备名&gt;</code>，内核源码和厂商配置参数的路径类似。例如，笔者手上华为P6的配置文件目录如下：</p>
+<ul>
+<li>设备配置参数：<code>device/huawei/hwp6_u06</code></li>
+<li>内核源码：<code>kernel/huawei/hwp6_u06</code></li>
+<li>厂商配置参数：<code>vendor/huawei</code></li>
+</ul>
+<p>根据AOSP的规则，Android源码目录下的各个repository有固定的命名规范，这一规范就是将上述路径的“<code>/</code>”换成“<code>_</code>”，因此也很容易猜出你找到的repository该放在哪个目录。但是如果你碰到未按规范命名的repository，则必须按照上面的规则，推知你该放置的目标目录。</p>
+<h2 id="第五步：修改配置文件"><a href="#第五步：修改配置文件" class="headerlink" title="第五步：修改配置文件"></a>第五步：修改配置文件</h2><p>我们获取到的现成的配置文件，不一定都是开箱即用的。它们在诞生之初，并不都是为我们现成的这套Android源代码设计的，能开箱即用的仅限于少数热门机型，大部分配置文件只适用于不同版本的OmniROM，甚至其他的ROM——典型的如CyanogenMod。因此，修改配置文件，是适配TWRP的必修课。</p>
+<h3 id="（一）判断配置文件是否能够直接适用"><a href="#（一）判断配置文件是否能够直接适用" class="headerlink" title="（一）判断配置文件是否能够直接适用"></a>（一）判断配置文件是否能够直接适用</h3><p>如果你的设备幸运地为TWRP官方所支持，那么在修改配置文件上，你就不必花费太多功夫，开箱使用即可。可以<a target="_blank" rel="noopener" href="https://twrp.me/Devices/">在TWRP官网中查找你的机型</a>。</p>
+<p>若不为官方所支持，也不用灰心，可能会有开发者进行非官方适配。只需在GitHub你找到的设备参数repository中，查看是否有当前OmniROM版本对应的分支（branch）。理论上，适合于Android 7.0及以上的版本可直接套用于OmniROM 8.1。</p>
+<h3 id="（二）修改BoardConfig-mk"><a href="#（二）修改BoardConfig-mk" class="headerlink" title="（二）修改BoardConfig.mk"></a>（二）修改<code>BoardConfig.mk</code></h3><p><code>BoardConfig.mk</code>是设备参数文件的组成部分，其中存放着不少与<code>boot.img</code>与Recovery编译的参数。正确设置这些参数，是保证TWRP正常编译的前提。Recovery和<code>boot.img</code>性质相同，均为Android的启动映像。</p>
+<p><strong>注：</strong></p>
+<ul>
+<li>以下所有目录均以Android源码根目录为参照。</li>
+<li>由于排版限制，下面的设置未包括取值要求说明。写着“是否”的为布尔值，取值为$true$或$false$；其余为数字值或字符串值，可以不添加引号。</li>
+</ul>
+<h4 id="1-内核打包参数"><a href="#1-内核打包参数" class="headerlink" title="1. 内核打包参数"></a>1. 内核打包参数</h4><p>这些参数，控制着内核映像文件（kernel image）打包进入启动映像的工作。它们一般都被开发者提前设置好，不需改动。启动映像通过<code>mkbootimg</code>生成，它的源代码位于<code>system/core/mkbootimg</code>中。</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BOARD_KERNEL_CMDLINE</code></td>
+<td>内核的运行参数</td>
+</tr>
+<tr>
+<td><code>BOARD_KERNEL_BASE</code></td>
+<td>内核在启动映像中的基址</td>
+</tr>
+<tr>
+<td><code>BOARD_KERNEL_PAGESIZE</code></td>
+<td>内核的页面大小</td>
+</tr>
+<tr>
+<td><code>BOARD_MKBOOTIMG_ARGS</code></td>
+<td>需要传递给<code>mkbootimg</code>工具的额外参数</td>
+</tr>
+<tr>
+<td><code>BOARD_BOOTIMAGE_PARTITION_SIZE</code></td>
+<td>启动分区的大小</td>
+</tr>
+<tr>
+<td><code>BOARD_RECOVERYIMAGE_PARTITION_SIZE</code></td>
+<td>Recovery分区的大小</td>
+</tr>
+<tr>
+<td><code>BOARD_CUSTOM_MKBOOTIMG</code></td>
+<td>一些特殊的设备需要用专门的<code>mkbootimg</code>工具来生成启动映像（如瑞芯微）。在这里指定该工具的路径。</td>
+</tr>
+<tr>
+<td><code>BOARD_CUSTOM_BOOTIMG_MK</code></td>
+<td>对于一些格式特殊的启动镜像，用户可以自己编写Makefile。在这里指定自定义的Makefile文件路径。</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong></p>
+<ul>
+<li><code>BOARD_CUSTOM_MKBOOTIMG</code>不再适用于Android 8.0及以上版本，添加该参数会导致报错。</li>
+<li><code>BOARD_CUSTOM_BOOTIMG_MK </code>可能不受Android 8.x编译系统支持而引起报错，但在Android 9.0中不存在问题，可放心使用。</li>
+</ul>
+<h4 id="2-内核编译参数"><a href="#2-内核编译参数" class="headerlink" title="2. 内核编译参数"></a>2. 内核编译参数</h4><p>各类第三方开源ROM的开发者都建议你自己编译内核，而不是使用设备参数文件中预先编译好的内核映像（prebuilt kernel image，预编译内核）。这是因为已编译的内核映像无法修改，只适用于某个特定版本的系统，一旦放到一个新系统中就无法正常工作，甚至直接无法开机。如果你找到的设备参数文件提供了预编译的内核，且你能够找到内核源码，请设置下面的选项。</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TARGET_KERNEL_SOURCE</code></td>
+<td>指定内核源码所在的目录</td>
+</tr>
+<tr>
+<td><code>TARGET_KERNEL_CONFIG</code></td>
+<td>指定编译内核使用的配置文件。<br>配置文件位于内核源码<code>arch/&lt;系统平台&gt;/configs</code>中</td>
+</tr>
+<tr>
+<td><code>BOARD_KERNEL_IMAGE_NAME</code></td>
+<td>指定内核映像名。Android编译系统根据它来查找内核映像<br>编译而成的内核映像位于内核源码<code>arch/&lt;系统平台&gt;/boot</code>中</td>
+</tr>
+<tr>
+<td><code>KERNEL_TOOLCHAIN</code></td>
+<td>指定用于编译内核的交叉工具链。有些设备比较特殊，使用Android源码自带的编译器编译的内核无法启动，必须使用专用或旧版本的编译器</td>
+</tr>
+<tr>
+<td><code>TARGET_KERNEL_CROSS_COMPILE_PREFIX</code></td>
+<td>与<code>KERNEL_TOOLCHAIN</code>配合使用，指定交叉工具链的前缀</td>
+</tr>
+</tbody></table>
+<p>但是，如果你实在无法找到内核源码，你也可以指定下面的参数，以使用现有的内核（如从能正常运行的<code>boot.img</code>与<code>recovery.img</code>中提取出来的内核，或设备参数文件提供者提供的内核）。不过不能保证在新版本的系统下正常使用！</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TARGET_PREBUILT_KERNEL</code></td>
+<td>指定预编译内核的路径</td>
+</tr>
+<tr>
+<td><code>TARGET_PREBUILT_RECOVERY_KERNEL</code></td>
+<td>指定用于Recovery的预编译内核路径</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong></p>
+<ul>
+<li>内核源码与预编译内核只能二选一，不能同时设置上面两个表格中的所有参数！</li>
+<li>根据不同平台，<code>BOARD_KERNEL_IMAGE_NAME</code>会有不同的取值。ARM平台为<code>zImage</code>，x86平台为<code>bzImage</code>，采用U-Boot的平台（如NXP、树莓派）为<code>uImage</code>。</li>
+</ul>
+<h4 id="3-Recovery相关选项"><a href="#3-Recovery相关选项" class="headerlink" title="3. Recovery相关选项"></a>3. Recovery相关选项</h4><p><code>BoardConfig.mk</code>中也包括了设置Recovery的若干选项，其中主要的参数如下所示。一般设备参数文件提供者都已经设置好了相应的参数。</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TARGET_RECOVERY_PIXEL_FORMAT</code></td>
+<td>指定Recovery显示的像素格式。不同的设备有不同的像素格式，常见的有<code>RGB_8888</code>、<code>RGB_565</code>等，设置不当会引起花屏、黑屏等故障。</td>
+</tr>
+<tr>
+<td><code>TARGET_RECOVERY_FSTAB</code></td>
+<td>指定Recovery分区表信息文件（<code>fstab</code>）的路径。该文件记载了可供挂载的分区信息，用户可在Recovery的“挂载”页面中选择是否挂载它们。</td>
+</tr>
+<tr>
+<td><code>BOARD_RECOVERY_SWIPE</code></td>
+<td>启用滑动操作，在非触屏Recovery中可以允许用户上下滑动屏幕来移动高亮选项。一般启用。</td>
+</tr>
+<tr>
+<td><code>DEVICE_RESOLUTION</code></td>
+<td>指定设备的分辨率。</td>
+</tr>
+<tr>
+<td><code>RECOVERY_GRAPHICS_USE_LINELENGTH</code></td>
+<td>Recovery图形显示时使用“行距”。具体作用笔者尚还不清楚，但是该选项若设置不当，会导致Recovery花屏。</td>
+</tr>
+<tr>
+<td><code>BOARD_HAS_SDCARD_INTERNAL</code></td>
+<td>设置设备是否有内置SD卡。现阶段的新设备均拥有至少8GB的eMMC存储，都将内置存储的<code>/data/media/0</code>划为内置SD卡。</td>
+</tr>
+<tr>
+<td><code>RECOVERY_SDCARD_ON_DATA</code></td>
+<td>在Recovery中，确定SD卡位于<code>data</code>分区。现阶段的新设备都将内置存储的<code>/data/media/0</code>划为内置SD卡。与上面的<code>BOARD_HAS_SDCARD_INTERNAL</code>呼应。</td>
+</tr>
+<tr>
+<td><code>TARGET_RECOVERY_INITRC</code></td>
+<td>指定自己的<code>init.rc</code>路径。<code>init.rc</code>是Android初始化程序<code>init</code>最主要的脚本，起到<code>main()</code>函数的作用。该选项允许用户编写自己的<code>init.rc</code>，以支持各种客制化的设备平台。</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong><code>TARGET_RECOVERY_INITRC</code>  仅适用于AOSP官方Recovery，以及Android 6.0之前的旧版本Recovery（如TWRP 2.x、ClockworkMod）。<strong>新版本的TWRP（≥3.0）会直接忽略该选项</strong>，只使用它提供的<code>init.rc</code>。</p>
+<h4 id="4-TWRP专用选项"><a href="#4-TWRP专用选项" class="headerlink" title="4. TWRP专用选项"></a>4. TWRP专用选项</h4><p>TWRP有专属的一些选项，部分选项如下所示。</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TW_THEME</code></td>
+<td>指定TWRP的主题。不同的主题决定TWRP显示的不同样式，包括分辨率、屏幕方向等。<br>默认可选的主题有：<code>portrait_hdpi</code>、<code>portrait_mdpi</code>、<code>landscape_hdpi</code>、<code>landscape_mdpi</code>、<code>watch_mdpi</code>。<br><strong>必须设置，否则编译过程中TWRP的编译规则会报错！</strong></td>
+</tr>
+<tr>
+<td><code>TW_CUSTOM_BATTERY_PATH</code></td>
+<td>指定电池路径。电池路径为内核系统目录<code>/sys</code>中电池设备所在的路径，TWRP访问它以显示电池电量。<br>例：华为P6的路径是<code>/sys/devices/platform/bq_bci_battery.1/power_supply/Battery</code>。</td>
+</tr>
+<tr>
+<td><code>TW_BRIGHTNESS_PATH</code></td>
+<td>指定亮度路径。亮度路径为内核系统目录<code>/sys</code>中屏幕调节文件所在的路径，TWRP编辑它以更改屏幕亮度。<br>例：华为P6的路径是<code>/sys/devices/platform/k3_fb.1/leds/lcd_backlight0/brightness</code>。</td>
+</tr>
+<tr>
+<td><code>TW_DEFAULT_BRIGHTNESS</code></td>
+<td>指定默认亮度。取值范围为$[0,255]$。</td>
+</tr>
+<tr>
+<td><code>TW_MAX_BRIGHTNESS</code></td>
+<td>指定最大亮度。取值范围为$[0,255]$。</td>
+</tr>
+<tr>
+<td><code>TW_FLASH_FROM_STORAGE</code></td>
+<td>该参数作用未知，可能仅适用于<code>2.x</code>版本。在<code>3.2.3-0</code>版本中已经失效。</td>
+</tr>
+<tr>
+<td><code>TW_EXTERNAL_STORAGE_PATH</code></td>
+<td>指定外部存储器的挂载路径。</td>
+</tr>
+<tr>
+<td><code>TW_EXTERNAL_STORAGE_MOUNT_POINT</code></td>
+<td>指定外部存储器的挂载点。</td>
+</tr>
+<tr>
+<td><code>TW_DEFAULT_EXTERNAL_STORAGE</code></td>
+<td>指定是否将默认存储器设为外置存储。在<code>3.2.3-0</code>版本中已经失效。</td>
+</tr>
+<tr>
+<td><code>TW_EXCLUDE_SUPERSU</code></td>
+<td>指定是否不包含SuperSU。包含了SuperSU的TWRP会在每次重启时提示用户Root手机。</td>
+</tr>
+<tr>
+<td><code>TW_INCLUDE_NTFS_3G</code></td>
+<td>指定是否包含NTFS-3G模块，以支持NTFS分区。</td>
+</tr>
+<tr>
+<td><code>TW_IGNORE_MISC_WIPE_DATA</code></td>
+<td>指定是否忽略从Bootloader传递而来的清除<code>data</code>分区的指令。这里的<code>misc</code>分区存放了Bootloader传递给启动映像（<code>boot</code>或<code>recovery</code>）的指令，可以控制它们启动的行为。</td>
+</tr>
+<tr>
+<td><code>TW_EXTRA_LANGUAGES</code></td>
+<td>指定是否增加额外的语言。额外的语言包括中文、日本语等。默认情况下TWRP只会包含英语与若干欧洲语言（如德语、法语、俄语、丹麦语等）。</td>
+</tr>
+</tbody></table>
+<h4 id="5-加密相关选项"><a href="#5-加密相关选项" class="headerlink" title="5. 加密相关选项"></a>5. 加密相关选项</h4><p>现今能购买到的手机，大多都已对<code>data</code>分区进行了加密，要想在系统中读取<code>data</code>分区，必须有一个解密的过程。官方系统（包括Recovery）的启动就包含了解密过程；而TWRP要想读取<code>data</code>分区，则必须设置好下面的选项，并包含用于解密的其他组件。</p>
+<p>笔者知道的加密方案有两种：高通的QSEECOM加密，与华为的专用文件系统强制加密（基于F2FS）。其中只有前者受到TWRP广大开发者的支持，TWRP的很多大神都已给自己负责的机型加入了高通的加密组件。具体给你的<strong>高通处理器机型</strong>增加加密功能的方法，笔者会择日写上教程。<em>（给小米Max的官方TWRP适配高通解密组件的开发者，就是我！）</em></p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TW_INCLUDE_CRYPTO</code></td>
+<td>指定TWRP是否包含加密组件，并启用加密解密功能</td>
+</tr>
+<tr>
+<td><code>TARGET_HW_DISK_ENCRYPTION</code></td>
+<td>指定设备是否包含硬件加密功能。现阶段启用加密的设备，一般都是硬件加密</td>
+</tr>
+<tr>
+<td><code>TARGET_KEYMASTER_WAIT_FOR_QSEE</code></td>
+<td>对于高通方案，指定在Recovery启动时是否等待高通加密服务程序<code>qseecomd</code>完成解密。必须开启，否则TWRP的解密功能形同虚设</td>
+</tr>
+</tbody></table>
+<h4 id="6-调试相关选项"><a href="#6-调试相关选项" class="headerlink" title="6. 调试相关选项"></a>6. 调试相关选项</h4><p>TWRP支持<code>logcat</code>调试功能，可以如同在Android系统里一样读取<code>logcat</code>日志。</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TWRP_INCLUDE_LOGCAT</code></td>
+<td>指定是否在TWRP中包含<code>logcat</code></td>
+</tr>
+<tr>
+<td><code>TARGET_USES_LOGD</code></td>
+<td>指定是否在TWRP中启用日志服务<code>logd</code></td>
+</tr>
+</tbody></table>
+<h3 id="（三）对非OmniROM配置文件的修改"><a href="#（三）对非OmniROM配置文件的修改" class="headerlink" title="（三）对非OmniROM配置文件的修改"></a>（三）对非OmniROM配置文件的修改</h3><p>并不是所有的设备都拥有适用于OmniROM的配置文件，因此还需将适用于其他ROM的配置文件进行一番修改。这种情况通常出现在年代略微久远的老设备上，它们往往只有CyanogenMod 4.x等老版本ROM的配置文件。不过，修改过程并不复杂。</p>
+<h4 id="1-修改设备Makefile（product-Makefile）"><a href="#1-修改设备Makefile（product-Makefile）" class="headerlink" title="1. 修改设备Makefile（product Makefile）"></a>1. 修改设备Makefile（product Makefile）</h4><p>每个ROM的设备参数文件都有一个ROM特定的<strong>“设备 Makefile”</strong>，它定义了设备的基本信息，起到当之无愧的“门户”作用。</p>
+<h5 id="设备Makefile的定义"><a href="#设备Makefile的定义" class="headerlink" title="设备Makefile的定义"></a>设备Makefile的定义</h5><p>我们来分析一下这类Makefile。它可以分为三个部分——<strong>继承部分</strong>、<strong>设备定义部分</strong>、<strong>用户自定义部分</strong>。一个示例的设备Makefile如下所示（设备为华为荣耀10 View，省略开头的Apache 2.0协议内容）：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment">#</span><br><span class="hljs-comment"># This file is the build configuration for a full Android</span><br><span class="hljs-comment"># build for grouper hardware. This cleanly combines a set of</span><br><span class="hljs-comment"># device-specific aspects (drivers) with a device-agnostic</span><br><span class="hljs-comment"># product configuration (apps).</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-comment"># Sample: This is where we&#x27;d set a backup provider if we had one</span><br><span class="hljs-comment"># $(call inherit-product, device/sample/products/backup_overlay.mk)</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/core_64_bit.mk)</span><br><br><span class="hljs-comment"># Get the prebuilt list of APNs</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/gsm.mk)</span><br><br><span class="hljs-comment"># Inherit from the common Open Source product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/aosp_base_telephony.mk)</span><br><br><span class="hljs-comment">#treble</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/treble_common.mk)</span><br><br><span class="hljs-comment"># must be before including omni part</span><br>TARGET_BOOTANIMATION_SIZE := 1080p<br><br><span class="hljs-comment"># Inherit from our custom product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/common.mk)</span><br><br><span class="hljs-comment"># Inherit from hardware-specific part of the product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, device/huawei/berkeley/device.mk)</span><br><br>PRODUCT_PROPERTY_OVERRIDES += ro.hardware.nfc_nci=nqx.default<br><br>ALLOW_MISSING_DEPENDENCIES := true<br><br>DEVICE_PACKAGE_OVERLAYS += device/huawei/berkeley/overlay<br><br><span class="hljs-comment"># Discard inherited values and use our own instead.</span><br>PRODUCT_NAME := omni_berkeley<br>PRODUCT_DEVICE := berkeley<br>PRODUCT_BRAND := Huawei<br>PRODUCT_MODEL := Honor View 10<br><br>TARGET_VENDOR := huawei<br></code></pre></td></tr></table></figure>
+
+<h6 id="①-继承部分"><a href="#①-继承部分" class="headerlink" title="① 继承部分"></a>① 继承部分</h6><p>继承部分，指的是上述源文件中调用<code>inherit-product</code>函数的部分，使得当前设备配置文件继承其他的配置文件。被继承的，包括ROM提供的通用（generic）配置文件（位于<code>build/make/target</code>目录中），与设备专门的配置文件（通常在设备参数文件目录下，以<code>device_&lt;设备名&gt;.mk</code>或<code>device.mk</code>为文件名）。</p>
+<p>编写时，一般只需把其他设备的代码搬来用即可，不过需要注意区分32位和64位。</p>
+<h6 id="②-设备定义部分"><a href="#②-设备定义部分" class="headerlink" title="② 设备定义部分"></a>② 设备定义部分</h6><p>设备定义部分是整个设备配置文件的核心，<strong>是编译系统查找设备参数文件的依据</strong>。包括以下变量，<strong>缺一不可</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PRODUCT_DEVICE</code></td>
+<td>设备名。<strong>必须填写，这是核心参数，用于编译系统对设备名的标识！</strong></td>
+</tr>
+<tr>
+<td><code>PRODUCT_NAME</code></td>
+<td>产品名，通常格式为<code>omni_&lt;PRODUCT_DEVICE&gt;</code><br><strong>必须填写，编译系统根据这个来为你配置编译环境！</strong></td>
+</tr>
+<tr>
+<td><code>PRODUCT_BRAND</code></td>
+<td>品牌名</td>
+</tr>
+<tr>
+<td><code>PRODUCT_MODEL</code></td>
+<td>设备型号。会显示在系统设置的“关于设备”中</td>
+</tr>
+<tr>
+<td><code>TARGET_VENDOR</code></td>
+<td>厂商名</td>
+</tr>
+</tbody></table>
+<h6 id="③-用户自定义部分"><a href="#③-用户自定义部分" class="headerlink" title="③ 用户自定义部分"></a>③ 用户自定义部分</h6><p>以上两类代码之外的其他代码，就属于用户自定义的代码了。可以放置其他的参数。</p>
+<h5 id="给设备Makefile改名"><a href="#给设备Makefile改名" class="headerlink" title="给设备Makefile改名"></a>给设备Makefile改名</h5><p>根据ROM的不同，设备Makefile会有不同规格的文件名。常见的如下所示：</p>
+<ul>
+<li>OmniROM: <code>omni_&lt;设备名&gt;.mk</code></li>
+<li>CyanogenMod: <code>cm.mk</code></li>
+<li>魔趣：<code>mokee.mk</code>（旧版本）、<code>mk_&lt;设备名&gt;.mk</code>（Android 9）</li>
+</ul>
+<p>尽管文件名不同，但它们实际上大同小异。只需将名字统一重命名为<code>omni_&lt;设备名&gt;.mk</code>即可。注意文件名中的“设备名”即该文件中<code>PRODUCT_DEVICE</code>的值，否则编译系统会报错找不到文件并中止。</p>
+<h4 id="2-明确设备参数文件Makefile的调用链"><a href="#2-明确设备参数文件Makefile的调用链" class="headerlink" title="2. 明确设备参数文件Makefile的调用链"></a>2. 明确设备参数文件Makefile的调用链</h4><p>Makefile（<code>*.mk</code>）的调用，存在一个链的关系。这条调用链的起点是编译系统负责管理设备配置文件的Makefile程序——<code>build/make/core/product_config.mk</code>，它会检测设备配置文件目录中的<code>AndroidProducts.mk</code>，并根据<code>AndroidProducts.mk</code>来定位到设备的“元Makefile”。</p>
+<h5 id="AndroidProducts-mk"><a href="#AndroidProducts-mk" class="headerlink" title="AndroidProducts.mk"></a><code>AndroidProducts.mk</code></h5><p><code>AndroidProducts.mk</code>是设备配置文件的<strong>入口</strong>。编译系统通过查找<code>device</code>目录下所有的<code>AndroidProducts.mk</code>，来确定某一款设备确实有其配置文件存在。该文件用于将设备Makefile包含进来，包含的方法是将它传递给变量<code>PRODUCT_MAKEFILES</code>。通常的写法如下所示：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile">PRODUCT_MAKEFILES := \<br>    <span class="hljs-variable">$(LOCAL_DIR)</span>/omni_berkeley.mk<br></code></pre></td></tr></table></figure>
+
+<h5 id="product-config-mk"><a href="#product-config-mk" class="headerlink" title="product_config.mk"></a><code>product_config.mk</code></h5><p><code>product_config.mk</code>工作逻辑的其中一步，就是在接受用户输入的设备配置名后，在<code>device/</code>目录中检索配置文件，若配置文件不存在，就会报错。相关代码如下所示（保留原始注释，并增加笔者的进一步说明）：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># ---------------------------------------------------------------</span><br><span class="hljs-comment"># Include the product definitions.</span><br><span class="hljs-comment"># We need to do this to translate TARGET_PRODUCT into its</span><br><span class="hljs-comment"># underlying TARGET_DEVICE before we start defining any rules.</span><br><span class="hljs-comment">#</span><br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(BUILD_SYSTEM)</span>/node_fns.mk<br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(BUILD_SYSTEM)</span>/product.mk<br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(BUILD_SYSTEM)</span>/device.mk<br><br><span class="hljs-keyword">ifneq</span> (<span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(TARGET_BUILD_APPS)</span>)</span>,)<br><span class="hljs-comment"># An unbundled app build needs only the core product makefiles.</span><br>all_product_configs := <span class="hljs-variable">$(<span class="hljs-built_in">call</span> get-product-makefiles,\</span><br><span class="hljs-variable">    <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/AndroidProducts.mk)</span><br><span class="hljs-keyword">else</span><br><span class="hljs-comment"># Read in all of the product definitions specified by the AndroidProducts.mk</span><br><span class="hljs-comment"># files in the tree.</span><br><span class="hljs-comment">## 【正如上面的注释所言，这一句会搜索 device 目录下所有的 AndroidProducts.mk，然后读取这些文件中的 PRODUCT_MAKEFILES 变量，从中获得设备Makefile的路径。】</span><br><span class="hljs-comment">## 【所有获取到的设备Makefile路径都会保存到 all_product_configs 这个变量中。】</span><br>all_product_configs := $(get-all-product-makefiles)<br><span class="hljs-keyword">endif</span><br><br>all_named_products :=<br><br><span class="hljs-comment"># Find the product config makefile for the current product.</span><br><span class="hljs-comment"># all_product_configs consists items like:</span><br><span class="hljs-comment"># &lt;product_name&gt;:&lt;path_to_the_product_makefile&gt;</span><br><span class="hljs-comment"># or just &lt;path_to_the_product_makefile&gt; in case the product name is the</span><br><span class="hljs-comment"># same as the base filename of the product config makefile.</span><br><span class="hljs-comment">## 【current_product_makefile 即为用户所选设备配置文件的设备Makefile文件名】</span><br><span class="hljs-comment">## 【下面一长串的 foreach 函数是文本处理，将路径改为以源码根目录为参照的相对路径】 </span><br>current_product_makefile :=<br>all_product_makefiles :=<br><span class="hljs-variable">$(<span class="hljs-built_in">foreach</span> f, <span class="hljs-variable">$(all_product_configs)</span>,\</span><br><span class="hljs-variable">    $(<span class="hljs-built_in">eval</span> _cpm_words := $(<span class="hljs-built_in">subst</span> :,<span class="hljs-variable">$(space)</span>,<span class="hljs-variable">$(f)</span>)</span>)\<br>    <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> _cpm_word1 := $(<span class="hljs-built_in">word</span> 1,<span class="hljs-variable">$(_cpm_words)</span>)</span>)\<br>    <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> _cpm_word2 := $(<span class="hljs-built_in">word</span> 2,<span class="hljs-variable">$(_cpm_words)</span>)</span>)\<br>    <span class="hljs-variable">$(<span class="hljs-built_in">if</span> <span class="hljs-variable">$(_cpm_word2)</span>,\</span><br><span class="hljs-variable">        $(<span class="hljs-built_in">eval</span> all_product_makefiles += <span class="hljs-variable">$(_cpm_word2)</span>)</span>\<br>        <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> all_named_products += <span class="hljs-variable">$(_cpm_word1)</span>)</span>\<br>        <span class="hljs-variable">$(<span class="hljs-built_in">if</span> $(<span class="hljs-built_in">filter</span> <span class="hljs-variable">$(TARGET_PRODUCT)</span>,<span class="hljs-variable">$(_cpm_word1)</span>)</span>,\<br>            <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> current_product_makefile += <span class="hljs-variable">$(_cpm_word2)</span>)</span>,),\<br>        <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> all_product_makefiles += <span class="hljs-variable">$(f)</span>)</span>\<br>        <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> all_named_products += $(<span class="hljs-built_in">basename</span> $(<span class="hljs-built_in">notdir</span> <span class="hljs-variable">$(f)</span>)</span>))\<br>        <span class="hljs-variable">$(<span class="hljs-built_in">if</span> $(<span class="hljs-built_in">filter</span> <span class="hljs-variable">$(TARGET_PRODUCT)</span>,$(<span class="hljs-built_in">basename</span> $(<span class="hljs-built_in">notdir</span> <span class="hljs-variable">$(f)</span>)</span>)),\<br>            <span class="hljs-variable">$(<span class="hljs-built_in">eval</span> current_product_makefile += <span class="hljs-variable">$(f)</span>)</span>,)))<br>_cpm_words :=<br>_cpm_word1 :=<br>_cpm_word2 :=<br><span class="hljs-comment">## 【经过上述处理后，current_product_makefile 的值就成了设备Makefile的文件名，如 omni_berkeley.mk】</span><br><span class="hljs-comment">## 【如果无法获取，则该变量值为空】</span><br>current_product_makefile := <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(current_product_makefile)</span>)</span><br>all_product_makefiles := <span class="hljs-variable">$(<span class="hljs-built_in">strip</span> <span class="hljs-variable">$(all_product_makefiles)</span>)</span><br><br>load_all_product_makefiles :=<br><span class="hljs-keyword">ifneq</span> (,<span class="hljs-variable">$(<span class="hljs-built_in">filter</span> product-graph, <span class="hljs-variable">$(MAKECMDGOALS)</span>)</span>)<br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(ANDROID_PRODUCT_GRAPH)</span>,--all)<br>load_all_product_makefiles := true<br><span class="hljs-keyword">endif</span><br><span class="hljs-keyword">endif</span><br><span class="hljs-keyword">ifneq</span> (,<span class="hljs-variable">$(<span class="hljs-built_in">filter</span> dump-products,<span class="hljs-variable">$(MAKECMDGOALS)</span>)</span>)<br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(ANDROID_DUMP_PRODUCTS)</span>,all)<br>load_all_product_makefiles := true<br><span class="hljs-keyword">endif</span><br><span class="hljs-keyword">endif</span><br><br><span class="hljs-comment">## 【一个设备可以拥有超过一个设备Makefile，但多数情况下只会有一个】</span><br><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(load_all_product_makefiles)</span>,true)<br><span class="hljs-comment"># Import all product makefiles.</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> import-products, <span class="hljs-variable">$(all_product_makefiles)</span>)</span><br><span class="hljs-keyword">else</span><br><span class="hljs-comment"># Import just the current product.</span><br><span class="hljs-comment">## 【如果找不到设备Makefile，就直接报错退出】</span><br><span class="hljs-keyword">ifndef</span> current_product_makefile<br><span class="hljs-variable">$(<span class="hljs-built_in">error</span> Can not locate config makefile for product &quot;<span class="hljs-variable">$(TARGET_PRODUCT)</span>&quot;)</span><br><span class="hljs-keyword">endif</span><br><span class="hljs-keyword">ifneq</span> (1,<span class="hljs-variable">$(words <span class="hljs-variable">$(current_product_makefile)</span>)</span>)<br><span class="hljs-variable">$(<span class="hljs-built_in">error</span> Product &quot;<span class="hljs-variable">$(TARGET_PRODUCT)</span>&quot; ambiguous: matches <span class="hljs-variable">$(current_product_makefile)</span>)</span><br><span class="hljs-keyword">endif</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> import-products, <span class="hljs-variable">$(current_product_makefile)</span>)</span><br><span class="hljs-keyword">endif</span>  <span class="hljs-comment"># Import all or just the current product makefile</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="总的调用关系"><a href="#总的调用关系" class="headerlink" title="总的调用关系"></a>总的调用关系</h5><p>根据上述分析，我们不难总结出下面的调用关系：</p>
+<ol>
+<li><code>build/make/core/product_config.mk</code>读取设备参数文件目录<code>device/</code>下所有的<code>AndroidProducts.mk</code>，得到设备Makefile的列表。</li>
+<li><code>product_config.mk</code>在列表中搜索用户指定设备（如华为荣耀10 View）的设备Makefile（<code>omni_berkeley.mk</code>）。</li>
+<li>若能搜索到，则从设备Makefile中读取设备信息，配置好编译环境；否则报错退出。</li>
+</ol>
+<h2 id="第六步：开始编译"><a href="#第六步：开始编译" class="headerlink" title="第六步：开始编译"></a>第六步：开始编译</h2><p>配置文件修改完成后，我们就可以立刻开始编译了。</p>
+<p>在Android源码根目录下，首先初始化编译环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> build/envsetup.sh<br></code></pre></td></tr></table></figure>
+
+<p>如果是Minimal Manifest，则请设置下面的环境变量，否则会因找不到依赖而报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> ALLOW_MISSING_DEPENDENCIES=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，运行<code>lunch</code>命令，选择编译目标。也可以直接运行<code>lunch &lt;下面菜单中的一个编译目标&gt;</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ lunch<br><br>You<span class="hljs-string">&#x27;re building on Linux</span><br><span class="hljs-string"></span><br><span class="hljs-string">Lunch menu... pick a combo:</span><br><span class="hljs-string">     1. aosp_arm-eng</span><br><span class="hljs-string">     2. aosp_arm64-eng</span><br><span class="hljs-string">     3. aosp_mips-eng</span><br><span class="hljs-string">     4. aosp_mips64-eng</span><br><span class="hljs-string">     5. aosp_x86-eng</span><br><span class="hljs-string">     6. aosp_x86_64-eng</span><br><span class="hljs-string">     7. omni_berkeley-user</span><br><span class="hljs-string">     8. omni_berkeley-userdebug</span><br><span class="hljs-string">     9. omni_berkeley-eng</span><br><span class="hljs-string">     10. omni_hwp6_u06-userdebug</span><br><span class="hljs-string">     11. omni_hwp6_u06-eng</span><br><span class="hljs-string">     12. omni_kenzo-userdebug</span><br><span class="hljs-string">     13. omni_emulator-userdebug</span><br><span class="hljs-string"></span><br><span class="hljs-string">Which would you like? [aosp_arm-eng] 10</span><br></code></pre></td></tr></table></figure>
+
+<p>最后，开始编译TWRP：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make recoveryimage<br></code></pre></td></tr></table></figure>
+
+<p>编译而成的Recovery为<code>out/target/product/&lt;设备名&gt;/recovery.img</code>，直接使用<code>fastboot</code>等工具刷入即可。</p>
+<h2 id="第七步：调试查错，修改代码"><a href="#第七步：调试查错，修改代码" class="headerlink" title="第七步：调试查错，修改代码"></a>第七步：调试查错，修改代码</h2><p>适配TWRP永远都不会是一个一蹴而就的事情，这就意味着你不可能一次就成功。潜在的各种错误，会潜伏在编译过程、运行过程乃至启动成功后的每一个角落，你要做的，就是随时查错。</p>
+<h3 id="（一）编译时出错"><a href="#（一）编译时出错" class="headerlink" title="（一）编译时出错"></a>（一）编译时出错</h3><p>编译过程中出错，是最容易排查的。一言以蔽之，就是——“<strong>发现一个错误，解决一个错误</strong>”。所有的错误，都会在终端输出中显示出来，你只需要观察错误的输出，然后根据它的提示解决即可。自Android 7.0起引入的<code>ninja</code>构建工具，会在出错时输出产生错误的命令，以“<code>FAILED:</code>”前缀标明之，只需在出错时搜索“<code>FAILED:</code>”，即可快速定位出错点。</p>
+<h3 id="（二）运行前出错"><a href="#（二）运行前出错" class="headerlink" title="（二）运行前出错"></a>（二）运行前出错</h3><p>成功通过编译后，得到的Recovery很可能不能正常启动，表现为自动重启、黑屏等。这个时候，<strong>最直接的查错办法，就是拿到内核日志</strong>。</p>
+<h4 id="1-获取内核日志的方法"><a href="#1-获取内核日志的方法" class="headerlink" title="1. 获取内核日志的方法"></a>1. 获取内核日志的方法</h4><p>一般来说，内核只要出现了panic，就会“想方设法”把崩溃时的内核日志记录下来。不同的平台、不同的内核，有不同的获取内核日志的方法。大致梳理如下。</p>
+<ul>
+<li>高通：内核日志存储在<code>/proc/last_kmsg</code>中。</li>
+<li>瑞芯微（如RK3188）：与高通相同。</li>
+<li>海思早期芯片（如K3V2）：存储在内核参数<code>CONFIG_APANIC_PLABEL</code>所制定的分区中，一般是<code>splash</code>。</li>
+</ul>
+<p>只需在正常启动的系统中（或将另一个正常启动的老Recovery刷入<code>boot</code>分区）用<code>cat</code>命令读取它们即可。</p>
+<h4 id="2-init阻碍内核日志记录的坑爹设计"><a href="#2-init阻碍内核日志记录的坑爹设计" class="headerlink" title="2. init阻碍内核日志记录的坑爹设计"></a>2. <code>init</code>阻碍内核日志记录的坑爹设计</h4><p>一些造成panic的启动故障发生于Android初始化程序<code>init</code>的运行过程中。然而， <code>init</code>有一个很坑爹的设计，就是在使用调试方式构建的ROM中，若遇到panic则自动重启进入Bootloader。官方说法是“有利于调试”，但是如此重启却会导致内核无法转存日志。因此有必要魔改掉这个功能。</p>
+<p>打开<code>init</code>所在的目录<code>system/core/init</code>，应用如下<code>git diff</code>补丁即可。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-comment">diff --git a/init/Android.bp b/init/Android.bp</span><br><span class="hljs-comment">index 45cf327f8..8a16fb2d2 100644</span><br><span class="hljs-comment">--- a/init/Android.bp</span><br><span class="hljs-comment">+++ b/init/Android.bp</span><br><span class="hljs-meta">@@ -14,6 +14,9 @@</span><br> // limitations under the License.<br> //<br> <br><span class="hljs-addition">+// AnClark modify: I want to read logs. If handles panic as rebooting into bootloader, I won&#x27;t get any logs!</span><br><span class="hljs-addition">+// Force setting DREBOOT_BOOTLOADER_ON_PANIC=0 on product_variables. </span><br><span class="hljs-addition">+</span><br> cc_defaults &#123;<br>     name: &quot;init_defaults&quot;,<br>     cpp_std: &quot;experimental&quot;,<br><span class="hljs-meta">@@ -41,7 +44,7 @@</span> cc_defaults &#123;<br>                 &quot;-UALLOW_PERMISSIVE_SELINUX&quot;,<br>                 &quot;-DALLOW_PERMISSIVE_SELINUX=1&quot;,<br>                 &quot;-UREBOOT_BOOTLOADER_ON_PANIC&quot;,<br><span class="hljs-deletion">-                &quot;-DREBOOT_BOOTLOADER_ON_PANIC=1&quot;,</span><br><span class="hljs-addition">+                &quot;-DREBOOT_BOOTLOADER_ON_PANIC=0&quot;,</span><br>                 &quot;-UWORLD_WRITABLE_KMSG&quot;,<br>                 &quot;-DWORLD_WRITABLE_KMSG=1&quot;,<br>                 &quot;-UDUMP_ON_UMOUNT_FAILURE&quot;,<br><span class="hljs-comment">diff --git a/init/Android.mk b/init/Android.mk</span><br><span class="hljs-comment">index f1fe5168b..d28b4e489 100644</span><br><span class="hljs-comment">--- a/init/Android.mk</span><br><span class="hljs-comment">+++ b/init/Android.mk</span><br><span class="hljs-meta">@@ -5,10 +5,12 @@</span> LOCAL_PATH:= $(call my-dir)<br> # --<br> <br> ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))<br><span class="hljs-addition">+# AnClark modify: I want to read logs. If handles panic as rebooting into bootloader, I won&#x27;t get any logs!</span><br><span class="hljs-addition">+# Force setting DREBOOT_BOOTLOADER_ON_PANIC=0 on product_variables. </span><br> init_options += \<br>     -DALLOW_LOCAL_PROP_OVERRIDE=1 \<br>     -DALLOW_PERMISSIVE_SELINUX=1 \<br><span class="hljs-deletion">-    -DREBOOT_BOOTLOADER_ON_PANIC=1 \</span><br><span class="hljs-addition">+    -DREBOOT_BOOTLOADER_ON_PANIC=0 \</span><br>     -DDUMP_ON_UMOUNT_FAILURE=1<br> else<br> init_options += \<br><span class="hljs-comment">diff --git a/init/util.cpp b/init/util.cpp</span><br><span class="hljs-comment">index fdcb22d1c..a468082af 100644</span><br><span class="hljs-comment">--- a/init/util.cpp</span><br><span class="hljs-comment">+++ b/init/util.cpp</span><br><span class="hljs-meta">@@ -370,11 +370,19 @@</span> bool expand_props(const std::string&amp; src, std::string* dst) &#123;<br>     return true;<br> &#125;<br> <br><span class="hljs-addition">+// AnClark MODIFY: Use abort() instead of rebooting into BL to trigger panic.</span><br><span class="hljs-addition">+/**</span><br> void panic() &#123;<br>     LOG(ERROR) &lt;&lt; &quot;panic: rebooting to bootloader&quot;;<br>     // Do not queue &quot;shutdown&quot; trigger since we want to shutdown immediately<br>     DoReboot(ANDROID_RB_RESTART2, &quot;reboot&quot;, &quot;bootloader&quot;, false);<br> &#125;<br><span class="hljs-addition">+**/</span><br><span class="hljs-addition">+</span><br><span class="hljs-addition">+void panic() &#123;</span><br><span class="hljs-addition">+   LOG(ERROR) &lt;&lt; &quot;android::init::panic() invoked. Abort init to trigger kernel panic!&quot;;</span><br><span class="hljs-addition">+   abort();</span><br><span class="hljs-addition">+&#125;</span><br> <br> static std::string init_android_dt_dir() &#123;<br>     // Use the standard procfs-based path by default<br></code></pre></td></tr></table></figure>
+
+<p><strong>应用补丁的方法：</strong>将上述代码保存为<code>system/core/init/no_reboot_into_bootloader.diff</code>，然后在<code>system/core/init</code>目录中运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">patch -p2 &lt; no_reboot_into_bootloader.diff<br></code></pre></td></tr></table></figure>
+
+<h3 id="（三）功能测试与Bug修复"><a href="#（三）功能测试与Bug修复" class="headerlink" title="（三）功能测试与Bug修复"></a>（三）功能测试与Bug修复</h3><p>如果你成功地过五关斩六将，久违的TWRP启动画面出现在你设备的屏幕上了，那么衷心地祝贺你！接下来你要做的，就是更进一步，检查TWRP的各项功能，捕捉可能影响使用的Bug。</p>
+<p>一般地，在TWRP中，你可以进行以下单元测试：</p>
+<ul>
+<li><p>挂载是否正常</p>
+<p>进入主菜单的“Mount”（挂载），点击每个分区的选项，检查是否能够正常挂载。</p>
+</li>
+<li><p>解密是否正常</p>
+<p>对于高通设备，观察解密是否正常的最直接方法，是看日志中是否有解密失败（decryption failed）的提示，以及“Mount”菜单中的<code>data</code>分区是否无法挂载。</p>
+</li>
+<li><p>是否能连接<code>adb</code></p>
+<p>连接电脑，运行<code>adb devices</code>是否能检测到设备处在Recovery状态下，运行<code>adb shell</code>是否能进入设备上的终端，并拥有Root权限（提示符为“<code>#</code>”）。</p>
+</li>
+<li><p>是否能连接MTP</p>
+<p>连接电脑，检查是否有一个MTP设备出现在“此电脑”（Windows）或文件管理器边栏（Ubuntu）中。如未出现，在“Mount”中点击“启用MTP（Enable MTP）”。</p>
+</li>
+<li><p>是否支持OTG</p>
+<p>2014年起的大部分主流机型都支持OTG。你可以插入一根OTG数据线，然后在TWRP终端中运行<code>lsusb</code>，看看是否检测到一个USB设备。此时再插入一个新设备，再看看<code>lsusb</code>的输出里是否多出了另外一个设备。如果插入的是U盘，还可以检查<code>/dev/block/</code>下是否多出了块设备<code>sdx</code>（<code>x</code>为任意一个小写英文字母）。</p>
+</li>
+<li><p>是否能备份/恢复系统</p>
+<p>测试一下系统是否能正常备份和恢复，检查可选的备份分区是否包含必要的分区（<code>system</code>、<code>data</code>、<code>boot</code>、<code>recovery</code>）。</p>
+</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="编译系统对Shell的支持"><a href="#编译系统对Shell的支持" class="headerlink" title="编译系统对Shell的支持"></a>编译系统对Shell的支持</h3><p>原则上，操作用的Shell只能是Bash。如果使用其他Shell，那么就会在运行一些命令时出现难以预料的Bug——例如，在<code>lunch</code>选单中，输序号选择了设备一，最终Shell会给我们选择设备三，很坑。对此，编译系统会在<code>source build/envsetup.sh</code>的过程中，对使用Bash之外的Shell提出警告。</p>
+<p>但是，从Android 9.0开始，编译系统就能够支持Bash之外的第三方Shell了，比如Zsh。因此，如果你的Shell是Zsh（尤其是Oh-My-Zsh），敬请放心使用。</p>
+<h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://forum.xda-developers.com/showthread.php?t=1943625">TWRP官方编译教程 - XDA Developers</a></li>
+</ul>
+<p>[^1]: 实际上Mac OS X也可以。</p>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/技术笔记/"><i class="fa fa-tag"></i>技术笔记</a></li>
+                
+                <li><a href="/tags/Android 适配教程/"><i class="fa fa-tag"></i>Android 适配教程</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2018/11/06/Struggle_with_Linux/%E4%B8%BADeepin-Linux%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8/">为Deepin Linux编译内核</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2018/09/18/BlackMacOS/%E8%BF%98%E6%98%AF%E8%8B%B9%E6%9E%9C%E5%A5%BD%EF%BC%9AThinkPad-X200%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0/">【弃坑】还是苹果好：ThinkPad X200安装黑苹果折腾记</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>开源NAS系统 Openmediavault（OMV） 编译与安装教程 - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                开源NAS系统 Openmediavault（OMV） 编译与安装教程
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2019-10-05
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/玩转NAS/">玩转NAS</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>Openmediavault，简称OMV，是开源NAS解决方案的不二之选，更是黑群晖之外的最佳选择。基于Debian的灵活性，以及低资源占用，使得它能够在各种架构的操作系统上大放异彩，这其中也包括我的上古赛扬D（Celeron D）处理器。</p>
+<p>然而，OMV固然好用，它的文档却是个巨坑：教程奇少无比，因为官方都在推荐用他们做好的镜像，对手动安装的专业用户非常不友好；而根据源码编译的教程更是空白，全靠用户自己猜！</p>
+<p>于是，在踩了N个坑，失败N次之后，我决定，不要让这空白再继续坑害新入坑的OMV用户了！这篇编译和安装二合一的教程，应运而生。</p>
+<span id="more"></span>
+
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li><strong>系统：</strong>Debian 10 Buster，不带任何桌面环境的基础版本</li>
+<li><strong>处理器架构：</strong>OMV官方推荐的AMD64、ARM、ARM64，以及i386<ul>
+<li>官方不提供i386架构的ISO镜像，但我们仍可以在Debian x86的系统上手动安装。</li>
+</ul>
+</li>
+<li><strong>磁盘空间：</strong>至少2GB（要安装大量的依赖包）</li>
+<li><strong>内存：</strong>至少512MB，推荐1GB及以上</li>
+</ul>
+<blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li><p><strong>为了便于操作，下文所有的命令都在root用户下进行。</strong></p>
+<ul>
+<li>本地用户，请使用<code>sudo -i</code>或<code>sudo su</code>来切换到root用户。</li>
+<li>SSH登入远程服务器，可直接以root身份登录。</li>
+</ul>
+</li>
+<li><p>Debian的基础版本镜像可从我母校——华中科技大学的镜像源下载：<a target="_blank" rel="noopener" href="http://mirrors.hust.edu.cn/debian-cd/current/">http://mirrors.hust.edu.cn/debian-cd/current/</a>。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="OMV的本质是什么？"><a href="#OMV的本质是什么？" class="headerlink" title="OMV的本质是什么？"></a>OMV的本质是什么？</h2><p>OMV的本质，就是建构在Nginx、PHP、Python等底层系统应用上的大型Web服务程序，类似于高知名度的<a target="_blank" rel="noopener" href="https://www.bt.com/">宝塔平台</a>。它本身不包含任何二进制文件和源码，所有有效的程序代码均为解释型语言，这使得<strong>它天生具有跨平台性</strong>——理论上，只要目标架构支持Debian、Dpkg，以及OMV的依赖程序，OMV就能在任意架构上的操作系统运行。</p>
+<p>OMV基于Debian而构建，它的源代码编译后生成的是跨平台、无架构（noarch）的Deb程序包，整个编译过程并不会调用编译器生成平台专用的二进制文件。因此，OMV能够在任何一个Debian操作系统实例上安装。</p>
+<p><strong>注：</strong>理论上Debian系、采用Dpkg的操作系统均可安装，比如Ubuntu。但笔者未进行测试。</p>
+<h2 id="克隆源代码"><a href="#克隆源代码" class="headerlink" title="克隆源代码"></a>克隆源代码</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>OMV的源代码发布在GitHub上，可直接克隆下来。我们将源码下载到<code>omv</code>目录中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Git和pip</span><br>apt install git python3-pip<br><span class="hljs-comment"># 克隆源码，放到omv目录下</span><br>git <span class="hljs-built_in">clone</span> https://github.com/openmediavault/openmediavault.git omv<br></code></pre></td></tr></table></figure>
+
+<h3 id="进入源码目录"><a href="#进入源码目录" class="headerlink" title="进入源码目录"></a>进入源码目录</h3><p>OMV的核心源码放在<code>deb</code>子目录中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">cd omv/deb<br></code></pre></td></tr></table></figure>
+
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>OMV的编译流程是个巨坑，不仅缺乏文档，更坑的是，它的Makefile写法并不规范，若不仔细研读，是很难找出真正的编译目标的。好在，经过总结后，它的编译过程相当简单。</p>
+<h3 id="安装编译所需工具"><a href="#安装编译所需工具" class="headerlink" title="安装编译所需工具"></a>安装编译所需工具</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">make install<br></code></pre></td></tr></table></figure>
+
+<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">make binary<br></code></pre></td></tr></table></figure>
+
+<p>编译完成后，<code>omv/deb</code>目录下会生成若干个deb安装包。一般如下所示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ls *.deb<br>openmediavault-clamav_5.0-1_all.deb<br>openmediavault-diskstats_5.0-1_all.deb<br>openmediavault-forkeddaapd_5.0-1_all.deb<br>openmediavault-keyring_1.0_all.deb<br>openmediavault-ldap_4.0.6-1_all.deb<br>openmediavault-lvm2_5.0.1-1_all.deb<br>openmediavault-nut_5.0-1_all.deb<br>openmediavault-shairport_5.0-1_all.deb<br>openmediavault-snmp_5.0-1_all.deb<br>openmediavault-tftp_5.0-1_all.deb<br>openmediavault-usbbackup_5.0.1-1_all.deb<br>openmediavault_5.0.11_all.deb<br></code></pre></td></tr></table></figure>
+
+<h3 id="坑：默认编译目标的问题"><a href="#坑：默认编译目标的问题" class="headerlink" title="坑：默认编译目标的问题"></a>坑：默认编译目标的问题</h3><p>OMV的默认编译目标，也就是不带参数运行<code>make</code>时进行的编译过程，竟然不是编译Deb包，而是对各个子目录执行清理！这一点要格外小心，笔者已经无力吐槽了ε=(´ο｀*)))。。。</p>
+<h2 id="安装OMV"><a href="#安装OMV" class="headerlink" title="安装OMV"></a>安装OMV</h2><h3 id="添加OMV官方源"><a href="#添加OMV官方源" class="headerlink" title="添加OMV官方源"></a>添加OMV官方源</h3><p>OMV的少部分依赖，在Debian的官方源中是没有的，因此必须添加OMV源。</p>
+<p>首先，将以下代码添加到<code>/etc/apt/sources.list</code>的末尾：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># Openmediavault official repository<br>deb http://packages.openmediavault.org/public usul main<br></code></pre></td></tr></table></figure>
+
+<p>接着，安装OMV源密钥环：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装我们自己编译的版本</span><br><span class="hljs-built_in">cd</span> omv/deb<br>dpkg -i openmediavault-keyring_1.0_all.deb<br><br><span class="hljs-comment"># 当然，你也可以在线安装</span><br>wget http://packages.openmediavault.org/public/pool/main/o/openmediavault-keyring/openmediavault-keyring_1.0_all.deb<br>dpkg -i openmediavault-keyring_1.0_all.deb<br></code></pre></td></tr></table></figure>
+
+<p>然后，更新软件源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">apt update<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装基础依赖"><a href="#安装基础依赖" class="headerlink" title="安装基础依赖"></a>安装基础依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># Debian 10 提供的软件包<br>apt install php-fpm php-json php-cgi php-cli php-mbstring ethtool python3-dialog acl xfsprogs jfsutils ntfs-3g sdparm postfix bsd-mailx cpufrequtils smartmontools uuid nfs-kernel-server proftpd-basic sshpass samba samba-common-bin rsync avahi-daemon libnss-mdns beep php-bcmath gdisk rrdtool collectd anacron cron-apt quota php-xml quotatool lvm2 watchdog libjson-perl liblocale-po-perl proftpd-mod-vroot libjavascript-minifier-xs-perl xmlstarlet socat rrdcached nginx wpasupplicant btrfs-progs samba-vfs-modules python3-pyudev python3-natsort jq chrony python3-netifaces python3-lxml salt-minion php-yaml python-click python3-click<br><br># Debian 10 不提供的软件包，在OMV源中提供<br>apt install monit php-pam libjs-extjs6 wsdd<br></code></pre></td></tr></table></figure>
+
+<p>此时会发生依赖关系错误。接着运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">apt --fix-broken install<br></code></pre></td></tr></table></figure>
+
+<p>再重复运行之前的那一长串<code>apt install</code>，即可正常安装。</p>
+<h3 id="安装OMV主程序包"><a href="#安装OMV主程序包" class="headerlink" title="安装OMV主程序包"></a>安装OMV主程序包</h3><p>为了方便安装，OMV的开发者将所有安装过程都整合在了一个包中，不需要再零零散散安装大量的包。</p>
+<h4 id="安装官方版本"><a href="#安装官方版本" class="headerlink" title="安装官方版本"></a>安装官方版本</h4><p>OMV可由官方源直接安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt install postfix openmediavault<br></code></pre></td></tr></table></figure>
+
+<p>期间会出现大量的日志，耐心等待，直到成功完成。<strong>要注意，一旦出现任何一种错误，OMV都是没法用的</strong>！</p>
+<h4 id="安装我们编译的版本"><a href="#安装我们编译的版本" class="headerlink" title="安装我们编译的版本"></a>安装我们编译的版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 重新进入到源码目录</span><br><span class="hljs-built_in">cd</span> omv/deb<br><span class="hljs-comment"># 然后开始安装</span><br>dpkg -i openmediavault-keyring_1.0_all.deb     <span class="hljs-comment"># 源密钥环</span><br>dpkg -i openmediavault_5.0.11_all.deb          <span class="hljs-comment"># 主安装包</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="填坑：解决Unit-file-is-masked问题"><a href="#填坑：解决Unit-file-is-masked问题" class="headerlink" title="填坑：解决Unit file is masked问题"></a>填坑：解决<code>Unit file is masked</code>问题</h4><p>在某些机器（如VPS）上手动安装OMV时，常常会出现<code>Unit file is masked</code>的问题。该问题非常致命，会中断OMV后续的安装进程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Failed to preset unit: Unit file /etc/systemd/system/openmediavault-cleanup-php.service is masked.<br>/usr/bin/deb-systemd-helper: error: systemctl preset failed on openmediavault-cleanup-php.service: No such file or directory<br>dpkg: error processing package openmediavault (--configure):<br> installed openmediavault package post-installation script subprocess returned error exit status 1 <br>Errors were encountered while processing:<br> openmediavault<br>E: Sub-process /usr/bin/dpkg returned an error code (1)<br></code></pre></td></tr></table></figure>
+
+<p>实际上，了解systemd对服务的管理机制，就不难得知，这里的“mask”是系统服务的一个状态，相当于被“屏蔽”。据此，<strong>解决办法很简单，但凡有一个服务提示被masked，就运行下面的命令来unmask，然后重新安装，直到安装过程能够顺利继续</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># systemctl unmask &lt;被报错的服务名&gt;，例如：</span><br>systemctl unmask openmediavault-cleanup-php.service<br></code></pre></td></tr></table></figure>
+
+<h2 id="启动OMV"><a href="#启动OMV" class="headerlink" title="启动OMV"></a>启动OMV</h2><p>运行以下命令即可启动。事实上，新版本OMV直接配置成了系统服务，可以自动启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">omv-run<br></code></pre></td></tr></table></figure>
+
+<p>在浏览器中输入主机的IP地址，即可打开OMV的登录页面。默认的凭据如下：</p>
+<table>
+<thead>
+<tr>
+<th>凭据</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>默认用户名</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>默认密码</td>
+<td>openmediavault</td>
+</tr>
+</tbody></table>
+<h2 id="添加OMVExtras插件库"><a href="#添加OMVExtras插件库" class="headerlink" title="添加OMVExtras插件库"></a>添加OMVExtras插件库</h2><p>OMVExtras插件库是官方所提供的插件源，建议添加，这样我们就能够用上更多强悍的插件。</p>
+<p>开发者提供了一键安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget -O - http://omv-extras.org/install | bash<br></code></pre></td></tr></table></figure>
+
+<p>要是不能下载脚本，则把下面该脚本的内容保存为<code>install.sh</code>，<code>chmod 755</code>后运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">declare</span> -i version<br><br>url=<span class="hljs-string">&quot;https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/&quot;</span><br><br>version=$(dpkg -l openmediavault | awk <span class="hljs-string">&#x27;$2 == &quot;openmediavault&quot; &#123; print substr($3,1,1) &#125;&#x27;</span>)<br><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;version&#125;</span><br><br><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$&#123;version&#125;</span> -eq 5 ]; <span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Downloading omv-extras.org plugin for openmediavault 5.x ...&quot;</span><br>  file=<span class="hljs-string">&quot;openmediavault-omvextrasorg_latest_all5.deb&quot;</span><br><span class="hljs-keyword">elif</span> [ <span class="hljs-variable">$&#123;version&#125;</span> -eq 4 ]; <span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Downloading omv-extras.org plugin for openmediavault 4.x ...&quot;</span><br>  file=<span class="hljs-string">&quot;openmediavault-omvextrasorg_latest_all4.deb&quot;</span><br><span class="hljs-keyword">elif</span> [ <span class="hljs-variable">$&#123;version&#125;</span> -eq 3 ]; <span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Downloading omv-extras.org plugin for openmediavault 3.x ...&quot;</span><br>  file=<span class="hljs-string">&quot;openmediavault-omvextrasorg_latest_all3.deb&quot;</span><br><span class="hljs-keyword">elif</span> [ <span class="hljs-variable">$&#123;version&#125;</span> -eq 2 ]; <span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Downloading omv-extras.org plugin for openmediavault 2.x ...&quot;</span><br>  file=<span class="hljs-string">&quot;openmediavault-omvextrasorg_latest_all.deb&quot;</span><br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Unsupported version of openmediavault&quot;</span><br>  <span class="hljs-built_in">exit</span> 0<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-keyword">if</span> [ -f <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;file&#125;</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>  rm <span class="hljs-variable">$&#123;file&#125;</span><br><span class="hljs-keyword">fi</span><br>wget --no-check-certificate <span class="hljs-variable">$&#123;url&#125;</span>/<span class="hljs-variable">$&#123;file&#125;</span><br><span class="hljs-keyword">if</span> [ -f <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;file&#125;</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>  dpkg -i <span class="hljs-variable">$&#123;file&#125;</span><br><br>  <span class="hljs-keyword">if</span> [ $? -gt 0 ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Installing other dependencies ...&quot;</span><br>    apt-get -f install<br>  <span class="hljs-keyword">fi</span><br><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Updating repos ...&quot;</span><br>  apt-get update<br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;There was a problem downloading the package.&quot;</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，刷新浏览器，即可看到<strong>OMV的左栏中多出了一个“OMV-Extras”入口</strong>。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54905523">OMV系列教程1——在Debian上安装OpenMediaVault开源NAS系统</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.ruanbekker.com/blog/2017/12/09/unmask-a-masked-service-in-systemd/">Unmask a Masked Service in Systemd - Ruan Bekker</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/710420/why-are-some-systemd-services-in-the-masked-state">Why are some systemd services in the “masked” state?</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://forum.openmediavault.org/index.php/Thread/25213-Install-OMV5-on-Debian-10-Buster-OMV-5-x-development/">Install OMV5 on Debian 10 (Buster) OMV 5.x (development) - Openmediavault Forum</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.howtoing.com/install-open-media-vault-nas">使用OpenMediaVault构建您自己的NAS</a></p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/教程/"><i class="fa fa-tag"></i>教程</a></li>
+                
+                <li><a href="/tags/NAS/"><i class="fa fa-tag"></i>NAS</a></li>
+                
+                <li><a href="/tags/OMV/"><i class="fa fa-tag"></i>OMV</a></li>
+                
+                <li><a href="/tags/Openmediavault/"><i class="fa fa-tag"></i>Openmediavault</a></li>
+                
+                <li><a href="/tags/Debian/"><i class="fa fa-tag"></i>Debian</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2019/12/28/PHP/%E5%9C%A8Ubuntu%E4%B8%8A%E9%85%8D%E7%BD%AEApache2+PHP/">在Ubuntu上安装并配置Apache2 + PHP</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2019/08/17/Struggle_with_Linux/Debian%20SELinux%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98/">Debian：修复SELinux导致卡在启动画面的问题</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

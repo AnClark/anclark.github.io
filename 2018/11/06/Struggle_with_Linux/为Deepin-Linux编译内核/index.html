@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>为Deepin Linux编译内核 - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                为Deepin Linux编译内核
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2018-11-06
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/Linux/">Linux</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>Deepin Linux是Linux中的新锐力量，独创的桌面环境、应用生态与设计时的种种匠心，使得它拥有非常酷炫的体验，成为越来越多电脑爱好者的首选。</p>
+<p>不过，基于Linux的操作系统，并不像Windows一样能完美解决驱动问题。在Windows中，只需找到对应的官方驱动安装即可；但是Linux却是将设备驱动程序都集成在内核中，以及作为内核模块加载，这一切都是在编译内核时就已一锤定音。如此机制，使得Deepin发行版的一套编译好的内核并不能完美适用于所有设备。</p>
+<p>笔者就在Linux的驱动上吃了苦头。面前这台备用笔记本是ThinkPad X200，X系列的老旗舰，在运行Deepin的时候，显卡驱动就出现了问题，表现为每次关盖后重新打开，或者是待机后重新唤醒，移动鼠标就会在鼠标指针下方区域出现画面撕裂、闪屏的情况，即便使用“深度显卡驱动管理工具”更换驱动也是如此。后来我就决定，自己为X200量身编译一个内核。</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="获取内核源码"><a href="#获取内核源码" class="headerlink" title="获取内核源码"></a>获取内核源码</h2><p>在Linux内核官网（<a target="_blank" rel="noopener" href="https://www.kernel.org/">https://www.kernel.org/</a> ）上，就可以下载到若干个版本的内核源码。从官网可知，内核源码有若干个版本，分别包括<strong>主线版</strong>（mainline）、<strong>稳定版</strong>（stable）、<strong>长期支持版</strong>（longterm）。这几个版本的区别如下：</p>
+<ul>
+<li><strong>主线版</strong>是Linux开发者活跃的地方，最新的内核功能主要在这里诞生；</li>
+<li><strong>稳定版</strong>是可供用户直接使用的版本；</li>
+<li>而<strong>长期支持版</strong>则主要是给设备制造商、发行版开发者使用的版本，相对更稳定，且能长期得到技术支持。</li>
+</ul>
+<p>对于PC上的Linux，一般选择稳定版，和版本大于等于<code>4.x</code>的长期支持版。我选择的是<code>4.19.1</code>的稳定版，它出现在最醒目的位置。</p>
+<img src="/assets/img/blog/kernel_org.png" class="" title="Kernel.org的主页面">
+
+<p>内核源码使用<code>tar.xz</code>格式压缩。我将内核源码包放置在<code>~/kernel</code>目录下，然后使用以下命令解压缩：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar -Jxvf linux-4.19.1.tar.xz<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>内核的编译需要用到若干个软件。在Deepin中，使用<code>apt</code>可一次性安装好：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译工具</span><br>sudo apt install gcc make<br><span class="hljs-comment"># 语法解析器生成工具</span><br>sudo apt install bison flex<br><span class="hljs-comment"># OpenSSL库</span><br>sudo apt install libssl-dev<br><span class="hljs-comment"># ncurses库</span><br>sudo apt install libncurses-dev<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置内核准备"><a href="#配置内核准备" class="headerlink" title="配置内核准备"></a>配置内核准备</h2><h3 id="加载默认的配置文件"><a href="#加载默认的配置文件" class="headerlink" title="加载默认的配置文件"></a>加载默认的配置文件</h3><p>配置内核的第一步，就是先加载默认的配置文件以供修改。在内核解压目录<code>linux-4.19</code>中，运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make defconfig<br></code></pre></td></tr></table></figure>
+
+<p>默认的配置文件就会被写入内核配置文件<code>.config</code>中。这里的<code>.config</code>位于内核源码根目录，内核编译过程用到的就是它。</p>
+<p>执行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">anclark@anclark-PC:~/kernel/linux-4.19$ make defconfig<br>  HOSTCC  scripts/kconfig/conf.o<br>  YACC    scripts/kconfig/zconf.tab.c<br>  LEX     scripts/kconfig/zconf.lex.c<br>  HOSTCC  scripts/kconfig/zconf.tab.o<br>  HOSTLD  scripts/kconfig/conf<br>*** Default configuration is based on <span class="hljs-string">&#x27;x86_64_defconfig&#x27;</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># configuration written to .config</span><br><span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="打开menuconfig"><a href="#打开menuconfig" class="headerlink" title="打开menuconfig"></a>打开menuconfig</h3><p>接下来的工作就是配置内核了。Linux为我们提供了menuconfig这个配置工具，它基于ncurses与wxDialog开发，可以在其中以图形化菜单的方式配置各种内核选项。</p>
+<p>运行以下命令，即可自动编译并启动menuconfig：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make menuconfig<br></code></pre></td></tr></table></figure>
+
+<p>稍等片刻，终端中就会出现如下画面：</p>
+<img src="/assets/img/blog/menuconfig_01_main_menu.png" class="" title="menuconfig 的主页面">
+
+<p>menuconfig的操作方法简单直观，在界面上部就已经列出了，改变选项值除了按“Y/N/M”三个键之外，还可用空格。可以键入问号（即<code>Shift+问号键</code>）来查看帮助，键入斜杠（<code>/</code>）来检索设置项。</p>
+<p>值得注意的是，一些组件在编译时可以选择将其编译到内核中（显示为<code>[*]</code>和<code>&lt;*&gt;</code>）或是编译为模块（显示为<code>[M]</code>和<code>&lt;M&gt;</code>）。编译到内核中就成为了内核的一部分；而编译成为模块则会被安装到指定的目录中，使用<code>modprobe</code>等工具加载。</p>
+<h2 id="配置内核"><a href="#配置内核" class="headerlink" title="配置内核"></a>配置内核</h2><h3 id="启用设备支持"><a href="#启用设备支持" class="headerlink" title="启用设备支持"></a>启用设备支持</h3><p>要想让内核比较完美地支持目标设备，还需对内核进行一番设置。Linux官方虽然提供了针对PC的通用配置文件，但该配置文件仅仅是一个开始，要面向各种各样复杂的具体平台，内核的发布者不可能兼顾所有的设备。因此，仅仅使用默认的配置文件是不够的。</p>
+<h4 id="启用无线网络支持"><a href="#启用无线网络支持" class="headerlink" title="启用无线网络支持"></a>启用无线网络支持</h4><p>考虑到不同的设备使用不同的无线网卡，默认配置文件并没有启用无线网卡的设备驱动。为此还需手动开启。</p>
+<p>首先使用<code>lspci</code>命令，列出所有安装在PCI总线上的设备，查看网卡型号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">anclark@anclark-PC:~/kernel/linux-4.19$ lspci<br>00:00.0 Host bridge: Intel Corporation Mobile 4 Series Chipset Memory Controller Hub (rev 07)<br>00:02.0 VGA compatible controller: Intel Corporation Mobile 4 Series Chipset Integrated Graphics Controller (rev 07)<br>00:02.1 Display controller: Intel Corporation Mobile 4 Series Chipset Integrated Graphics Controller (rev 07)<br>00:03.0 Communication controller: Intel Corporation Mobile 4 Series Chipset MEI Controller (rev 07)<br>00:03.3 Serial controller: Intel Corporation Mobile 4 Series Chipset AMT SOL Redirection (rev 07)<br>00:19.0 Ethernet controller: Intel Corporation 82567LM Gigabit Network Connection (rev 03)<br>00:1a.0 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#4 (rev 03)</span><br>00:1a.1 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#5 (rev 03)</span><br>00:1a.2 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#6 (rev 03)</span><br>00:1a.7 USB controller: Intel Corporation 82801I (ICH9 Family) USB2 EHCI Controller <span class="hljs-comment">#2 (rev 03)</span><br>00:1b.0 Audio device: Intel Corporation 82801I (ICH9 Family) HD Audio Controller (rev 03)<br>00:1c.0 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 1 (rev 03)<br>00:1c.1 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 2 (rev 03)<br>00:1c.2 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 3 (rev 03)<br>00:1c.3 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 4 (rev 03)<br>00:1d.0 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#1 (rev 03)</span><br>00:1d.1 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#2 (rev 03)</span><br>00:1d.2 USB controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller <span class="hljs-comment">#3 (rev 03)</span><br>00:1d.7 USB controller: Intel Corporation 82801I (ICH9 Family) USB2 EHCI Controller <span class="hljs-comment">#1 (rev 03)</span><br>00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev 93)<br>00:1f.0 ISA bridge: Intel Corporation ICH9M-E LPC Interface Controller (rev 03)<br>00:1f.2 SATA controller: Intel Corporation 82801IBM/IEM (ICH9M/ICH9M-E) 4 port SATA Controller [AHCI mode] (rev 03)<br>00:1f.3 SMBus: Intel Corporation 82801I (ICH9 Family) SMBus Controller (rev 03)<br>03:00.0 Network controller: Intel Corporation PRO/Wireless 5100 AGN [Shiloh] Network Connection<br>04:00.0 Memory controller: Intel Corporation Turbo Memory Controller (rev 11)<br></code></pre></td></tr></table></figure>
+
+<p>在列出的设备中，无线网卡对应的是<code>03:00.0 Network controller: Intel Corporation PRO/Wireless 5100 AGN [Shiloh] Network Connection</code>，从中不难得知，我X200无线网卡的型号是Intel 5100AGN。</p>
+<p>然后在menuconfig中，依次进入以下选项：</p>
+<ul>
+<li>Device Drivers<ul>
+<li>Network device support<ul>
+<li>Wireless LAN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>其中提供了很多设备的驱动选项。先找到自己无线网卡的品牌，然后找到无线网卡型号所对应的项目，按空格键选择“<code>M</code>”编译为模块。当然，如果确定驱动程序没有问题，也可以选择“<code>*</code>”编译为内核的一部分，不过这样就不能使用<code>modprobe</code>工具手工装载卸载以便调试了。</p>
+<p>以笔者的Intel 5100AGN为例。首先找到Intel所对应的项目，如下图所示。特别的是，笔者的5100AGN对应的驱动项目是<code>iwlwifi</code>，即列表中的<code>Intel Wireless WiFi Next Gen AGN - Wireless-N/Advanced-N/Ultimate-N (iwlwifi) </code>。<strong>这一点从该项的帮助信息中可以知悉——遇到无法确认的项目，不妨查看它的帮助信息，以了解它支持什么型号。</strong></p>
+<p>下图是无线网卡驱动列表中的Intel相关选项，高亮的那一项，也就是<code>iwlwifi</code>，是笔者无线网卡需要用到的：</p>
+<img src="/assets/img/blog/menuconfig_02_wlan_intel.png" class="" title="无线网卡驱动列表中的Intel相关选项，高亮的那一项是笔者无线网卡需要用到的">
+
+<p>在界面中直接输入问号（<kbd>Shift</kbd>+<kbd>/</kbd>），可以查看它的说明，这里包含了它所对应的网卡型号。看来英特尔把相对来说新推出的网卡型号都整合成一个驱动了。</p>
+<img src="/assets/img/blog/menuconfig_03_iwlwifi.png" class="" title="“iwlwifi”项目所对应的网卡型号。看来英特尔把这些新推出的网卡型号都整合成一个驱动了。">
+
+<p>同时，英特尔无线网卡的工作还需要固件（firmware）的支持，因此下面的两项关于固件的项目也选择上。</p>
+<blockquote>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>在笔者的X200上，如果此处英特尔无线网卡的驱动型号同时选择多个，会有不能加载固件的情况出现，不能加载固件就意味着不能启动无线网卡。即便将<a target="_blank" rel="noopener" href="https://wireless.wiki.kernel.org/en/users/Drivers/iwlwifi">固件下载站</a>中正确的固件放置到指定位置（<code>/lib/firmware/</code>），也无法启动网卡。因此，只能选择<code>iwlwifi</code>。</li>
+<li>笔者的5100AGN无线网卡不支持把驱动编译到内核中（上述选项选择“<code>*</code>”就是将指定的驱动编译为内核的一部分），而只能编译为模块。否则，同样会出现找不到固件的问题。</li>
+</ul>
+</blockquote>
+<h4 id="启用蓝牙支持"><a href="#启用蓝牙支持" class="headerlink" title="启用蓝牙支持"></a>启用蓝牙支持</h4><p>kernel.org上的内核源码，面向的是千千万万台配置不同的设备，所以除了WLAN，蓝牙也并没有默认启用，还需手动启用。具体可参见我写的另一篇教程：**<a href="/2019/02/21/Struggle_with_Linux/%E4%B8%BADeepin-Linux%E5%90%AF%E7%94%A8%E8%93%9D%E7%89%99%E6%94%AF%E6%8C%81/" title="为Deepin Linux启用蓝牙支持">为Deepin Linux启用蓝牙支持</a>**。</p>
+<h4 id="启用声卡支持"><a href="#启用声卡支持" class="headerlink" title="启用声卡支持"></a>启用声卡支持</h4><p>同样默认地，默认配置文件并未启用声卡支持，因此用编译出来的内核启动系统，是没有声音的。Linux内核使用ALSA作为音频框架，声卡驱动作为编解码器（codec）被加载，需要我们手动把声卡的codec选项打开，才可在Deepin中听到声音。</p>
+<p>在menuconfig中，依次进入以下选项：</p>
+<ul>
+<li>Device Drivers<ul>
+<li>Sound card support<ul>
+<li>Advanced Linux Sound Architecture</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="/assets/img/blog/menuconfig_04_alsa.png" class="" title="声卡驱动选项">
+
+<p>其中又包括若干个关于声卡驱动的子菜单，包括Generic sound devices（标准音频设备）、PCI sound devices（PCI音频设备）、HD-Audio、USB sound devices（USB音频设备）和PCMCIA sound devices。现在新的笔记本和台式机声卡基本上都使用HD Audio控制器，包括笔者的X200，因此选择HD-Audio。</p>
+<img src="/assets/img/blog/menuconfig_05_hda_codecs.png" class="" title="HD-Audio 的相关选项，其中包括了各个品牌的声卡编解码器">
+
+<p>特别的是，在Linux中，HD Audio音频的实现由芯片组厂商（如Intel、AMD、NVIDIA）负责，因此使用<code>lspci</code>是看不到声卡品牌和型号的。不过不用担心，在HD-Audio这一列表中，一个品牌的所有HDA声卡都遵循同一套API标准，所以可以以一个选项覆盖所有型号。而就品牌而言，现在的笔记本多使用Realtek（瑞昱）和Conexant（科胜讯，<a target="_blank" rel="noopener" href="https://www.sohu.com/a/148807314_610706">已被Synaptics收购</a>）的声卡，所以选择它们对应的两项即可。另外，如果笔记本附带HDMI或DisplayPort接口，则还要选上<code>Build HDMI/DisplayPort HD-audio codec support</code>，以从这两种视频输出接口中输出音频信号。</p>
+<p>至于编译模式，最好将它们编译成内核的一部分，因为相较于无线网卡，声卡的折腾要容易不少，电脑声卡出问题的概率会低得多。</p>
+<h3 id="启用用户态文件系统支持"><a href="#启用用户态文件系统支持" class="headerlink" title="启用用户态文件系统支持"></a>启用用户态文件系统支持</h3><p>包括Deepin在内的发行版，为了方便用户使用，以及照顾双系统用户的需求，都支持Windows和Mac的文件系统，如NTFS、exFAT、HFS+。通常对于这些文件系统的支持，多基于FUSE（Filesystem In UserSpacE，用户态文件系统），配合访问这些文件系统的驱动层，如ntfs-3g。</p>
+<p><strong>值得注意的是，默认情况下，用户态文件系统并没有在默认配置文件中启用</strong>，必须要手动打开该功能才行。打开的方法很简单，该选项位于menuconfig主页面的“<code>File systems</code>”中，项目名为<code>FUSE (Filesystem in Userspace) support</code>，如下图所示：</p>
+<img src="/assets/img/blog/menuconfig_06_fs_fuse.png" class="" title="FUSE选项在“File systems”二级菜单中的位置">
+
+<p>务必把它编译成内核的一部分，而不是模块，以实现Linux对FUSE的无缝支持，这对系统体验的提升是不可或缺的。</p>
+<h3 id="保存内核配置"><a href="#保存内核配置" class="headerlink" title="保存内核配置"></a>保存内核配置</h3><p>内核配置默认保存在内核源码根目录的<code>.config</code>文件中，内核编译过程会使用它，因此menuconfig默认也会将修改好的配置文件保存在那里。按左右方向键，在底部的按钮中选择“Save”，选择内核配置文件的保存位置（默认为<code>.config</code>），回车。若要退出，选择“Exit”即可。</p>
+<img src="/assets/img/blog/menuconfig_07_save_config.png" class="" title="保存内核配置的提示界面">
+
+<p>笔者建议将好不容易编辑好的内核配置导出，以便下次使用。直接把内核源码根目录的<code>.config</code>复制到别处。下次若要使用，直接将导出的配置文件覆盖内核源码根目录的<code>.config</code>文件即可。</p>
+<h2 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h2><p>配置工作完成后，我们就可以着手开始编译内核了，同时编译完成后的内核与模块可以直接安装到系统中，下次启动就可以直接使用我们新的内核。</p>
+<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>首先确保内核已经配置好——源码根目录有<code>.config</code>文件，然后运行以下命令，开始编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make<br></code></pre></td></tr></table></figure>
+
+<p>如果想提高一下编译效率，可以加上<code>-j</code>参数，多开编译进程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make -j8<br></code></pre></td></tr></table></figure>
+
+<p>稍等一段时间，等待编译完成。完成时，<code>make</code>会输出以下信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Kernel: arch/x86/bzImage is ready (#2)<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装内核模块"><a href="#安装内核模块" class="headerlink" title="安装内核模块"></a>安装内核模块</h3><p>内核编译好之后，可以直接运行<code>make install</code>进行安装。但是经我实测，直接安装容易出错，出错的地方主要位于在内核模块的安装上。因此，最好先安装内核模块。</p>
+<p>安装内核模块，只需要一个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo make modules_install<br></code></pre></td></tr></table></figure>
+
+<p>运行该命令会调用<code>depmod</code>工具——配置内核模块的工具。不同版本内核的模块必须分别存放在内核对应的目录中，<code>depmod</code>工具可以自动创建新的内核所对应的模块目录，然后将模块安装到其中。</p>
+<h3 id="安装内核"><a href="#安装内核" class="headerlink" title="安装内核"></a>安装内核</h3><p>安装内核到系统中，只需要一个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo make install<br></code></pre></td></tr></table></figure>
+
+<p>该命令会自动调用内核源码中的安装工具，将内核复制到系统中，在Grub菜单项中加入新内核所对应的启动选项，并备份旧版本内核。安装成功后，下次启动就会自动使用我们编译好的新内核了，同时还可以在启动菜单的“高级启动选项（Advanced boot options）”中选择旧版本的内核启动。</p>
+<h3 id="安装头文件"><a href="#安装头文件" class="headerlink" title="安装头文件"></a>安装头文件</h3><p>如果你需要做Linux相关的开发，也可以将内核头文件安装到系统中。只需使用一个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo make headers_install<br></code></pre></td></tr></table></figure>
+
+<h2 id="编译清理"><a href="#编译清理" class="headerlink" title="编译清理"></a>编译清理</h2><p>编译后，如果对内核源码进行了一些修改，或是同一个内核源码用来给多个设备进行编译，一般都需要进行一番清理。</p>
+<p>清理的命令有两个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">make clean<br>make distclean<br></code></pre></td></tr></table></figure>
+
+<p>它们的区别在于，<code>make clean</code>只会清理编译输出的文件，如<code>*.o</code>（目标代码）、<code>*.cmd</code>（编译命令记录）等，而保留当前内核的配置文件，便于重新编译；而<code>make distclean</code>的清理则比较彻底，会将内核配置文件、内核配置程序的可执行文件等（如menuconfig的可执行文件）一并清除。</p>
+<blockquote>
+<p><strong>注意事项：</strong><br>在Deepin中，由于我们在安装内核的过程中使用了<code>sudo</code>，这会使得内核源码目录中的一些文件只有使用Root权限才能被修改。因此清理和编译的命令也需要<code>sudo</code>，否则会因权限不足而中止。</p>
+</blockquote>
+<h2 id="测试新的内核"><a href="#测试新的内核" class="headerlink" title="测试新的内核"></a>测试新的内核</h2><p>内核安装完成后，重启电脑就会默认使用新内核启动。为了保证内核无故障运行，我需要对内核进行一番测试。以下是我在我的X200上进行测试的过程。但在实际操作中，由于无前人的经验，我只能摸着石头过河，发现一个问题，解决一个问题。以下是我对整个测试过程的总结。</p>
+<h3 id="显示：检查关盖花屏问题是否解决"><a href="#显示：检查关盖花屏问题是否解决" class="headerlink" title="显示：检查关盖花屏问题是否解决"></a>显示：检查关盖花屏问题是否解决</h3><p>很简单，关闭盖子重新打开，移动鼠标，以及休眠后唤醒，移动鼠标。可以发现，花屏问题完美解决，原先闪屏撕裂的状况不再出现，终于可以愉快地吃上Deepin了。</p>
+<h3 id="无线网卡：检查连接性"><a href="#无线网卡：检查连接性" class="headerlink" title="无线网卡：检查连接性"></a>无线网卡：检查连接性</h3><p>老款的ThinkPad有一个很贴心的设计——灯条，这是我当时选择它的原因。灯条上电源、硬盘、网卡、蓝牙工作的状态一应俱全，方便而直观，贴心程度至今难以被后来者超越。尤其是无线网卡，会在启动后亮起，并在有网络流量时闪烁。</p>
+<p>无线网卡未加载时，Deepin系统的状态栏中并不会出现无线网络的图标，同时X200的无线网卡灯不会亮起。这使我非常纳闷，毕竟测试的时候我曾经尝试同时启用过多个型号的驱动。</p>
+<p>后来我尝试分析内核日志，使用<code>dmesg | grep iwl</code>获取Intel无线网卡相关的日志信息，结果发现了下面的错误提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Direct firmware load for iwlwifi-5000-5.ucode failed with error -2<br>Direct firmware load for iwlwifi-5000-4.ucode failed with error -2<br>Direct firmware load for iwlwifi-5000-3.ucode failed with error -2<br>Direct firmware load for iwlwifi-5000-2.ucode failed with error -2<br>Direct firmware load for iwlwifi-5000-1.ucode failed with error -2<br>No suitable firmware found!<br></code></pre></td></tr></table></figure>
+
+<p>后来，我尝试在<a target="_blank" rel="noopener" href="https://wireless.wiki.kernel.org/en/users/Drivers/iwlwifi">Intel固件发布页面</a>中下载了与我无线网卡对应的上述固件文件，放置于<code>/lib/firmware</code>中，结果重启后还是会提示上述的错误。</p>
+<p>于是，我回到menuconfig中，得知对应我设备的Intel驱动选项其实是<code>iwlwifi</code>，而不是列表中其他的那些型号。果然，取消勾选其他型号，只保留<code>iwlwifi</code>，重新编译并安装内核，问题解决，久违的无线网卡指示灯终于欢快地亮起了。</p>
+<h3 id="测试声卡"><a href="#测试声卡" class="headerlink" title="测试声卡"></a>测试声卡</h3><p>测试声卡的过程相对要顺利一些，也更简单。起初电脑放不出声音，在Deepin设置中的“声音”→“高级设置”中设备列表是空的。然后在内核中打开声卡驱动相关的选项，重新编译之后，声音播放就正常了。</p>
+<p>Chrome打开网易云音乐，随便放首歌，是最直观的测试方法。</p>
+<h3 id="测试文件系统"><a href="#测试文件系统" class="headerlink" title="测试文件系统"></a>测试文件系统</h3><p>笔者将X200原装的硬盘拆下来改为移动硬盘，并给笔记本换上固态，把原装硬盘格式化为exFAT。在启用FUSE之前，插上原装硬盘，Deepin虽然能识别出来，却无法挂载，显示为空。后来启用FUSE后，果然能正常识别并自动挂载了，任务栏上也出现了安全弹出的图标。</p>
+<h3 id="测试USB"><a href="#测试USB" class="headerlink" title="测试USB"></a>测试USB</h3><p>笔者的另一台新的惠普笔记本，在Ubuntu 16.04上曾使用4.18版本的stable内核源码，结果USB无法使用。有鉴于此，我在X200上还需对USB功能单独测试。使用<code>lsusb</code>命令检查USB设备连接，果然有输出；然后插入鼠标、键盘、移动硬盘等USB设备，果然正常识别出来了。由此说明，4.19内核在X200上的USB功能不存在问题。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>和Windows不同，玩Linux的意义在于折腾。驱动问题上，Windows的解决是最为到位和全面的，只需下载驱动安装文件安装即可，并且厂商也会优先支持Windows；而Linux上必须好好折腾一番，就像我这样不停地编辑配置编译内核，才能用上顺手好用的系统。Linux虽说麻烦一些，可是折腾之后设备跑起来的成就感，却是难以比拟的。</p>
+<p>与此同时，笔者也意识到，<strong>很多问题的解决，还是要靠自己。</strong>对于Deepin官方内核在X200上显示的Bug，笔者曾在Deepin论坛和反馈平台中反馈，但几乎没人有有效的回复，终究还是靠我自己解决。而且我稍微检索了一下百度，结果没找到任何前人的经验，找到的只是问题最基本的排查方法而已。要是等着别人为我想办法，那难度可堪比登天了。<strong>自己动手，丰衣足食，正是硬道理！</strong></p>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/技术笔记/"><i class="fa fa-tag"></i>技术笔记</a></li>
+                
+                <li><a href="/tags/Deepin/"><i class="fa fa-tag"></i>Deepin</a></li>
+                
+                <li><a href="/tags/内核/"><i class="fa fa-tag"></i>内核</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2018/11/12/Network/%E5%9C%A8OpenWrt%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8IPv6/">在OpenWrt路由器上使用IPv6</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/">TWRP Recovery 编译适配教程</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

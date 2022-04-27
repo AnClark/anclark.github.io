@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>在Ubuntu上安装并配置Apache2 + PHP - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                在Ubuntu上安装并配置Apache2 + PHP
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2019-12-28
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/PHP/">PHP</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>今天笔者决定要重新学习PHP，以应聘后端开发的相关职位，遂拿出我安装了Linux Mint 19.3（基于Ubuntu 18.04）的笔记本，安装Apache2+PHP开发环境。查阅了不少资料，然而相关资料非常散装，折腾了一个多小时，遂把折腾的心得，整理成这篇教程。</p>
+<span id="more"></span>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h3><p>只需运行以下命令即可安装Apache2：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install apache2<br></code></pre></td></tr></table></figure>
+
+<p>默认情况下，Apache2会安装成一项系统服务，日后可以通过<code>/etc/init.d/apache2</code>和<code>systemctl apache2</code>来进行管理。通过以下命令检测Apache2是否安装上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo /etc/init.d/apache2 stop<br>[ ok ] Stopping apache2 (via systemctl): apache2.service.<br>$ sudo /etc/init.d/apache2 start<br>[ ok ] Starting apache2 (via systemctl): apache2.service.<br>$ sudo /etc/init.d/apache2      <br>Usage: apache2 &#123;start|stop|graceful-stop|restart|reload|force-reload&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>新版本的Apache2已经废弃了组件<code>httpd</code>，由可执行文件<code>apache2</code>替代。</p>
+<h3 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h3><p>Ubuntu 18.04默认提供的PHP版本是7.2，可以采用“宏包”的形式安装——安装一个<code>php</code>包，就可以安装上所有基本的PHP组件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install php<br></code></pre></td></tr></table></figure>
+
+<p>运行后，从APT的输出结果可以看出，必要的组件都将会装上，其中包括Apache2服务器上的PHP模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Reading package lists... Done<br>Building dependency tree       <br>Reading state information... Done<br>The following additional packages will be installed:<br>  apache2-bin libapache2-mod-php7.2 libapr1 libaprutil1<br>  libaprutil1-dbd-sqlite3 libaprutil1-ldap php-common php7.2 php7.2-cli<br>  php7.2-common php7.2-json php7.2-opcache php7.2-readline<br>Suggested packages:<br>  apache2-doc apache2-suexec-pristine | apache2-suexec-custom php-pear<br>Recommended packages:<br>  apache2<br>The following NEW packages will be installed:<br>  apache2-bin libapache2-mod-php7.2 libapr1 libaprutil1<br>  libaprutil1-dbd-sqlite3 libaprutil1-ldap php php-common php7.2 php7.2-cli<br>  php7.2-common php7.2-json php7.2-opcache php7.2-readline<br>0 upgraded, 14 newly installed, 0 to remove and 1 not upgraded.<br>Need to get 5,133 kB of archives.<br>After this operation, 21.9 MB of additional disk space will be used.<br>Do you want to continue? [Y/n] y<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，可以运行<code>php -v</code>来检测PHP是否安装好。安装成功后，会显示版本信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ php -v<br>PHP 7.2.24-0ubuntu0.18.04.1 (cli) (built: Oct 28 2019 12:07:07) ( NTS )<br>Copyright (c) 1997-2018 The PHP Group<br>Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies<br>    with Zend OPcache v7.2.24-0ubuntu0.18.04.1, Copyright (c) 1999-2018, by Zend Technologies<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装PHP模块"><a href="#安装PHP模块" class="headerlink" title="安装PHP模块"></a>安装PHP模块</h3><p>Ubuntu中的PHP模块均使用软件包提供，需要什么模块就安装哪个包，例如MySQL和cUrl模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install php-mysql php-curl<br></code></pre></td></tr></table></figure>
+
+<p>这些包也是宏包，不带版本号，默认会安装与当前PHP对应的版本。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>Windows下的集成包Wamp Server和XAMPP是开箱即用的，意味着安装后无需专门进行配置，即可直接使用Apache2和PHP。但手动安装的Apache2和PHP都不行，必须费一番功夫折腾配置文件。</p>
+<p>主要涉及到的配置文件有：</p>
+<ul>
+<li><code>/etc/apache2/apache2.conf</code>：主配置文件。它可以用Include指令来包含其他的配置文件。</li>
+<li><code>/etc/apache2/sites-avaliable/</code>：存放站点配置文件的目录。一个Apache2服务器可以运行多个站点。</li>
+<li><code>/etc/apache2/sites-enabled/</code>：启用的站点配置文件，存放<code>sites-available</code>中配置文件的链接，想启用哪个就吧哪个链接进来。貌似把配置文件本体放进来是不会起作用的。</li>
+</ul>
+<p>其他供参考的配置文件：</p>
+<ul>
+<li><code>/etc/apache2/mods-avaliable/</code>：存放模块配置文件的目录。Apache2服务器可以加载各种模块，PHP语言支持正是用模块来提供的。<ul>
+<li>这里的配置文件又有两种类型（语法完全相同）：<ul>
+<li><code>*.conf</code>，为模块的配置信息，相当于<code>apache2.conf</code>的补充；</li>
+<li><code>*.load</code>，为模块自动加载的入口文件，里面的内容为<code>LoadModule</code>指令。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>/etc/apache2/mods-enabled/</code>：与<code>sites-enabled/</code>类似，想启用哪个模块，就把哪个模块的配置文件链接进来。</li>
+</ul>
+<p><strong>注意：</strong>新版本的Apache2已经不再使用<code>httpd.conf</code>作为配置文件，它的作用被<code>apache2.conf</code>和其他附属配置文件取代。</p>
+<h3 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h3><p>Apache2配置文件有专门的语法，其中，每个配置项的格式为：<code>配置项名 配置值</code>。</p>
+<p>安装Apache2后，站点配置文件中就有了一个默认的配置：<code>000-default.conf</code>。</p>
+<p>一般需要修改或添加以下配置项：</p>
+<ul>
+<li><strong><code>ServerName</code>：服务器的域名</strong>。<ul>
+<li>在本地开发PHP的，把域名设置为<code>localhost</code>即可。</li>
+</ul>
+</li>
+<li><strong><code>DocumentRoot</code>：站点文件的根目录</strong>，例如<code>index.html</code>等文件要存放的目录。<ul>
+<li>默认为<code>/var/www/</code>或<code>/var/www/html/</code>。</li>
+<li><strong>将它改为你用户主目录下的一个目录</strong>。这里使用<code>/home/username/.apache/default_site</code>。</li>
+</ul>
+</li>
+<li><strong><code>DirectoryIndex</code>：站点入口文件名</strong>，即未输入网页文件名时，Apache2会给你加载的文件名。<ul>
+<li>将它设为<code>index.html index.htm index.php</code>。</li>
+</ul>
+</li>
+</ul>
+<p>修改后的配置文件大致如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&lt;VirtualHost *:80&gt;<br>	ServerName localhost <br><br>	ServerAdmin webmaster@localhost<br>	DocumentRoot /home/username/.apache/default_site/<br><br>	DirectoryIndex index.html index.htm index.php<br><br>	ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log<br>	CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined<br><br>	# For most configuration files from conf-available/, which are<br>	# enabled or disabled at a global level, it is possible to<br>	# include a line for only one particular virtual host. For example the<br>	# following line enables the CGI configuration for this host only<br>	# after it has been globally disabled with &quot;a2disconf&quot;.<br>	#Include conf-available/serve-cgi-bin.conf<br>&lt;/VirtualHost&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="修改目录权限"><a href="#修改目录权限" class="headerlink" title="修改目录权限"></a>修改目录权限</h3><p>设置站点的<code>DocumentRoot</code>后，默认情况下用户是没有它的访问权限的，这时如果直接使用<code>localhost</code>访问，会提示<strong>“403 Forbidden”</strong>。</p>
+<p>解决办法是，在<code>apache2.conf</code>中添加新<code>DocumentRoot</code>目录的权限。配置文件中管理目录权限的段如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># Sets the default security model of the Apache2 HTTPD server. It does<br># not allow access to the root filesystem outside of /usr/share and /var/www.<br># The former is used by web applications packaged in Debian,<br># the latter may be used for local directories served by the web server. If<br># your system is serving content from a sub-directory in /srv you must allow<br># access here, or in any related virtual host.<br>&lt;Directory /&gt;<br>	Options FollowSymLinks<br>	AllowOverride None<br>	Require all denied<br>&lt;/Directory&gt;<br><br>&lt;Directory /usr/share&gt;<br>	AllowOverride None<br>	Require all granted<br>&lt;/Directory&gt;<br><br>&lt;Directory /var/www/&gt;<br>	Options Indexes FollowSymLinks<br>	AllowOverride None<br>	Require all granted<br>&lt;/Directory&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可见，几个默认的目录都有相应的权限配置。因此我们也需要把自己的<code>DocumentRoot</code>目录加进来，添加以下内容到这一部分（或文件尾部）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&lt;Directory /home/username/.apache&gt;<br>        Options Indexes FollowSymLinks<br>        AllowOverride None<br>        Require all granted<br>&lt;/Directory&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="重启服务器"><a href="#重启服务器" class="headerlink" title="重启服务器"></a>重启服务器</h3><p>要想设置生效，必须重启服务器。运行以下命令重启Apache2：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/etc/init.d/apache2 restart<br></code></pre></td></tr></table></figure>
+
+<p>或者是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo systemctl apache2 restart<br></code></pre></td></tr></table></figure>
+
+<h3 id="检查服务器是否能访问"><a href="#检查服务器是否能访问" class="headerlink" title="检查服务器是否能访问"></a>检查服务器是否能访问</h3><p>在<code>DocumentRoot</code>中新建一个<code>index.php</code>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-keyword">echo</span> phpinfo();<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，访问 <a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a> 或 <a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.0.0.1</a>，出现PHP的详细信息，即配置成功。</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><h3 id="无法使用PHP"><a href="#无法使用PHP" class="headerlink" title="无法使用PHP"></a>无法使用PHP</h3><p>一般地，PHP的宏包会同时安装好Apache2的PHP模块 <code>libapache2-mod-php7.2</code>，不仅会放置模块的文件，更会在<code>/etc/apache2/mods-avaliable</code>中放置好相应的配置文件，无需手动添加PHP的支持。因此，安装宏包（或单独安装PHP模块）后，Apache2服务器就能自动支持PHP。</p>
+<p>但是总会有一些异常原因，使得服务器不能解析PHP文件（例如先安装PHP再安装Apache2）。可按照以下办法解决。</p>
+<h4 id="1-排查是否未启用PHP模块"><a href="#1-排查是否未启用PHP模块" class="headerlink" title="(1) 排查是否未启用PHP模块"></a>(1) 排查是否未启用PHP模块</h4><p>使用<code>apache2ctl</code>来查看当前已加载的模块列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">apachectl -M | grep php<br></code></pre></td></tr></table></figure>
+
+<p>如果PHP模块已加载，则会输出下面结果，否则为空：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">php7 module (shared)<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-重新安装PHP支持模块"><a href="#2-重新安装PHP支持模块" class="headerlink" title="(2) 重新安装PHP支持模块"></a>(2) 重新安装PHP支持模块</h4><p>如果上述命令找不到PHP模块，则Apache2的PHP模块可能已丢失，运行以下命令以补上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install libapache2-mod-php7.2<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-手工启用PHP模块"><a href="#3-手工启用PHP模块" class="headerlink" title="(3) 手工启用PHP模块"></a>(3) 手工启用PHP模块</h4><p>如果<code>libapache2-mod-php7.2</code>已经安装，却仍无法启动，则可尝试手动启用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sudo a2enmod php7.2<br></code></pre></td></tr></table></figure>
+
+<p>期间会自动处理模块之间的依赖关系，输出如下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Considering dependency mpm_prefork for php7.2:<br>Considering conflict mpm_event for mpm_prefork:<br>Considering conflict mpm_worker for mpm_prefork:<br>Enabling module mpm_prefork.<br>Considering conflict php5 for php7.2:<br>Enabling module php7.2.<br>To activate the new configuration, you need to run:<br>  systemctl restart apache2<br></code></pre></td></tr></table></figure>
+
+<p>如果发生如下依赖关系的错误，则可先禁用掉相应的模块，然后再启用。笔者的处理过程如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo a2enmod php7.2<br>Considering dependency mpm_prefork <span class="hljs-keyword">for</span> php7.2:<br>Considering conflict mpm_event <span class="hljs-keyword">for</span> mpm_prefork:<br>ERROR: Module mpm_event is enabled - cannot proceed due to conflicts. It needs to be disabled first!<br>Considering conflict mpm_worker <span class="hljs-keyword">for</span> mpm_prefork:<br>ERROR: Could not <span class="hljs-built_in">enable</span> dependency mpm_prefork <span class="hljs-keyword">for</span> php7.2, aborting<br><br>$ sudo a2dismod mpm_event<br>Module mpm_event disabled.<br>To activate the new configuration, you need to run:<br>  systemctl restart apache2<br><br>$ sudo a2enmod php7.2 <br>Considering dependency mpm_prefork <span class="hljs-keyword">for</span> php7.2:<br>Considering conflict mpm_event <span class="hljs-keyword">for</span> mpm_prefork:<br>Considering conflict mpm_worker <span class="hljs-keyword">for</span> mpm_prefork:<br>Enabling module mpm_prefork.<br>Considering conflict php5 <span class="hljs-keyword">for</span> php7.2:<br>Enabling module php7.2.<br>To activate the new configuration, you need to run:<br>  systemctl restart apache2<br></code></pre></td></tr></table></figure>
+
+<p>最后，重新启动Apache2，使更改生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/etc/init.d/apache2 restart<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/87aa2db12b24">[Apache] Forbidden 403 错误原因与解决</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jenyzhang/article/details/51539165">ubuntu apache2配置</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiangfeilong/p/11143701.html">apache2 不支持php文件 解决办法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.renfei.org/blog/set-up-apache-mysql-php-phpmyadmin-on-ubuntu-server.html">Ubuntu 配置 Apache, MySQL, PHP 以及 phpMyAdmin 过程记录</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.darrenfang.com/2014/01/ubuntu-apache-configuration-and-enable-mod-rewrite/">Ubuntu Apache配置及开启mod_rewrite模块</a></li>
+</ul>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/PHP/"><i class="fa fa-tag"></i>PHP</a></li>
+                
+                <li><a href="/tags/Apache2/"><i class="fa fa-tag"></i>Apache2</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+            <div class="pagination-prev">
+                <a href="/2020/02/14/Struggle_with_Linux/Arch%20Linux%E4%B8%8EKDE%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/">Arch Linux + KDE安装教程</a>
+            </div>
+        
+        
+            <div class="pagination-next">
+                <a href="/2019/10/05/Play_NAS/OMV%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">开源NAS系统 Openmediavault（OMV） 编译与安装教程</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

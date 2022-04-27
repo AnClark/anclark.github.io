@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh_CN" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>U盘安装Tianocore，让BIOS老机器跑上UEFI - 爱拼安小匠的技术博客</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+	<div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        <!-- Customizable nav bar -->
+        
+            
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+            
+        
+            
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+            
+        
+            
+            <!-- Language switcher -->
+
+    <li>
+        <a href="javascript:void(0)">
+            <i class="fa fa-language"></i> 
+            
+            <span>简体中文</span>
+            
+            <span class="drop-flag fa fa-angle-down"></span>
+        </a>
+        <dl>
+            
+                <li>
+                    
+                    <a href="/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>简体中文</span>
+                    </a>
+                </li>
+            
+                <li>
+                    
+                    <a href="/en/" class="">
+                    
+                        <i class="fa fa-circle"></i>
+                        <span>English</span>
+                    </a>
+                </li>
+            
+        </dl>
+    </li>
+
+            
+        
+    </ul>
+
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://anclark.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name">
+            <a href="/">
+                
+                    爱拼安小匠的技术博客
+                
+            </a>
+            <small id="type-data">
+                
+                    
+                
+            </small>
+        </h2>
+    </div>
+</header>
+
+        <div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                U盘安装Tianocore，让BIOS老机器跑上UEFI
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2022-04-26
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/操作系统/">操作系统</a></li>
+                            
+                        
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <p>自从Intel第二代酷睿处理器推出的年份开始，UEFI日渐成为电脑固件的主流。起初的电脑还附带CSM模式，以兼容BIOS的MBR启动。但现在UEFI已经完全取代了BIOS，成为绝对标准，乃至Windows 11也不再提供MBR启动了。</p>
+<p>对于不具备UEFI的旧电脑，通常MBR足以胜任大部分主流操作系统的启动——Windows 10和Linux发行版仍然支持MBR。在我的ThinkPad X200中，以MBR启动的Arch Linux足以让这台2009年诞生的老本继续焕发风采。</p>
+<p>但是，玩技术的我绝对不止于此，一心也想让旧电脑，尤其是保留正宗血统的旧款ThinkPad（如：X200、T500、R400、X201 Tablet）吃上UEFI。如此优秀的产品，无法使用新技术，实在是可惜——毕竟自从X230开始，ThinkPad就不再有祖传血统了。</p>
+<p>所幸我遇上了Tianocore，它是DUET的一种适配。在BIOS仍为主流的时代，开发人员使用DUET来开发UEFI固件及软件。那么对于旧电脑，自然也能理所当然地借助它来模拟出UEFI环境。黑苹果必备的Clover启动器，也可以通过MBR方式运行，它就使用DUET来提供支持。</p>
+<p>这篇教程将分享如何制作一个Tianocore启动盘。</p>
+<span id="more"></span>
+
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li><strong>U盘一个：</strong>容量不需要太大，32MB也可以。</li>
+<li><strong>任意一台安装Linux发行版的电脑：</strong>接下来所有的操作都将在Linux下进行。</li>
+<li><strong><code>fdisk</code>工具：</strong>用于磁盘分区，一般的Linux发行版均自带。如果没有，则需安装<code>util-linux</code>软件包（随发行版而定）。当然，也可以使用<code>cfdisk</code>、<code>parted</code>、GParted等分区工具，依你的使用习惯而定。</li>
+</ul>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>从以下地址下载Tianocore的预编译版本，开箱即用：<a target="_blank" rel="noopener" href="https://gitlab.com/tianocore_uefi_duet_builds/tianocore_uefi_duet_installer/-/archive/master/tianocore_uefi_duet_installer-master.zip">https://gitlab.com/tianocore_uefi_duet_builds/tianocore_uefi_duet_installer/-/archive/master/tianocore_uefi_duet_installer-master.zip</a>。下载完成后解压：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">unzip tianocore_uefi_duet_installer-master.zip<br><span class="hljs-built_in">cd</span> tianocore_uefi_duet_installer-master<br></code></pre></td></tr></table></figure>
+
+<h3 id="建立分区"><a href="#建立分区" class="headerlink" title="建立分区"></a>建立分区</h3><p>接下来插入U盘。首先确认U盘的设备路径，例如在笔者的电脑里是<code>/dev/sdb</code>（我只有一块硬盘）。</p>
+<p>然后即将使用<code>fdisk</code>，对U盘重新分区，<strong>注意一旦重新分区，则数据将全部丢失，请提前做好备份！</strong></p>
+<p><strong>1. 启动fdisk。</strong>启动后将进入fdisk的命令提示符。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo fdisk /dev/sdb<br>Welcome to fdisk (util-linux 2.38).<br>Changes will remain <span class="hljs-keyword">in</span> memory only, until you decide to write them.<br>Be careful before using the write <span class="hljs-built_in">command</span>.<br><br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>):<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 建立新的MBR分区表。</strong>提示符后输入命令<code>o</code>，回车。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): o<br><br>Created a new DOS disklabel with disk identifier 0xf209509d.<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 建立一个主分区。</strong>提示符后输入命令<code>n</code>，开始创建分区。</p>
+<p>首先会询问创建分区的类型，输入<code>p</code>，表示主分区。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): n<br>Partition <span class="hljs-built_in">type</span><br>   p   primary (0 primary, 0 extended, 4 free)<br>   e   extended (container <span class="hljs-keyword">for</span> logical partitions)<br>Select (default p): p<br></code></pre></td></tr></table></figure>
+
+<p>然后询问分区编号。现在创建的是第一个分区，可直接回车采用默认值<code>1</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Partition number (1-4, default 1): 1<br></code></pre></td></tr></table></figure>
+
+<p>接着是分区起始位置，以扇区为单位。第一个分区从2048开始（不同设备可能不同），回车保持默认值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">First sector (2048-131071, default 2048): 2048<br></code></pre></td></tr></table></figure>
+
+<p>最后是指定分区结束位置，以扇区为单位。这里只分一个区，所以保持默认值，也就是允许的最大值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Last sector, +/-sectors or +/-size&#123;K,M,G,T,P&#125; (2048-131071, default 131071): 131071<br><br>Created a new partition 1 of type &#x27;Linux&#x27; and of size 63 MiB.<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 保存修改。</strong>用<code>w</code>命令保存并退出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Command (m for help): w<br>The partition table has been altered.<br>Syncing disks.<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<p>和Windows不同，<strong>启动分区无需激活</strong>，因为Tianocore的引导程序工作逻辑特殊，它不认活动分区，而是只认写了Tianocore引导扇区的第一个分区。</p>
+<p>如果已经是MBR分区表，也可以不重建分区表，从而保留你的数据。前提是你的第一个分区必须是FAT32格式的主分区，且可能仍需要格式化才能使用。</p>
+<h3 id="格式化第一个分区"><a href="#格式化第一个分区" class="headerlink" title="格式化第一个分区"></a>格式化第一个分区</h3><p>Tianocore的引导程序只支持FAT12/FAT16/FAT32文件系统，这里只建议选择FAT32。</p>
+<p>使用<code>mkfs.vfat</code>格式化我们刚刚创建的分区。这里需要指定<code>-h</code>参数，让格式化工具写入指定大小的隐藏扇区，隐藏扇区大小是该分区的起始位置（start LBA）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo mkfs.vfat -F32 -h 2048 /dev/sdb1<br></code></pre></td></tr></table></figure>
+
+<h3 id="写入引导扇区"><a href="#写入引导扇区" class="headerlink" title="写入引导扇区"></a>写入引导扇区</h3><p>格式化完毕后，将Tianocore的引导扇区写入分区头部。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo dd <span class="hljs-keyword">if</span>=BootSector/bd32.bin of=/dev/sdb1 bs=1 skip=90 seek=90 count=420<br></code></pre></td></tr></table></figure>
+
+<h3 id="写入MBR引导程序"><a href="#写入MBR引导程序" class="headerlink" title="写入MBR引导程序"></a>写入MBR引导程序</h3><p>接下来把引导程序写入MBR中。</p>
+<p>MBR为512字节，其中前446字节是引导程序，因此<strong>下方的<code>bs</code>参数不能省略</strong>，否则分区表也会被破坏掉。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo dd <span class="hljs-keyword">if</span>=BootSector/Mbr.com of=/dev/sdb bs=446 count=1<br></code></pre></td></tr></table></figure>
+
+<h3 id="复制启动器"><a href="#复制启动器" class="headerlink" title="复制启动器"></a>复制启动器</h3><p>上述工作全部完成后，还差最后一步：把启动器复制到U盘中。启动器位于<code>Efildr</code>子目录中，分为<code>EDK</code>和<code>UDK</code>两个版本。我们采用后者，它支持AHCI磁盘，而前者只支持旧版的IDE磁盘（兼容模式）。</p>
+<p><strong>1. 安全弹出U盘后再插入，让系统重新识别U盘。</strong>主要是针对一些无法识别分区变动的发行版。Arch Linux KDE会在分区改变后自动识别，所以无需这一步。</p>
+<p><strong>2. 挂载U盘分区。</strong>最好不使用Root权限挂载，而是直接用文件管理器来挂载U盘。如果使用Root权限复制，则引导程序有可能会因权限问题而无法读取启动器。</p>
+<p><strong>3. 复制启动器文件。</strong>将以下文件复制到U盘根目录：</p>
+<ul>
+<li><code>Efildr/UDK_X64/Efildr20</code>（注意，复制到U盘中的文件名改为全大写，即<code>EFILDR20</code>。）</li>
+</ul>
+<p><strong>4. 安全弹出U盘。</strong></p>
+<p>到这里，Tianocore的引导盘就做好了。</p>
+<h2 id="更进一步：Tianocore与ESP分区二合一"><a href="#更进一步：Tianocore与ESP分区二合一" class="headerlink" title="更进一步：Tianocore与ESP分区二合一"></a>更进一步：Tianocore与ESP分区二合一</h2><p>Tianocore会自动识别电脑上的ESP分区，也就是标记为<code>ef (EFI (FAT-12/16/32))</code>的分区。识别之后，就会立即引导默认的引导程序，即<code>EFI/BOOT/BOOTX64.EFI</code>。需要注意的是，即使磁盘分区表是MBR，它也会识别。</p>
+<p>结合ESP分区的FAT32格式，运用上述性质，我们完全可以使用单个ESP分区，写入引导扇区并放置启动器<code>EFILDR20</code>，同时再把EFI引导程序和相关文件一并放进来。这样免去了单独创建ESP分区的麻烦。</p>
+<p>具体操作步骤和上一章“安装步骤”相同，只是多了以下步骤。<strong>其中“修改分区参数”放在“建立分区”之中完成。</strong></p>
+<h3 id="修改分区参数"><a href="#修改分区参数" class="headerlink" title="修改分区参数"></a>修改分区参数</h3><p>在<code>fdisk</code>中，用<code>t</code>命令，设定分区类型。回车之后，首先指定要修改的分区编号（如果只有一个分区，则会自动选择）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Command (m for help): t<br>Partition number (1,2, default 2): <br></code></pre></td></tr></table></figure>
+
+<p>然后指定分区类型编号，ESP分区对应<code>ef</code>。回车之后设定完成。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Hex code or alias (type L to list all): ef<br>Changed type of partition &#x27;EFI (FAT-12/16/32)&#x27; to &#x27;EFI (FAT-12/16/32)&#x27;.<br></code></pre></td></tr></table></figure>
+
+<p>最后保存分区表，输入<code>w</code>保存并退出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Command (m for help): w<br>The partition table has been altered.<br>Syncing disks.<br></code></pre></td></tr></table></figure>
+
+<h3 id="挂载ESP分区并复制相关文件"><a href="#挂载ESP分区并复制相关文件" class="headerlink" title="挂载ESP分区并复制相关文件"></a>挂载ESP分区并复制相关文件</h3><p>KDE等桌面环境是不会自动提示你挂载ESP分区的，只能手动挂载。笔者的ESP分区仍为<code>/dev/sdb1</code>，假设挂载到<code>/mnt</code>目录下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo mount /dev/sdb1 /mnt<br></code></pre></td></tr></table></figure>
+
+<p>然后回到Tianocore的下载目录中，复制启动器文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 复制文件</span><br><span class="hljs-built_in">cd</span> tianocore_uefi_duet_installer-master<br>sudo cp Efildr/UDK_X64/Efildr20 /mnt/EFILDR20<br><br><span class="hljs-comment"># 设置权限，以防万一</span><br>sudo chmod 755 /mnt/EFILDR20<br></code></pre></td></tr></table></figure>
+
+<p>同时，你可以直接把你喜欢的UEFI引导程序复制进来，但要注意复制文件需要root权限。</p>
+<p>复制完成后，卸载分区，拔出U盘：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo umount /mnt<br></code></pre></td></tr></table></figure>
+
+<h2 id="引导测试"><a href="#引导测试" class="headerlink" title="引导测试"></a>引导测试</h2><p>启动盘完成后，找台旧电脑，插入U盘，以USB-HDD模式启动。不久之后，Tianocore的Logo界面就会出现在屏幕上，随后自动打开DUET界面，样子就是你似曾相识的BIOS配置界面。</p>
+<p>如果存在<code>EFI/BOOT/BOOTx64.EFI</code>，则Tianocore会自动引导，体验就和真正的UEFI环境一样。</p>
+<p>目前启动盘在我的ThinkPad R400上测试通过，可以愉快使用，成功引导另一张U盘里的Ventoy EFI启动器，并借助后者顺利启动了UEFI版的微PE镜像。</p>
+<p>痛快地玩起来吧！</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><h3 id="官方教程不足信"><a href="#官方教程不足信" class="headerlink" title="官方教程不足信"></a>官方教程不足信</h3><p>下载下来的Tianocore安装文件中也附带有教程，但不足以参考，请以笔者的教程为准。</p>
+<p>官方教程有一步是要编译<code>Linux_Source</code>下的文件，运行编译好的一个程序来生成并写入MBR。但由于程序编写于2010年代初，且偏偏加入了<code>-Werror</code>参数，现在的GCC 11.2会频频报错，除非修改Makefile（例如，<code>CFLAGS</code>去掉<code>-Werror</code>，<code>CPPFLAGS</code>加上<code>-fpermissive</code>）。加之，即使编译成功，该程序也不能把MBR写到U盘里，会提示无法识别。“生成”的MBR实际上是把已有的MBR文件复制一份罢了。</p>
+<p>倒不如，直接用<code>dd</code>命令来写入MBR。</p>
+<h3 id="兼容性无法保证"><a href="#兼容性无法保证" class="headerlink" title="兼容性无法保证"></a>兼容性无法保证</h3><p>有的电脑无法运行Tianocore。比如我手上的X200，会卡在<code>Welcome to EFI world!</code>这个界面里，无法继续。但R400则一切正常。制作好启动盘后务必先测试。</p>
+<h3 id="无法保存DUET设置"><a href="#无法保存DUET设置" class="headerlink" title="无法保存DUET设置"></a>无法保存DUET设置</h3><p>Tianocore DUET的设置程序允许直接在“Boot Maintenance Options”中修改参数，例如新增启动菜单项。但由于该项目主要用于开发，它目前是无法保存设置的，重启之后就会自动还原。</p>
+<p>幸而，DUET会默认引导ESP分区中的<code>EFI/BOOT/BOOTx64.EFI</code>，所以只要操作系统的启动器采用这个名字，就无需再做额外的设置。</p>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/UEFI/"><i class="fa fa-tag"></i>UEFI</a></li>
+                
+                <li><a href="/tags/MBR/"><i class="fa fa-tag"></i>MBR</a></li>
+                
+                <li><a href="/tags/BIOS/"><i class="fa fa-tag"></i>BIOS</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+        
+            <div class="pagination-next">
+                <a href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> 近期文章</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/12/Git/Git_Sync_Commits/">GitHub：如何只提交/应用指定commit（Pull Request，或更新本地代码）</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/09/Programming_Tips/Makefile_%E8%B8%A9%E5%9D%91%E8%AE%B0/">Makefile 编写时的几个大坑和技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">解决Linux下ZIP压缩包乱码的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/09/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_03.md/">把Arch Linux打造成音乐工作站（三）：使用Windows下的VST插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/23/Struggle_with_Linux/%E7%BB%99RIME%E4%B8%AD%E5%B7%9E%E9%9F%B5%E6%B7%BB%E5%8A%A0%E8%AF%8D%E5%BA%93/">Arch Linux下给RIME中州韵添加词库</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> 标签</h2>
+            <a href="/tags/ASIO/" style="font-size: 10px;">ASIO</a> <a href="/tags/Android-%E9%80%82%E9%85%8D/" style="font-size: 10px;">Android 适配</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" style="font-size: 12.5px;">Android 适配教程</a> <a href="/tags/Android-%E9%80%82%E9%85%8D%E7%AC%94%E8%AE%B0/" style="font-size: 20px;">Android 适配笔记</a> <a href="/tags/Apache2/" style="font-size: 10px;">Apache2</a> <a href="/tags/Arch-Linux/" style="font-size: 12.5px;">Arch Linux</a> <a href="/tags/BIOS/" style="font-size: 10px;">BIOS</a> <a href="/tags/BusyBox/" style="font-size: 10px;">BusyBox</a> <a href="/tags/Cherry-Pick/" style="font-size: 10px;">Cherry Pick</a> <a href="/tags/Debian/" style="font-size: 10px;">Debian</a> <a href="/tags/Deepin/" style="font-size: 17.5px;">Deepin</a> <a href="/tags/Foobar2000/" style="font-size: 10px;">Foobar2000</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hexo%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">Hexo插件</a> <a href="/tags/IPv6/" style="font-size: 10px;">IPv6</a> <a href="/tags/JACK/" style="font-size: 10px;">JACK</a> <a href="/tags/KDE/" style="font-size: 10px;">KDE</a> <a href="/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/tags/Linux-%E5%AE%89%E8%A3%85/" style="font-size: 10px;">Linux 安装</a> <a href="/tags/MBR/" style="font-size: 10px;">MBR</a> <a href="/tags/Mac-OS/" style="font-size: 10px;">Mac OS</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/NAS/" style="font-size: 10px;">NAS</a> <a href="/tags/OMV/" style="font-size: 10px;">OMV</a> <a href="/tags/OpenSUSE/" style="font-size: 10px;">OpenSUSE</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/Openmediavault/" style="font-size: 10px;">Openmediavault</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Pull-Request/" style="font-size: 10px;">Pull Request</a> <a href="/tags/PyAudio/" style="font-size: 10px;">PyAudio</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/RIME/" style="font-size: 10px;">RIME</a> <a href="/tags/SDL/" style="font-size: 10px;">SDL</a> <a href="/tags/Snap/" style="font-size: 10px;">Snap</a> <a href="/tags/Snapd/" style="font-size: 10px;">Snapd</a> <a href="/tags/TWRP/" style="font-size: 12.5px;">TWRP</a> <a href="/tags/UEFI/" style="font-size: 10px;">UEFI</a> <a href="/tags/Ubuntu/" style="font-size: 12.5px;">Ubuntu</a> <a href="/tags/VSCode/" style="font-size: 10px;">VSCode</a> <a href="/tags/VST/" style="font-size: 10px;">VST</a> <a href="/tags/Wine/" style="font-size: 12.5px;">Wine</a> <a href="/tags/ZIP/" style="font-size: 10px;">ZIP</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/%E4%B9%B1%E7%A0%81/" style="font-size: 10px;">乱码</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">使用技巧</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 10px;">内核</a> <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="font-size: 10px;">压缩包</a> <a href="/tags/%E5%9E%82%E7%9B%B4%E5%90%8C%E6%AD%A5/" style="font-size: 10px;">垂直同步</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">学习笔记</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> 分类</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/">适配</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">7</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/%E6%8F%92%E4%BB%B6/">插件</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Arch-Linux/">Arch Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Deepin/">Deepin</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenSUSE/">OpenSUSE</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/">Ubuntu</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Ubuntu/Snap/">Snap</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/npm/">npm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">安装配置</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SDL/">SDL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/">Switch</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Switch/%E5%BC%80%E5%8F%91/">开发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/">Mac OS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac-OS/%E9%BB%91%E8%8B%B9%E6%9E%9C/">黑苹果</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/UEFI/">UEFI</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/">玩转NAS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E8%BD%ACNAS/Openmediavault/">Openmediavault</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/">电脑维修</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">故障解决</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/">编程经验</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E7%BB%8F%E9%AA%8C/Makefile/">Makefile</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/">论文报告</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A/%E5%8F%8C%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87/">双学位论文</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/">音乐制作</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/">Linux下做音乐</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+</div>
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2022 爱拼安小匠的技术博客.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="返回顶部"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script>
+
+</body>
+</html>

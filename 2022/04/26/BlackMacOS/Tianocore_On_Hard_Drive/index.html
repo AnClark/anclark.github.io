@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta name="description" content="">
 	<meta name="keywords" content="">
-	<title>归档 - 爱拼安小匠的技术博客</title>
+	<title>把Tianocore装到GPT硬盘中，让BIOS老机器跑上UEFI - 爱拼安小匠的技术博客</title>
     <link rel="alternate" href="" type="application/atom+xml"/>
 	<link rel="shortcut icon" href=""/>
 	
@@ -37,7 +37,7 @@
             
             <li>
                 
-                    <a href="/archives/" class="active">
+                    <a href="/archives/" class="">
                         <i class=" fa-"></i> 
                         <span>归档</span>
                     </a>
@@ -156,24 +156,15 @@
     </div>
 </header>
 
-        
-<div class="con-wrap fadeToTop archive">
+        <div class="con-wrap fadeToTop">
     
     <section class="article-area">
     
-        
-        
-            
-                <div class="archive-year"><span class="year-block">2022</span></div>
-
-            
-            <article class="article">
+        <article class="article">
     <div class="article-wrap">
         
             <h2 class="article-title cl">
-                <a href="/2022/04/26/BlackMacOS/Tianocore_On_Hard_Drive/" title="把Tianocore装到GPT硬盘中，让BIOS老机器跑上UEFI">
-                    把Tianocore装到GPT硬盘中，让BIOS老机器跑上UEFI
-                </a>
+                把Tianocore装到GPT硬盘中，让BIOS老机器跑上UEFI
             </h2>
         
 
@@ -207,75 +198,106 @@
             
             <p>在上一篇文章《<a href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/" title="U盘安装Tianocore，让BIOS老机器跑上UEFI">U盘安装Tianocore，让BIOS老机器跑上UEFI</a>》中，笔者讲解了如何把Tianocore DUET安装到U盘中，作为启动盘引导BIOS的老机器用上UEFI环境。在MBR分区表下，同时利用MBR引导程序与分区引导扇区，引导Tianocore的启动器<code>EFILDR20</code>。理论上用同样的方法可以安装到硬盘中。</p>
 <p>当然，Tianocore的可能性远不止于此。得益于BIOS的功能特性，Tianocore甚至还可以安装在GPT分区环境下，直接在老电脑上启动，无需再借助MBR分区表！这下，老电脑可以更充分地展现第二春了。</p>
-        </div>
-        
-            
-                <a href="/2022/04/26/BlackMacOS/Tianocore_On_Hard_Drive/" class="more-link">阅读更多...</a>
-            
-        
-        
-    </div>
-</article>
+<span id="more"></span>
 
-        
-            
-            <article class="article">
-    <div class="article-wrap">
-        
-            <h2 class="article-title cl">
-                <a href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/" title="U盘安装Tianocore，让BIOS老机器跑上UEFI">
-                    U盘安装Tianocore，让BIOS老机器跑上UEFI
-                </a>
-            </h2>
-        
-
-        <ul class="article-extra" style="margin-bottom: 20px">
-            
-            <li class="article-time">
-                2022-04-26
-            </li>
-            
-
-            
-                
-                <li class="article-category">
-                    <ol class="category-list cl">
-                        <i class="fa fa-folder-o"></i>
-                        
-                            
-                            <li><a href="/categories/操作系统/">操作系统</a></li>
-                            
-                        
-                            
-                        
-                    </ol>
-                </li>
-                
-            
-
-
-        </ul>
-        <div class="article-description">
-            
-            <p>自从Intel第二代酷睿处理器推出的年份开始，UEFI日渐成为电脑固件的主流。起初的电脑还附带CSM模式，以兼容BIOS的MBR启动。但现在UEFI已经完全取代了BIOS，成为绝对标准，乃至Windows 11也不再提供MBR启动了。</p>
-<p>对于不具备UEFI的旧电脑，通常MBR足以胜任大部分主流操作系统的启动——Windows 10和Linux发行版仍然支持MBR。在我的ThinkPad X200中，以MBR启动的Arch Linux足以让这台2009年诞生的老本继续焕发风采。</p>
-<p>但是，玩技术的我绝对不止于此，一心也想让旧电脑，尤其是保留正宗血统的旧款ThinkPad（如：X200、T500、R400、X201 Tablet）吃上UEFI。如此优秀的产品，无法使用新技术，实在是可惜——毕竟自从X230开始，ThinkPad就不再有祖传血统了。</p>
-<p>所幸我遇上了Tianocore，它是DUET的一种适配。在BIOS仍为主流的时代，开发人员使用DUET来开发UEFI固件及软件。那么对于旧电脑，自然也能理所当然地借助它来模拟出UEFI环境。黑苹果必备的Clover启动器，也可以通过MBR方式运行，它就使用DUET来提供支持。</p>
-<p>这篇教程将分享如何制作一个Tianocore启动盘。</p>
-        </div>
-        
-            
-                <a href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/" class="more-link">阅读更多...</a>
-            
-        
-        
-    </div>
-</article>
-
-        
-        <ul class="pagination clear">
-    <span class="page-number current">1</span>
+<h2 id="原理：老电脑为什么也可以用GPT分区表？"><a href="#原理：老电脑为什么也可以用GPT分区表？" class="headerlink" title="原理：老电脑为什么也可以用GPT分区表？"></a>原理：老电脑为什么也可以用GPT分区表？</h2><h3 id="先试试MBR引导程序"><a href="#先试试MBR引导程序" class="headerlink" title="先试试MBR引导程序"></a>先试试MBR引导程序</h3><p>笔者一直以为，BIOS的老电脑就一定不能识别GPT分区表，只能使用MBR。</p>
+<p>实际上，经过测试，不管磁盘是MBR还是GPT，BIOS在启动该磁盘时，一定会尝试读取第1个扇区（0号扇区，也就是磁盘前512字节）上的引导程序。而在GPT标准中，第1个扇区的头部（0~446字节）和MBR一样，也可以放置引导程序。两种分区表都以<code>55 aa</code>作为结束标志。</p>
+<p>那么，这就意味着传统MBR上的引导程序，也是可以放在这里，并被BIOS识别的。</p>
+<p>不妨做个测试：找一个GPT分区表的U盘（可以使用Ventoy创建），根据上一篇文章，尝试把<code>Mbr.com</code>写入该区域，你会发现分区表的内容根本没有变化，原来的分区都在。接着用这块U盘启动电脑，屏幕上出现<code>MBR Start!</code>字样，说明BIOS的确识别了我们写入的引导程序。</p>
+<h3 id="再试试引导扇区"><a href="#再试试引导扇区" class="headerlink" title="再试试引导扇区"></a>再试试引导扇区</h3><p>笔者也一直以为，GPT下，各个磁盘分区的头部会有别于MBR。</p>
+<p>实际上则不然。两种分区表，区别的仅仅是组织分区的方式，而分区本身不随之变化。例如，FAT32分区头部的元数据和引导扇区，在MBR和GPT下都一样。那么，只要引导程序能识别GPT分区，照样能读取引导扇区并启动之。</p>
+<h3 id="Gpt-com"><a href="#Gpt-com" class="headerlink" title="Gpt.com"></a><code>Gpt.com</code></h3><p>支持GPT的引导程序还真有，就是<code>Mbr.com</code>的姊妹版——<code>Gpt.com</code>。它同样位于Tianocore的编译版本当中，可以读取GPT分区表，并引导ESP分区上的启动扇区。</p>
+<p>需要注意的是，<code>Gpt.com</code>只会搜索当前磁盘上的ESP分区，且ESP必须是磁盘的第一个分区。分区编号是写死（hardcoded）在代码中的，此时需要配合使用分区启动扇区<code>bd32hd</code>（文件名的<code>hd</code>就是hardcoded的缩写），而不是<code>bd32</code>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>由于是给硬盘安装，启动盘是必需的，需事先制作。接下来的安装主要在Windows PE（需要BootIce软件）上进行。</p>
+<p><strong>本教程假定：</strong></p>
+<ul>
+<li>启动盘用Ventoy制作，Linux下为<code>/dev/sdb</code>，对应Windows PE下的E盘。</li>
+<li>本地硬盘，Linux下为<code>/dev/sda</code>。</li>
 </ul>
+<h3 id="准备启动盘"><a href="#准备启动盘" class="headerlink" title="准备启动盘"></a>准备启动盘</h3><ul>
+<li><strong>U盘一个：</strong>容量足够，足以装得下PE。事先使用Ventoy制作并放入镜像（可以使用GPT分区表），或者是用Rufus写入镜像。</li>
+<li><strong>Windows PE：</strong>需要同时带有BootIce和分区工具（例如DiskGenius、傲梅分区助手）。<strong>接下来的主要操作都需要借助BootIce进行。</strong>推荐：微PE、51nb PE、Edgeless（可能需要安装插件）。</li>
+</ul>
+<h3 id="下载Tianocore编译版本"><a href="#下载Tianocore编译版本" class="headerlink" title="下载Tianocore编译版本"></a>下载Tianocore编译版本</h3><p>从以下地址下载Tianocore的预编译版本，开箱即用：<a target="_blank" rel="noopener" href="https://gitlab.com/tianocore_uefi_duet_builds/tianocore_uefi_duet_installer/-/archive/master/tianocore_uefi_duet_installer-master.zip">https://gitlab.com/tianocore_uefi_duet_builds/tianocore_uefi_duet_installer/-/archive/master/tianocore_uefi_duet_installer-master.zip</a>。</p>
+<p>下载完成后解压。<strong>本教程将解压后的文件夹<code>tianocore_uefi_duet_installer-master</code>放在启动盘根目录下。</strong></p>
+<h2 id="PE下的操作"><a href="#PE下的操作" class="headerlink" title="PE下的操作"></a>PE下的操作</h2><p>以下使用微PE来演示。</p>
+<h3 id="转换分区表"><a href="#转换分区表" class="headerlink" title="转换分区表"></a>转换分区表</h3><p>如果当前分区表是MBR，则需要使用DiskGenius来转换。右击侧边栏的本地硬盘，选择【转换分区表类型为GUID格式】。</p>
+<p>需要注意的是，<strong>转换GPT需要磁盘尾部有33个扇区的空间</strong>，主要用于存储分区表的备份等。如果尾部空间不足，DiskGenius就会报错。此时，只需调整最后一个分区，在尾部腾出约1MB的空间即可。</p>
+<p>要调整大小，右键点击本地磁盘最后一个分区，选择【调整分区大小】，然后在对话框中，于【分区后部的空间】填入<code>1MB</code>，右侧下拉框选择【保持空闲】，点击【开始】即可调整大小。完毕之后再尝试转换分区表。</p>
+<p>转换完成后，点击工具栏上的【保存更改】。</p>
+<h3 id="在磁盘头部建立ESP、MSR分区"><a href="#在磁盘头部建立ESP、MSR分区" class="headerlink" title="在磁盘头部建立ESP、MSR分区"></a>在磁盘头部建立ESP、MSR分区</h3><p>接下来要调整原第一个分区，在头部腾出空间，以创建ESP和MSR分区（Windows会使用MSR分区）。一般ESP分区不会太大，一般都在1GB以内，通常为100～700MB。MSR分区没有固定容量，笔者见过16～128MB的情况。</p>
+<p><strong>第一步，</strong>右键点击第一个分区，选择【调整分区大小】。本例中，笔者腾出384MB空间，在【分区前部的空间】中输入<code>384MB</code>，点击【开始】以调整。</p>
+<p><strong>第二步，</strong>调整完成后，右击分区头部的空闲空间，选择【建立ESP/MSR分区】。这里勾选【建立ESP分区】，分区大小设为256MB；同时勾选【建立MSR分区】。然后确定。</p>
+<p>如果MSR分区偏小，会在它和后续的分区之间留下一段空闲空间，这时可以右击后续的分区，选择【扩容分区】，让DiskGenius向分区前部扩容。</p>
+<h3 id="写入引导程序"><a href="#写入引导程序" class="headerlink" title="写入引导程序"></a>写入引导程序</h3><p>接下来利用BootIce的“恢复MBR”功能，来写入引导程序。</p>
+<p>打开BootIce，在【目标磁盘】中选择本地磁盘（笔者的是HD0），然后点击【主引导记录】➡️【恢复MBR】，找到并选择<code>Gpt.com</code>（在笔者的电脑上，位于<code>E:\tianocore_uefi_duet_installer-master\BootSector\Gpt.com</code>）。</p>
+<p><strong>一定记得勾选“保留 磁盘签名和分区表不变”，起始扇区号为<code>0</code>，恢复扇区数为<code>1</code>。</strong></p>
+<p>确认无误后，点击【恢复】，即可把引导程序写入磁盘头部。保险起见，打开DiskGenius查看分区表，确保分区表不变。</p>
+<h3 id="给ESP分区写入引导扇区（PBR）"><a href="#给ESP分区写入引导扇区（PBR）" class="headerlink" title="给ESP分区写入引导扇区（PBR）"></a>给ESP分区写入引导扇区（PBR）</h3><p>同样是在BootIce中，确保【目标磁盘】仍是本地磁盘，然后点击【分区引导记录】➡️【恢复PBR】，找到并选择<code>bd32hd.bin</code>（在笔者的电脑上，位于<code>E:\tianocore_uefi_duet_installer-master\BootSector\bd32hd.bin</code>）。</p>
+<p><strong>一定要记得勾选【保留BPB参数表不变】，恢复扇区数为<code>1</code>。</strong>起始扇区号不能设置，保持默认即可。</p>
+<p>确认无误后，点击“恢复”，即可把引导程序写入分区头部。</p>
+<h3 id="检查MBR与分区引导扇区"><a href="#检查MBR与分区引导扇区" class="headerlink" title="检查MBR与分区引导扇区"></a>检查MBR与分区引导扇区</h3><p>为了确认引导程序是否正确写入，可以借助BootIce的扇区编辑功能。</p>
+<p>在【目标磁盘】中选择本地磁盘，点击工具栏最左侧的【分区列表】按钮，选择【MBR】：</p>
+<ul>
+<li>如果<code>Gpt.com</code>写入成功，则右侧窗格下方会有字符串<code>DUET</code>，以及字符<code>G.P.T.S.t.a.r.t.!</code>。</li>
+<li>如果不满足上述条件，则需要重新写入。例如：有字符串<code>Invalid partion table</code>、<code>Missing operating system</code>的，则仍是BOOTMGR的MBR。</li>
+</ul>
+<p>然后再在【分区列表】中选择ESP分区（通常是【GPT0】）：</p>
+<ul>
+<li>如果<code>bd32hd.bin</code>写入成功，则右侧窗格下方会有字符串<code>Missing EFILDR</code>、<code>Bad</code>等；</li>
+<li>如果不满足上述条件，则需要重新写入。例如：有字符串<code>BOOTMGR</code>、<code>Disk error</code>、<code>Press any key to restart</code>的，则仍是BOOTMGR的分区引导扇区。</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>BootIce无法识别Tianocore的引导程序，显示“未知类型引导程序”是正常现象。</p>
+</blockquote>
+<h3 id="复制启动器"><a href="#复制启动器" class="headerlink" title="复制启动器"></a>复制启动器</h3><p>上述工作全部完成后，还差最后一步：把启动器复制到ESP分区中。启动器位于<code>tianocore_uefi_duet_installer-master/Efildr</code>子目录中，分为<code>EDK</code>和<code>UDK</code>两个版本。我们采用后者，它支持AHCI磁盘，而前者只支持旧版的IDE磁盘（兼容模式）。</p>
+<p><strong>1. 给ESP分区分配盘符。</strong>ESP默认是隐藏的。回到BootIce，选择本地磁盘，点击“分区管理”，然后选中ESP分区，点击“分配盘符”。笔者建议选择<code>Z:</code>。</p>
+<p><strong>2. 复制启动器文件。</strong>进入到<code>Efildr</code>目录（笔者电脑为<code>E:\tianocore_uefi_duet_installer-master\Efildr</code>）将以下文件复制到U盘根目录：</p>
+<ul>
+<li><code>UDK_X64/Efildr20</code>（注意，复制到U盘中的文件名改为全大写，即<code>EFILDR20</code>。）</li>
+</ul>
+<p>到此，配置完成。</p>
+<h2 id="引导测试"><a href="#引导测试" class="headerlink" title="引导测试"></a>引导测试</h2><p>安装完成后，重启电脑，从硬盘启动。此时写入的<code>Gpt.com</code>会自动启动ESP分区上的引导扇区，并引导<code>EFILDR20</code>，进入UEFI环境。</p>
+<p>如果存在<code>EFI/BOOT/BOOTx64.EFI</code>，则Tianocore会自动引导，体验就和真正的UEFI环境一样。</p>
+<p>目前启动盘在我的ThinkPad R400上测试通过，可以愉快使用，成功引导另一张U盘里的Ventoy EFI启动器，并借助后者顺利启动了UEFI版的微PE镜像。</p>
+<p>更加痛快地玩起来吧！</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><h3 id="兼容性无法保证"><a href="#兼容性无法保证" class="headerlink" title="兼容性无法保证"></a>兼容性无法保证</h3><p>有的电脑无法运行Tianocore。比如我手上的X200，会卡在<code>Welcome to EFI world!</code>这个界面里，无法继续。但R400则一切正常。制作好启动盘后务必先测试。</p>
+<h3 id="无法保存DUET设置"><a href="#无法保存DUET设置" class="headerlink" title="无法保存DUET设置"></a>无法保存DUET设置</h3><p>Tianocore DUET的设置程序允许直接在“Boot Maintenance Options”中修改参数，例如新增启动菜单项。但由于该项目主要用于开发，它目前是无法保存设置的，重启之后就会自动还原。</p>
+<p>幸而，DUET会默认引导ESP分区中的<code>EFI/BOOT/BOOTx64.EFI</code>，所以只要操作系统的启动器采用这个名字，就无需再做额外的设置。</p>
+<h3 id="另一个版本的DUET启动器"><a href="#另一个版本的DUET启动器" class="headerlink" title="另一个版本的DUET启动器"></a>另一个版本的DUET启动器</h3><p>在<code>tianocore_uefi_duet_installer-master/Efildr</code>中，还有另一个启动器<code>Efildr_FSVariable</code>，它会把EFI启动器的设置存储到专门的文件中（固定为<code>EFIVAR.BIN</code>）。但是据笔者测试，它并不能保存设置，还会导致微PE蓝屏。不建议使用。</p>
+<hr>
+
+        </div>
+        
+        
+        
+        <div class="article-tags">
+            <ul class="tags-list cl">
+                
+                <li><a href="/tags/UEFI/"><i class="fa fa-tag"></i>UEFI</a></li>
+                
+                <li><a href="/tags/MBR/"><i class="fa fa-tag"></i>MBR</a></li>
+                
+                <li><a href="/tags/GPT/"><i class="fa fa-tag"></i>GPT</a></li>
+                
+                <li><a href="/tags/BIOS/"><i class="fa fa-tag"></i>BIOS</a></li>
+                
+            </ul>
+        </div>
+        
+        <div class="article-pagination cl">
+        
+        
+            <div class="pagination-next">
+                <a href="/2022/04/26/BlackMacOS/Tianocore_On_USB_Drive/">U盘安装Tianocore，让BIOS老机器跑上UEFI</a>
+            </div>
+        
+        </div>
+
+        
+    </div>
+</article>
+
     </section>
     
 <section class="tool-area">

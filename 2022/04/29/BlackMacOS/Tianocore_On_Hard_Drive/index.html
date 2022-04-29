@@ -17,14 +17,24 @@
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
 <meta property="og:description" content="在上一篇文章《U盘安装Tianocore，让BIOS老机器跑上UEFI》中，笔者讲解了如何把Tianocore DUET安装到U盘中，作为启动盘引导BIOS的老机器用上UEFI环境。在MBR分区表下，同时利用MBR引导程序与分区引导扇区，引导Tianocore的启动器EFILDR20。理论上用同样的方法可以安装到硬盘中。 当然，Tianocore的可能性远不止于此。得益于BIOS的功能特性，Tia">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_UEFI_convert_no_spare_space.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_add_tail_free_space.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_add_front_free_space.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_after_adding_front_space.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_create_ESP_MSR.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_after_creating_ESP_MSR.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/BootIce_select_disk.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/BootIce_restore_MBR.png">
+<meta property="og:image" content="https://anclark.github.io/assets/img/blog/BootIce_restore_PBR.png">
 <meta property="article:published_time" content="2022-04-29T07:50:00.000Z">
-<meta property="article:modified_time" content="2022-04-29T07:59:59.860Z">
+<meta property="article:modified_time" content="2022-04-29T15:16:27.208Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="UEFI">
 <meta property="article:tag" content="MBR">
 <meta property="article:tag" content="GPT">
 <meta property="article:tag" content="BIOS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://anclark.github.io/assets/img/blog/WinPE_DG_UEFI_convert_no_spare_space.png">
   
     <link rel="alternative" href="/atom.xml" title="爱拼安小匠的技术博客" type="application/atom+xml">
   
@@ -218,7 +228,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.5k字</span>
+      <span class="post-count">2.6k字</span>
     </span>
   </span>
 
@@ -265,18 +275,40 @@
 <h2 id="PE下的操作"><a href="#PE下的操作" class="headerlink" title="PE下的操作"></a>PE下的操作</h2><p>以下使用微PE来演示。</p>
 <h3 id="转换分区表"><a href="#转换分区表" class="headerlink" title="转换分区表"></a>转换分区表</h3><p>如果当前分区表是MBR，则需要使用DiskGenius来转换。右击侧边栏的本地硬盘，选择【转换分区表类型为GUID格式】。</p>
 <p>需要注意的是，<strong>转换GPT需要磁盘尾部有33个扇区的空间</strong>，主要用于存储分区表的备份等。如果尾部空间不足，DiskGenius就会报错。此时，只需调整最后一个分区，在尾部腾出约1MB的空间即可。</p>
+<img src="/assets/img/blog/WinPE_DG_UEFI_convert_no_spare_space.png" class="" title="DiskGenius因尾部空间不足而报错">
+
 <p>要调整大小，右键点击本地磁盘最后一个分区，选择【调整分区大小】，然后在对话框中，于【分区后部的空间】填入<code>1MB</code>，右侧下拉框选择【保持空闲】，点击【开始】即可调整大小。完毕之后再尝试转换分区表。</p>
-<p>转换完成后，点击工具栏上的【保存更改】。</p>
+<img src="/assets/img/blog/WinPE_DG_add_tail_free_space.png" class="" title="缩减分区尾部以腾出空间">
+
+<p>转换完成后，点击工具栏上的【保存更改】，写入分区表。</p>
 <h3 id="在磁盘头部建立ESP、MSR分区"><a href="#在磁盘头部建立ESP、MSR分区" class="headerlink" title="在磁盘头部建立ESP、MSR分区"></a>在磁盘头部建立ESP、MSR分区</h3><p>接下来要调整原第一个分区，在头部腾出空间，以创建ESP和MSR分区（Windows会使用MSR分区）。一般ESP分区不会太大，一般都在1GB以内，通常为100～700MB。MSR分区没有固定容量，笔者见过16～128MB的情况。</p>
 <p><strong>第一步，</strong>右键点击第一个分区，选择【调整分区大小】。本例中，笔者腾出384MB空间，在【分区前部的空间】中输入<code>384MB</code>，点击【开始】以调整。</p>
+<img src="/assets/img/blog/WinPE_DG_add_front_free_space.png" class="" title="缩减分区头部以腾出空间">
+
+<p>调整完成后的效果如下图所示（仅供参考）⬇️</p>
+<img src="/assets/img/blog/WinPE_DG_after_adding_front_space.png" class="" title="分区完成后的效果">
+
 <p><strong>第二步，</strong>调整完成后，右击分区头部的空闲空间，选择【建立ESP/MSR分区】。这里勾选【建立ESP分区】，分区大小设为256MB；同时勾选【建立MSR分区】。然后确定。</p>
+<img src="/assets/img/blog/WinPE_DG_create_ESP_MSR.png" class="" title="建立ESP、MBR分区">
+
+<p><strong>第三步，</strong>点击工具栏的【保存更改】。此时DiskGenius会询问是否立即格式化ESP分区，选择【是】。</p>
+<p>完成分区后的效果如下图所示（仅供参考）⬇️</p>
+<img src="/assets/img/blog/WinPE_DG_after_creating_ESP_MSR.png" class="" title="分区完成后的效果">
+
 <p>如果MSR分区偏小，会在它和后续的分区之间留下一段空闲空间，这时可以右击后续的分区，选择【扩容分区】，让DiskGenius向分区前部扩容。</p>
 <h3 id="写入引导程序"><a href="#写入引导程序" class="headerlink" title="写入引导程序"></a>写入引导程序</h3><p>接下来利用BootIce的“恢复MBR”功能，来写入引导程序。</p>
-<p>打开BootIce，在【目标磁盘】中选择本地磁盘（笔者的是HD0），然后点击【主引导记录】➡️【恢复MBR】，找到并选择<code>Gpt.com</code>（在笔者的电脑上，位于<code>E:\tianocore_uefi_duet_installer-master\BootSector\Gpt.com</code>）。</p>
+<p>打开BootIce，在【目标磁盘】中选择本地磁盘（笔者的是HD0）。</p>
+<img src="/assets/img/blog/BootIce_select_disk.png" class="" title="选择磁盘">
+
+<p>然后点击【主引导记录】➡️【恢复MBR】，找到并选择<code>Gpt.com</code>（在笔者的电脑上，位于<code>E:\tianocore_uefi_duet_installer-master\BootSector\Gpt.com</code>）。</p>
 <p><strong>一定记得勾选“保留 磁盘签名和分区表不变”，起始扇区号为<code>0</code>，恢复扇区数为<code>1</code>。</strong></p>
+<img src="/assets/img/blog/BootIce_restore_MBR.png" class="" title="恢复MBR">
+
 <p>确认无误后，点击【恢复】，即可把引导程序写入磁盘头部。保险起见，打开DiskGenius查看分区表，确保分区表不变。</p>
 <h3 id="给ESP分区写入引导扇区（PBR）"><a href="#给ESP分区写入引导扇区（PBR）" class="headerlink" title="给ESP分区写入引导扇区（PBR）"></a>给ESP分区写入引导扇区（PBR）</h3><p>同样是在BootIce中，确保【目标磁盘】仍是本地磁盘，然后点击【分区引导记录】➡️【恢复PBR】，找到并选择<code>bd32hd.bin</code>（在笔者的电脑上，位于<code>E:\tianocore_uefi_duet_installer-master\BootSector\bd32hd.bin</code>）。</p>
 <p><strong>一定要记得勾选【保留BPB参数表不变】，恢复扇区数为<code>1</code>。</strong>起始扇区号不能设置，保持默认即可。</p>
+<img src="/assets/img/blog/BootIce_restore_PBR.png" class="" title="恢复PBR">
+
 <p>确认无误后，点击“恢复”，即可把引导程序写入分区头部。</p>
 <h3 id="检查MBR与分区引导扇区"><a href="#检查MBR与分区引导扇区" class="headerlink" title="检查MBR与分区引导扇区"></a>检查MBR与分区引导扇区</h3><p>为了确认引导程序是否正确写入，可以借助BootIce的扇区编辑功能。</p>
 <p>在【目标磁盘】中选择本地磁盘，点击工具栏最左侧的【分区列表】按钮，选择【MBR】：</p>

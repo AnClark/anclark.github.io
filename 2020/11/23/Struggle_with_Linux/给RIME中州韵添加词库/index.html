@@ -18,10 +18,12 @@
 <meta property="og:description" content="RIME输入法是现在我在Linux下输入中文的首选，流畅的使用体验，配合ThinkPad X200细腻温润的击键，让打字成为一种享受。它词库的可拓展性也相当可观，在开源社区维护的词库加持下，加载你喜欢的词库，可获得不亚于搜狗云输入的体验。 不过Linux下的RIME并未提供图形设置界面，所有的设置都需用户根据教程来手动编修配置文件，有些挑战性。好在它的设置有规律可循，可按部就班完成设置。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-23T08:42:00.000Z">
-<meta property="article:modified_time" content="2022-04-26T08:42:37.858Z">
+<meta property="article:modified_time" content="2022-05-03T08:18:55.535Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Arch Linux">
+<meta property="article:tag" content="输入法">
+<meta property="article:tag" content="Fcitx">
 <meta property="article:tag" content="RIME">
 <meta name="twitter:card" content="summary">
   
@@ -244,9 +246,15 @@
 <h2 id="下载词库"><a href="#下载词库" class="headerlink" title="下载词库"></a>下载词库</h2><p>RIME的配置文件分为用户配置和预置配置。其中：</p>
 <ul>
 <li><strong>预置</strong>的配置文件和词库均位于<code>/usr/share/rime-data/</code>当中，需Root权限；</li>
-<li><strong>用户</strong>的配置文件位于<code>~/.config/fcitx/rime</code>或<code>~/.config/ibus/rime</code>当中，视你安装的输入法框架（Fcitx或IBUS）而定。</li>
+<li><strong>用户</strong>的配置文件位于以下目录，视你安装的输入法框架（Fcitx或IBUS）及其版本而定：<ul>
+<li><code>~/.config/fcitx/rime</code>（Fcitx4）</li>
+<li><code>~/.local/share/fcitx5</code>（Fcitx5）</li>
+<li>``~/.config/ibus/rime`（IBUS）</li>
 </ul>
-<p>其中<strong>词库以<code>*.dict.yaml</code>为扩展名</strong>，是一个纯文本文件。无论是社区发布，还是你用<a target="_blank" rel="noopener" href="https://github.com/studyzy/imewlconverter">imewlconverter</a>从其他输入法转换的词库，均为这个格式。下载后把它们放在<strong>预置</strong>目录下，以确保全局可用。</p>
+</li>
+</ul>
+<p>其中<strong>词库以<code>*.dict.yaml</code>为扩展名</strong>，是一个纯文本文件。无论是社区发布，还是你用<a target="_blank" rel="noopener" href="https://github.com/studyzy/imewlconverter">imewlconverter</a>从其他输入法转换的词库，均为这个格式。</p>
+<p><strong>词库下载后，把它们放在预置目录下，以确保全局可用。</strong></p>
 <p>例如，在Arch Linux CN中提供了以下两个词库，安装相应的包，会自动在<code>/usr/share/rime-data/</code>中创建相应的词库文件：</p>
 <table>
 <thead>
@@ -293,7 +301,7 @@
 <ol>
 <li>在用户配置目录里创建与预置词库同名的文件（四叶草的词库文件名为<code>clover.dict.yaml</code>）；</li>
 <li>填入与预置目录中原版词库文件一致的内容（下文直接使用官方教程提供的模板）；</li>
-<li>在<code>import_table:</code>字段中加入你自己的词库；</li>
+<li>在<code>import_table:</code>字段中加入你自己的词库（下文中的词库已经放在了预置目录里）；</li>
 <li>重新部署生效。</li>
 </ol>
 <p>以下是一个例子（我的<code>~/.config/fcitx/clover.dict.yaml</code>）：</p>
@@ -394,6 +402,14 @@
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">输入法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Fcitx</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -660,15 +676,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -681,6 +705,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -700,14 +732,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
@@ -717,14 +741,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cherry Pick</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -756,35 +772,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -816,6 +808,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
               </li>
              
@@ -824,15 +820,43 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -848,11 +872,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
+                <a href="javascript:void(0)" class="js-tag color4">输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Fcitx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">RIME</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -864,14 +900,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Snapd</a>
               </li>
              
@@ -880,15 +908,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
+                <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RIME</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,11 +932,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color5">垂直同步</a>
               </li>
             
             <div class="clearfix"></div>

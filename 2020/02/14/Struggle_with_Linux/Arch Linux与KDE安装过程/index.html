@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/arch_kde_disable_kde_bell.png">
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/arch_kde_do_not_restore_last_session.png">
 <meta property="article:published_time" content="2020-02-14T00:50:00.000Z">
-<meta property="article:modified_time" content="2022-05-03T13:29:40.943Z">
+<meta property="article:modified_time" content="2022-05-13T05:47:49.895Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="Linux 安装">
 <meta property="article:tag" content="Arch Linux">
@@ -221,7 +221,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">8.1k字</span>
+      <span class="post-count">8.3k字</span>
     </span>
   </span>
 
@@ -230,7 +230,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">31分</span>
+      <span class="post-count">32分</span>
     </span>
   </span>
 </div>
@@ -244,7 +244,7 @@
     <p>玩转Arch Linux是一件非常有成就感的事情，尤其是自己动手一步步安装它、配置它、折腾它，把它打造成自己理想的操作系统。刚开始看似很难，官方提供的镜像就是一个没有任何桌面环境的bare system（裸系统）。但这正是Arch Linux的闪光点——高定制性，所有的组件均可以通过官方镜像，来给目标系统安装上，想要什么组件就装什么组件，系统归你掌握。</p>
 <p>近日，我成功给我的上古ThinkPad X200装上了Arch Linux，并配置好了KDE，把经验总结如下。</p>
 <blockquote>
-<p><strong>提示：</strong>本文会根据我实践的体验，持续修订。最近修订：2022.5.3。</p>
+<p><strong>提示：</strong>本文会根据我实践的体验，持续修订。最近修订：2022.5.13。</p>
 </blockquote>
 <span id="more"></span>
 
@@ -641,8 +641,18 @@
 <p>如果KDE设置中的“打印机设置”不可用，则安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S print-manager		<span class="hljs-comment"># 包含在了kde-utilities套组中</span><br></code></pre></td></tr></table></figure>
 
-<p>这样，既可以在KDE设置的“打印机设置”中管理打印机，也可以登录<a target="_blank" rel="noopener" href="http://localhost:631/">http://localhost:631</a>以使用CUPS的WebUI进行管理。</p>
-<h4 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h4><p>关于打印机驱动的安装，可参考以下的文章：</p>
+<p>在添加打印机时，会出现<code>The name org.fedoraproject.Config.Printing was not provided by any .service files</code>的错误提示，安装以下软件包解决此问题（实际上不影响驱动安装）。这是Gnome下的打印机管理程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S system-config-printer<br></code></pre></td></tr></table></figure>
+
+<p>配置完成后，既可以在KDE设置的“打印机设置”中管理打印机，也可以登录<a target="_blank" rel="noopener" href="http://localhost:631/">http://localhost:631</a>使用CUPS的WebUI进行管理。</p>
+<h4 id="安装Foomatic打印机数据库"><a href="#安装Foomatic打印机数据库" class="headerlink" title="安装Foomatic打印机数据库"></a>安装Foomatic打印机数据库</h4><p>安装完成上述组件后，打印机驱动列表只有寥寥几款驱动可选，这是因为没有安装Foomatic数据库。</p>
+<p>Foomatic收录了各个品牌常见型号的打印机驱动，一般的发行版都已经自带，而在Arch Linux中显然需要手动安装。同时安装以下包，以支持大多数品牌的打印机。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S foomatic-db foomatic-db-ppds                  <span class="hljs-comment"># 基本驱动程序</span><br>sudo pacman -S foomatic-db-nonfree foomatic-db-nonfree-ppds  <span class="hljs-comment"># 非自由软件的驱动</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示：</strong>非自由软件驱动见于Xerox和极个别西方品牌打印机（如Genicom、Lexmark）。</p>
+</blockquote>
+<h4 id="安装其他品牌驱动"><a href="#安装其他品牌驱动" class="headerlink" title="安装其他品牌驱动"></a>安装其他品牌驱动</h4><p>如果Foomatic数据库没有提供你想要的驱动程序，可参考以下的文章：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://www.mintos.org/hard/printer-driver.html">《方法论：如何驱动各品牌打印机》</a>。作者列举了惠普、三星、兄弟工业（Brothers），以及日系品牌（佳能、富士、爱普生等）的打印机驱动安装方法。首推惠普打印机，它对Linux的支持最完善，其次是三星和兄弟（<small>其实兄弟工业也是日系，但对Linux支持较好</small>）。</li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Edison_404/article/details/78048582">ArchLinux使用HP打印机</a>。只需安装<code>hpoj, hplip</code>这两个包，即可驱动惠普主流型号的打印机。</li>
@@ -1003,6 +1013,22 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
               </li>
              
@@ -1027,34 +1053,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配教程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android 适配笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
@@ -1072,6 +1070,18 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1127,6 +1137,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
               </li>
              
@@ -1155,11 +1173,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1252,26 +1282,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
               </li>
              
               <li class="article-tag-list-item">

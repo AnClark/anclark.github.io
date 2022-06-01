@@ -184,6 +184,116 @@
             
 
   
+    <article id="post-Struggle_with_Linux/ThinkPad充电管理驱动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/06/01/Struggle_with_Linux/ThinkPad%E5%85%85%E7%94%B5%E7%AE%A1%E7%90%86%E9%A9%B1%E5%8A%A8/" target="_blank">使用TP SMAPI驱动，保护ThinkPad的电池</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/06/01/Struggle_with_Linux/ThinkPad%E5%85%85%E7%94%B5%E7%AE%A1%E7%90%86%E9%A9%B1%E5%8A%A8/" class="archive-article-date">
+        <time datetime="2022-06-01T13:24:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>添置了一台ThinkPad R400作为新的主力机，按照惯例装上Arch Linux，并换一块全新的电池。结果没用多久，电池的寿命就只剩下90%了，真是心疼，亏我买的是7800mAh的大容量！</p>
+<p>查一查不难知道，早期ThinkPad适用的锂离子电池，在循环充电数次后，寿命就会下降。所谓循环充电，指的就是电量用尽后再充满。想想我坚持这种错误的用法也有两周有余，电池不损耗才怪！</p>
+<p>正确的维护方法，应当是每次充电时不要充满，充到90%左右为止，这样可以大大延长电池寿命。早期的ThinkPad，在Windows下可以配合联想官方的ThinkVantage管理软件与“联想电源管理”程序，防止过充，保护电池。但是，该工具早已不支持Windows 10（安装时直接弹出兼容性警告而无法继续），况且我用的是Arch Linux。</p>
+<p>所幸天无绝人之路，在Linux下也有适用于ThinkPad的电源管理驱动——TP SMAPI。它可以访问早期ThinkPad主板上搭载的控制芯片，来直接控制ThinkPad的充电行为。接下来的教程就是利用该驱动来限制充电量，弥补Linux缺少“联想电源管理”的缺憾。</p>
+    
+    <a class="article-more-a" href="/2022/06/01/Struggle_with_Linux/ThinkPad%E5%85%85%E7%94%B5%E7%AE%A1%E7%90%86%E9%A9%B1%E5%8A%A8/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ThinkPad</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">电池</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/06/01/Struggle_with_Linux/ThinkPad%E5%85%85%E7%94%B5%E7%AE%A1%E7%90%86%E9%A9%B1%E5%8A%A8/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Struggle_with_Linux/MW2Fcitx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1270,131 +1380,6 @@
 
 
   
-    <article id="post-Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" target="_blank">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" class="archive-article-date">
-        <time datetime="2020-11-25T10:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <blockquote>
-<p>上回讲到，在Arch Linux里装上JACK2音频服务，能够在Linux下造就低延迟的音频体验，音乐制作必备。</p>
-<p><strong>传送门——</strong><a href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" title="把Arch Linux打造成音乐工作站（一）：安装与配置JACK">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a></p>
-</blockquote>
-<p>除了使用LMMS等原生的DAW，还可以试试Windows下专属的软件。借助Wine的力量，在Arch Linux中可以愉快运行不少Windows专享的DAW和VST插件。要想让它们在低延迟的音频设备里运行，发挥出最佳的效果，WineASIO必不可少。</p>
-<p>WineASIO是一款在Wine中运行的ASIO驱动，它的作用是在支持ASIO的音频应用里提供一个“桥梁”，沟通宿主音频应用与JACK。这和Windows下的ASIO驱动不同，后者可直接访问硬件，而在Linux中任何音频设备都由ALSA连接。</p>
-<p>下面讲讲怎样在躲掉一个个坑的情况下，成功装好WineASIO。</p>
-    
-    <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">音乐制作</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">软件配置</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ASIO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/" class="article-tag-list-link color5">音乐制作</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/" class="article-tag-list-link color5">Linux下做音乐</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1688,26 +1673,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
               </li>
              
@@ -1749,6 +1714,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">萌娘百科</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ThinkPad</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电池</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1797,6 +1770,26 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">乱码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">

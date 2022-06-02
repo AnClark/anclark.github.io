@@ -18,7 +18,7 @@
 <meta property="og:description" content="添置了一台ThinkPad R400作为新的主力机，按照惯例装上Arch Linux，并换一块全新的电池。结果没用多久，电池的寿命就只剩下90%了，真是心疼，亏我买的是7800mAh的大容量！ 查一查不难知道，早期ThinkPad适用的锂离子电池，在循环充电数次后，寿命就会下降。所谓循环充电，指的就是电量用尽后再充满。想想我坚持这种错误的用法也有两周有余，电池不损耗才怪！ 正确的维护方法，应当是每">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-01T13:24:20.000Z">
-<meta property="article:modified_time" content="2022-06-01T14:22:13.194Z">
+<meta property="article:modified_time" content="2022-06-02T05:46:51.291Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="ThinkPad">
 <meta property="article:tag" content="电池">
@@ -247,6 +247,8 @@
 </li>
 <li><p><strong>本教程的TP SMAPI驱动仅适用于早期的ThinkPad，也就是“2字辈”诞生之前的产品。</strong>“2字辈”指X220系列、T420、W520等，采用第二代酷睿处理器的设备，从这一代开始联想就把小黑的遗产一步步抛弃。</p>
 </li>
+<li><p>重新插拔电池后，充电参数可能会恢复到默认值，你需要重新设置。如果你经常换电池，可以参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Tp_smapi#General_way">ArchWiki里提到的解决方案</a>。</p>
+</li>
 </ul>
 <h2 id="安装TP-SMAPI驱动"><a href="#安装TP-SMAPI驱动" class="headerlink" title="安装TP SMAPI驱动"></a>安装TP SMAPI驱动</h2><h3 id="使用标准内核时"><a href="#使用标准内核时" class="headerlink" title="使用标准内核时"></a>使用标准内核时</h3><p>Arch Linux的官方源收录了TP SMAPI驱动：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">➜  ~ pacman -Ss tp smapi<br>community/tp_smapi 0.43-396<br>    Modules <span class="hljs-keyword">for</span> ThinkPad<span class="hljs-string">&#x27;s SMAPI functionality</span><br><span class="hljs-string">community/tp_smapi-lts 0.43-242 [已安装]</span><br><span class="hljs-string">    Modules for ThinkPad&#x27;</span>s SMAPI functionality<br></code></pre></td></tr></table></figure>
@@ -268,14 +270,11 @@
 <p><strong>注意：</strong> 更新内核时，头文件包也要同步更新！</p>
 </blockquote>
 <h2 id="激活TP-SMAPI驱动"><a href="#激活TP-SMAPI驱动" class="headerlink" title="激活TP SMAPI驱动"></a>激活TP SMAPI驱动</h2><h3 id="立即激活驱动"><a href="#立即激活驱动" class="headerlink" title="立即激活驱动"></a>立即激活驱动</h3><p>直接运行以下命令即可：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 标准内核下</span><br>sudo modprobe tp_smapi<br><br><span class="hljs-comment"># 非标准内核下（用DKMS）</span><br>sudo modprobe tp_smapi-dkms<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo modprobe tp_smapi<br></code></pre></td></tr></table></figure>
 
 <h3 id="重启后自动激活"><a href="#重启后自动激活" class="headerlink" title="重启后自动激活"></a>重启后自动激活</h3><p>安装完成后，还需让系统在启动时自动加载驱动。</p>
 <p>在<code>/lib/modules-load.d/</code>里建立一个新文件<code>tp_smapi.conf</code>（可以是其他名字），填入以下内容：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">tp_smapi<br></code></pre></td></tr></table></figure>
-
-<p>如果安装的是<code>tp_smapi-dkms</code>，则填入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">tp_smapi-dkms<br></code></pre></td></tr></table></figure>
 
 <p>建立这个配置文件后，下次重启时，系统就能自动加载<code>tp_smapi</code>驱动了。</p>
 <h2 id="设置充电参数"><a href="#设置充电参数" class="headerlink" title="设置充电参数"></a>设置充电参数</h2><h3 id="参数作用"><a href="#参数作用" class="headerlink" title="参数作用"></a>参数作用</h3><p>驱动激活之后，会创建文件夹<code>/sys/devices/platform/smapi/</code>，内容如下所示：</p>
@@ -303,7 +302,7 @@
 <p>期待持续使用后，电池寿命能继续得到保证，从此可以放心使用ThinkPad了。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.thinkwiki.org/wiki/Tp_smapi">Tp smapi - ThinkWiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Tp_smapi">Tp smapi - ArchWiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Tp_smapi">Tp smapi - ArchWiki</a>，包含了更进阶的用法。</li>
 </ul>
 
     
@@ -787,6 +786,26 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
               </li>
              
@@ -884,26 +903,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">

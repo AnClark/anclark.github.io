@@ -184,6 +184,113 @@
             
 
   
+    <article id="post-Struggle_with_Linux/Prefer_dhclient" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/" target="_blank">不用dhcpcd，改用dhclient的理由</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/" class="archive-article-date">
+        <time datetime="2022-06-13T05:38:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>包括Arch Linux在内的诸多Linux发行版，默认的DHCP客户端是dhcpcd。但它并不是放之四海都适用，我在不同的电脑使用时，就遭遇严重的问题。而换用另一款DHCP客户端——dhclient后，竟然都能迎刃而解。</p>
+    
+    <a class="article-more-a" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DHCP</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Struggle_with_Linux/ThinkPad充电管理驱动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1252,134 +1359,6 @@
 
 
   
-    <article id="post-Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" target="_blank">把Arch Linux打造成音乐工作站（一）：安装与配置JACK</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/" class="archive-article-date">
-        <time datetime="2020-12-08T10:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>相较于Windows，作为开发者首选的系统之一，Arch Linux有以下难以比拟的优势：</p>
-<ul>
-<li>运行速度快，内存占用量较小，轻便自在；</li>
-<li>Pacman软件库，应有尽有，安装开发工具轻而易举；</li>
-<li>安全可靠，不怕病毒；</li>
-<li>对老电脑、老设备分外友好，十年前的ThinkPad X200照样做主力。</li>
-</ul>
-<p>不过，不管是哪个发行版，Linux总有一点比不上Windows和MacOS，就是音乐制作——很少有音频软件厂商能够提供原生支持Linux的音乐制作工具。尤其是Native Instruments这样的业界巨头，只专注于Windows和MacOS，不会为Linux提供任何支持。实在是可叹。</p>
-<p>幸运的是，开源的力量是无穷的，既然Linux能普及，总有大佬在填补这方面的空白。各种适用于Linux的音乐制作工具链应运而生，从底层驱动级别的JACK，到对标业界标准插件规范（VST、RTAX、AAX、DX、AU）的LADSPA，甚至完整的DAW——LMMS、Ardour、REAPER for Linux，应有尽有。从此，Linux不再是没有音乐人造访的荒漠。</p>
-<p>要把你的Arch Linux打造成音乐工作站，首先要做的就是<strong>配置音频服务——JACK</strong>。JACK是一套高性能、低延迟的音频服务程序，它基于Linux底层的ALSA，可为音频应用程序提供低延迟的音频回放、录制支持，相当于Windows下的ASIO，以及MacOS下的CoreAudio。</p>
-    
-    <a class="article-more-a" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">音乐制作</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">软件配置</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JACK</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/" class="article-tag-list-link color5">音乐制作</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/%E9%9F%B3%E4%B9%90%E5%88%B6%E4%BD%9C/Linux%E4%B8%8B%E5%81%9A%E9%9F%B3%E4%B9%90/" class="article-tag-list-link color5">Linux下做音乐</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/12/08/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_01/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1734,6 +1713,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">萌娘百科</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
               </li>
              
               <li class="article-tag-list-item">

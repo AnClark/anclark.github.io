@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/JACK2_sink_with_PulseAudio.png">
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/cadence_configure_driver.png">
 <meta property="article:published_time" content="2020-12-08T10:57:00.000Z">
-<meta property="article:modified_time" content="2022-04-26T08:42:37.000Z">
+<meta property="article:modified_time" content="2022-07-07T13:40:41.312Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Linux">
@@ -224,7 +224,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.6k字</span>
+      <span class="post-count">1.9k字</span>
     </span>
   </span>
 
@@ -233,7 +233,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
+      <span class="post-count">6分</span>
     </span>
   </span>
 </div>
@@ -254,6 +254,9 @@
 <p>不过，不管是哪个发行版，Linux总有一点比不上Windows和MacOS，就是音乐制作——很少有音频软件厂商能够提供原生支持Linux的音乐制作工具。尤其是Native Instruments这样的业界巨头，只专注于Windows和MacOS，不会为Linux提供任何支持。实在是可叹。</p>
 <p>幸运的是，开源的力量是无穷的，既然Linux能普及，总有大佬在填补这方面的空白。各种适用于Linux的音乐制作工具链应运而生，从底层驱动级别的JACK，到对标业界标准插件规范（VST、RTAX、AAX、DX、AU）的LADSPA，甚至完整的DAW——LMMS、Ardour、REAPER for Linux，应有尽有。从此，Linux不再是没有音乐人造访的荒漠。</p>
 <p>要把你的Arch Linux打造成音乐工作站，首先要做的就是<strong>配置音频服务——JACK</strong>。JACK是一套高性能、低延迟的音频服务程序，它基于Linux底层的ALSA，可为音频应用程序提供低延迟的音频回放、录制支持，相当于Windows下的ASIO，以及MacOS下的CoreAudio。</p>
+<blockquote>
+<p><strong>最后修订：</strong>2022年7月7日。</p>
+</blockquote>
 <span id="more"></span>
 
 <h2 id="安装哪个版本的JACK？"><a href="#安装哪个版本的JACK？" class="headerlink" title="安装哪个版本的JACK？"></a>安装哪个版本的JACK？</h2><p>一般的发行版会提供两个版本的JACK：</p>
@@ -267,6 +270,7 @@
 <li>JACK2：包名为<code>jack2</code>，用C++重写的版本：<ul>
 <li>支持DBus协议控制</li>
 <li>支持将PulseAudio、ALSA重定向到JACK，从而兼顾其他使用这两种音频服务的程序</li>
+<li>支持重定向ALSA MIDI，使MIDI设备在低延迟、高性能环境下工作</li>
 <li>无需配置权限即可使用</li>
 </ul>
 </li>
@@ -274,16 +278,27 @@
 <p>先给出结论——<strong>选择JACK2，不要选择JACK1！</strong></p>
 <p>虽然JACK1是最初版本，包括Manjaro、Artix Community在内的多款发行版都有预装，但它并不是开箱即用的。想要使用JACK1，首先要配置realtime权限，然后再把当前用户添加到<code>audio</code>用户组中，重新登录后再通过QJackCtl这类工具来手工启用JACK服务，非常麻烦。</p>
 <p>加之，JACK，和PulseAudio是独占访问声卡的，其中PulseAudio是各大Linux发行版和各种应用首选的音频服务，这就意味着一旦开启JACK，其他应用程序就无法出声，甚至会引起一些无法预料的错误。</p>
-<p>相较于此，重写的JACK2则解决了上述两大硬伤。首先，JACK2使用了全新的架构，默认情况下无需依赖realtime权限和<code>audio</code>用户组即可运行，和PulseAudio一样都能直接运行于用户空间（区别于root权限下的系统服务）。其次，开发者设计了一套“桥接（Bridging）”机制，能够把ALSA和PulseAudio重定向到JACK里来，从而保证其他使用了PulseAudio的应用程序仍能正常使用，听歌做歌两不误。</p>
+<p>相较于此，重写的JACK2则解决了上述两大硬伤。</p>
+<ul>
+<li>首先，JACK2使用了全新的架构，默认情况下无需依赖realtime权限和<code>audio</code>用户组即可运行，和PulseAudio一样都能直接运行于用户空间（区别于root权限下的系统服务）。</li>
+<li>其次，开发者设计了一套“桥接（Bridging）”机制，能将来自其他接口（ALSA、PulseAudio等）的音频、MIDI等数据重定向到JACK里来，从而使用其他音频接口的程序仍能正常使用。例如，PulseAudio的桥接，可以保证其他使用了PulseAudio的应用程序仍能出声，听歌做歌两不误。</li>
+</ul>
 <p>显然，<strong>首选的JACK版本非JACK2莫属。</strong></p>
-<h2 id="安装与启动JACK2"><a href="#安装与启动JACK2" class="headerlink" title="安装与启动JACK2"></a>安装与启动JACK2</h2><p>首先安装JACK2，以及JACK2的音频控制面板Cadence：</p>
+<h2 id="安装JACK2"><a href="#安装JACK2" class="headerlink" title="安装JACK2"></a>安装JACK2</h2><p>首先安装JACK2，以及JACK2的音频控制面板Cadence。Cadence是一款优雅的JACK2控制面板，功能全面。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -Ss jack2 cadence<br></code></pre></td></tr></table></figure>
 
-<p>Cadence是一款优雅的JACK2控制面板，功能全面。首先打开它：</p>
+<p>接着，安装用于桥接JACK2与其他音频接口的软件包，根据自己的需要选择。建议至少安装<code>pulseaudio-jack</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S pulseaudio-jack    <span class="hljs-comment"># PulseAudio ➡️ JACK2</span><br>sudo pacman -S zita-ajbridge      <span class="hljs-comment"># ALSA ➡️ JACK2</span><br>sudo pacman -S a2jmidid           <span class="hljs-comment"># ALSA MIDI ➡️ JACK2</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，将当前用户添加到<code>audio</code>用户组中。这不是强制要求，但该步骤似乎也与桥接功能有关，建议一并完成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 假设当前用户名为&quot;username&quot;</span><br>sudo usermod --append -G audio username<br></code></pre></td></tr></table></figure>
+
+<p><strong>最后，重启电脑，使上述所有修改生效。</strong>若不重启则无法使用桥接功能。</p>
+<h2 id="启动JACK2"><a href="#启动JACK2" class="headerlink" title="启动JACK2"></a>启动JACK2</h2><p>接下来，JACK2的管理均由Cadence完成，无需使用命令行。首先打开Cadence：</p>
 <img src="/assets/img/blog/cadence_main_ui.png" class="" title="Cadence 主界面">
 
 <p><small><strong>图1</strong> Cadence主界面</small></p>
-<p>然后<strong>点击_【JACK Status】_部分的_【Start】_，启动JACK服务</strong>。若启动成功，则该部分会显示以下内容，表示JACK2启动成功，并给出当前的运行参数。</p>
+<p>然后<strong>点击 <em>【JACK Status】</em> 部分的 <em>【Start】</em> ，启动JACK服务</strong>。若启动成功，则该部分会显示以下内容，表示JACK2启动成功，并给出当前的运行参数。</p>
 <img src="/assets/img/blog/cadence_jack_started.png" class="" title="JACK启动成功">
 
 <p><small><strong>图2</strong> JACK启动成功后，Cadence显示的状态</small></p>
@@ -296,17 +311,17 @@
 <p><strong>提示：</strong></p>
 <ul>
 <li>可以勾选【Auto-start JACK or LADISH at login】，设置Cadence与JACK2服务的自启动。</li>
-<li>桥接启用后，<strong>原有声卡设备（见图3上方）的音量控制仍然起作用，用于控制输出的主音量</strong>。</li>
+<li>桥接启用后，<strong>原有声卡设备的音量控制仍然起作用，用于控制输出的主音量</strong>。（例如，图3上方的“ <em>Speakers（内置音频 模拟立体声）</em> ”。）</li>
 </ul>
 </blockquote>
 <h2 id="设置输出设备"><a href="#设置输出设备" class="headerlink" title="设置输出设备"></a>设置输出设备</h2><p>默认地，Cadence会把输出设备设置为Dummy（空设备），会导致无法出声。因此要手动设置音频设备。</p>
-<p>在Cadence主界面里，<strong>点击_【JACK Status】_部分的_【Configure】_，进入JACK设置</strong>，然后<strong>点选_【Drivers】_选项卡</strong>。</p>
+<p>在Cadence主界面里，<strong>点击 <em>【JACK Status】</em> 部分的 <em>【Configure】</em> ，进入JACK设置</strong>，然后<strong>点选 <em>【Drivers】</em> 选项卡</strong>。</p>
 <p>左边【Drivers】一栏有五种输出设备：ALSA（调用本地声卡）、Dummy（空设备）、Loopback（回环）、Net/NetOne（网络源）。<strong>点选ALSA，以使用我们的声卡。</strong>其余选项不常用。</p>
 <img src="/assets/img/blog/cadence_configure_driver.png" class="" title="设置Cadence声卡">
 
 <p><small><strong>图4</strong> 设置Cadence输出设备</small></p>
 <p>此时右边就会显示出可用的设置项。</p>
-<p>看到**_【Device】_部分**，设置输出设备。注意下面几个设置项，按下表设置好：</p>
+<p>看到 <strong><em>【Device】</em> 部分</strong> ，设置输出设备。注意下面几个设置项，按下表设置好：</p>
 <table>
 <thead>
 <tr>
@@ -336,7 +351,7 @@
 <td>默认值为<code>0</code>，会自动指向该设备支持的最大通道数</td>
 </tr>
 </tbody></table>
-<p>然后看到**_【Properties】_部分**，设置以下两个参数：</p>
+<p>然后看到 <strong>_【Properties】_部分</strong> ，设置以下两个参数：</p>
 <table>
 <thead>
 <tr>
@@ -348,7 +363,7 @@
 <tbody><tr>
 <td>Sample Rate</td>
 <td>采样率</td>
-<td>一般音乐制作用<code>44100</code>或<code>48000</code>即可<br>要求音质则可用<code>96000</code>或<code>192000</code>，但声卡不一定能支持。</td>
+<td>一般音乐制作用<code>44100</code>或<code>48000</code>即可<br>要求更高音质则可用<code>96000</code>或<code>192000</code>，但声卡不一定能支持。</td>
 </tr>
 <tr>
 <td>Buffer Size</td>
@@ -357,7 +372,7 @@
 </tr>
 </tbody></table>
 <p><strong>其他参数保持默认值即可。</strong></p>
-<p>设置完成后确认，先后点击**<em>【Stop】</em>**和_<strong>【Start】</strong>_，重启JACK，即可生效。</p>
+<p>设置完成后确认，先后点击 <strong>_ 【Stop】_</strong> 和_<strong>【Start】</strong>_，重启JACK，即可生效。</p>
 <h2 id="下集继续……"><a href="#下集继续……" class="headerlink" title="下集继续……"></a>下集继续……</h2><p>接下来，我会讲解如何设置WineASIO，让你能畅快地通过Wine来运行Windows下支持ASIO的音频软件。</p>
 <p><strong>传送门</strong>——<a href="/2020/11/25/Linux_Audio_Production/Make_Your_ArchLinux_An_Audio_Workstation_02/" title="把Arch Linux打造成音乐工作站（二）：安装WineASIO">把Arch Linux打造成音乐工作站（二）：安装WineASIO</a></p>
 

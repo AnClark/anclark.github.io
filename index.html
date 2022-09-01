@@ -184,6 +184,142 @@
             
 
   
+    <article id="post-Struggle_with_Linux/修复BIOS+GPT引导" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/" target="_blank">修复F2FS主分区下Grub BIOS+GPT引导</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/" class="archive-article-date">
+        <time datetime="2022-09-01T12:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>在给我的ThinkPad X201T安装Manjaro的时候，由于这台电脑年代久远，不支持UEFI（至少从X220系列才开始支持），所以我首先选择MBR分区表。</p>
+<p>但随后，安装程序竟然建议我使用GPT分区表。它特地说明，GPT同时兼容BIOS和UEFI，在BIOS下只需分配一个8MB的主分区，并给分区加上<code>bios_boot</code>即可。这一切都可以在图形安装程序下进行。</p>
+<p>喜欢尝鲜的我，果断尝试GPT，给硬盘分了两个区，继续安装，最后成功引导进入安装后的系统：</p>
+<table>
+<thead>
+<tr>
+<th>分区</th>
+<th>大小</th>
+<th>文件系统</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/dev/sda1</code></td>
+<td>8MB</td>
+<td>Grub <code>core.img</code>（引导程序）</td>
+<td>Grub引导分区</td>
+</tr>
+<tr>
+<td><code>/dev/sda2</code></td>
+<td>119GB</td>
+<td>F2FS</td>
+<td>主分区，根目录</td>
+</tr>
+</tbody></table>
+<p>然而，我高兴得太早了。</p>
+    
+    <a class="article-more-a" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">GPT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Grub</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Network/OpenWRT_Qemu" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1228,123 +1364,6 @@
 
 
   
-    <article id="post-Struggle_with_Linux/解决Linux下zip压缩包乱码的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">解决Linux下ZIP压缩包乱码的问题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-        <time datetime="2020-12-11T02:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-11</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>在Linux中打开一些ZIP压缩包，不可避免的情况就是乱码。数款命令行工具（如<code>7za</code>、<code>unzip</code>）和软件（如KDE的Ark），甚至借助Wine来使用Windows下的7-Zip，结果都一样。</p>
-<p>出现这种问题，正是因为该压缩包是在Windows下创建的，且可能使用了WinRAR等软件。这样的压缩包，只会使用Windows的默认编码GB18030（或GBK）。然而上述Linux下的工具却不支持，最多只能支持ANSI等西方编码，甚至连<code>iconv</code>也无法处理命令行工具所输出的GB18030文件列表（可能被那些工具当UTF-8处理了）。</p>
-<p>好在，Archlinuxcn源提供了一个修改版的<code>unzip</code>，名为<code>unzip-iconv</code>，在官方版本的基础上集成了编码转换工具<code>iconv</code>的功能。</p>
-    
-    <a class="article-more-a" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">使用技巧</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ZIP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">压缩包</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">乱码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/12/11/Struggle_with_Linux/%E8%A7%A3%E5%86%B3Linux%E4%B8%8Bzip%E5%8E%8B%E7%BC%A9%E5%8C%85%E4%B9%B1%E7%A0%81%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1743,6 +1762,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Snap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Grub</a>
               </li>
              
               <li class="article-tag-list-item">

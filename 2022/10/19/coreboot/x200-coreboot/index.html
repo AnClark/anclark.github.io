@@ -18,7 +18,7 @@
 <meta property="og:description" content="我手上这台ThinkPad X200，宝刀不老，长期以来一直都是我写程序写论文的主力。不过，前主人给它设置了超级管理员密码，由于相隔已久，早已忘了密码。幸好超级密码只锁定BIOS设置，不影响进系统，倒也相安无事。 然而，有密码始终影响我对笔记本的掌控。我尝试像台式机那样，拔掉BIOS电池来清除密码。殊不知，X200是商务笔记本系列，联想早已经做足了防范。结果很惨：每次开机都得输入管理员密码！ 最终">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-19T06:06:45.000Z">
-<meta property="article:modified_time" content="2022-10-19T16:53:24.383Z">
+<meta property="article:modified_time" content="2022-10-19T17:07:42.125Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="ThinkPad">
 <meta property="article:tag" content="Coreboot">
@@ -285,16 +285,14 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> coreboot<br>git submodule update --init --recursive<br></code></pre></td></tr></table></figure>
 
 <h3 id="2-准备交叉编译器"><a href="#2-准备交叉编译器" class="headerlink" title="(2) 准备交叉编译器"></a>(2) 准备交叉编译器</h3><p>coreboot涉及到更底层的系统环境。为了保证coreboot的正常编译，还需要准备交叉编译器。例如，Intel x86_64平台中，一律使用i386的GCC编译器。</p>
-<p>coreboot可以自动构建交叉编译器，只需运行以下命令：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">make crossgcc-i386<br></code></pre></td></tr></table></figure>
-
-<p>之后，编译系统就会自动下载、构建交叉编译器，所有的过程都是全自动的。</p>
-<h3 id="3-准备Ada编译器"><a href="#3-准备Ada编译器" class="headerlink" title="(3) 准备Ada编译器"></a>(3) 准备Ada编译器</h3><p>coreboot包含一个显卡驱动：libgfxinit，它可以在Intel平台下初始化集成显卡或核芯显卡，本教程会用上它。</p>
-<p>它使用Ada语言的子集SPARK编写，因此还需要安装GCC Ada编译器。</p>
+<p>首先，安装GCC Ada工具链。coreboot包含一个显卡驱动：libgfxinit，它可以在Intel平台下初始化集成显卡或核芯显卡，使用Ada语言的子集SPARK编写。要给交叉编译器提供Ada语言的支持，必须先在当前主机上安装GCC Ada工具链。</p>
 <p>不同的发行版有不同的包名。在Arch Linux中，使用以下命令安装：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo pacman -S gcc-ada<br></code></pre></td></tr></table></figure>
 
+<p>接下来，就可以让coreboot自动构建交叉编译器，只需运行以下命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">make crossgcc-i386<br></code></pre></td></tr></table></figure>
 
+<p>构建过程是全自动的，一步到位。</p>
 <h2 id="准备BIOS组件"><a href="#准备BIOS组件" class="headerlink" title="准备BIOS组件"></a>准备BIOS组件</h2><p>coreboot需要从原机的官方BIOS ROM中提取以下三个组件：</p>
 <ul>
 <li>Flash descriptor，存放闪存芯片的布局信息</li>
@@ -440,7 +438,7 @@
 
 <h2 id="后续问题：Grub的显示"><a href="#后续问题：Grub的显示" class="headerlink" title="后续问题：Grub的显示"></a>后续问题：Grub的显示</h2><p>我在测试coreboot的时候，启动过程中，会卡在“Welcome to Grub!”字样。但没过多久，Grub仍能正常引导Linux。</p>
 <p>Grub默认会以图形方式显示菜单，这要求显卡必须初始化图形功能——有别于传统的VGA文字模式。</p>
-<p>然而，我的X200只能用libgfxinit初始化。如果不启用Linear Frame Buffer，则默认只能使用文字模式，而Grub无法对此作出自适应的处理，所以菜单无法显示。</p>
+<p>然而，我的X200只能用libgfxinit初始化。如果不启用Linear Framebuffer，则默认只能使用文字模式，而Grub无法对此作出自适应的处理，所以菜单无法显示。</p>
 <p>对此，有两种解决方案：</p>
 <h3 id="方案一：将Grub切换到文字模式"><a href="#方案一：将Grub切换到文字模式" class="headerlink" title="方案一：将Grub切换到文字模式"></a>方案一：将Grub切换到文字模式</h3><p>进入Linux后，修改<code>/etc/default/grub</code>，取消注释下面这行：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">#GRUB_TERMINAL=console</span><br></code></pre></td></tr></table></figure>
@@ -452,9 +450,9 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
 
 <p>重启后，Grub就会以简易的文字来绘制界面，可以顺利使用了。</p>
-<h3 id="方案二：启用Linear-Frame-Buffer"><a href="#方案二：启用Linear-Frame-Buffer" class="headerlink" title="方案二：启用Linear Frame Buffer"></a>方案二：启用Linear Frame Buffer</h3><p>使用Linear Frame Buffer，就可以保证Grub的图形菜单能正常显示。</p>
-<p>但是，Linear Frame Buffer不支持缩放，只能点对点显示，这意味着如果输入分辨率小于Linear Frame Buffer指定的分辨率，画面就只能靠左上角显示。</p>
-<p>并且，Grub也无法获取Linear Frame Buffer的最佳分辨率，它一律会用640x480的最低分辨率输出。最终的显示效果很“憋屈”。</p>
+<h3 id="方案二：启用Linear-Framebuffer"><a href="#方案二：启用Linear-Framebuffer" class="headerlink" title="方案二：启用Linear Framebuffer"></a>方案二：启用Linear Framebuffer</h3><p>使用Linear Framebuffer，就可以保证Grub的图形菜单能正常显示。</p>
+<p>但是，Linear Framebuffer不支持缩放，只能点对点显示，这意味着如果输入分辨率小于Linear Frame Buffer指定的分辨率，画面就只能靠左上角显示。</p>
+<p>并且，Grub也无法获取Linear Framebuffer的最佳分辨率，它一律会用640x480的最低分辨率输出。最终的显示效果很“憋屈”。</p>
 <p>所以，我们还需要设置Grub的输出分辨率。打开修改<code>/etc/default/grub</code>，修改参数<code>GRUB_GFXMODE</code>：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">GRUB_GFXMODE=1280x800x32<br></code></pre></td></tr></table></figure>
 

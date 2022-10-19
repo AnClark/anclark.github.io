@@ -184,6 +184,119 @@
             
 
   
+    <article id="post-Android_Adapting_Note/OmniROM：包含并自动同步TWRP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2018/09/10/Android_Adapting_Note/OmniROM%EF%BC%9A%E5%8C%85%E5%90%AB%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5TWRP/" target="_blank">OmniROM：包含并自动同步TWRP</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2018/09/10/Android_Adapting_Note/OmniROM%EF%BC%9A%E5%8C%85%E5%90%AB%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5TWRP/" class="archive-article-date">
+        <time datetime="2018-09-10T15:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-10</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>知名第三方Recovery TWRP与OmniROM合作，将其最新的代码托管到OmniROM的仓库中（<a target="_blank" rel="noopener" href="https://github.com/omnirom/android_bootable_recovery%EF%BC%89%E3%80%82%E4%B8%8D%E8%BF%87%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E4%BD%BF%E7%94%A8%60repo">https://github.com/omnirom/android_bootable_recovery）。不过默认情况下，使用`repo</a> init<code>初始化OmniROM manifest的时候，TWRP并未被包含进去，实际下载到的</code>bootable/recovery`是AOSP的版本。</p>
+<p>一种解决思路是手动<code>git clone</code>TWRP的源码，不过由于它未被包含进manifest中，因此下次运行<code>repo sync</code>时，它所在的目录会被覆盖，得不偿失。</p>
+<p>正确的办法是，更改OmniROM的manifest文件，在其中包含TWRP。</p>
+    
+    <a class="article-more-a" href="/2018/09/10/Android_Adapting_Note/OmniROM%EF%BC%9A%E5%8C%85%E5%90%AB%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5TWRP/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/%E9%80%82%E9%85%8D/" class="article-tag-list-link color3">适配</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/%E9%80%82%E9%85%8D/%E7%AC%94%E8%AE%B0/" class="article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2018/09/10/Android_Adapting_Note/OmniROM%EF%BC%9A%E5%8C%85%E5%90%AB%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5TWRP/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Mend_My_Computer/踩坑：固态硬盘连接故障使系统假死崩溃" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -990,7 +1103,7 @@
 <ul>
 <li><p><code>bootimg.py</code></p>
 <ul>
-<li>由中国开发者Liu DongMiao（<a href="mailto:&#x6c;&#105;&#117;&#100;&#111;&#110;&#x67;&#x6d;&#x69;&#x61;&#x6f;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x6c;&#105;&#117;&#100;&#111;&#110;&#x67;&#x6d;&#x69;&#x61;&#x6f;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>）开发，使用Python 2.7编写，支持快速解包/打包启动映像。默认存储文件名固定，可以不需指定额外参数</li>
+<li>由中国开发者Liu DongMiao（<a href="mailto:&#x6c;&#105;&#x75;&#100;&#111;&#x6e;&#x67;&#109;&#105;&#97;&#111;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x6c;&#105;&#x75;&#100;&#111;&#x6e;&#x67;&#109;&#105;&#97;&#111;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;</a>）开发，使用Python 2.7编写，支持快速解包/打包启动映像。默认存储文件名固定，可以不需指定额外参数</li>
 </ul>
 </li>
 <li><p>Android官方提供的<code>mkbootimg</code>工具</p>
@@ -1992,14 +2105,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
@@ -2037,6 +2142,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2241,6 +2354,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">乱码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">X11</a>
               </li>
              
               <li class="article-tag-list-item">

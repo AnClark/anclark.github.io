@@ -184,6 +184,123 @@
             
 
   
+    <article id="post-Mend_My_Computer/解决笔记本在Linux下插电源降频的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/03/13/Mend_My_Computer/%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%9C%A8Linux%E4%B8%8B%E6%8F%92%E7%94%B5%E6%BA%90%E9%99%8D%E9%A2%91%E7%9A%84%E9%97%AE%E9%A2%98/" target="_blank">解决笔记本在Linux下插电降频的问题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/03/13/Mend_My_Computer/%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%9C%A8Linux%E4%B8%8B%E6%8F%92%E7%94%B5%E6%BA%90%E9%99%8D%E9%A2%91%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        <time datetime="2019-03-13T11:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>笔记本的处理器频率，若使用电池，则可对最高频率做适当限制，以达到省电目的；若插入移动电源，则可以解除限制，让处理器能够在其最高频率上运行，以提高性能——这是最基本的电源管理策略。</p>
+<p>然而，我的ThinkPad X200却不走寻常路，故意和我对着干。X200搭载Intel Core 2 Duo P8600 双核处理器，设计最高主频为2.40GHz。在使用“performance”调控器（governor），并尽可能将调控器最高频率设为最大值的情况下：</p>
+<ul>
+<li>若只使用电池，则处理器最高频率可以达到2.40GHz，平均运行频率常常能超过1.6GHz。</li>
+<li>但是，若插上电源适配器，过一段时间后，最高频率就被限制在了1.60GHz，且无法使用<code>cpufreq-set</code>工具进行更改。</li>
+</ul>
+<p>这也太奇怪了吧，笔记本居然会在插电时降频！尽管插电后电量多到用不完，毫无费电之虞，笔记本却仍然认为应该省电；而使用电池时，笔记本却根本不管这些，允许CPU达到最大频率。什么逻辑！</p>
+    
+    <a class="article-more-a" href="/2019/03/13/Mend_My_Computer/%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%9C%A8Linux%E4%B8%8B%E6%8F%92%E7%94%B5%E6%BA%90%E9%99%8D%E9%A2%91%E7%9A%84%E9%97%AE%E9%A2%98/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">插电降频</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/" class="article-tag-list-link color5">电脑维修</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/%E7%94%B5%E8%84%91%E7%BB%B4%E4%BF%AE/%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/" class="article-tag-list-link color5">故障解决</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/03/13/Mend_My_Computer/%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%9C%A8Linux%E4%B8%8B%E6%8F%92%E7%94%B5%E6%BA%90%E9%99%8D%E9%A2%91%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Struggle_with_Linux/为OpenSUSE安装搜狗输入法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1273,113 +1390,6 @@
 
 
   
-    <article id="draft-Use_Python/笔记：Python-3开发C模块初试" class="article article-type-draft  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2018/09/15/Use_Python/%E7%AC%94%E8%AE%B0%EF%BC%9APython-3%E5%BC%80%E5%8F%91C%E6%A8%A1%E5%9D%97%E5%88%9D%E8%AF%95/" target="_blank">【未完成】笔记：Python 3开发C模块初试</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2018/09/15/Use_Python/%E7%AC%94%E8%AE%B0%EF%BC%9APython-3%E5%BC%80%E5%8F%91C%E6%A8%A1%E5%9D%97%E5%88%9D%E8%AF%95/" class="archive-article-date">
-        <time datetime="2018-09-15T11:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Python固然强大，不过现阶段，它在调用一些系统底层的功能时，仍然不如C/C++来得深入直接。因此，使用C语言扩展Python的功能——编写C模块，是尤为必要的。一个典型的例子就是著名的音频播放模块PyAudio，它并非使用纯Python直接调用音频接口，而是以PortAudio作为与系统音频交互的底层，再用一个C模块沟通PortAudio与Python，方能在Python中播放出声音。</p>
-    
-    <a class="article-more-a" href="/2018/09/15/Use_Python/%E7%AC%94%E8%AE%B0%EF%BC%9APython-3%E5%BC%80%E5%8F%91C%E6%A8%A1%E5%9D%97%E5%88%9D%E8%AF%95/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2018/09/15/Use_Python/%E7%AC%94%E8%AE%B0%EF%BC%9APython-3%E5%BC%80%E5%8F%91C%E6%A8%A1%E5%9D%97%E5%88%9D%E8%AF%95/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &amp;raquo;</a>
@@ -1541,6 +1551,30 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MBR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GPT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BIOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
@@ -1562,10 +1596,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1593,35 +1623,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MBR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GPT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BIOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1641,11 +1643,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
+                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1669,11 +1679,27 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1797,26 +1823,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
@@ -1830,6 +1836,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">X200</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
             
             <div class="clearfix"></div>

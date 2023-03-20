@@ -184,6 +184,119 @@
             
 
   
+    <article id="post-Git/Git_Fetch_All_Commits" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/03/20/Git/Git_Fetch_All_Commits/" target="_blank">Git：解决无法使用git fetch获取所有分支源代码的问题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/03/20/Git/Git_Fetch_All_Commits/" class="archive-article-date">
+        <time datetime="2023-03-20T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>当我们需要同步Git本地与远程仓库的状态时，会用上<code>git fetch</code>，该命令拉取远端仓库的分支、更新状况等状态。例如，远端建立了新的分支，但本地看不到，就可以用<code>git fetch</code>来同步。</p>
+<p>实际操作中，笔者会在多台电脑上开发，建立新分支来适配新特性或进行测试，因此常常需要该命令来保证每台电脑的分支列表都能与GitHub同步。</p>
+<p>但是，<code>git fetch</code> 命令有一个非常巨大的坑：<strong>有时它只能同步一个分支，无法同步所有分支。</strong>  一不留神，就中招了。</p>
+    
+    <a class="article-more-a" href="/2023/03/20/Git/Git_Fetch_All_Commits/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">GitHub</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Fetch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Git/" class="article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/03/20/Git/Git_Fetch_All_Commits/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Programming_Tips/CMake_ 交叉编译的参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1193,138 +1306,6 @@
 
 
   
-    <article id="post-Struggle_with_Linux/MW2Fcitx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2022/05/03/Struggle_with_Linux/MW2Fcitx/" target="_blank">动动手，把MediaWiki百科（维基百科、萌娘百科等）变成自己的词库</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2022/05/03/Struggle_with_Linux/MW2Fcitx/" class="archive-article-date">
-        <time datetime="2022-05-03T13:09:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-03</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>在配置好Arch Linux CN源后，我想安装RIME中州韵输入法，在Pacman中搜索。这时，搜索结果中好像出现了什么神奇的东西：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">$ pacman -Ss fcitx rime<br>...<br>archlinuxcn/fcitx5-pinyin-moegirl-rime 20220218-1<br>    Fcitx 5 Pinyin Dictionary from zh.moegirl.org.cn<br>archlinuxcn/fcitx5-pinyin-zhwiki-rime 20210120-1<br>    Fcitx 5 Pinyin Dictionary from zh.wikipedia.org for rime<br>...<br></code></pre></td></tr></table></figure>
-
-<p>好家伙，它们是专为中州韵打造的词库，采撷自萌娘百科和维基百科。百科平台的条目本身是个宝藏语料库，添加它们可以大大提升输入体验，不再苦苦一个字一个字地去拼、去凑。尤其是萌娘百科的词库，对使用中州韵的ACG爱好者来说，更是天大的福音，从此再也不用担心打不出番句名角色名了！</p>
-<p>制作这些词库，显然用不着一个个去翻百科。它们都使用MW2Fcitx（MediaWiki To Fcitx）这个项目来生成。MW2Fcitx能够调用API，从基于MediaWiki的百科网站中获取所有的条目标题，将它们汇编成Fcitx下输入法可用的词库。像维基百科、萌娘百科都是基于MediaWiki搭建的，MW2Fcitx自然支持它们。</p>
-<p>接下来就讲解如何使用MW2Fcitx来充实你的词库。</p>
-    
-    <a class="article-more-a" href="/2022/05/03/Struggle_with_Linux/MW2Fcitx/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">输入法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Fcitx</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RIME</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MediaWiki</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">维基百科</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">萌娘百科</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2022/05/03/Struggle_with_Linux/MW2Fcitx/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1511,6 +1492,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Fetch</a>
               </li>
              
               <li class="article-tag-list-item">

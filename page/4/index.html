@@ -184,6 +184,124 @@
             
 
   
+    <article id="post-Struggle_with_Linux/为snapd设置代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/04/12/Struggle_with_Linux/%E4%B8%BAsnapd%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/" target="_blank">为snapd设置代理</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/04/12/Struggle_with_Linux/%E4%B8%BAsnapd%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/" class="archive-article-date">
+        <time datetime="2019-04-12T14:32:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-12</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Snap，全称SnapCraft，是一个全新的应用软件环境。在Snap中，软件被封装在类似于Docker的容器中，作为虚拟盘（借助回环设备）挂载，即开即用，可随时获取，这一切由其后台服务<code>snapd</code>提供支持。Ubuntu从18.04开始，就引入它作为系统的一部分，而其他的Linux发行版（如Deepin）也可以通过软件管理工具进行安装（如<code>sudo apt install snapd</code>）。</p>
+<p>SnapCraft将软件包分发在自己的服务器上。然而，因为众所周知的原因，访问位于海外的Snap服务器异常缓慢，不加代理的情况下，下载速度会持续降到十几KB每秒。这使得我们不得不想办法通过代理服务器进行加速。</p>
+<p>一般地，Linux上的一些应用程序会通过读取环境变量<code>http_proxy</code>和<code>https_proxy</code>来应用代理服务器设置，典型的有Chrome。然而，Snap比较特别，它不会从环境变量中上述环境变量中读取代理服务器设置，因此直接使用<code>export http_proxy=[代理服务器地址]</code>或<code>export https_proxy=[代理服务器地址]</code>是不起作用的。</p>
+<p>那么，有何正确的方法？</p>
+    
+    <a class="article-more-a" href="/2019/04/12/Struggle_with_Linux/%E4%B8%BAsnapd%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Snapd</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Snap</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Ubuntu/" class="article-tag-list-link color2">Ubuntu</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux/Ubuntu/Snap/" class="article-tag-list-link color5">Snap</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/04/12/Struggle_with_Linux/%E4%B8%BAsnapd%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hexo/推荐插件整理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1193,120 +1311,6 @@
 
 
   
-    <article id="post-Android_Adapting_Guide/TWRP-Recovery-编译适配教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" target="_blank">TWRP Recovery 编译适配教程</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/" class="archive-article-date">
-        <time datetime="2018-10-03T00:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
-<p>然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？</p>
-<p><strong>当然要自己动手啦！</strong></p>
-<p>事实上，TWRP的适配并没有想象中的那么难。理论上只需在Android的源代码中进行，准备好必要的文件，运行编译命令，即可完成适配。下面笔者就来结合自己的经验，一步步讲解如何适配TWRP Recovery。</p>
-    
-    <a class="article-more-a" href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android 适配教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/%E9%80%82%E9%85%8D/" class="article-tag-list-link color3">适配</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/%E9%80%82%E9%85%8D/%E6%95%99%E7%A8%8B/" class="article-tag-list-link color3">教程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &amp;raquo;</a>
@@ -1493,6 +1497,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Fetch</a>
               </li>
              
               <li class="article-tag-list-item">

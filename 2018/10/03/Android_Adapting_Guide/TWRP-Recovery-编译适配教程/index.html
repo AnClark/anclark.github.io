@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://anclark.github.io">
-  <title>TWRP Recovery 编译适配教程 | 爱拼安小匠的技术博客</title>
+  <title>TWRP Recovery 编译适配教程（2018版） | 爱拼安小匠的技术博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
+  <meta name="description" content="写在前面——2023年3月 Android更新换代频繁，编译系统经常调整，设备安全机制经常变化，且TWRP的仓库地址也会更改。 这篇首发于2018年的教程不一定适用于当下的Android源码树，尤其是Android 9开始的版本。因此，仅供参考。 本文在稀土掘金同步发表。如果需要留言，请移步掘金版本的评论区。  TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TWRP Recovery 编译适配教程">
+<meta property="og:title" content="TWRP Recovery 编译适配教程（2018版）">
 <meta property="og:url" content="https://anclark.github.io/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-%E7%BC%96%E8%AF%91%E9%80%82%E9%85%8D%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。 然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？ 当然要自己">
+<meta property="og:description" content="写在前面——2023年3月 Android更新换代频繁，编译系统经常调整，设备安全机制经常变化，且TWRP的仓库地址也会更改。 这篇首发于2018年的教程不一定适用于当下的Android源码树，尤其是Android 9开始的版本。因此，仅供参考。 本文在稀土掘金同步发表。如果需要留言，请移步掘金版本的评论区。  TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-10-03T00:43:00.000Z">
-<meta property="article:modified_time" content="2022-04-26T08:42:37.000Z">
+<meta property="article:modified_time" content="2023-03-21T07:28:55.645Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Android 适配教程">
@@ -190,7 +190,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      TWRP Recovery 编译适配教程
+      TWRP Recovery 编译适配教程（2018版）
     </h1>
   
 
@@ -216,7 +216,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">9k字</span>
+      <span class="post-count">9.1k字</span>
     </span>
   </span>
 
@@ -225,7 +225,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">35分</span>
+      <span class="post-count">36分</span>
     </span>
   </span>
 </div>
@@ -236,7 +236,13 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
+    <blockquote>
+<p><strong>写在前面——2023年3月</strong></p>
+<p>Android更新换代频繁，编译系统经常调整，设备安全机制经常变化，且TWRP的仓库地址也会更改。</p>
+<p>这篇首发于2018年的教程不一定适用于当下的Android源码树，尤其是Android 9开始的版本。因此，仅供参考。</p>
+<p>本文在稀土掘金同步发表。如果需要留言，请移步<a target="_blank" rel="noopener" href="https://juejin.cn/post/6936324758296330248">掘金版本</a>的评论区。</p>
+</blockquote>
+<p>TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的第一步，正是选择一款适合的TWRP，然后刷上去。目前，多个品牌的热门机型都有官方适配了，且一些开发者也给官方未覆盖的机型适配了自己的非官方版本。</p>
 <p>然而，开发者们并不是万能的，总有那么一些机型，并没有哪一位开发者前来适配。在这样的情境下，你是愿意痴痴地等，等到哪位大神有时间做适配，还是马上动手丰衣足食呢？</p>
 <p><strong>当然要自己动手啦！</strong></p>
 <p>事实上，TWRP的适配并没有想象中的那么难。理论上只需在Android的源代码中进行，准备好必要的文件，运行编译命令，即可完成适配。下面笔者就来结合自己的经验，一步步讲解如何适配TWRP Recovery。</p>
@@ -769,7 +775,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://anclark.github.io/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/" title="TWRP Recovery 编译适配教程" target="_blank">https://anclark.github.io/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/</a>
+          <a href="https://anclark.github.io/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/" title="TWRP Recovery 编译适配教程（2018版）" target="_blank">https://anclark.github.io/2018/10/03/Android_Adapting_Guide/TWRP-Recovery-编译适配教程/</a>
         </li>
         
         <li>
@@ -1238,6 +1244,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
@@ -1318,6 +1332,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Xfce</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">启动器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内核</a>
               </li>
              
@@ -1379,14 +1401,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">X200</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
               </li>
             
             <div class="clearfix"></div>

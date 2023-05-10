@@ -184,6 +184,115 @@
             
 
   
+    <article id="post-OpenWRT/OpenWRT_DHCPv6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/05/10/OpenWRT/OpenWRT_DHCPv6/" target="_blank">OpenWRT启用IPv6与DHCPv6支持</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/05/10/OpenWRT/OpenWRT_DHCPv6/" class="archive-article-date">
+        <time datetime="2023-05-10T08:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-10</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>在OpenWRT中，IPv6是可选功能，它默认不启用。如果按照默认设置来编译、使用固件，那最终将导致以下问题：</p>
+<ul>
+<li>无法获取上游的IPv6地址</li>
+<li>接口设置中，协议列表里没有“DHCPv6 客户端”这一项</li>
+<li>无法给本地设备分配IPv6地址</li>
+</ul>
+<p>那么，该如何使OpenWRT重获IPv6连接的能力？基本思路就是重新编译固件，刷入设备后再启用IPv6的一系列选项。</p>
+    
+    <a class="article-more-a" href="/2023/05/10/OpenWRT/OpenWRT_DHCPv6/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IPv6</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">DHCPv6</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/OpenWRT/" class="article-tag-list-link color3">OpenWRT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/05/10/OpenWRT/OpenWRT_DHCPv6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Struggle_with_Linux/Xfce_Launcher_WinKey" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1198,113 +1307,6 @@
 
 
   
-    <article id="post-Struggle_with_Linux/Prefer_dhclient" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/" target="_blank">不用dhcpcd，改用dhclient的理由</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/" class="archive-article-date">
-        <time datetime="2022-06-13T05:38:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>包括Arch Linux在内的诸多Linux发行版，默认的DHCP客户端是dhcpcd。但它并不是放之四海都适用，我在不同的电脑使用时，就遭遇严重的问题。而换用另一款DHCP客户端——dhclient后，竟然都能迎刃而解。</p>
-    
-    <a class="article-more-a" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DHCP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2022/06/13/Struggle_with_Linux/Prefer_dhclient/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1775,6 +1777,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">X200</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">DHCPv6</a>
               </li>
             
             <div class="clearfix"></div>

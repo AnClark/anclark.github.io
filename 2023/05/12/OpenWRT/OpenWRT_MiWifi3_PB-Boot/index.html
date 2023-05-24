@@ -18,7 +18,7 @@
 <meta property="og:description" content="我有一台吃灰多年的小米路由器3，请工程师扩容升级内存，并刷了PB-Boot，以及恩山 @醉老仙 的OpenWRT固件（基于Lean大神的源码编译），作为主力路由器使用。7x24小时稳定运行一个多月，跑插件完全没问题。 不过，这版固件不支持IPv6。虽然仅有IPv4也不影响上网，但运营商IPv6的资源就白白浪费了。我猜想是编译过程中没有开启IPv6支持，因此打算用L大的源码，自己编译一个可用PB-B">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-12T06:06:00.000Z">
-<meta property="article:modified_time" content="2023-05-12T13:25:20.097Z">
+<meta property="article:modified_time" content="2023-05-24T06:49:06.790Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="小米路由器3">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/coolsnowwolf/lede/ lean-lede<br><span class="hljs-built_in">cd</span> lean-lede<br>./scripts/feeds update -a &amp;&amp; ./scripts/feeds install -a <br></code></pre></td></tr></table></figure>
 
 <h2 id="增加PB-Boot支持"><a href="#增加PB-Boot支持" class="headerlink" title="增加PB-Boot支持"></a>增加PB-Boot支持</h2><p>PB-Boot是PandoraBox所属的路由器Bootloader，需要使用专用格式的固件。但是L大的源码树默认不支持编译小米路由器3的PB-Boot固件。</p>
-<p>幸运的是，GitHub网友**<a target="_blank" rel="noopener" href="https://github.com/MortalM">MortalM</a>**成功编译出了PB-Boot固件，并<a target="_blank" rel="noopener" href="https://github.com/coolsnowwolf/lede/issues/8402">分享了自己的做法</a>，在此表示衷心的感谢！</p>
+<p>幸运的是，GitHub网友 <a target="_blank" rel="noopener" href="https://github.com/MortalM"><strong>MortalM</strong></a> 成功编译出了PB-Boot固件，并<a target="_blank" rel="noopener" href="https://github.com/coolsnowwolf/lede/issues/8402">分享了自己的做法</a>，在此表示衷心的感谢！</p>
 <p><strong>请按照以下提示来修改<code>target/linux/ramips/image/mt7620.mk</code>，以生成PB-Boot格式的固件（带<code>-</code>的行表示删除，<code>+</code>表示增加）：</strong></p>
 <figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs diff"> define Device/xiaomi_miwifi-r3<br>   SOC := mt7620a<br>   BLOCKSIZE := 128k<br>   PAGESIZE := 2048<br>   KERNEL_SIZE := 4096k<br>   KERNEL_SIZE := 4096k<br>   IMAGE_SIZE := 32768k<br>   UBINIZE_OPTS := -E 5<br><span class="hljs-deletion">-  IMAGES += kernel1.bin rootfs0.bin</span><br><span class="hljs-addition">+  IMAGES += kernel1.bin rootfs0.bin pb-boot.bin</span><br>   IMAGE/kernel1.bin := append-kernel | check-size $$$$(KERNEL_SIZE)<br>   IMAGE/rootfs0.bin := append-ubi | check-size $$$$(IMAGE_SIZE)<br>   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata<br><span class="hljs-addition">+  IMAGE/pb-boot.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi | check-size $$$$(IMAGE_SIZE)</span><br>   DEVICE_VENDOR := Xiaomi<br>   DEVICE_MODEL := Mi Router R3<br>   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb2 kmod-usb-ohci uboot-envtools<br></code></pre></td></tr></table></figure>
 
@@ -707,10 +707,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
@@ -728,6 +724,26 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">路由器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -756,22 +772,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Debian</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">

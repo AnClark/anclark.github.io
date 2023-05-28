@@ -184,6 +184,98 @@
             
 
   
+    <article id="post-OpenWRT/OpenWRT_ZN-M2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/05/28/OpenWRT/OpenWRT_ZN-M2/" target="_blank">为兆能讯通M2编译OpenWRT，完美支持无线网络和WiFi6</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/05/28/OpenWRT/OpenWRT_ZN-M2/" class="archive-article-date">
+        <time datetime="2023-05-28T03:47:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p> 办宽带的时候，电信公司给我送了一台兆能讯通M2路由器（下文简称兆能M2）。它搭载高通IPQ6000处理器，千兆接入，支持WIFI6，是高性价比的宝藏，在性能优异的同时，拥有广阔的玩转空间。</p>
+<p>为了更好发挥兆能M2的可玩性，我给它编译了支持无线的OpenWRT固件，畅快做主力。理论上也可与和目CMIOT AX18通用。</p>
+<blockquote>
+<p><strong>注意：</strong> 阅读本文需要你掌握OpenWRT的基本知识，以及menuconfig的使用方法。</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/2023/05/28/OpenWRT/OpenWRT_ZN-M2/#more">阅读全文 >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/OpenWRT/" class="article-tag-list-link color3">OpenWRT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/05/28/OpenWRT/OpenWRT_ZN-M2/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-OpenWRT/OpenWRT_MiWifi3_PB-Boot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1122,145 +1214,6 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2022/10/19/Struggle_with_Linux/%E8%A7%A3%E5%86%B3invalid-mit-magic-cookie-1-key/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Struggle_with_Linux/修复BIOS+GPT引导" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/" target="_blank">修复F2FS主分区下Grub BIOS+GPT引导</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/" class="archive-article-date">
-        <time datetime="2022-09-01T12:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>在给我的ThinkPad X201T安装Manjaro的时候，由于这台电脑年代久远，不支持UEFI（至少从X220系列才开始支持），所以我首先选择MBR分区表。</p>
-<p>但随后，安装程序竟然建议我使用GPT分区表。它特地说明，GPT同时兼容BIOS和UEFI，在BIOS下只需分配一个8MB的主分区，并给分区加上<code>bios_boot</code>即可。这一切都可以在图形安装程序下进行。</p>
-<p>喜欢尝鲜的我，果断尝试GPT，给硬盘分了两个区，继续安装，最后成功引导进入安装后的系统：</p>
-<table>
-<thead>
-<tr>
-<th>分区</th>
-<th>大小</th>
-<th>文件系统</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/dev/sda1</code></td>
-<td>8MB</td>
-<td>Grub <code>core.img</code>（引导程序）</td>
-<td>Grub引导分区</td>
-</tr>
-<tr>
-<td><code>/dev/sda2</code></td>
-<td>119GB</td>
-<td>F2FS</td>
-<td>主分区，根目录</td>
-</tr>
-</tbody></table>
-<p>然而，我高兴得太早了。</p>
-<blockquote>
-<p><strong>最后修订：</strong>2022年9月6日</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/#more">阅读全文 >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">GPT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Grub</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/Arch-Linux/" class="article-tag-list-link color1">Arch Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2022/09/01/Struggle_with_Linux/%E4%BF%AE%E5%A4%8DBIOS+GPT%E5%BC%95%E5%AF%BC/">展开全文 >></a>
     </p>
     
 

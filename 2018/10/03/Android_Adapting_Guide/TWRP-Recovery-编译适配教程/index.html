@@ -18,7 +18,7 @@
 <meta property="og:description" content="写在前面——2023年3月 Android更新换代频繁，编译系统经常调整，设备安全机制经常变化，且TWRP的仓库地址也会更改。 这篇首发于2018年的教程不一定适用于当下的Android源码树，尤其是Android 9开始的版本。因此，仅供参考。 本文在稀土掘金同步发表。如果需要留言，请移步掘金版本的评论区。  TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-10-03T00:43:00.000Z">
-<meta property="article:modified_time" content="2023-03-21T07:28:55.645Z">
+<meta property="article:modified_time" content="2023-06-25T09:48:23.367Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Android 适配教程">
@@ -285,7 +285,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo curl https://storage.googleapis.com/git-repo-downloads/repo &gt; /usr/bin/repo<br>sudo chmod +x /usr/bin/repo<br></code></pre></td></tr></table></figure>
 
 <h3 id="（二）下载OmniROM源代码"><a href="#（二）下载OmniROM源代码" class="headerlink" title="（二）下载OmniROM源代码"></a>（二）下载OmniROM源代码</h3><p>首先在磁盘中新建一个专门的目录，用于存放OmniROM源代码，然后使用<code>repo init</code>初始化源代码仓库。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">mkdir omni9<br><span class="hljs-built_in">cd</span> omni9<br>repo init -u git://github.com/omnirom/android.git -b android-9.0<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">mkdir omni9<br><span class="hljs-built_in">cd</span> omni9<br>repo init -u https://github.com/omnirom/android.git -b android-9.0<br></code></pre></td></tr></table></figure>
 
 <p><code>-b</code>参数指定你需要的Android版本。一般编译<code>3.0.x</code>系列版本用<code>android-6.0</code>即可，但是更新的版本则需要<code>android-7.0</code>及更高。笔者强烈建议只选择最新的TWRP版本——<code>3.3.1-0</code>，因此对应地，使用<code>android-8.1</code>或<code>android-9.0</code>。</p>
 <p>初始化完成后，我们开始下载：</p>
@@ -300,7 +300,7 @@
 </ul>
 <h3 id="（四）备选方案——Minimal-Manifest-for-TWRP"><a href="#（四）备选方案——Minimal-Manifest-for-TWRP" class="headerlink" title="（四）备选方案——Minimal Manifest for TWRP"></a>（四）备选方案——Minimal Manifest for TWRP</h3><p>如果磁盘空间不足，不妨考虑<strong>Minimal Manifest for TWRP</strong>，它只包含了编译TWRP所需的最少组件，并且也包含了TWRP源码及所需依赖。项目的地址在这里：<a target="_blank" rel="noopener" href="https://github.com/minimal-manifest-twrp">https://github.com/minimal-manifest-twrp</a>。</p>
 <p>以下载Omni 8.1的Minimal Manifest为例，按照下面的步骤就可以下载到精悍、省空间、省资源的代码树：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 建立文件夹用来存放代码树</span><br>mkdir omni8_minimal<br><span class="hljs-built_in">cd</span> omni8_minimal<br><span class="hljs-comment"># 初始化源码仓库</span><br><span class="hljs-comment"># 可以把分支名“twrp-8.1”后的“8.1”改为你想要下载的安卓版本号，支持4.4~9.0</span><br>repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-8.1 --no-clone-bundle<br><span class="hljs-comment"># 开始同步</span><br>repo sync -f --force-sync<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 建立文件夹用来存放代码树</span><br>mkdir omni8_minimal<br><span class="hljs-built_in">cd</span> omni8_minimal<br><span class="hljs-comment"># 初始化源码仓库</span><br><span class="hljs-comment"># 可以把分支名“twrp-8.1”后的“8.1”改为你想要下载的安卓版本号，支持4.4~9.0</span><br>repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-8.1 --no-clone-bundle<br><span class="hljs-comment"># 开始同步</span><br>repo sync -f --force-sync<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>注意：</strong></p>
@@ -1172,27 +1172,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">npm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,11 +1196,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1240,19 +1232,27 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">CMake</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -18,7 +18,7 @@
 <meta property="og:description" content="写在前面——2023年3月 Android更新换代频繁，编译系统经常调整，设备安全机制经常变化，且TWRP的仓库地址也会更改。 这篇首发于2018年的教程不一定适用于当下的Android源码树，尤其是Android 9开始的版本。因此，仅供参考。 本文在稀土掘金同步发表。如果需要留言，请移步掘金版本的评论区。  TWRP Recovery的强悍，使得它成为了刷机领域当之无愧的首选。很多设备刷机的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-10-03T00:43:00.000Z">
-<meta property="article:modified_time" content="2023-06-25T09:48:23.367Z">
+<meta property="article:modified_time" content="2023-07-18T00:50:21.310Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Android 适配教程">
@@ -216,7 +216,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">9.1k字</span>
+      <span class="post-count">10.7k字</span>
     </span>
   </span>
 
@@ -225,7 +225,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">36分</span>
+      <span class="post-count">42分</span>
     </span>
   </span>
 </div>
@@ -272,13 +272,19 @@
 <h2 id="第一步：准备编译环境"><a href="#第一步：准备编译环境" class="headerlink" title="第一步：准备编译环境"></a>第一步：准备编译环境</h2><h3 id="（一）安装必要的软件包"><a href="#（一）安装必要的软件包" class="headerlink" title="（一）安装必要的软件包"></a>（一）安装必要的软件包</h3><p>TWRP的编译，需要一系列软件包支持。在Ubuntu下，使用<code>apt</code>命令即可一次就安装好：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 更新软件源</span><br>sudo apt update<br><span class="hljs-comment"># 安装软件包</span><br>sudo apt install git-core gnupg flex bison gperf \<br>zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \<br>lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \<br>libgl1-mesa-dev libxml2-utils xsltproc unzip<br><span class="hljs-comment"># 安装OpenJDK</span><br>sudo apt install openjdk-8-jdk<br><span class="hljs-comment"># 安装编译套件build-essential。若出错，则请使用以下第二行的命令</span><br>sudo apt install build-essential<br>sudo apt install gcc g++ make<br></code></pre></td></tr></table></figure>
 
+<p>Arch Linux则安装以下软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 更新软件源</span><br>sudo pacman -Syy<br><span class="hljs-comment"># 保险起见，先进行一次全面系统更新</span><br>sudo pacman -Syyu<br><span class="hljs-comment"># 安装软件包</span><br>sudo pacman -S gcc make git flex bison zip unzip curl ccache ncurses<br><span class="hljs-comment"># 安装OpenJDK</span><br>sudo pacman -S jdk8-openjdk<br></code></pre></td></tr></table></figure>
+
 <h3 id="（二）配置ccache"><a href="#（二）配置ccache" class="headerlink" title="（二）配置ccache"></a>（二）配置<code>ccache</code></h3><p><code>ccache</code>是一个缓存工具，它通过将编译产生的中间文件（预处理得到的代码、输出文件<code>*.o</code>等）缓存起来，待到下次编译同样源文件时直接复制而不是重新生成，以此来提高编译效率。最直接的好处，就是在<code>make clean</code>之后，重新编译的速度能够快不少。</p>
 <p>波浪线“<code>~</code>”是Home目录的简写。我们在Bash的配置文件<code>~/.bashrc</code>的尾部加上以下语句，启用<code>ccache</code>。<code>ccache</code>默认存放在用户目录下（<code>~/.ccache</code>），可以更改环境变量<code>CCACHE_DIR</code>，以设置到其他磁盘分区。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启用ccache</span><br><span class="hljs-built_in">export</span> USE_CCACHE=1<br><span class="hljs-comment"># 改变ccache缓存路径</span><br><span class="hljs-built_in">export</span> CCACHE_DIR=/mnt/seagate_drive/.ccache<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启用ccache</span><br><span class="hljs-built_in">export</span> USE_CCACHE=1<br><span class="hljs-comment"># 改变ccache缓存路径，以笔者自己的设置为例</span><br><span class="hljs-built_in">export</span> CCACHE_DIR=/mnt/seagate_drive/.ccache<br></code></pre></td></tr></table></figure>
 
 <p>然后重启终端，或运行<code>source ~/.bashrc</code>，或新开一个Bash会话，使上述语句生效。</p>
 <p>另外，可以设置<code>ccache</code>缓存所占磁盘空间的大小：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -M 50G<br></code></pre></td></tr></table></figure>
+
+<h3 id="（三）对于新系统环境的向后兼容"><a href="#（三）对于新系统环境的向后兼容" class="headerlink" title="（三）对于新系统环境的向后兼容"></a>（三）对于新系统环境的向后兼容</h3><p>值得留意的是，本文将要使用的OmniROM 8.1源码树，至今仍然依赖Python 2.7与ncurses 5.x（主要是Clang编译器），然而Arch Linux的官方源已经不提供。<strong>须手动添加Arch Linux CN源</strong>，然后再安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Python 2.7与ncurses 5.x。其中ncurses 5.x是兼容库</span><br>sudo pacman -S python2 ncurses5-compat-libs<br></code></pre></td></tr></table></figure>
 
 <h2 id="第二步：下载Android源代码"><a href="#第二步：下载Android源代码" class="headerlink" title="第二步：下载Android源代码"></a>第二步：下载Android源代码</h2><p>编译TWRP离不开Android源代码，因为它依赖Android源码中的组件。推荐使用<a target="_blank" rel="noopener" href="https://www.omnirom.org/">OmniROM</a>，它与TWRP的开发团队TeamWin有官方合作关系，由OmniROM持有<a target="_blank" rel="noopener" href="https://github.com/omnirom/android_bootable_recovery">TWRP的最新源代码</a>。</p>
 <h3 id="（一）下载repo"><a href="#（一）下载repo" class="headerlink" title="（一）下载repo"></a>（一）下载<code>repo</code></h3><p><code>repo</code>是谷歌开发的软件仓库管理工具，使用Python 2.7编写，用于批量管理由Git组织的源代码。使用以下的命令，把<code>repo</code>下载到被<code>PATH</code>所包含的<code>/usr/bin</code>目录中：</p>
@@ -493,7 +499,7 @@
 </tr>
 <tr>
 <td><code>DEVICE_RESOLUTION</code></td>
-<td>指定设备的分辨率。</td>
+<td>指定设备的分辨率，格式为<code>宽x高</code>，例如<code>1080x1920</code>。</td>
 </tr>
 <tr>
 <td><code>RECOVERY_GRAPHICS_USE_LINELENGTH</code></td>
@@ -509,10 +515,9 @@
 </tr>
 <tr>
 <td><code>TARGET_RECOVERY_INITRC</code></td>
-<td>指定自己的<code>init.rc</code>路径。<code>init.rc</code>是Android初始化程序<code>init</code>最主要的脚本，起到<code>main()</code>函数的作用。该选项允许用户编写自己的<code>init.rc</code>，以支持各种客制化的设备平台。</td>
+<td>指定自己的<code>init.rc</code>路径。<code>init.rc</code>是Android初始化程序<code>init</code>最主要的脚本，起到<code>main()</code>函数的作用。该选项允许用户编写自己的<code>init.rc</code>，以支持各种客制化的设备平台。<br><strong>注意：</strong> 该选项仅适用于AOSP官方Recovery，以及Android 6.0之前的旧版本Recovery（如TWRP 2.x、ClockworkMod）。<strong>新版本的TWRP（≥3.0）会直接忽略该选项</strong>，只使用它提供的<code>init.rc</code>。</td>
 </tr>
 </tbody></table>
-<p><strong>注意：</strong><code>TARGET_RECOVERY_INITRC</code>  仅适用于AOSP官方Recovery，以及Android 6.0之前的旧版本Recovery（如TWRP 2.x、ClockworkMod）。<strong>新版本的TWRP（≥3.0）会直接忽略该选项</strong>，只使用它提供的<code>init.rc</code>。</p>
 <h4 id="4-TWRP专用选项"><a href="#4-TWRP专用选项" class="headerlink" title="4. TWRP专用选项"></a>4. TWRP专用选项</h4><p>TWRP有专属的一些选项，部分选项如下所示。</p>
 <table>
 <thead>
@@ -614,13 +619,20 @@
 </tr>
 </tbody></table>
 <h3 id="（三）对非OmniROM配置文件的修改"><a href="#（三）对非OmniROM配置文件的修改" class="headerlink" title="（三）对非OmniROM配置文件的修改"></a>（三）对非OmniROM配置文件的修改</h3><p>并不是所有的设备都拥有适用于OmniROM的配置文件，因此还需将适用于其他ROM的配置文件进行一番修改。这种情况通常出现在年代略微久远的老设备上，它们往往只有CyanogenMod 4.x等老版本ROM的配置文件。不过，修改过程并不复杂。</p>
-<h4 id="1-修改设备Makefile（product-Makefile）"><a href="#1-修改设备Makefile（product-Makefile）" class="headerlink" title="1. 修改设备Makefile（product Makefile）"></a>1. 修改设备Makefile（product Makefile）</h4><p>每个ROM的设备参数文件都有一个ROM特定的<strong>“设备 Makefile”</strong>，它定义了设备的基本信息，起到当之无愧的“门户”作用。</p>
-<h5 id="设备Makefile的定义"><a href="#设备Makefile的定义" class="headerlink" title="设备Makefile的定义"></a>设备Makefile的定义</h5><p>我们来分析一下这类Makefile。它可以分为三个部分——<strong>继承部分</strong>、<strong>设备定义部分</strong>、<strong>用户自定义部分</strong>。一个示例的设备Makefile如下所示（设备为华为荣耀10 View，省略开头的Apache 2.0协议内容）：</p>
+<h4 id="1-修改产品Makefile（product-Makefile）"><a href="#1-修改产品Makefile（product-Makefile）" class="headerlink" title="1. 修改产品Makefile（product Makefile）"></a>1. 修改产品Makefile（product Makefile）</h4><p>每个ROM的设备参数文件都有一个ROM特定的<strong>“产品 Makefile”</strong>，它定义了设备的基本信息，起到当之无愧的“门户”作用。</p>
+<h5 id="（1）设备Makefile的定义"><a href="#（1）设备Makefile的定义" class="headerlink" title="（1）设备Makefile的定义"></a>（1）设备Makefile的定义</h5><p>我们来分析一下这类Makefile。它可以分为三个部分——<strong>继承部分</strong>、<strong>设备定义部分</strong>、<strong>用户自定义部分</strong>。一个示例的设备Makefile如下所示（设备为华为荣耀10 View，省略开头的Apache 2.0协议内容）：</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment">#</span><br><span class="hljs-comment"># This file is the build configuration for a full Android</span><br><span class="hljs-comment"># build for grouper hardware. This cleanly combines a set of</span><br><span class="hljs-comment"># device-specific aspects (drivers) with a device-agnostic</span><br><span class="hljs-comment"># product configuration (apps).</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-comment"># Sample: This is where we&#x27;d set a backup provider if we had one</span><br><span class="hljs-comment"># $(call inherit-product, device/sample/products/backup_overlay.mk)</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/core_64_bit.mk)</span><br><br><span class="hljs-comment"># Get the prebuilt list of APNs</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/gsm.mk)</span><br><br><span class="hljs-comment"># Inherit from the common Open Source product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/aosp_base_telephony.mk)</span><br><br><span class="hljs-comment">#treble</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/treble_common.mk)</span><br><br><span class="hljs-comment"># must be before including omni part</span><br>TARGET_BOOTANIMATION_SIZE := 1080p<br><br><span class="hljs-comment"># Inherit from our custom product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/common.mk)</span><br><br><span class="hljs-comment"># Inherit from hardware-specific part of the product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, device/huawei/berkeley/device.mk)</span><br><br>PRODUCT_PROPERTY_OVERRIDES += ro.hardware.nfc_nci=nqx.default<br><br>ALLOW_MISSING_DEPENDENCIES := true<br><br>DEVICE_PACKAGE_OVERLAYS += device/huawei/berkeley/overlay<br><br><span class="hljs-comment"># Discard inherited values and use our own instead.</span><br>PRODUCT_NAME := omni_berkeley<br>PRODUCT_DEVICE := berkeley<br>PRODUCT_BRAND := Huawei<br>PRODUCT_MODEL := Honor View 10<br><br>TARGET_VENDOR := huawei<br></code></pre></td></tr></table></figure>
 
-<h6 id="①-继承部分"><a href="#①-继承部分" class="headerlink" title="① 继承部分"></a>① 继承部分</h6><p>继承部分，指的是上述源文件中调用<code>inherit-product</code>函数的部分，使得当前设备配置文件继承其他的配置文件。被继承的，包括ROM提供的通用（generic）配置文件（位于<code>build/make/target</code>目录中），与设备专门的配置文件（通常在设备参数文件目录下，以<code>device_&lt;设备名&gt;.mk</code>或<code>device.mk</code>为文件名）。</p>
-<p>编写时，一般只需把其他设备的代码搬来用即可，不过需要注意区分32位和64位。</p>
-<h6 id="②-设备定义部分"><a href="#②-设备定义部分" class="headerlink" title="② 设备定义部分"></a>② 设备定义部分</h6><p>设备定义部分是整个设备配置文件的核心，<strong>是编译系统查找设备参数文件的依据</strong>。包括以下变量，<strong>缺一不可</strong>：</p>
+<h6 id="a-继承部分"><a href="#a-继承部分" class="headerlink" title="a) 继承部分"></a>a) 继承部分</h6><p>继承部分，指的是上述源文件中调用<code>inherit-product</code>或<code>inherit-product-if-exists</code>函数的部分，使得当前设备配置文件继承其他的配置文件。被继承的，包括：</p>
+<ul>
+<li>ROM提供的通用（generic）配置文件（位于<code>build/make/target</code>目录中）</li>
+<li>设备专门的配置文件（通常在设备参数文件目录下，以<code>device_&lt;设备名&gt;.mk</code>或<code>device.mk</code>为文件名）</li>
+<li>厂商公用的配置文件（通常位于<code>vendor/&lt;厂商名&gt;/&lt;设备名或芯片型号&gt;</code>目录下）</li>
+</ul>
+<p>在适配TWRP时，一般只需把其他已适配TWRP设备的代码搬来用即可，删去其他ROM使用的配置文件。一般典型的继承部分代码如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># 适用于手机等设备的基础配置文件，似乎自动生成</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/full_base_telephony.mk)</span><br><br><span class="hljs-comment"># Treble支持。如果设备原生支持Treble（通常是2018年起、预装Android 8.1的设备），则应该启用</span><br><span class="hljs-comment">#$(call inherit-product, $(SRC_TARGET_DIR)/product/treble_common.mk)</span><br><br><span class="hljs-comment"># 多语言支持</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, <span class="hljs-variable">$(SRC_TARGET_DIR)</span>/product/languages_full.mk)</span><br><br><span class="hljs-comment"># OmniROM的通用配置文件</span><br><span class="hljs-comment"># Inherit from our custom product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/common.mk)</span><br><br><span class="hljs-comment"># 设备的网络制式，除了有gsm.mk，还有cdma.mk，根据实际需要选择</span><br><span class="hljs-comment">## Specify phone tech before including full_phone</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, vendor/omni/config/gsm.mk)</span><br><br><span class="hljs-comment"># 本设备的专门配置文件，注意文件名可以不止一种。将在下一节讲解。</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, device/&lt;厂商名&gt;/&lt;设备名&gt;/device.mk)</span><br><br><span class="hljs-comment"># 同时，如果你的设备树来自其他平台（如LineageOS、CM、魔趣），你还要统统删掉，因为它们与OmniROM不兼容。例如：</span><br><span class="hljs-comment"># $(call inherit-product, vendor/lineage/config/common.mk)</span><br><span class="hljs-comment"># $(call inherit-product, vendor/cm/config/common.mk)</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="b-设备定义部分"><a href="#b-设备定义部分" class="headerlink" title="b) 设备定义部分"></a>b) 设备定义部分</h6><p>设备定义部分是整个设备配置文件的核心，<strong>是编译系统查找设备参数文件的依据</strong>。包括以下变量，<strong>缺一不可</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -649,14 +661,47 @@
 <td>厂商名</td>
 </tr>
 </tbody></table>
-<h6 id="③-用户自定义部分"><a href="#③-用户自定义部分" class="headerlink" title="③ 用户自定义部分"></a>③ 用户自定义部分</h6><p>以上两类代码之外的其他代码，就属于用户自定义的代码了。可以放置其他的参数。</p>
-<h5 id="给设备Makefile改名"><a href="#给设备Makefile改名" class="headerlink" title="给设备Makefile改名"></a>给设备Makefile改名</h5><p>根据ROM的不同，设备Makefile会有不同规格的文件名。常见的如下所示：</p>
+<h6 id="c-用户自定义部分"><a href="#c-用户自定义部分" class="headerlink" title="c) 用户自定义部分"></a>c) 用户自定义部分</h6><p>以上两类代码之外的其他代码，就属于用户自定义的代码了。可以放置其他的参数。</p>
+<h5 id="（2）给设备Makefile改名"><a href="#（2）给设备Makefile改名" class="headerlink" title="（2）给设备Makefile改名"></a>（2）给设备Makefile改名</h5><p>根据ROM的不同，设备Makefile会有不同规格的文件名。常见的如下所示：</p>
 <ul>
 <li>OmniROM: <code>omni_&lt;设备名&gt;.mk</code></li>
 <li>CyanogenMod: <code>cm.mk</code></li>
 <li>魔趣：<code>mokee.mk</code>（旧版本）、<code>mk_&lt;设备名&gt;.mk</code>（Android 9）</li>
 </ul>
 <p>尽管文件名不同，但它们实际上大同小异。只需将名字统一重命名为<code>omni_&lt;设备名&gt;.mk</code>即可。注意文件名中的“设备名”即该文件中<code>PRODUCT_DEVICE</code>的值，否则编译系统会报错找不到文件并中止。</p>
+<h4 id="2-修改设备专门Makefile（device-mk）"><a href="#2-修改设备专门Makefile（device-mk）" class="headerlink" title="2. 修改设备专门Makefile（device.mk）"></a>2. 修改设备专门Makefile（device.mk）</h4><p>除了有产品Makefile之外，设备树常常会另设一个设备专门配置文件，名字各异，包括但不限于：</p>
+<ul>
+<li><code>device.mk</code></li>
+<li><code>full_&lt;设备名&gt;.mk</code></li>
+<li><code>device_&lt;设备名&gt;.mk</code></li>
+</ul>
+<h5 id="（1）如何使用"><a href="#（1）如何使用" class="headerlink" title="（1）如何使用"></a>（1）如何使用</h5><p>它由产品Makefile引用。例如，上一节荣耀10 View产品Makefile中，通过以下的语句来引用。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Inherit from hardware-specific part of the product configuration</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, device/huawei/berkeley/device.mk)</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>由于该文件可能还包含着另一组设备定义，因此引用语句必须放在产品Makefile的设备定义前，否则会导致混乱。</p>
+</blockquote>
+<h5 id="（2）主要内容"><a href="#（2）主要内容" class="headerlink" title="（2）主要内容"></a>（2）主要内容</h5><p>这类设备配置文件常常包括（但不限于）以下内容：</p>
+<h6 id="a-复制文件"><a href="#a-复制文件" class="headerlink" title="a) 复制文件"></a>a) 复制文件</h6><p>可以设置变量<code>PRODUCT_COPY_FILES</code>，将特定的文件复制到设备ROM的目录中，通常采用以下格式：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile">PRODUCT_COPY_FILES += \<br>    &lt;源文件1&gt;:&lt;目标目录1&gt;<br>    &lt;源文件2&gt;:&lt;目标目录2&gt;<br>    &lt;源文件2&gt;:&lt;目标目录2&gt;<br>    ...<br></code></pre></td></tr></table></figure>
+
+<p>其中，源文件和目标目录有明确要求：</p>
+<ul>
+<li><strong>源文件</strong>：采用相对目录，以Android源码根目录为参照。例如<code>device/&lt;厂商名&gt;/&lt;设备名&gt;</code>。</li>
+<li><strong>目标目录</strong>：同样采用相对目录，以最终输出目录为参照。例如<code>out/target/product/&lt;设备名&gt;/</code>。</li>
+</ul>
+<p>一般使用<code>PRODUCT_COPY_FILES</code>来复制厂商专属的文件（如刷机程序）、我们定制的配置文件（如后文会讲到的<code>init</code>脚本）等。</p>
+<h6 id="b-继承部分"><a href="#b-继承部分" class="headerlink" title="b) 继承部分"></a>b) 继承部分</h6><p>类似于上文的产品Makefile，有些设备树作者也会在设备专门Makefile中，放置继承代码。原则上，继承部分的代码只需要写在产品Makefile开头，毕竟设备Makefile是要被前者引用的；而有的继承部分代码与新版OmniROM不兼容，需要删改。</p>
+<p><strong>其一，如果是厂商的继承代码，则可以保留</strong>，例如：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product-<span class="hljs-built_in">if</span>-exists, vendor/&lt;厂商名&gt;/&lt;设备名&gt;/deivce-vendor.mk)</span><br></code></pre></td></tr></table></figure>
+
+<p><code>inherit-product-if-exists</code>函数不会因为找不到厂商配置文件而报错。</p>
+<p><strong>其二，如果是ROM通用配置文件，则先检查产品Makefile有没有相应的代码</strong>。若产品Makefile已有，则删除设备Makefile中的相应代码；否则就要按照上一节的方法，把继承部分补充到产品Makefile开头。</p>
+<p><strong>其三，有些代码已经过时，还会导致莫名其妙的问题，必须删除</strong>，例如：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># 这一句代码，原意是要引用全局配置文件，包括模拟器（device/common/goldfish）在内的所有设备。</span><br><span class="hljs-comment"># 在Android 4.4及更早版本要用到，但Android 8.x及更新版本已经不需要。</span><br><span class="hljs-comment"># Minimal Manifest for TWRP没有包含模拟器的配置文件，故引用该句会报错。删除本句不影响TWRP编译。</span><br><span class="hljs-variable">$(<span class="hljs-built_in">call</span> inherit-product, build/target/product/full.mk)</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="c-用户自定义部分-1"><a href="#c-用户自定义部分-1" class="headerlink" title="c)  用户自定义部分"></a>c)  用户自定义部分</h6><p>在这里也可以指定你自己的参数，例如补充<code>BoardConfig.mk</code>中的一些设备参数。不过，为防止冲突，笔者不建议这么做。</p>
 <h4 id="2-明确设备参数文件Makefile的调用链"><a href="#2-明确设备参数文件Makefile的调用链" class="headerlink" title="2. 明确设备参数文件Makefile的调用链"></a>2. 明确设备参数文件Makefile的调用链</h4><p>Makefile（<code>*.mk</code>）的调用，存在一个链的关系。这条调用链的起点是编译系统负责管理设备配置文件的Makefile程序——<code>build/make/core/product_config.mk</code>，它会检测设备配置文件目录中的<code>AndroidProducts.mk</code>，并根据<code>AndroidProducts.mk</code>来定位到设备的“元Makefile”。</p>
 <h5 id="AndroidProducts-mk"><a href="#AndroidProducts-mk" class="headerlink" title="AndroidProducts.mk"></a><code>AndroidProducts.mk</code></h5><p><code>AndroidProducts.mk</code>是设备配置文件的<strong>入口</strong>。编译系统通过查找<code>device</code>目录下所有的<code>AndroidProducts.mk</code>，来确定某一款设备确实有其配置文件存在。该文件用于将设备Makefile包含进来，包含的方法是将它传递给变量<code>PRODUCT_MAKEFILES</code>。通常的写法如下所示：</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile">PRODUCT_MAKEFILES := \<br>    <span class="hljs-variable">$(LOCAL_DIR)</span>/omni_berkeley.mk<br></code></pre></td></tr></table></figure>
@@ -670,12 +715,18 @@
 <li><code>product_config.mk</code>在列表中搜索用户指定设备（如华为荣耀10 View）的设备Makefile（<code>omni_berkeley.mk</code>）。</li>
 <li>若能搜索到，则从设备Makefile中读取设备信息，配置好编译环境；否则报错退出。</li>
 </ol>
+<h4 id="3-移植设备初始化文件（init-rc）"><a href="#3-移植设备初始化文件（init-rc）" class="headerlink" title="3. 移植设备初始化文件（init.rc）"></a>3. 移植设备初始化文件（init.rc）</h4><p>Android的初始化程序<code>init</code>会在启动时读取一个名为<code>init.rc</code>的脚本，用于初始化系统、厂商软硬件。在早期版本的Android（6.0及更早版本，尤其是4.4.x及之前的版本），该文件需要厂商自行编写，涵盖系统启动全流程。</p>
+<p>但在OmniROM 8.0及配套的TWRP中，<code>init.rc</code>中负责初始化系统的代码由TWRP提供，不再需要自行编写。原本在OmniROM 6.0仍适用的<code>TARGET_RECOVER_INITRC</code>参数也失效，官方建议采用专门的<strong>厂商初始化脚本</strong>（<code>init.recovery.&lt;厂商名称&gt;.rc</code>）来完成厂商软硬件的初始化。</p>
+<p>由此，如果你的设备树有原厂<code>init.rc</code>，那么就要把该文件中厂商相关的代码统统移动到<code>init.recovery.&lt;厂商名称&gt;.rc</code>中。简单来说，去掉系统初始化部分后，剩下的就是厂商自己的代码。</p>
 <h2 id="第六步：开始编译"><a href="#第六步：开始编译" class="headerlink" title="第六步：开始编译"></a>第六步：开始编译</h2><p>配置文件修改完成后，我们就可以立刻开始编译了。</p>
 <p>在Android源码根目录下，首先初始化编译环境：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> build/envsetup.sh<br></code></pre></td></tr></table></figure>
 
 <p>如果是Minimal Manifest，则请设置下面的环境变量，否则会因找不到依赖而报错：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> ALLOW_MISSING_DEPENDENCIES=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>Omni 8.1的源码树仍然依赖Python 2，因此请把Python 2添加到环境变量中。笔者采用的方法是：在源码树下新建目录，在其中给Python2的可执行文件建立链接，再把它添加到PATH中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 以下命令请在Android源码根目录运行</span><br><span class="hljs-comment"># 创建目录，建立链接</span><br>mkdir -p .my_path<br>ln -sf /usr/bin/python2 .my_path/python<br><br><span class="hljs-comment"># 然后把上述目录加入PATH中。以后每次开始编译前都要运行</span><br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PWD</span>/.my_path:<span class="hljs-variable">$PATH</span><br></code></pre></td></tr></table></figure>
 
 <p>然后，运行<code>lunch</code>命令，选择编译目标。也可以直接运行<code>lunch &lt;下面菜单中的一个编译目标&gt;</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ lunch<br><br>You<span class="hljs-string">&#x27;re building on Linux</span><br><span class="hljs-string"></span><br><span class="hljs-string">Lunch menu... pick a combo:</span><br><span class="hljs-string">     1. aosp_arm-eng</span><br><span class="hljs-string">     2. aosp_arm64-eng</span><br><span class="hljs-string">     3. aosp_mips-eng</span><br><span class="hljs-string">     4. aosp_mips64-eng</span><br><span class="hljs-string">     5. aosp_x86-eng</span><br><span class="hljs-string">     6. aosp_x86_64-eng</span><br><span class="hljs-string">     7. omni_berkeley-user</span><br><span class="hljs-string">     8. omni_berkeley-userdebug</span><br><span class="hljs-string">     9. omni_berkeley-eng</span><br><span class="hljs-string">     10. omni_hwp6_u06-userdebug</span><br><span class="hljs-string">     11. omni_hwp6_u06-eng</span><br><span class="hljs-string">     12. omni_kenzo-userdebug</span><br><span class="hljs-string">     13. omni_emulator-userdebug</span><br><span class="hljs-string"></span><br><span class="hljs-string">Which would you like? [aosp_arm-eng] 10</span><br></code></pre></td></tr></table></figure>
@@ -1136,7 +1187,47 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1164,35 +1255,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IPv6</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">路由器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1224,14 +1291,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
               </li>
              
@@ -1248,15 +1307,27 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Coreboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ThinkPad</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">X200</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1269,10 +1340,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">KDE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">小米路由器3</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1317,10 +1384,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ThinkPad</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1392,19 +1455,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Coreboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">X200</a>
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">

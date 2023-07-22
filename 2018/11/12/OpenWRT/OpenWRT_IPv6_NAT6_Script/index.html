@@ -6,25 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://anclark.github.io">
-  <title>在OpenWrt路由器上使用IPv6 | 爱拼安小匠的技术博客</title>
+  <title>在OpenWrt路由器上使用IPv6（采用NAT6方式） | 爱拼安小匠的技术博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。">
+  <meta name="description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。原理就是借助OpenWRT提供的kmod-ipt-nat6模块，启用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在OpenWrt路由器上使用IPv6">
+<meta property="og:title" content="在OpenWrt路由器上使用IPv6（采用NAT6方式）">
 <meta property="og:url" content="https://anclark.github.io/2018/11/12/OpenWRT/OpenWRT_IPv6_NAT6_Script/index.html">
 <meta property="og:site_name" content="爱拼安小匠的技术博客">
-<meta property="og:description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。">
+<meta property="og:description" content="现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。 为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。原理就是借助OpenWRT提供的kmod-ipt-nat6模块，启用">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5168189-f1153efa564baffe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2018-11-12T09:00:00.000Z">
-<meta property="article:modified_time" content="2022-06-14T07:49:47.287Z">
+<meta property="article:modified_time" content="2023-07-22T13:30:01.089Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="OpenWrt">
 <meta property="article:tag" content="IPv6">
 <meta property="article:tag" content="路由器">
+<meta property="article:tag" content="NAT6">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5168189-f1153efa564baffe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
@@ -194,7 +195,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      在OpenWrt路由器上使用IPv6
+      在OpenWrt路由器上使用IPv6（采用NAT6方式）
     </h1>
   
 
@@ -241,7 +242,7 @@
   <div class="article-entry" itemprop="articleBody">
     
     <p>现在的教育网和宽带基本都提供了IPv6支持。但是，由于网络性质使然，IPv6并不能像IPv4那样，直接使用路由器共享，这使得路由器接入IPv6后，所有连接到路由器的设备都不能连接v6。</p>
-<p>为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。</p>
+<p>为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。原理就是借助OpenWRT提供的<code>kmod-ipt-nat6</code>模块，启用IPv6的NAT功能（NAT6）。</p>
 <span id="more"></span>
 
 <h2 id="设置脚本"><a href="#设置脚本" class="headerlink" title="设置脚本"></a>设置脚本</h2><p>为了方便路由器的配置，<strong>我将所有设置过程做成了一个脚本，并在GitHub上开源。</strong></p>
@@ -365,7 +366,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://anclark.github.io/2018/11/12/OpenWRT/OpenWRT_IPv6_NAT6_Script/" title="在OpenWrt路由器上使用IPv6" target="_blank">https://anclark.github.io/2018/11/12/OpenWRT/OpenWRT_IPv6_NAT6_Script/</a>
+          <a href="https://anclark.github.io/2018/11/12/OpenWRT/OpenWRT_IPv6_NAT6_Script/" title="在OpenWrt路由器上使用IPv6（采用NAT6方式）" target="_blank">https://anclark.github.io/2018/11/12/OpenWRT/OpenWRT_IPv6_NAT6_Script/</a>
         </li>
         
         <li>
@@ -400,6 +401,10 @@
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">路由器</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">NAT6</a>
         		</li>
       		
 		</ul>
@@ -670,6 +675,46 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MBR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GPT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BIOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
@@ -690,35 +735,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MBR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GPT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BIOS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -734,6 +755,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VST</a>
               </li>
              
@@ -742,11 +771,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JACK</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ASIO</a>
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -762,7 +787,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+                <a href="javascript:void(0)" class="js-tag color5">NAT6</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -770,15 +795,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -798,11 +815,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Mac OS</a>
+                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">黑苹果</a>
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -842,19 +859,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -879,6 +888,30 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RIME</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Deepin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Foobar2000</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">窗口</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MediaWiki</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">维基百科</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">萌娘百科</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -914,6 +947,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OpenSUSE</a>
               </li>
              
@@ -923,26 +960,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Snap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MediaWiki</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">维基百科</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">萌娘百科</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">窗口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -978,19 +995,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">

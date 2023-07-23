@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5168189-f1153efa564baffe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2018-11-12T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-22T13:30:01.089Z">
+<meta property="article:modified_time" content="2023-07-23T05:32:05.261Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="OpenWrt">
@@ -221,7 +221,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.6k字</span>
+      <span class="post-count">2.8k字</span>
     </span>
   </span>
 
@@ -245,7 +245,13 @@
 <p>为此，必须对路由器进行一番魔改。如果路由器使用的是OpenWrt，或基于OpenWrt的固件，那么在经过一番设置后，IPv6的共享就不再是传说了。原理就是借助OpenWRT提供的<code>kmod-ipt-nat6</code>模块，启用IPv6的NAT功能（NAT6）。</p>
 <span id="more"></span>
 
-<h2 id="设置脚本"><a href="#设置脚本" class="headerlink" title="设置脚本"></a>设置脚本</h2><p>为了方便路由器的配置，<strong>我将所有设置过程做成了一个脚本，并在GitHub上开源。</strong></p>
+<h2 id="设置脚本"><a href="#设置脚本" class="headerlink" title="设置脚本"></a>设置脚本</h2><blockquote>
+<p><strong>【！！！注意！！！】</strong></p>
+<p>我编写这个脚本，旨在便于一键设置IPv6，使操作自动化。</p>
+<p><strong>由于年代久远，且设计时没有考虑鲁棒性，本脚本不能保证在所有OpenWRT环境中均正常使用</strong>。（例如，有些旧版本OpenWRT会无法安装<code>kmod-ipt-nat6</code>组件。）</p>
+<p><strong>建议直接按照下文的“原理”部分来一步步操作。</strong></p>
+</blockquote>
+<p>为了方便路由器的配置，<strong>我将所有设置过程做成了一个脚本，并在GitHub上开源。</strong></p>
 <blockquote>
 <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/AnClark/OpenWrt-IPv6-Scripts">https://github.com/AnClark/OpenWrt-IPv6-Scripts</a></p>
 <p>脚本地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/AnClark/OpenWrt-IPv6-Scripts/master/Use%20ip6tables/operation.sh">戳这里直接下载，脚本文件名为<code>operation.sh</code></a></p>
@@ -315,6 +321,7 @@
 <li>运营商网络，包括电信、联通、移动、各地广电和长城宽带，IPv6服务须额外申请，而且并不是所有地方都能办理。</li>
 </ol>
 </blockquote>
+<h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><p>如果你习惯使用LuCI来配置，建议参考知乎网友<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/chasecat">一只大肥猫呦</a>的文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/492774540">《校园网环境下Openwrt配置ipv6教程——以nat6为例》</a>。</p>
 <h2 id="致谢与参考"><a href="#致谢与参考" class="headerlink" title="致谢与参考"></a>致谢与参考</h2><ul>
 <li><strong>zqp19950813提供配置方法。</strong>本文的脚本基于他的教程编写。</li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/guituo9698/article/details/70285755">【转发】 通过openwrt的NAT6转发，使后端设备获得ipv6网络</a></li>
@@ -679,6 +686,18 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
               </li>
              
@@ -692,18 +711,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">BIOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">TWRP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BusyBox</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -775,6 +782,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
               </li>
              
@@ -799,27 +814,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">npm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">镜像源</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Apache2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -856,6 +855,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/arch_kde_disable_kde_bell.png">
 <meta property="og:image" content="https://anclark.github.io/assets/img/blog/arch_kde_do_not_restore_last_session.png">
 <meta property="article:published_time" content="2020-02-14T00:50:00.000Z">
-<meta property="article:modified_time" content="2022-05-24T12:42:26.212Z">
+<meta property="article:modified_time" content="2023-07-23T08:49:27.293Z">
 <meta property="article:author" content="爱拼安小匠">
 <meta property="article:tag" content="Linux 安装">
 <meta property="article:tag" content="Arch Linux">
@@ -221,7 +221,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">8.4k字</span>
+      <span class="post-count">8.7k字</span>
     </span>
   </span>
 
@@ -230,7 +230,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">32分</span>
+      <span class="post-count">33分</span>
     </span>
   </span>
 </div>
@@ -416,8 +416,21 @@
 
 <p>dhclient无需注册服务，也不是后台服务。它在需要的时候会被调用。</p>
 </blockquote>
-<h3 id="安装声音支持"><a href="#安装声音支持" class="headerlink" title="安装声音支持"></a>安装声音支持</h3><p>KDE等桌面环境使用PulseAudio作为音频后端，配合ALSA模块即可解决声音问题。</p>
+<h3 id="安装声音支持"><a href="#安装声音支持" class="headerlink" title="安装声音支持"></a>安装声音支持</h3><p>Linux发行版有两种主流的音频后端，<strong>在安装时你需要二选一</strong>：</p>
+<ul>
+<li>PulseAudio，历史悠久、最为常用；</li>
+<li>PipeWire，新生代，采用全新架构，整合多种音频后端（PulseAudio、ALSA和JACK），提供低延迟的音频体验。</li>
+</ul>
+<p>PipeWire自然是更优选择，它会大大改善你的音频使用体验。<strong>但是，KDE长期没有官方适配PipeWire的支持，因此你可能仍需选择PulseAudio。</strong></p>
+<h4 id="第一种选择：PulseAudio"><a href="#第一种选择：PulseAudio" class="headerlink" title="第一种选择：PulseAudio"></a>第一种选择：PulseAudio</h4><p>KDE等桌面环境使用PulseAudio作为音频后端，配合ALSA模块即可解决声音问题。在KDE加入对PipeWire的支持前，PulseAudio仍是最稳妥的选择。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pacstrap /mnt alsa-utils pulseaudio pulseaudio-alsa<br></code></pre></td></tr></table></figure>
+
+<h4 id="第二种选择：PipeWire"><a href="#第二种选择：PipeWire" class="headerlink" title="第二种选择：PipeWire"></a>第二种选择：PipeWire</h4><p>如果你仍想使用PipeWire，那么依然可以使用它来取代PulseAudio。</p>
+<p>首先安装PipeWire的软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Pipewire基本组件</span><br>pacstrap /mnt pipewire pipewire-audio pipewire-pulse pipewire-alsa lib32-pipewire<br><br><span class="hljs-comment"># 如果你是音乐制作人，就要用到JACK音频接口。此时还需要安装JACK支持</span><br>pacstrap /mnt pipewire-jack lib32-pipewire-jack<br><br><span class="hljs-comment"># 安装音频会话管理器，用于提供音量调节等功能</span><br>pacstrap /mnt pipewire-media-session<br></code></pre></td></tr></table></figure>
+
+<p>然后，激活PipeWire的会话管理器，以提供完整的PipeWire体验：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换到已安装好的系统里</span><br>arch-chroot /mnt<br><br><span class="hljs-comment"># 开启SPipeWire会话管理器的服务。</span><br><span class="hljs-comment"># 注意，这个服务不能使用root权限，别漏了--user参数！</span><br>systemctl <span class="hljs-built_in">enable</span> pipewire-media-session --user<br><br><span class="hljs-comment"># 退回安装环境</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="安装KDE-Plasma"><a href="#安装KDE-Plasma" class="headerlink" title="安装KDE Plasma"></a>安装KDE Plasma</h3><p>接下来就是安装KDE Plasma桌面环境，Plasma本身就是一个软件包。</p>
 <p>首先安装桌面环境本体，以及桌面管理器SDDM：</p>
@@ -1071,23 +1084,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Fetch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Pull Request</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cherry Pick</a>
+                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1096,10 +1097,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hexo插件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1127,7 +1124,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">插电降频</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Fetch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Pull Request</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cherry Pick</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1171,11 +1184,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
+                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">论文</a>
+                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1199,39 +1216,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 适配</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Linux 安装</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Arch Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">KDE</a>
+                <a href="javascript:void(0)" class="js-tag color3">论文</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1351,11 +1340,39 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">VSCode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">CMake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SDL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Makefile</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">DHCPv6</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">PyAudio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,10 +1381,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">X200</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DHCPv6</a>
               </li>
             
             <div class="clearfix"></div>
